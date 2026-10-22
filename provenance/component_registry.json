@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "note": "Conservative, evidence-led source classification. Unlisted tracked files default to UNRESOLVED. These are not ownership determinations.",
+  "entries": {
+    "src/cmbcst/mk_likelihood.py": {
+      "origin": "UPSTREAM_ADAPTED",
+      "source": "https://github.com/antolonappan/cosmic_birefringence/blob/main/src/cosmic_bire/tools_fast.py",
+      "license": "MIT",
+      "license_file": "THIRD_PARTY_LICENSES/cosmic_birefringence-MIT.txt",
+      "confidence": "documented-lineage; line-level derivation not yet independently audited",
+      "verification": "reference-equation comparison and code-lineage review pending"
+    },
+    "src/cmbcst/network.py": {
+      "origin": "PROJECT_AI_ASSISTED_UNRESOLVED",
+      "source": "https://arxiv.org/abs/2609.09149",
+      "license": "UNRESOLVED",
+      "confidence": "scientific antecedent acknowledged; original expression and novelty unadjudicated",
+      "verification": "GLS/closure identities and novelty baseline comparison pending independent review"
+    },
+    "scripts/jovin_verify.py": {
+      "origin": "EXTERNAL_WRAPPER",
+      "source": "local external JoVin harness",
+      "license": "UNRESOLVED",
+      "confidence": "wrapper present; rights in external harness not established",
+      "verification": "external executable, source, provenance and full-system validation not established"
+    },
+    "results/reproduction.json": {
+      "origin": "GENERATED_RESULT",
+      "source": "public Planck PR4/NPIPE and cited scientific methods",
+      "license": "DATA_RIGHTS_UNRESOLVED",
+      "confidence": "generated output; not a copyright or novelty determination",
+      "verification": "full raw-data rerun, inputs, numerical tolerance and external review pending"
+    },
+    "results/persistence.json": {
+      "origin": "GENERATED_EXPLORATORY_RESULT",
+      "source": "Planck map inputs and simulation assumptions in scripts/run_reproduction.py",
+      "license": "DATA_RIGHTS_UNRESOLVED",
+      "confidence": "cached exploratory null-model result, not anomaly evidence",
+      "verification": "revised Monte Carlo correction and realistic null rerun pending"
+    },
+    "data/evidence/jovin_receipts.json": {
+      "origin": "GENERATED_LOCAL_TEST_RECEIPTS",
+      "source": "scripts/jovin_verify.py",
+      "license": "UNRESOLVED",
+      "confidence": "locally reported receipts, not independent third-party certification",
+      "verification": "verify receipts/harness inputs and reproducibility independently"
+    },
+    "docs/index.html": {
+      "origin": "GENERATED_PRESENTATION",
+      "source": "studio/template.html and scripts/build_studio.py",
+      "license": "ASSET_RIGHTS_UNRESOLVED",
+      "confidence": "generated page may embed outside assets",
+      "verification": "inspect embedded CSS, JS, images, fonts, citations and license metadata"
+    },
+    ".mcp.json": {
+      "origin": "LOCAL_CONFIG",
+      "source": "project local integration",
+      "license": "UNRESOLVED",
+      "confidence": "public configuration reveals host/runtime paths",
+      "verification": "inspect privacy implications and ensure no secrets"
+    }
+  }
+}
