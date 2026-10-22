@@ -89,6 +89,14 @@ def readme_tables(data: dict) -> None:
         a = pers["ngp_minus_sgp_mean_life0"]
         rows.append(("NGP − SGP mean PD₀ lifetime, 143 GHz", f"{a['real']:+.3f} (sims {a['sim_mean']:+.3f} ± {a['sim_std']:.3f}, p = {a['p_two_sided']:.2f})",
                      "not in paper"))
+    sp = data.get("spatial")
+    if sp:
+        for sc, name in (("base12", "12 equal-area regions (primary)"), ("lat8", "8 latitude bands (robustness)")):
+            o = sp["schemes"][sc]
+            rows.append((f"Spatial stationarity of the calibration pattern, {name}",
+                         f"χ² {o['chi2_spatial']:.1f} / {o['dof_spatial']}, PTE {o['pte_spatial']:.2f}", "new (not in paper)"))
+            rows.append((f"Same-frequency A/B edges across regions, {name}",
+                         f"χ² {o['chi2_ab']:.1f} / {o['dof_ab']}, PTE {o['pte_ab']:.3f}", "new (not in paper)"))
     d = rep["dust_ee_over_bb_l_lt_300"]
     rows.append(("Dust EE/BB, ℓ < 300 (ΛCDM-subtracted) 143/217/353",
                  " / ".join(f"{d[q]['lcdm_subtracted']:.2f}" for q in ("143", "217", "353")),
@@ -109,7 +117,13 @@ def main() -> int:
     rep = json.loads((REPO / "results" / "reproduction.json").read_text(encoding="utf-8"))
     add_curl_sigma(rep)
     pers_path = REPO / "results" / "persistence.json"
+    def opt(name):
+        p = REPO / "results" / name
+        return json.loads(p.read_text(encoding="utf-8")) if p.exists() else None
+
     data = {"reproduction": rep, "persistence": json.loads(pers_path.read_text(encoding="utf-8")) if pers_path.exists() else None,
+            "spatial": opt("spatial.json"), "spatial_validation": opt("spatial_validation.json"),
+            "spatial_leakage": opt("spatial_leakage.json"), "npe": opt("npe.json"), "npe_validation": opt("npe_validation.json"),
             "cited": CITED, "receipts": latest_receipts()}
     tpl = (REPO / "studio" / "template.html").read_text(encoding="utf-8")
     payload = json.dumps(data, separators=(",", ":")).replace("</", "<\\/")
