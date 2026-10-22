@@ -76,10 +76,10 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 <!-- RECEIPTS:START -->
 | Suite | Result | Receipt |
 |---|---|---|
-| `network` | pass 12/12 | `20261022T174052Z-6be1cc5058ca` |
+| `network` | pass 12/12 | `20261022T182616Z-55c98a3fc8f4` |
 | `differential` | pass 7/7 | `20261022T171103Z-7469960ebbb7` |
 | `mk_core` | pass 8/8 | `20261022T171106Z-676f9cad61b0` |
-| `persistence` | pass 8/8 | `20261022T174054Z-c6e1fea88f6d` |
+| `persistence` | pass 8/8 | `20261022T182619Z-703f2a4eadd6` |
 | `accel` | pass 10/10 | `20261022T172121Z-5cd7a09a18e0` |
 <!-- RECEIPTS:END -->
 
