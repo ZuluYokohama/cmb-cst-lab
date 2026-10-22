@@ -209,4 +209,7 @@ data/evidence/   jovin_receipts.json
 The estimator, likelihood and analysis choices follow Lonappan, Keating & Arnold (2026).
 `mk_likelihood.py` is a numpy port of the model in their MIT-licensed pipeline,
 [antolonappan/cosmic_birefringence](https://github.com/antolonappan/cosmic_birefringence).
+Its MIT license and copyright notice (© 2026 Anto Idicherian Lonappan) are reproduced in
+[`THIRD_PARTY_LICENSES/cosmic_birefringence-MIT.txt`](THIRD_PARTY_LICENSES/cosmic_birefringence-MIT.txt),
+as the license requires for substantial portions of the software.
 The data are ESA Planck PR4 (NPIPE) via NERSC and the Planck Legacy Archive.
