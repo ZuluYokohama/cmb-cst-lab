@@ -1,0 +1,58 @@
+{
+  "frozen_utc": "2026-10-22T20:26:53.246897+00:00",
+  "git_head_at_freeze": "e1bb18f0eb16d93219b4dc78c99a59e0080713e3",
+  "file_sha256": {
+    "src/cmbcst/spatial.py": "db8fe48b2c6551bdac3edbfa70ecb576f9e913f46869526fda6753b6169b5c6f",
+    "src/cmbcst/regions.py": "b4a5aaa43d8574d657516c42f89b5b7919ca022daf883e8d4e2e495bfcd1c570",
+    "src/cmbcst/differential.py": "9c0763f9d155b1fd924e1d0da183a61a4aec8c8a4cadc77727d45355a33e0a6c",
+    "src/cmbcst/network.py": "93cf89b0a5c9defa9aa719cbeea5855640b8fa9e8c114f7a4eba00abd7aec945",
+    "src/cmbcst/spectra.py": "f49f508b30df565a94d466e70a0e79606721b50832893177a0ca6c20a55085e1",
+    "scripts/run_spatial.py": "a6c87ad54905d3cf709c1167e388f2dbd369683d45321db2fa2c24e37743848b"
+  },
+  "input_sha256": {
+    "data/work/spatial/base12_00.npz": "b51d8f8629b48b0b611bd223947e9670dae6749ec67f84ff1e834a2892e0f1df",
+    "data/work/spatial/base12_01.npz": "54d408d0b49d271cd1e3a8a0a3c6a076f644547904f2317e402a230ff90a5a81",
+    "data/work/spatial/base12_02.npz": "cd28ddf8f5ba8ac200feb2a730c8daefb9a265dd0e6aec9225372be7c50d371d",
+    "data/work/spatial/base12_03.npz": "fc3a29a62605dad517324b2738fd2d81ec083122c0ceefe91d90cd02f27845d9",
+    "data/work/spatial/base12_04.npz": "47f6fc9b7a36c037f9e18d87f8d301a18b95f5b836cb7550f515e066fc0a0e51",
+    "data/work/spatial/base12_05.npz": "23bff66504fdd605b2897b6174509d8f5e827450c50da8113efe68a3b91e288b",
+    "data/work/spatial/base12_06.npz": "91f720e1f256c92a3ddbd538ba0f91f8793688d30baf2b3e64e16ccb222fb519",
+    "data/work/spatial/base12_07.npz": "d45cec6c57b1a6e5128d56ca2a7442e52725c81c3b72dd53f74079811bc94983",
+    "data/work/spatial/base12_08.npz": "95483bb633a88b21224786c3ff5ca13f37a661dffbf3da078e731ea932ad2337",
+    "data/work/spatial/base12_09.npz": "bafa811a1c30f1f67d74ebc8ef9d4dcf1e56507fcb216c4d4f529ed8bc575d3e",
+    "data/work/spatial/base12_10.npz": "87c56bdca3e3532fdaf7515434e61bce7a023b87aaac04986f5244d8f9a5c3df",
+    "data/work/spatial/base12_11.npz": "35fbd284c830b2ade9083d21a0eae0cb806831f2c059f373a6811aa694c5ff27",
+    "data/work/spatial/lat8_00.npz": "25298af05e71e92bd07a83d71815686ffc0e681986226ae40430eb387f001f4a",
+    "data/work/spatial/lat8_01.npz": "68ba2f43ee9d45c5ca43f4646d62f992a248fee8f6325d1324bf7e6c08c293e9",
+    "data/work/spatial/lat8_02.npz": "8268f4e8f1764012ce7dddeab6b36a954c68b5960bc70a36cc0ca9f8d9fe63d4",
+    "data/work/spatial/lat8_03.npz": "858e3c638ad7cdd78582fb4917b9bf4c95877a426250d7b5798f50982a849e4c",
+    "data/work/spatial/lat8_04.npz": "e1664832bbc3e013b81b9dcfc3390c1243e41a8f467219a528ee93d5b0f5216f",
+    "data/work/spatial/lat8_05.npz": "75fc834d4ad3aaa5025febea49f87a2f9dcb25526f24eab3bc8430a5788616b8",
+    "data/work/spatial/lat8_06.npz": "45ab23fdecabd5614a3acda83ca72a6b96f7c43cb0ea81a236712eb33f4877fb",
+    "data/work/spatial/lat8_07.npz": "9f89bc32e0b3b84ff96d27c1ba0a3dc6458a77cc45c3332e8e9aaad012183b85",
+    "data/work/spatial/base12_meta.json": "921a4872d318eb3fb7771f70f86c329f40914116b8a22696bb535f72ef66b7fa",
+    "data/work/spatial/lat8_meta.json": "d9b6f7964bad079b2fc362d80f35383d71b3ee596290fe4d2a36c6db99bbe869",
+    "results/reproduction.json": "89d4dd7d64a76bc3862a1094002cee4687ef4369e108a6f5903cea30f9e7fda9",
+    "results/spatial_validation.json": "27d41fd2a8443bccd5a8c21145473b597829c03b404dc96c3a7b9a6e14f19b86",
+    "results/spatial_leakage.json": "88c9fd909fb3da8204ed238d4f12539e3b7be257d3af69dcddd85edbc3f25305"
+  },
+  "statistics": {
+    "chi2_spatial": "stationarity of the per-map calibration pattern across regions, dof 7(R-1)",
+    "chi2_closure": "triangle closure within regions, dof 21R",
+    "chi2_ab": "constancy of the 4 same-frequency A/B pair angles across regions, dof 4(R-1)",
+    "tracer_regression": "per-map slope of gamma_r against the regional 353 GHz dust tracer, dof 7"
+  },
+  "schemes": [
+    "base12",
+    "lat8"
+  ],
+  "detection_pte": 0.01,
+  "primary": "base12 chi2_spatial; lat8 is a robustness partition",
+  "validation_files": [
+    "results/spatial_validation.json",
+    "results/spatial_leakage.json"
+  ],
+  "version": 2,
+  "supersedes": "data/evidence/analysis_freeze_A_v1.json (unblinded once, 2026-10-22)",
+  "correction_note": "Post-unblinding correction of code errors found in review, not analysis choices: (1) gamma uncertainties now Cov = F_r^-1 - F_tot^-1; (2) tracer regression profiles the vector intercept exactly. Primary statistics (chi2_spatial, closure, A/B) are computed by unchanged code paths and must reproduce v1 exactly. Inputs now hashed."
+}

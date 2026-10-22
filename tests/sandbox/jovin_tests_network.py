@@ -115,3 +115,20 @@ def test_chi2_diff_ignores_common_mode():
     assert a["chi2"] < 1e-18 and a["dof"] == 7
     b = chi2_diff(q, q + np.r_[0.3, np.zeros(7)], c, c)
     assert b["chi2"] > 0
+
+
+def test_residual_is_covariance_weighted_coexact():
+    # d0^T C^{-1} r = 0, so C^{-1} r lies in ker d0^T = im d1^T; r itself need NOT lie in
+    # im d1^T (it does when C preserves that subspace, e.g. C proportional to the identity).
+    rng = np.random.default_rng(12)
+    _, _, d0, d1 = complete_complex(8)
+    cov = _cov(rng, 28)
+    res = solve_network(rng.multivariate_normal(np.zeros(28), cov), cov, d0, 4)
+    r, w = res["curl"], np.linalg.solve(cov, res["curl"])
+    assert np.max(np.abs(d0.T @ w)) < 1e-9 * np.max(np.abs(w))
+    proj = d1.T @ np.linalg.lstsq(d1.T, w, rcond=None)[0]       # projection onto im d1^T
+    assert np.linalg.norm(w - proj) < 1e-9 * np.linalg.norm(w)   # C^{-1} r in im d1^T
+    proj_r = d1.T @ np.linalg.lstsq(d1.T, r, rcond=None)[0]
+    assert np.linalg.norm(r - proj_r) > 1e-3 * np.linalg.norm(r)  # r itself is not
+    iso = solve_network(r + d0 @ rng.normal(size=8), np.eye(28), d0, 4)["curl"]
+    assert np.linalg.norm(d0.T @ iso) < 1e-10 * np.linalg.norm(iso)  # identity C: Euclidean curl

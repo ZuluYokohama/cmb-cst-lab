@@ -53,11 +53,11 @@ class UnionFindPersistence:
 def compute_cubical_persistent_homology_2d(
     field: np.ndarray, periodic: bool = True
 ) -> Tuple[np.ndarray, np.ndarray]:
-    """Compute graph-based sublevel PD_0 and an approximate PD_1 diagnostic.
+    """Return exact PD_0 for the chosen four-neighbor grid graph, plus a PD_1 proxy.
 
-    PD_0 is exact for the chosen four-neighbor pixel graph. The dual-superlevel
-    PD_1 computation is only a lower-bound proxy and must NOT be described as
-    a complete cubical-complex loop-persistence diagram.
+    The dual eight-neighbor superlevel construction does NOT implement a full
+    exact cubical-complex PD_1 calculation. Its lifetimes are lower-bound
+    proxies, and the public sky-patch statistical analysis uses PD_0 only.
     """
     h, w = field.shape
     flat = field.ravel()
@@ -138,24 +138,6 @@ def lifetimes(pd: np.ndarray, drop_essential: bool = False) -> np.ndarray:
     return p[:, 1] - p[:, 0] if len(p) else np.zeros(0)
 
 
-def empirical_two_sided_mc_pvalue(observed: float, null: np.ndarray) -> float:
-    """Conservative two-sided Monte Carlo tail with a +1 correction.
-
-    For exchangeable null draws and the observed statistic, prevents p=0.
-    This is a single-test p-value only: scanning patches/statistics additionally
-    requires a pre-specified multiplicity correction. The original cached
-    results/persistence.json remains from the earlier estimator until the
-    full real-data stage is rerun.
-    """
-    null = np.asarray(null, dtype=float)
-    if null.ndim != 1 or len(null) < 1 or not np.isfinite(observed) or not np.all(np.isfinite(null)):
-        raise ValueError("Observed statistic and finite null sample required")
-    n = len(null)
-    return float(min(1.0, 2.0 * min(
-        (1 + np.count_nonzero(null <= observed)) / (n + 1),
-        (1 + np.count_nonzero(null >= observed)) / (n + 1))))
-
-
 def patch_summary(field: np.ndarray) -> dict[str, float]:
     """Statistics compared between real patches and Gaussian simulations.
 
@@ -196,3 +178,28 @@ def project_patch(hpx_map: np.ndarray, center_theta: float, center_phi: float, s
     th, ph = gnomonic_angles(center_theta, center_phi, size, patch_deg)
     pix = ducc0.healpix.Healpix_Base(nside, "RING").ang2pix(np.stack([th.ravel(), ph.ravel()], axis=1))
     return hpx_map[pix].reshape(th.shape)
+
+
+def mc_pvalue(sims: np.ndarray, observed: float) -> float:
+    """Two-sided Monte Carlo p-value with the +1 correction (never zero):
+    p = min(1, 2 min((1 + #{T_sim <= T_obs}) / (1 + N), (1 + #{T_sim >= T_obs}) / (1 + N)))."""
+    sims = np.asarray(sims, dtype=float)
+    if sims.ndim != 1 or sims.size < 1 or not np.isfinite(observed) or not np.all(np.isfinite(sims)):
+        raise ValueError("Observed value and a non-empty finite 1-D null sample are required")
+    n = sims.size
+    lo = (1 + np.sum(sims <= observed)) / (1 + n)
+    hi = (1 + np.sum(sims >= observed)) / (1 + n)
+    return float(min(1.0, 2 * min(lo, hi)))
+
+
+def holm(pvals) -> np.ndarray:
+    """Holm step-down adjusted p-values (family-wise error control), in the input order."""
+    p = np.asarray(pvals, dtype=float)
+    m = p.size
+    order = np.argsort(p)
+    adj = np.empty(m)
+    running = 0.0
+    for rank, idx in enumerate(order):
+        running = max(running, (m - rank) * p[idx])
+        adj[idx] = min(1.0, running)
+    return adj

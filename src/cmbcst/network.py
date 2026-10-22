@@ -8,12 +8,14 @@ Maps are the 8 vertices of the complete graph K_8, pairs are its 28 edges and th
     (d1 w)_t = w_ij + w_jk - w_ik           for triangle t = (i, j, k), i < j < k.
 
 d1 d0 = 0, ker d0 = span{1} (the common rotation: beta plus any shared offset), and because
-every triangle is filled, ker d1 = im d0. So H^1 = 0: the Euclidean orthogonal complement of im d0 in C^1 is im d1^T; however, for
-nontrivial covariance the GLS residual is *Sigma^{-1}-orthogonal* to im d0 and
-belongs to Sigma im d1^T rather than generally to im d1^T itself. A closure
-failure is a failure of global pair consistency; a detector-wide (node) offset
-is undetectable by closure. Its covariance-weighted size is exactly the GLS
-residual chi^2 (see `closure_chi2`), not an independent statistic.
+every triangle is filled, ker d1 = im d0. So H^1 = 0: there is no harmonic component, and
+anything outside im d0 is a failure of triangle closure.
+
+The fit uses the edge covariance C, so the decomposition is orthogonal in the C^{-1} inner
+product. The GLS residual r obeys d0^T C^{-1} r = 0, i.e. C^{-1} r lies in ker d0^T = im d1^T:
+r is a *covariance-weighted* coexact component: it need not lie in im d1^T. It does lie there
+when C preserves that subspace (for example C proportional to the identity).
+their weighted chi^2 equals the residual chi^2 of the gauge-fixed fit (see `closure_chi2`).
 """
 from __future__ import annotations
 
@@ -51,10 +53,10 @@ def solve_network(dalpha: np.ndarray, cov: np.ndarray, d0: np.ndarray, gauge: in
     """Generalised least squares for d = d0 x + n with x[gauge] = 0.
 
     Returns the per-map angles, their covariance (zero row/column at the gauge map),
-    the residual chi^2 with n_edges - (n - 1) degrees of freedom, and the fitted
-    gradient in im d0 and residual in the C^{-1}-orthogonal complement of im d0.
-    The residual is called `curl` for backward compatibility; it does not in
-    general belong to the Euclidean subspace im(d1.T) when covariance is nonuniform.
+    the residual chi^2 with n_edges - (n - 1) degrees of freedom, and the C^{-1}-orthogonal split
+    of the data into the gradient d0 x (in im d0) and the residual returned as "curl": a
+    covariance-weighted coexact component, with C^{-1} curl in im d1^T (the curl itself need not
+    lie in im d1^T), plus its covariance "cov_curl".
     """
     n = d0.shape[1]
     keep = [k for k in range(n) if k != gauge]
@@ -88,9 +90,8 @@ def closures(dalpha: np.ndarray, cov: np.ndarray, d1: np.ndarray) -> dict[str, n
 def closure_chi2(dalpha: np.ndarray, cov: np.ndarray, d1: np.ndarray, tol: float = 1e-10) -> tuple[float, int]:
     """chi^2 of all triangle closures jointly, c^T (d1 C d1^T)^+ c, and its rank.
 
-    For a filled complete graph this equals `solve_network(...)["chi2"]`: both measure
-    the same lack of closure using the same data and covariance. It is not
-    independent evidence. A node-offset injection remains invisible.
+    For a filled complete graph this equals `solve_network(...)["chi2"]`: both measure the
+    component of the data outside im d0 = ker d1.
     """
     c = d1 @ dalpha
     cov_c = d1 @ cov @ d1.T

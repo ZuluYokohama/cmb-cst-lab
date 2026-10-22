@@ -97,7 +97,7 @@ svg .lbl { fill: var(--ink); font: 500 12px var(--mono); }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
 .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
 .note { font-size: 13px; color: var(--muted); max-width: 72ch; }
-.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 20px; }
 code { font: 13px var(--mono); background: var(--grid); padding: 1px 5px; border-radius: 4px; }
 .srcline { font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 10px; }
 footer { padding-top: 28px; font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
@@ -123,7 +123,7 @@ footer { padding-top: 28px; font-size: 13px; color: var(--muted); display: grid;
   <section id="network">
     <div class="eyebrow">The network on K₈</div>
     <h2>Pair angles, their gradient part and what fails to close</h2>
-    <p>Each edge carries one measured angle difference Δα<sub>ij</sub> = α<sub>i</sub> − α<sub>j</sub>, read from the ratio of antisymmetric to symmetric cross-spectra. The common rotation (β and any shared offset) cancels. The gauge-fixed fit splits the 28 numbers into a gradient part (7 dimensions, one angle per map) and a remainder. With every triangle filled, H¹ = 0, so the remainder is pure curl: triangle closure failures, not hidden cohomology.</p>
+    <p>Each edge carries one measured angle difference Δα<sub>ij</sub> = α<sub>i</sub> − α<sub>j</sub>, read from the ratio of antisymmetric to symmetric cross-spectra. The common rotation (β and any shared offset) cancels. The gauge-fixed fit splits the 28 numbers into a gradient part (7 dimensions, one angle per map) and a remainder. With every triangle filled, H¹ = 0, so there is no harmonic part: the remainder is triangle-closure failure. The fit is weighted by the edge covariance C, so the remainder is a covariance-weighted coexact component (C⁻¹r ∈ im d₁ᵀ). This graph “curl” is a calibration diagnostic, unrelated to CMB B-modes.</p>
     <div class="bench">
       <div class="panel">
         <div class="controls">
@@ -170,6 +170,18 @@ footer { padding-top: 28px; font-size: 13px; color: var(--muted); display: grid;
     <div class="panel"><svg id="closure-plot" viewBox="0 0 720 230" role="img" aria-label="Distribution of 56 triangle closure pulls"></svg></div>
   </section>
 
+  <section id="spatial">
+    <div class="eyebrow">Region-resolved network</div>
+    <h2>Is the calibration pattern the same across the sky?</h2>
+    <p>The 28 pair angles are measured separately in each sky region, and the joint fit splits the misfit exactly into closure inside regions and a <em>spatial-stationarity</em> term that asks whether the per-map angles differ between regions. A sky-dependent common rotation (anisotropic birefringence) is gauge and cannot appear. The four same-frequency A/B edges compare detectors in one band, so dust cancels there: drift on those edges would be instrumental.</p>
+    <p id="spatial-text" class="muted"></p>
+    <div class="tablewrap"><table><thead><tr><th>Partition</th><th>Statistic</th><th>χ² / dof</th><th>PTE</th><th>Null mean (blinded sims)</th></tr></thead><tbody id="spatial-body"></tbody></table></div>
+    <div class="grid2">
+      <div class="panel"><h3>Contribution to χ²<sub>spatial</sub> by region</h3><svg id="spatial-bars" viewBox="0 0 520 260" role="img" aria-label="Per-region spatial chi-squared"></svg><div class="note" id="spatial-bars-note"></div></div>
+      <div class="panel"><h3>Calibration drift γ / σ, maps × regions</h3><svg id="spatial-grid" viewBox="0 0 520 260" role="img" aria-label="Per-map per-region drift"></svg><div class="note">Gauge 143A = 0. Blue negative, orange positive; colour saturates at |γ/σ| = 3.</div></div>
+    </div>
+  </section>
+
   <section id="beta">
     <div class="eyebrow">Birefringence</div>
     <h2>β from the literature and from this run</h2>
@@ -181,7 +193,7 @@ footer { padding-top: 28px; font-size: 13px; color: var(--muted); display: grid;
     <div class="eyebrow">Topology of the real sky</div>
     <h2>Sublevel persistence at the Galactic caps and the Cold Spot</h2>
     <p id="pers-text"></p>
-    <div class="tablewrap"><table><thead><tr><th>Patch</th><th>Statistic</th><th>Planck 143 GHz</th><th>Gaussian sims</th><th>p (two-sided)</th></tr></thead><tbody id="pers-body"></tbody></table></div>
+    <div class="tablewrap"><table><thead><tr><th>Patch</th><th>Statistic</th><th>Planck 143 GHz</th><th>Gaussian sims</th><th>z</th><th>p</th><th>p (Holm)</th></tr></thead><tbody id="pers-body"></tbody></table></div>
   </section>
 
   <section id="dust">
@@ -266,9 +278,9 @@ function masthead() {
     `Eight public Planck PR4 polarization maps, all 28 cross-pairs, the paper's own estimator. ` +
     `The angle differences ${closes ? "close up to noise" : "do not close"} (χ² = ${f(net.chi2, 1)} for ${net.dof} dof, PTE ${f(net.pte, 2)}), and the per-map pattern ` +
     `${agrees ? "agrees with" : "disagrees with"} a Minami–Komatsu fit of the same maps (χ²_diff = ${f(cd.chi2, 2)} for ${cd.dof} dof, PTE ${f(cd.pte, 2)}). ` +
-    `With every triangle filled, H¹ = 0, so what the fit leaves over is pure curl, and it is noise-sized.`;
+    `With every triangle filled, H¹ = 0, so what the fit leaves over is weighted closure failure, and it is noise-sized.`;
   const items = [
-    { k: "Network closure", n: `${f(net.chi2, 1)}<small> / ${net.dof} dof</small>`, c: `PTE ${f(net.pte, 2)} · what curl remains is noise-sized` },
+    { k: "Network closure", n: `${f(net.chi2, 1)}<small> / ${net.dof} dof</small>`, c: `PTE ${f(net.pte, 2)} · closure residual is noise-sized` },
     { k: "Network vs MK pattern", n: `${f(cd.chi2, 2)}<small> / ${cd.dof} dof</small>`, c: `PTE ${f(cd.pte, 2)} · paper: ${C.paper.chi2_diff} / ${C.paper.dof}, PTE ${C.paper.pte}` },
     { k: "MK β, f<sub>sky</sub> 0.92", n: `${f(m0.mk.beta_deg, 2)}°<small> ± ${f(m0.mk.sigma_beta_deg, 2)}</small>`, c: `paper: ${C.paper.beta_mk[0]}° ± ${C.paper.beta_mk[1]}` },
     { k: "Pearson r, 28 pairs", n: f(m0.pearson_r_pairs, 3), c: `paper: ${C.paper.pearson_r} · descriptive only` },
@@ -334,7 +346,7 @@ function drawK8() {
     txt(svg, ox, oy + (Math.abs(ux) <= 0.3 ? uy * 6 : 0), det === "143A" ? "gauge 0" : `${sgn(a)}°±${f(s)}`, { "text-anchor": anchor });
   });
   const lg = document.getElementById("k8-legend");
-  const lab = { delta: "measured Δα", grad: "gradient d₀α", curl: "curl Δα − d₀α" }[state.mode];
+  const lab = { delta: "measured Δα", grad: "gradient d₀α", curl: "weighted closure residual Δα − d₀α" }[state.mode];
   lg.innerHTML = `<span><i class="sw" style="background:var(--neg)"></i>negative</span><span><i class="sw" style="background:var(--pos)"></i>positive</span>` +
     `<span>colour and width scale to |Δα| ≤ ${f(vmax)}° · showing ${lab}</span>` +
     ["100", "143", "217", "353"].map(q => `<span><i class="sw" style="background:var(--f${q})"></i>${q} GHz</span>`).join("");
@@ -475,14 +487,65 @@ function persistence() {
   const rows = [];
   for (const [patch, stats] of Object.entries(P.stats)) for (const [s, v] of Object.entries(stats))
     { const dg = s === "n0" ? 0 : 3;
-      rows.push(`<tr><td>${patch}</td><td>${nice[s]}</td><td class="n">${f(v.real, dg)}</td><td class="n">${f(v.sim_mean, dg)} ± ${f(v.sim_std, dg)}</td><td class="n">${f(v.p_two_sided, 2)}</td></tr>`); }
-  rows.push(`<tr><td>NGP − SGP</td><td>mean PD₀ lifetime</td><td class="n">${f(a.real, 3)}</td><td class="n">${f(a.sim_mean, 3)} ± ${f(a.sim_std, 3)}</td><td class="n">${f(a.p_two_sided, 2)}</td></tr>`);
+      rows.push(`<tr><td>${patch}</td><td>${nice[s]}</td><td class="n">${f(v.real, dg)}</td><td class="n">${f(v.sim_mean, dg)} ± ${f(v.sim_std, dg)}</td><td class="n">${sgn(v.z ?? 0, 2)}</td><td class="n">${f(v.p_two_sided, 3)}</td><td class="n">${f(v.p_holm, 2)}</td></tr>`); }
+  rows.push(`<tr><td>NGP − SGP</td><td>mean PD₀ lifetime</td><td class="n">${f(a.real, 3)}</td><td class="n">${f(a.sim_mean, 3)} ± ${f(a.sim_std, 3)}</td><td class="n">${sgn(a.z ?? 0, 2)}</td><td class="n">${f(a.p_two_sided, 3)}</td><td class="n">${f(a.p_holm, 2)}</td></tr>`);
   body.innerHTML = rows.join("");
   const n0p = Object.values(P.stats).map(s => s.n0.p_two_sided), allHigh = Object.values(P.stats).every(s => s.n0.real > s.n0.sim_mean);
+  const n0holm = Object.entries(P.stats).map(([k, s]) => [k, s.n0.p_holm]), sigHolm = n0holm.filter(([, p]) => p < 0.05);
   tx.textContent = `Sublevel persistence of the real ${P.map}, at three 20° patches, compared against ${P.n_sims} Gaussian skies drawn from the measured spectrum. ` +
     `The north–south difference in mean PD₀ lifetime is ${f(a.real, 3)} against a simulated spread of ±${f(a.sim_std, 3)} (p = ${f(a.p_two_sided, 2)}): no hemispherical asymmetry in this statistic. ` +
-    (allHigh ? `All three patches carry more PD₀ features than the simulations (p ≤ ${f(Math.max(...n0p), 2)}), by a similar margin at the poles and at the Cold Spot. A shared excess like this most likely comes from small-scale noise and point sources that isotropic Gaussian skies do not model, not from sky topology. ` : "") +
+    (allHigh ? `All three patches carry more PD₀ features than the simulations (raw p ≤ ${f(Math.max(...n0p), 3)}; after Holm correction over ${P.n_comparisons} comparisons, ` +
+      (sigHolm.length ? `${sigHolm.map(([k, p]) => `${k} (p = ${f(p, 3)})`).join(", ")} remain${sigHolm.length === 1 ? "s" : ""} significant at 0.05` : "none is significant at 0.05") + `). The shift has the same sign at the poles and at the Cold Spot, which points first to a simulation/data mismatch (anisotropic noise, foregrounds, pipeline) rather than sky topology. It stays unexplained until the validation track runs. ` : "") +
     `PD₁ is not used because its dual construction gives only lower bounds on loop lifetimes (pinned in the persistence suite).`;
+}
+
+/* ---------- region-resolved network ---------- */
+function spatialSection() {
+  const S = DATA.spatial, V = DATA.spatial_validation, L = DATA.spatial_leakage;
+  const body = document.getElementById("spatial-body"), tx = document.getElementById("spatial-text");
+  if (!V) { document.getElementById("spatial").hidden = true; return; }
+  const rows = [];
+  for (const sc of Object.keys(V.schemes)) {
+    const v = V.schemes[sc], s = S ? S.schemes[sc] : null;
+    const line = (name, chi, dof, pte, nm) => rows.push(`<tr><td>${sc}</td><td>${name}</td><td class="n">${s ? `${f(chi, 1)} / ${dof}` : "blinded"}</td><td class="n">${s ? f(pte, 3) : "–"}</td><td class="n">${nm == null ? "–" : `${f(nm, 1)} / ${dof}`}</td></tr>`);
+    line("spatial stationarity", s && s.chi2_spatial, v.dof_spatial, s && s.pte_spatial, v.null_mean.spatial);
+    line("closure in regions", s && s.chi2_closure, v.dof_closure, s && s.pte_closure, v.null_mean.closure);
+    line("A/B edges (instrument control)", s && s.chi2_ab, v.dof_ab, s && s.pte_ab, v.null_mean.ab);
+    if (s) line("drift vs dust tracer", s.tracer_delta_chi2, s.tracer_dof, s.tracer_pte, null);
+  }
+  body.innerHTML = rows.join("");
+  const b12 = V.schemes.base12;
+  const p02 = (b12.power.dust_like.find(p => p.amp_deg === 0.2) || {}).detection_rate;
+  const i01 = (b12.power.instrument_like.find(p => p.amp_deg === 0.1) || {}).detection_rate;
+  tx.textContent = (S ? `Unblinded ${S.unblinded_utc.slice(0, 10)} from the frozen analysis (freeze ${S.freeze_utc.slice(0, 16).replace("T", " ")} UTC). ` : "Real-data statistics are blinded until the analysis is frozen. ") +
+    `On ${b12.n_null} blinded null skies the statistics match their dof; at the pre-registered PTE < ${S ? S.detection_pte : 0.01} the base12 partition detects a 0.2° dust-like drift ${Math.round(100 * p02)}% of the time and a 0.1° instrument-like drift ${Math.round(100 * i01)}% of the time.` +
+    (L ? ` Map-level simulations put the cross-region correlation of pair angles at ${f(L.mean_corr_offdiag, 3)} (max ${f(L.max_abs_corr_offdiag, 2)}, noise floor ${f(L.sd_expected_noise, 2)}).` : "");
+  const bars = document.getElementById("spatial-bars"), grid = document.getElementById("spatial-grid");
+  clear(bars); clear(grid);
+  if (!S) {
+    txt(bars, 260, 130, "blinded until the analysis freeze", { "text-anchor": "middle" });
+    txt(grid, 260, 130, "blinded until the analysis freeze", { "text-anchor": "middle" });
+    return;
+  }
+  const s = S.schemes.base12, nR = s.n_regions, contrib = s.chi2_spatial_region, dust = s.dust_tracer;
+  const L0 = 40, Rr = 510, T = 10, Bt = 220, ymax = Math.max(14, ...contrib) * 1.1, w = (Rr - L0) / nR;
+  const y = v => Bt - v / ymax * (Bt - T);
+  const lmin = Math.log(Math.min(...dust)), lmax = Math.log(Math.max(...dust));
+  ticks(0, ymax, 4).forEach(v => { el("line", { x1: L0, x2: Rr, y1: y(v), y2: y(v), stroke: css("--grid") }, bars); txt(bars, L0 - 6, y(v) + 4, v, { "text-anchor": "end" }); });
+  el("line", { x1: L0, x2: Rr, y1: y(7), y2: y(7), stroke: css("--accent"), "stroke-dasharray": "4 3" }, bars);
+  contrib.forEach((c, k) => {
+    const t = (Math.log(dust[k]) - lmin) / (lmax - lmin);
+    el("rect", { x: L0 + k * w + 2, y: y(c), width: w - 4, height: Bt - y(c), fill: lerpColor(css("--zero"), css("--f353"), t) }, bars);
+    txt(bars, L0 + (k + 0.5) * w, Bt + 14, s.labels[k], { "text-anchor": "middle" });
+  });
+  document.getElementById("spatial-bars-note").textContent = "Dashed line: expected 7 per region. Darker bars carry more 353 GHz dust.";
+  const g = s.gamma_deg, gs = s.gamma_sigma_deg, cw = (Rr - 60) / nR, ch = (Bt - T) / 8;
+  R.detectors.forEach((d, i) => txt(grid, 54, T + (i + 0.6) * ch, d, { "text-anchor": "end" }));
+  for (let k = 0; k < nR; k++) for (let i = 0; i < 8; i++) {
+    const z = gs[k][i] > 0 ? g[k][i] / gs[k][i] : 0;
+    el("rect", { x: 60 + k * cw + 1, y: T + i * ch + 1, width: cw - 2, height: ch - 2, fill: divColor(z, 3) }, grid);
+  }
+  s.labels.forEach((lab, k) => txt(grid, 60 + (k + 0.5) * cw, Bt + 14, lab, { "text-anchor": "middle" }));
 }
 
 /* ---------- dust, receipts, methods ---------- */
@@ -497,6 +560,10 @@ function receipts() {
     differential: "exact recovery, blindness to β and sky EB, covariance calibrated over 40 Wishart skies",
     mk_core: "port matches the reference MK rows to 1e-14, exact α/β recovery, agreement with the network",
     persistence: "β₀ from PD₀ equals flood-fill counts; pins the PD₁ lower-bound behaviour",
+    spatial: "exact closure/stationarity χ² split, gauge invisibility, null calibration, blinded-null exactness",
+    simulator: "SED, PD model, β cancels in M0, A/B immunity to dust EB, Wishart moments, score recovery",
+    npe: "MADE autoregressive masks, normalisation, SBC detection, device log-densities recomputed",
+    accel: "bootstrap kernels, plus GPU (accepted) and NPU (rejected) Gram matrices recomputed in float64",
   };
   document.getElementById("receipt-body").innerHTML = Object.keys(what).map(s => {
     const r = RC[s]; if (!r) return `<tr><td class="n">${s}</td><td>${what[s]}</td><td>not run</td><td>–</td></tr>`;
@@ -511,7 +578,12 @@ function methods() {
     ["Masks", `The paper's masks are not public. Rebuilt from PLA products: union of 100–353 GHz point-source masks × a CO(2-1) cut set to reach f_sky = 0.92 (got ${f(mk.fsky["0"], 3)}); the second mask adds the GAL070 Galactic cut (got ${f(mk.fsky["30"], 3)}, paper 0.62).`],
     ["Spectra", `Masked spin-2 transforms with ducc0 (ℓ ≤ 1520), all 16×16 field cross-spectra, 72 bins of width 20 over 51 ≤ ℓ < 1491. Pseudo-C_ℓ divided by ⟨w²⟩ (${f(m0.fsky_w2, 3)} / ${f(m30.fsky_w2, 3)}); NaMaster, used by the paper, has no Windows build.`],
     ["Estimators", `Pair angles by reweighted least squares on D = tan 2Δα · S with Gaussian covariance; joint 28×28 covariance by linear propagation. Network: GLS with α_143A = 0. MK: numpy port of the reference likelihood, 4 dust-EB amplitudes, Fisher scoring. Beams: ${R.beam_source}.`],
-    ["Cross-covariance", `χ²_diff keeps Cov(network, MK) as the paper does, estimated from ${(m0.chi2_diff || {}).n_sims || 0} Wishart draws around the measured bandpowers with both estimators re-run on each draw.`],
+    ["Cross-covariance", `χ²_diff keeps Cov(network, MK) as the paper does, estimated from ${(m0.chi2_diff || {}).n_sims || 0} Wishart draws around the measured bandpowers with both estimators re-run on each draw.` +
+      (m0.bootstrap ? ` Draws ran on ${m0.bootstrap.backend}` +
+        (m0.bootstrap.float32_max_rel_err != null
+          ? `; the float32 Gram matrices matched float64 to ${m0.bootstrap.float32_max_rel_err.toExponential(1)} (limit ${m0.bootstrap.float32_tolerance.toExponential(0)})`
+          : "; no float32 step, so no precision check applies") +
+        `, and the run took ${Math.round(m0.bootstrap.seconds / 60)} min.` : "")],
     ["Known differences", `Pseudo-C_ℓ instead of NaMaster, rebuilt masks, Fisher-scoring point estimates instead of MCMC, a Monte Carlo pixel window. Differences from the paper's numbers are reported, not tuned away.`],
   ];
   document.getElementById("methods-body").innerHTML = blocks.map(([h, t]) => `<div class="panel"><h3>${h}</h3><p class="note">${t}</p></div>`).join("");
@@ -525,8 +597,8 @@ function syncButtons() {
 }
 document.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { state.mode = b.dataset.mode; save(); syncButtons(); drawK8(); }));
 document.querySelectorAll("[data-mask]").forEach(b => b.addEventListener("click", () => { state.mask = b.dataset.mask; state.edge = null; save(); syncButtons(); drawK8(); edgePanel(); }));
-function renderAll() { masthead(); ledger(); syncButtons(); drawK8(); edgePanel(); alphaPlot(); pairSelect(); closurePlot(); betaPlot(); persistence(); dust(); receipts(); methods(); }
+function renderAll() { masthead(); ledger(); syncButtons(); drawK8(); edgePanel(); alphaPlot(); pairSelect(); closurePlot(); spatialSection(); betaPlot(); persistence(); dust(); receipts(); methods(); }
 renderAll();
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { drawK8(); alphaPlot(); pairPlot(); closurePlot(); betaPlot(); });
-new MutationObserver(() => { drawK8(); alphaPlot(); pairPlot(); closurePlot(); betaPlot(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+new MutationObserver(() => { drawK8(); alphaPlot(); pairPlot(); closurePlot(); spatialSection(); betaPlot(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 </script>

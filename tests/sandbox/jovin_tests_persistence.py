@@ -3,7 +3,8 @@ from __future__ import annotations
 
 import numpy as np
 
-from solution import compute_cubical_persistent_homology_2d, evaluate_betti_and_euler, gnomonic_angles, lifetimes
+from solution import (compute_cubical_persistent_homology_2d, evaluate_betti_and_euler, gnomonic_angles, holm, lifetimes,
+                      mc_pvalue)
 
 
 def _components(mask: np.ndarray, conn8: bool = False) -> int:
@@ -85,3 +86,19 @@ def test_gnomonic_centre_and_extent():
     v = lambda t, p: np.array([np.sin(t) * np.cos(p), np.sin(t) * np.sin(p), np.cos(t)])
     d = np.arccos(np.clip(v(th[0, 0], ph[0, 0]) @ v(th[64, 64], ph[64, 64]), -1, 1))
     assert abs(d - np.arctan(np.sqrt(2) * np.tan(np.radians(10.0)))) < 1e-9
+
+
+def test_mc_pvalue_has_plus_one_correction_and_is_never_zero():
+    sims = np.arange(200, dtype=float)
+    assert mc_pvalue(sims, 1000.0) == 2 * 1 / 201          # beyond every sim: 2/(N+1), not 0
+    assert mc_pvalue(sims, 0.0) == 2 * 2 / 201             # one sim ties in the lower tail
+    assert mc_pvalue(sims, 99.5) == 1.0
+    rng = np.random.default_rng(3)
+    ps = [mc_pvalue(rng.standard_normal(199), rng.standard_normal()) for _ in range(2000)]
+    assert abs(np.mean(np.array(ps) <= 0.1) - 0.1) < 0.02  # calibrated under the null
+
+
+def test_holm_adjustment():
+    adj = holm([0.01, 0.04, 0.03, 0.5])
+    assert np.allclose(adj, [0.04, 0.09, 0.09, 0.5])
+    assert np.all(holm([0.2, 0.2]) == 0.4)

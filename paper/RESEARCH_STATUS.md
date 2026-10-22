@@ -12,7 +12,7 @@
 - A coherent **detector-node** offset is absorbed by fitted angles and cannot be detected by triangle closure. A fault on a **single pairwise measurement** generally can.
 - The new single-edge GLR scan implements well-established statistics with an empirical maximum-statistic threshold for familywise error. It is a **baseline diagnostic**, not a new cosmology estimator.
 - A deterministic **synthetic** experiment (4,000 independent calibration nulls; 4,000 null holdouts; 4,000 injected draws) has 5% held-out false-alarm fraction, 84% detection, and 81.5% simultaneous detection plus correct edge localization for one selected 4-sigma edge injection. These figures do **not** describe the Planck data, uncertainty across other covariances, or superiority over existing comparators.
-- Real-sky persistence analyses remain exploratory. The displayed old component-count p-values 0.01--0.03 were nominal and uncorrected for multiple tests, and the finite-simulation estimator was revised. **Do not reuse cached results as if they came from the revised code.**
+- Real-sky persistence remains exploratory. The current main-branch output uses 1,000 Gaussian nulls, +1-corrected two-sided tails and Holm control across 13 tests. The two smallest adjusted component-count p-values are about 0.078; this is **not** a corrected discovery. Noise anisotropy, foregrounds, masks and null-model adequacy remain incompletely validated.
 - The PD1 return value is a dual-based lower-bound proxy, not an independently established exact cubical-complex loop-persistence result. In the Planck patch analysis, only PD0 is used.
 - Sheaf cohomology, non-Gaussian primordial phase extraction, and new physical E/B curl invariants are **not implemented/validated scientific outputs of this codebase**.
 
@@ -24,7 +24,7 @@ The original README reports real-map Planck PR4 reproduction; this revision does
 
 1. Record map file hashes, exact processing masks, output commit, numerical environment, theory transfer and covariance estimation.
 2. Rerun the real-sky pipeline from source maps and compare the reproducible outputs to the original LKA paper without tuning masks on the result.
-3. Recalculate all persistence empirical probabilities using the corrected algorithm and enough simulations to bound tail Monte Carlo uncertainty. Validate nulls with foregrounds/noise and apply a preselected multiple-testing correction.
+3. Independently verify the current corrected persistence output and test Monte Carlo uncertainty under realistic anisotropic noise, foreground, mask and multiple-testing scenarios; the present 1,000 Gaussian simulations are not a sufficient physical-null validation.
 4. Compare the edge GLR with **equivalent** covariance-weighted GLS residual diagnostics, leave-one-edge-out fits, and robust/outlier methods. The GLR may be algebraically equivalent to well-known studentized residuals, so do not label it superior without a difference established by a blinded test.
 5. Preregister contamination classes, calibration metrics, confidence interval/reporting rules and independent held-out seeds before new performance claims.
 6. Obtain independent mathematical and experimental cosmology review, including numerical provenance and authorship attribution.
