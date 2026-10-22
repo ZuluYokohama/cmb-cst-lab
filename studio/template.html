@@ -123,7 +123,7 @@ footer { padding-top: 28px; font-size: 13px; color: var(--muted); display: grid;
   <section id="network">
     <div class="eyebrow">The network on K₈</div>
     <h2>Pair angles, their gradient part and what fails to close</h2>
-    <p>Each edge carries one measured angle difference Δα<sub>ij</sub> = α<sub>i</sub> − α<sub>j</sub>, read from the ratio of antisymmetric to symmetric cross-spectra. The common rotation (β and any shared offset) cancels. The gauge-fixed fit splits the 28 numbers into a gradient part (7 dimensions, one angle per map) and a remainder. With every triangle filled, H¹ = 0, so the remainder is pure curl: triangle closure failures, not hidden cohomology.</p>
+    <p>Each edge carries one measured angle difference Δα<sub>ij</sub> = α<sub>i</sub> − α<sub>j</sub>, read from the ratio of antisymmetric to symmetric cross-spectra. The common rotation (β and any shared offset) cancels. The gauge-fixed fit splits the 28 numbers into a gradient part (7 dimensions, one angle per map) and a remainder. With every triangle filled, H¹ = 0, so there is no harmonic part: the remainder is triangle-closure failure. The fit is weighted by the edge covariance C, so the remainder is a covariance-weighted coexact component (C⁻¹r ∈ im d₁ᵀ). This graph “curl” is a calibration diagnostic, unrelated to CMB B-modes.</p>
     <div class="bench">
       <div class="panel">
         <div class="controls">
@@ -181,7 +181,7 @@ footer { padding-top: 28px; font-size: 13px; color: var(--muted); display: grid;
     <div class="eyebrow">Topology of the real sky</div>
     <h2>Sublevel persistence at the Galactic caps and the Cold Spot</h2>
     <p id="pers-text"></p>
-    <div class="tablewrap"><table><thead><tr><th>Patch</th><th>Statistic</th><th>Planck 143 GHz</th><th>Gaussian sims</th><th>p (two-sided)</th></tr></thead><tbody id="pers-body"></tbody></table></div>
+    <div class="tablewrap"><table><thead><tr><th>Patch</th><th>Statistic</th><th>Planck 143 GHz</th><th>Gaussian sims</th><th>z</th><th>p</th><th>p (Holm)</th></tr></thead><tbody id="pers-body"></tbody></table></div>
   </section>
 
   <section id="dust">
@@ -266,9 +266,9 @@ function masthead() {
     `Eight public Planck PR4 polarization maps, all 28 cross-pairs, the paper's own estimator. ` +
     `The angle differences ${closes ? "close up to noise" : "do not close"} (χ² = ${f(net.chi2, 1)} for ${net.dof} dof, PTE ${f(net.pte, 2)}), and the per-map pattern ` +
     `${agrees ? "agrees with" : "disagrees with"} a Minami–Komatsu fit of the same maps (χ²_diff = ${f(cd.chi2, 2)} for ${cd.dof} dof, PTE ${f(cd.pte, 2)}). ` +
-    `With every triangle filled, H¹ = 0, so what the fit leaves over is pure curl, and it is noise-sized.`;
+    `With every triangle filled, H¹ = 0, so what the fit leaves over is weighted closure failure, and it is noise-sized.`;
   const items = [
-    { k: "Network closure", n: `${f(net.chi2, 1)}<small> / ${net.dof} dof</small>`, c: `PTE ${f(net.pte, 2)} · what curl remains is noise-sized` },
+    { k: "Network closure", n: `${f(net.chi2, 1)}<small> / ${net.dof} dof</small>`, c: `PTE ${f(net.pte, 2)} · closure residual is noise-sized` },
     { k: "Network vs MK pattern", n: `${f(cd.chi2, 2)}<small> / ${cd.dof} dof</small>`, c: `PTE ${f(cd.pte, 2)} · paper: ${C.paper.chi2_diff} / ${C.paper.dof}, PTE ${C.paper.pte}` },
     { k: "MK β, f<sub>sky</sub> 0.92", n: `${f(m0.mk.beta_deg, 2)}°<small> ± ${f(m0.mk.sigma_beta_deg, 2)}</small>`, c: `paper: ${C.paper.beta_mk[0]}° ± ${C.paper.beta_mk[1]}` },
     { k: "Pearson r, 28 pairs", n: f(m0.pearson_r_pairs, 3), c: `paper: ${C.paper.pearson_r} · descriptive only` },
@@ -334,7 +334,7 @@ function drawK8() {
     txt(svg, ox, oy + (Math.abs(ux) <= 0.3 ? uy * 6 : 0), det === "143A" ? "gauge 0" : `${sgn(a)}°±${f(s)}`, { "text-anchor": anchor });
   });
   const lg = document.getElementById("k8-legend");
-  const lab = { delta: "measured Δα", grad: "gradient d₀α", curl: "curl Δα − d₀α" }[state.mode];
+  const lab = { delta: "measured Δα", grad: "gradient d₀α", curl: "weighted closure residual Δα − d₀α" }[state.mode];
   lg.innerHTML = `<span><i class="sw" style="background:var(--neg)"></i>negative</span><span><i class="sw" style="background:var(--pos)"></i>positive</span>` +
     `<span>colour and width scale to |Δα| ≤ ${f(vmax)}° · showing ${lab}</span>` +
     ["100", "143", "217", "353"].map(q => `<span><i class="sw" style="background:var(--f${q})"></i>${q} GHz</span>`).join("");
@@ -475,13 +475,15 @@ function persistence() {
   const rows = [];
   for (const [patch, stats] of Object.entries(P.stats)) for (const [s, v] of Object.entries(stats))
     { const dg = s === "n0" ? 0 : 3;
-      rows.push(`<tr><td>${patch}</td><td>${nice[s]}</td><td class="n">${f(v.real, dg)}</td><td class="n">${f(v.sim_mean, dg)} ± ${f(v.sim_std, dg)}</td><td class="n">${f(v.p_two_sided, 2)}</td></tr>`); }
-  rows.push(`<tr><td>NGP − SGP</td><td>mean PD₀ lifetime</td><td class="n">${f(a.real, 3)}</td><td class="n">${f(a.sim_mean, 3)} ± ${f(a.sim_std, 3)}</td><td class="n">${f(a.p_two_sided, 2)}</td></tr>`);
+      rows.push(`<tr><td>${patch}</td><td>${nice[s]}</td><td class="n">${f(v.real, dg)}</td><td class="n">${f(v.sim_mean, dg)} ± ${f(v.sim_std, dg)}</td><td class="n">${sgn(v.z ?? 0, 2)}</td><td class="n">${f(v.p_two_sided, 3)}</td><td class="n">${f(v.p_holm, 2)}</td></tr>`); }
+  rows.push(`<tr><td>NGP − SGP</td><td>mean PD₀ lifetime</td><td class="n">${f(a.real, 3)}</td><td class="n">${f(a.sim_mean, 3)} ± ${f(a.sim_std, 3)}</td><td class="n">${sgn(a.z ?? 0, 2)}</td><td class="n">${f(a.p_two_sided, 3)}</td><td class="n">${f(a.p_holm, 2)}</td></tr>`);
   body.innerHTML = rows.join("");
   const n0p = Object.values(P.stats).map(s => s.n0.p_two_sided), allHigh = Object.values(P.stats).every(s => s.n0.real > s.n0.sim_mean);
+  const n0holm = Object.entries(P.stats).map(([k, s]) => [k, s.n0.p_holm]), sigHolm = n0holm.filter(([, p]) => p < 0.05);
   tx.textContent = `Sublevel persistence of the real ${P.map}, at three 20° patches, compared against ${P.n_sims} Gaussian skies drawn from the measured spectrum. ` +
     `The north–south difference in mean PD₀ lifetime is ${f(a.real, 3)} against a simulated spread of ±${f(a.sim_std, 3)} (p = ${f(a.p_two_sided, 2)}): no hemispherical asymmetry in this statistic. ` +
-    (allHigh ? `All three patches carry more PD₀ features than the simulations (p ≤ ${f(Math.max(...n0p), 2)}), by a similar margin at the poles and at the Cold Spot. A shared excess like this most likely comes from small-scale noise and point sources that isotropic Gaussian skies do not model, not from sky topology. ` : "") +
+    (allHigh ? `All three patches carry more PD₀ features than the simulations (raw p ≤ ${f(Math.max(...n0p), 3)}; after Holm correction over ${P.n_comparisons} comparisons, ` +
+      (sigHolm.length ? `${sigHolm.map(([k, p]) => `${k} (p = ${f(p, 3)})`).join(", ")} remain${sigHolm.length === 1 ? "s" : ""} significant at 0.05` : "none is significant at 0.05") + `). The shift has the same sign at the poles and at the Cold Spot, which points first to a simulation/data mismatch (anisotropic noise, foregrounds, pipeline) rather than sky topology. It stays unexplained until the validation track runs. ` : "") +
     `PD₁ is not used because its dual construction gives only lower bounds on loop lifetimes (pinned in the persistence suite).`;
 }
 
