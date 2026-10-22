@@ -43,18 +43,23 @@ def _dmat(ti, tj):
     return np.stack([np.stack([-d, -a], -1), np.stack([a, d], -1)], -2)
 
 
-def model_rows(alpha: np.ndarray, beta: float, a_sin4psi: float, pairs: list[tuple[int, int]]) -> tuple[np.ndarray, np.ndarray]:
-    """m (P, 2) acting on observed (EE, BB) and b (P, 2) acting on theory (EE, BB), one bin."""
+def model_rows(alpha: np.ndarray, beta: float, a_sin4psi, pairs: list[tuple[int, int]]) -> tuple[np.ndarray, np.ndarray]:
+    """m acting on observed (EE, BB) and b acting on theory (EE, BB).
+
+    A scalar `a_sin4psi` (one bin) gives shapes (P, 2); an array of per-bin values (nb,) gives
+    (nb, P, 2), so all bins are built in one batched pass.
+    """
     i = np.array([p[0] for p in pairs])
     j = np.array([p[1] for p in pairs])
     ti, tj = 2 * alpha[i], 2 * alpha[j]
-    f = a_sin4psi * np.array([[1.0, 0.0], [1.0, 0.0]])
-    lam_vec = _rvec(ti, tj) + _dvec(ti, tj) @ f
-    lam_mat = _rmat(ti, tj) + _dmat(ti, tj) @ f
-    m = -np.einsum("pk,pkl->pl", lam_vec, np.linalg.inv(lam_mat))
+    a = np.asarray(a_sin4psi, dtype=float)
+    f = a.reshape(-1, 1, 1) * np.array([[1.0, 0.0], [1.0, 0.0]])  # (nb, 2, 2)
+    lam_vec = _rvec(ti, tj)[None] + np.einsum("pk,bkl->bpl", _dvec(ti, tj), f)
+    lam_mat = _rmat(ti, tj)[None] + np.einsum("pkm,bml->bpkl", _dmat(ti, tj), f)
+    m = -np.einsum("bpk,bpkl->bpl", lam_vec, np.linalg.inv(lam_mat))
     tb_i, tb_j = ti + 2 * beta, tj + 2 * beta
-    b = _rvec(tb_i, tb_j) + np.einsum("pk,pkl->pl", m, _rmat(tb_i, tb_j))
-    return m, b
+    b = _rvec(tb_i, tb_j)[None] + np.einsum("bpk,pkl->bpl", m, _rmat(tb_i, tb_j))
+    return (m[0], b[0]) if a.ndim == 0 else (m, b)
 
 
 def observables(cl: np.ndarray, pairs: list[tuple[int, int]]) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -113,52 +118,45 @@ class MKLikelihood:
     def unpack(self, theta):
         return theta[: self.n], theta[self.n], theta[self.n + 1:]
 
-    def residuals(self, theta) -> tuple[list[np.ndarray], list[np.ndarray]]:
+    def residuals(self, theta, with_cov: bool = True) -> tuple[np.ndarray, np.ndarray | None]:
+        """v (nb, P) and, if asked, C (nb, P, P), all bins in one batched pass."""
         alpha, beta, amps = self.unpack(theta)
-        vs, cs = [], []
-        for b in range(self.nb):
-            a = amps[self.aidx[b]] * np.sin(4 * self.psi[b]) if self.n_a else 0.0
-            m, bt = model_rows(alpha, beta, a, self.pairs)
-            v = m[:, 0] * self.ee[b] + m[:, 1] * self.bb[b] + self.eb[b] - np.sum(bt * self.th[b], axis=1)
-            c = np.outer(m[:, 0], m[:, 0]) * self.s_ee[b] + np.outer(m[:, 1], m[:, 1]) * self.s_bb[b] + self.s_eb[b]
-            vs.append(v)
-            cs.append(c)
-        return vs, cs
+        a = amps[self.aidx] * np.sin(4 * self.psi) if self.n_a else np.zeros(self.nb)
+        m, bt = model_rows(alpha, beta, a, self.pairs)  # (nb, P, 2) each
+        v = m[..., 0] * self.ee + m[..., 1] * self.bb + self.eb - np.sum(bt * self.th, axis=-1)
+        if not with_cov:
+            return v, None
+        m0, m1 = m[..., 0], m[..., 1]
+        c = m0[:, :, None] * m0[:, None, :] * self.s_ee + m1[:, :, None] * m1[:, None, :] * self.s_bb + self.s_eb
+        return v, c
 
     def neg2lnl(self, theta) -> float:
-        vs, cs = self.residuals(theta)
-        out = 0.0
-        for v, c in zip(vs, cs):
-            out += float(v @ np.linalg.solve(c, v))
-            if self.ln_det:
-                out += float(np.linalg.slogdet(c)[1])
+        v, c = self.residuals(theta)
+        out = float(np.einsum("bp,bp->", v, np.linalg.solve(c, v[..., None])[..., 0]))
+        if self.ln_det:
+            out += float(np.sum(np.linalg.slogdet(c)[1]))
         return out
 
-    def fit(self, theta0=None, free=None, n_iter: int = 20, h: float = 1e-6, tol: float = 1e-10) -> dict[str, object]:
+    def fit(self, theta0=None, free=None, n_iter: int = 30, h: float = 1e-6, tol: float = 1e-9) -> dict[str, object]:
         """Fisher scoring: linearise v in theta with C held at the current point, step, repeat.
 
         `free` lists the parameter indices to fit (default all); the rest stay at theta0. With
         beta fixed at 0 and no dust term, the fitted alphas are total angles theta_m = alpha_m + beta.
+        `tol` (radians, 1e-9 = 6e-8 deg) sits above the finite-difference Jacobian's resolution.
         """
         k = self.n + 1 + self.n_a
         theta = np.zeros(k) if theta0 is None else np.array(theta0, dtype=float)
         free = np.arange(k) if free is None else np.asarray(free)
         for it in range(n_iter):
-            vs, cs = self.residuals(theta)
-            jac = []
-            for p in free:
+            v, c = self.residuals(theta)
+            jac = np.empty(v.shape + (len(free),))  # (nb, P, nf)
+            for q, p in enumerate(free):
                 tp = theta.copy()
                 tp[p] += h
-                vp, _ = self.residuals(tp)
-                jac.append([(a - b) / h for a, b in zip(vp, vs)])
-            nf = len(free)
-            fisher = np.zeros((nf, nf))
-            grad = np.zeros(nf)
-            for b in range(self.nb):
-                jb = np.stack([jac[p][b] for p in range(nf)], axis=1)  # (P, nf)
-                cinv_j = np.linalg.solve(cs[b], jb)
-                fisher += jb.T @ cinv_j
-                grad += cinv_j.T @ vs[b]
+                jac[..., q] = (self.residuals(tp, with_cov=False)[0] - v) / h
+            cinv_j = np.linalg.solve(c, jac)
+            fisher = np.einsum("bpk,bpl->kl", jac, cinv_j)
+            grad = np.einsum("bpk,bp->k", cinv_j, v)
             step = -np.linalg.solve(fisher, grad)
             theta[free] = theta[free] + step
             if np.max(np.abs(step)) < tol:
@@ -168,7 +166,8 @@ class MKLikelihood:
         alpha, beta, amps = self.unpack(theta)
         return {"theta": theta, "cov": cov, "alpha": alpha, "beta": beta, "A": amps,
                 "cov_alpha": cov[: self.n, : self.n], "sigma_beta": float(np.sqrt(cov[self.n, self.n])),
-                "neg2lnl": self.neg2lnl(theta), "iterations": it + 1}
+                "neg2lnl": self.neg2lnl(theta), "iterations": it + 1,
+                "converged": bool(np.max(np.abs(step)) < tol)}
 
 
 def anchored_beta(theta: np.ndarray, cov_theta: np.ndarray, anchor: np.ndarray, cov_anchor: np.ndarray,

@@ -107,6 +107,25 @@ def test_port_matches_reference_rows():
             assert np.allclose(m[k], rm, atol=1e-14) and np.allclose(b[k], rb, atol=1e-14)
 
 
+def test_batched_likelihood_equals_per_bin_loop():
+    # The batched residuals/covariance/-2lnL must equal a plain per-bin loop over scalar model_rows
+    cl, nu, th_ee, th_bb = _binned(lmax=571)
+    psi = 0.2 * np.sin(np.arange(cl.shape[0]) / 4.0)
+    lk = MKLikelihood(cl, nu, th_ee, th_bb, psi=psi, n_a=4)
+    rng = np.random.default_rng(9)
+    theta = np.r_[ALPHA + rng.normal(0, 0.1 * DEG, N), BETA, rng.normal(0, 0.05, 4)]
+    v, c = lk.residuals(theta)
+    alpha, beta, amps = lk.unpack(theta)
+    ref = 0.0
+    for b in range(lk.nb):
+        m, bt = model_rows(alpha, beta, amps[lk.aidx[b]] * np.sin(4 * psi[b]), lk.pairs)
+        vb = m[:, 0] * lk.ee[b] + m[:, 1] * lk.bb[b] + lk.eb[b] - np.sum(bt * lk.th[b], axis=1)
+        cb = np.outer(m[:, 0], m[:, 0]) * lk.s_ee[b] + np.outer(m[:, 1], m[:, 1]) * lk.s_bb[b] + lk.s_eb[b]
+        assert np.allclose(v[b], vb, rtol=1e-12, atol=1e-15) and np.allclose(c[b], cb, rtol=1e-12, atol=1e-18)
+        ref += float(vb @ np.linalg.solve(cb, vb)) + float(np.linalg.slogdet(cb)[1])
+    assert abs(lk.neg2lnl(theta) - ref) < 1e-9 * max(1.0, abs(ref))
+
+
 def test_small_angle_limit():
     # EB_o = 2 a_j EE - 2 a_i BB + 2 beta (EE - BB)_th  to first order
     alpha = np.array([1e-4, -2e-4, 0, 0, 0, 0, 0, 0])

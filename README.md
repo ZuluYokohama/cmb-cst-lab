@@ -35,8 +35,8 @@ comparison.
 | Sky fraction (masks "0" / "30") | 0.920 / 0.600 | 0.92 / 0.62 |
 | Network residual χ² (21 dof), f_sky 0.92 | 28.8, PTE 0.12 | not reported |
 | Network residual χ² (21 dof), f_sky 0.62 | 30.7, PTE 0.08 | not reported |
-| Network vs MK, χ²_diff (7 dof) | 3.27, PTE 0.86 | 8.18, PTE 0.32 |
-| Largest per-map pull | 143B +0.78 | 143B +1.8 |
+| Network vs MK, χ²_diff (7 dof) | 3.32, PTE 0.85 | 8.18, PTE 0.32 |
+| Largest per-map pull | 143B +0.70 | 143B +1.8 |
 | Pearson r over 28 pair angles | 0.984 | 0.98 |
 | MK β, f_sky 0.92 | 0.25° ± 0.23° | 0.37° ± 0.11° |
 | Anchored β, f_sky 0.92 | 0.24° ± 0.23° | 0.37° ± 0.12° |
@@ -69,10 +69,10 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 <!-- RECEIPTS:START -->
 | Suite | Result | Receipt |
 |---|---|---|
-| `network` | pass 11/11 | `20261022T162235Z-2682b8ed3d8e` |
-| `differential` | pass 7/7 | `20261022T162238Z-56a6af847c12` |
-| `mk_core` | pass 7/7 | `20261022T162240Z-d35036cacbf4` |
-| `persistence` | pass 6/6 | `20261022T162243Z-47da1c40da3c` |
+| `network` | pass 11/11 | `20261022T165352Z-58032115e582` |
+| `differential` | pass 7/7 | `20261022T165355Z-8e1e4659ec22` |
+| `mk_core` | pass 8/8 | `20261022T165358Z-e815e0ea05f6` |
+| `persistence` | pass 6/6 | `20261022T165400Z-1a5c5de91484` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).
@@ -84,11 +84,31 @@ plus a common β are applied in map space, and the pipeline recovers them. Over 
 the network χ² averages 19.4 for 21 dof. The Gaussian errors are unbiased and about 10%
 conservative under a cut sky.
 
+## Hardware acceleration
+
+The bootstrap behind χ²_diff draws 2,000 Wishart samples of the bandpowers and refits both
+estimators on each one. Two changes make that practical on a laptop:
+
+- **GPU draws (`src/cmbcst/accel.py`).** On an Intel Arc GPU (PyTorch XPU; developed on an Arc
+  140V) the normals Z and the Gram matrices ZZᵀ/ν, a 16 × ~5·10⁴ product per bin, are formed in
+  float32, because Xe2 has no fast float64. The 16 × 16 transform L·(ZZᵀ/ν)·Lᵀ stays in float64
+  on the CPU. Each run first recomputes a batch from the same normals in float64 and stops if the
+  float32 result differs by more than 10⁻⁵ relative (measured: ~3·10⁻⁶). Without an XPU device
+  the same draws run in numpy.
+- **Batched likelihood (float64, CPU).** The MK likelihood evaluates all 72 bins in one batched
+  pass instead of a per-bin loop. It is about 10× faster, equal to the loop to 1e-12 (sandbox
+  suite `mk_core`), and the fit reproduces the previous one to 2·10⁻¹⁰ degrees.
+
+Measured per draw: 41 ms on the Arc GPU against 414 ms in numpy, and 0.2 s per MK fit against
+~2 s before. The likelihoods stay in float64 throughout; only the Gram products use the GPU.
+The NPU is not used: it accelerates quantized neural-network inference, and this analysis has none.
+
 ## Reproduce
 
 ```bash
 python -m venv .venv
 .venv/Scripts/python -m pip install -e ".[dev]"
+.venv/Scripts/python -m pip install torch --index-url https://download.pytorch.org/whl/xpu   # optional, Intel Arc GPU
 .venv/Scripts/python -m cmbcst.data                 # ~17 GB: 8 NPIPE maps, 3 PLA products, beam tarball
 .venv/Scripts/python scripts/run_reproduction.py    # masks -> alms -> spectra -> transfer -> analyse -> persistence
 .venv/Scripts/python scripts/build_studio.py        # studio/index.html + README tables
@@ -117,7 +137,8 @@ NaMaster are not needed.
   ΛCDM term. Fisher scoring gives the point estimate and covariance; a profile-likelihood scan
   over β confirms σ.
 - **χ²_diff:** the network and MK patterns on the 7-dimensional differential subspace, keeping
-  their cross-covariance from 200 Wishart draws of the bandpowers.
+  their cross-covariance from 2,000 Wishart draws of the bandpowers (drawn on the GPU when one
+  is available; see *Hardware acceleration*).
 - **Persistence:** 20° patches of the 143 GHz (A+B)/2 temperature map at the Galactic caps and the
   Cold Spot, PD₀ statistics, and 200 Gaussian skies from the measured spectrum.
 
@@ -140,7 +161,7 @@ NaMaster are not needed.
 ```
 src/cmbcst/      network.py (cochain complex, GLS, closures), differential.py (pair angles),
                  mk_likelihood.py (MK port), spectra.py (ducc0 SHTs), masks.py, beams.py,
-                 theory.py (CAMB, pixel window), persistence.py, data.py
+                 theory.py (CAMB, pixel window), persistence.py, accel.py (GPU bootstrap), data.py
 scripts/         run_reproduction.py, build_studio.py, jovin_verify.py
 tests/           pytest (local) and tests/sandbox (JoVin suites)
 studio/          template.html -> index.html
