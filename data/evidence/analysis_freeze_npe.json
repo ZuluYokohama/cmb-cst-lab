@@ -1,0 +1,31 @@
+{
+  "frozen_utc": "2026-10-22T20:48:24.083653+00:00",
+  "git_head_at_freeze": "e65de71b4c66138a57ebe5a7f17ebbc443fccb43",
+  "sha256": {
+    "src/cmbcst/simulator.py": "2a5d03131bdc27082945052dcaf60e62bd93667b2a20c1d02e88c19d487e7c45",
+    "src/cmbcst/npe.py": "a3a68a945222f90bba4137407ec0714842a2575ecd1e1412ba526f666a7aafa1",
+    "src/cmbcst/npe_torch.py": "eea7ba540d2d2ab09e6903eb616c05d47d292a9183a936ae631e97ed6dc46371",
+    "scripts/run_npe.py": "d613b47bee39158a816c8aa4ca59bba46542e85a89e24da16bde1c1b724489a1",
+    "data/work/npe/maf_0.npz": "3ac4ad273a933a13015483517c13c6d0a202b8f4c19f3ce8886843a0159d7c52",
+    "data/work/npe/maf_1.npz": "738c3a2d299d49c68a5828d49375cb4cc69b3f8d15fc130bceb144a14dd9c066",
+    "data/work/npe/maf_2.npz": "afa628008400b434017800cbad32859fca9bccd7007b17295cfb3e727b1799d7",
+    "data/work/npe/maf_3.npz": "0fed7d9c6d3ae912230b92f552be7c810768dc6922f265ac5b92b778f2ccb9cb",
+    "data/work/npe/maf_4.npz": "68a1756326f04bb5d49a29772ad3eea9318ef02a3c893bca342e3ef761136ca7",
+    "data/work/npe/fixed.npz": "7078103f6f2a0882abd23b9359768c2f139dafa015609f1caf57bf413296e4f9",
+    "data/work/npe/standardisers.npz": "30bb87e1de1e88bc2162835224ac6a30fa74bbc262248ff9520eabdd4fea21d5",
+    "data/work/npe/train_info.json": "a3315ba4ad5af67ebbe8cec204664d12bfd3e967ca384618bc06f77d5d0dd086",
+    "data/work/spectra_m0.npz": "8314223897be5c59bc98ff5c79fb5f2185e6b8ce965829c01718d300d44f28c7",
+    "results/reproduction.json": "89d4dd7d64a76bc3862a1094002cee4687ef4369e108a6f5903cea30f9e7fda9",
+    "results/npe_validation.json": "38978fbceed9a3810f79dc0d8fe2679e3153cc2661bc7aa88e57babcaca608e5"
+  },
+  "target": [
+    "beta",
+    "psi0",
+    "n_psi",
+    "psi1",
+    "A_d",
+    "beta_d"
+  ],
+  "report": "beta - psi0 (identifiable combination) and beta: posterior median, 68/95% intervals from the 5-member ensemble; beta also under psi0 priors N(0, 0.5/1/2 deg) by importance reweighting",
+  "validation_file": "results/npe_validation.json"
+}
