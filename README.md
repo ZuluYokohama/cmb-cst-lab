@@ -30,9 +30,12 @@ verification receipts. Open it in a browser.
    about ψ₀, β returns the prior (see the results table and `results/npe.json`).
 4. **Persistence on the real sky (exploratory).** No Galactic-cap asymmetry or lifetime anomaly
    appears. However, the PD₀ feature count is high in all three patches (NGP, SGP, Cold Spot)
-   relative to the current Gaussian simulations. A shared offset like that points first to a
-   simulation/data mismatch (noise anisotropy, foregrounds, pipeline), and it is unexplained
-   until the validation track runs; see `results/persistence.json`.
+   relative to Gaussian simulations, and adding Planck's anisotropic noise does not change that.
+   Against phase-randomized surrogates of the real map (same harmonic amplitudes, random phases)
+   the caps are typical, so the excess comes from the map's spectral shape, not its phase
+   structure. The Cold Spot patch has fewer features than every surrogate (Holm p ≈ 0.07, at the
+   resolution floor of 1,000 surrogates), as expected for a coherent known anomaly. See
+   `results/persistence.json` and `results/persistence_validation.json`.
 
 ## Results
 
@@ -57,8 +60,9 @@ comparison.
 | Same-frequency A/B edges across regions, 12 equal-area regions (primary) | χ² 45.8 / 44, PTE 0.397 | new (not in paper) |
 | Spatial stationarity of the calibration pattern, 8 latitude bands (robustness) | χ² 67.9 / 49, PTE 0.04 | new (not in paper) |
 | Same-frequency A/B edges across regions, 8 latitude bands (robustness) | χ² 49.0 / 28, PTE 0.008 | new (not in paper) |
-| β − ψ₀ (identifiable), neural posterior, agnostic dust EB | -0.13° (68%: -0.37 … +0.13) | new (not in paper) |
-| β with no assumption on dust misalignment | -0.00° (68%: -0.88 … +0.91), prior-limited | new (not in paper) |
+| β − ψ₀ (identifiable), neural posterior, agnostic dust EB | -0.09° (68%: -0.37 … +0.20) | new (not in paper) |
+| β given a dust-misalignment prior ψ₀ ~ N(0, 0.5°), neural posterior | -0.07° (68%: -0.60 … +0.48) | new (not in paper) |
+| β with no assumption on dust misalignment | -0.01° (68%: -0.84 … +0.83), prior-limited | new (not in paper) |
 | Dust EE/BB, ℓ < 300 (ΛCDM-subtracted) 143/217/353 | 1.41 / 1.40 / 1.40 | 1.41 / 1.37 / 1.42 |
 
 Per-map angles (network, gauge α_143A = 0, f_sky 0.92):
@@ -92,8 +96,8 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `persistence` | pass 8/8 | `20261022T182619Z-703f2a4eadd6` |
 | `accel` | pass 10/10 | `20261022T172121Z-5cd7a09a18e0` |
 | `spatial` | pass 10/10 | `20261022T202537Z-066b960ada38` |
-| `simulator` | pass 8/8 | `20261022T204610Z-c3fe16ae3a78` |
-| `npe` | pass 6/6 | `20261022T204703Z-e4e6aa7bd505` |
+| `simulator` | pass 9/9 | `20261022T214914Z-3c4a576e585d` |
+| `npe` | pass 7/7 | `20261022T214916Z-c3e848b7da18` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).
