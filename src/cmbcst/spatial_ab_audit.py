@@ -38,7 +38,9 @@ def same_frequency_joint_gls(deltas: np.ndarray, covs: np.ndarray,
     sub = covs[:, edges][:, :, edges]
     if not np.all(np.isfinite(sub)) or not np.all(np.isfinite(deltas[:, edges])):
         raise ValueError("Non-finite values")
-    if not np.allclose(sub, sub.transpose(0, 2, 1), rtol=1e-10, atol=1e-10):
+    # symmetry relative to each region's covariance scale (a fixed atol accepts tiny asymmetric matrices)
+    scale = np.max(np.abs(sub), axis=(1, 2))
+    if np.any(scale <= 0) or np.any(np.max(np.abs(sub - sub.transpose(0, 2, 1)), axis=(1, 2)) > 1e-10 * scale):
         raise ValueError("Covariance must be symmetric")
     try:
         inv = np.linalg.solve(sub, np.broadcast_to(np.eye(len(edges)), sub.shape))

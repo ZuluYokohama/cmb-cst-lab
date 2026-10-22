@@ -78,3 +78,9 @@ def test_rejects_invalid_covariance_and_duplicate_selection():
     cov[:, 2, 2] = -1
     with pytest.raises(ValueError):
         same_frequency_joint_gls(data, cov, [2, 3])
+
+
+def test_rejects_asymmetry_at_small_covariance_scale():
+    cov = np.array([[[1e-12, 5e-11], [0.0, 1e-12]]] * 2)
+    with pytest.raises(ValueError):
+        same_frequency_joint_gls(np.array([[1.0, 1.0], [-1.0, -1.0]]), cov, [0, 1])

@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import io
 import json
 from pathlib import Path
 import sys
@@ -49,8 +50,9 @@ def scheme_audit(scheme: str, expected: dict) -> dict:
     hashes = {str(meta_file.relative_to(REPO)): sha256_file(meta_file)}
     for i, label in enumerate(meta["labels"]):
         file = WORK / f"{scheme}_{i:02d}.npz"
-        hashes[str(file.relative_to(REPO))] = sha256_file(file)
-        with np.load(file, allow_pickle=False) as bundle:
+        blob = file.read_bytes()                       # hash and load the same bytes
+        hashes[str(file.relative_to(REPO))] = hashlib.sha256(blob).hexdigest()
+        with np.load(io.BytesIO(blob), allow_pickle=False) as bundle:
             pa = pair_angles(bundle["cl"], bundle["nu"], ed)
         delta_list.append(pa["delta"] / DEG)
         covariance_list.append(pa["cov"] / DEG**2)
