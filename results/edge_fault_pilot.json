@@ -1,0 +1,24 @@
+{
+  "status": "exploratory synthetic pilot, not observational or preregistered",
+  "seed": 20261022,
+  "n_maps": 8,
+  "n_edges": 28,
+  "null_calibration_seed": 23,
+  "null_holdout_seed": 24,
+  "n_calibration": 4000,
+  "n_holdout_null": 4000,
+  "n_injected": 4000,
+  "injected_edge_zero_based": 9,
+  "injected_edge_vertices": [
+    1,
+    4
+  ],
+  "amplitude_in_profile_sigma": 4,
+  "nominal_familywise_alpha": 0.05,
+  "calibrated_max_glrt_threshold": 9.434338831421858,
+  "heldout_null_fwer": 0.05,
+  "injected_detection_power": 0.84,
+  "correct_localization_unconditional": 0.92675,
+  "joint_detection_correct_localization": 0.815,
+  "first_injection_empirical_p": 0.00024993751562109475
+}
