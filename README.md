@@ -33,8 +33,8 @@ verification receipts. Open it in a browser.
    relative to Gaussian simulations (z ≈ +2.2 to +2.9). Adding Planck's anisotropic noise does
    not remove it, and neither do phase-randomized surrogates of the masked map, which keep its
    exact harmonic amplitudes (z ≈ +3.0 to +3.7). The best Holm-adjusted p is 0.07, the floor
-   for 1,000 simulations. So it is neither noise anisotropy nor spectral shape. The leading
-   candidate is compact sources and clusters inside the patches, which no null contains. It
+   for 1,000 simulations. None of these nulls reproduces the excess, though none is excluded at
+   that significance. The leading candidate is compact sources and clusters inside the patches, which no null contains. It
    stays unexplained, and no cosmological claim is made. See `results/persistence.json` and
    `results/persistence_validation.json`.
 

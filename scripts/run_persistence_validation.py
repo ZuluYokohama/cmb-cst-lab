@@ -132,7 +132,9 @@ def main(argv: list[str]) -> int:
                 v = np.array([x[patch][st] for x in sims])
                 r = real[patch][st]
                 rec[patch][st] = {"real": r, "sim_mean": float(v.mean()), "sim_std": float(v.std()),
-                                  "z": float((r - v.mean()) / v.std()), "p": persistence.mc_pvalue(v, r)}
+                                  # z undefined (None) when every simulation gives the same value
+                                  "z": float((r - v.mean()) / v.std()) if v.std() > 0 else None,
+                                  "p": persistence.mc_pvalue(v, r)}
                 flat.append((null, patch, st))
         out["nulls"][null] = rec
     adj = persistence.holm([out["nulls"][n][p][s]["p"] for n, p, s in flat])

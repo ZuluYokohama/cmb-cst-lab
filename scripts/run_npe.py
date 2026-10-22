@@ -391,19 +391,20 @@ def stage_fisher() -> None:
         c = np.linalg.inv(fis[np.ix_(free, free)])
         return float(np.sqrt(c[free.index(8), free.index(8)]))
 
-    c = np.linalg.inv(fis)
-    d = np.sqrt(np.diag(c))
+    sing, cond, vec = singular(fis)
     out = {"fiducial": FIDUCIAL().tolist(), "params": list(simulator.PARAMS),
            "sigma_beta_deg": {"no_dust_eb": sig_beta([p for p in allp if p not in (9, 10, 11)]),
                               "M1_constant_psi": sig_beta([p for p in allp if p not in (10, 11)]),
                               "full": sig_beta(allp)},
-           "corr_beta_psi0": float(c[8, 9] / (d[8] * d[9]))}
-    sing, cond, vec = singular(fis)
+           "corr_beta_psi0": None}
+    if not sing:                       # a singular matrix has no finite covariance to correlate
+        c = np.linalg.inv(fis)
+        out["corr_beta_psi0"] = float(c[8, 9] / np.sqrt(c[8, 8] * c[9, 9]))
     out["full_fisher_singular"] = bool(sing)
     out["full_min_relative_eigenvalue"] = cond
     out["null_direction"] = {n: round(float(x), 4) for n, x in zip(simulator.PARAMS, vec)}
     (RESULTS / "npe_fisher.json").write_text(json.dumps(out, indent=2))
-    log(f"fisher: {out['sigma_beta_deg']}, corr(beta, psi0) {out['corr_beta_psi0']:.3f}")
+    log(f"fisher: {out['sigma_beta_deg']}, corr(beta, psi0) {out['corr_beta_psi0']}, singular {sing}")
 
 
 def _sha(path: Path) -> str:

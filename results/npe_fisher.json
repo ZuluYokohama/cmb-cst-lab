@@ -36,7 +36,7 @@
     "M1_constant_psi": null,
     "full": null
   },
-  "corr_beta_psi0": 0.9999999999947712,
+  "corr_beta_psi0": null,
   "full_fisher_singular": true,
   "full_min_relative_eigenvalue": 3.767813709108522e-15,
   "null_direction": {
