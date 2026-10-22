@@ -43,6 +43,14 @@ def cases() -> list[dict]:
     return out
 
 
+def previous_attestation() -> dict | None:
+    text = TESTS.read_text(encoding="utf-8")
+    block = text.split("# ATTESTATION:START", 1)[1].split("# ATTESTATION:END", 1)[0]
+    ns: dict = {"json": json}
+    exec(block, ns)
+    return ns.get("ATTESTATION")
+
+
 def run_xpu(z: np.ndarray) -> tuple[np.ndarray, str]:
     import torch
 
@@ -85,6 +93,10 @@ def main() -> int:
 
     att = {"generated_utc": datetime.now(timezone.utc).isoformat(), "rel_tol": accel.REL_TOL, "nf": NF,
            "cases": cases(), "devices": {}}
+    # Keep records of devices not present on this machine, if they were measured on the same cases
+    prev = previous_attestation()
+    if prev and prev.get("cases") == att["cases"] and prev.get("nf") == NF:
+        att["devices"].update({k: v for k, v in prev["devices"].items() if k not in devices})
     for name, fn in devices.items():
         rec = {"label": None, "grams": [], "max_rel_err": 0.0, "error": None}
         try:

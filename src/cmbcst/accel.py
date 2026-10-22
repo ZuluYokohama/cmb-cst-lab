@@ -45,8 +45,16 @@ def gram64(z: np.ndarray) -> np.ndarray:
 
 
 def max_rel_err(g: np.ndarray, ref: np.ndarray) -> float:
-    """max |g - ref| / max |ref|, the accelerated-path acceptance metric."""
-    return float(np.max(np.abs(np.asarray(g, dtype=np.float64) - ref)) / np.max(np.abs(ref)))
+    """max |g - ref| / max |ref|, the accelerated-path acceptance metric.
+
+    Non-finite device output (NaN/inf) returns inf, so it can never pass a REL_TOL gate (a NaN
+    would otherwise vanish inside max()).
+    """
+    g = np.asarray(g, dtype=np.float64)
+    if not np.all(np.isfinite(g)):
+        return float("inf")
+    err = float(np.max(np.abs(g - ref)) / np.max(np.abs(ref)))
+    return err if np.isfinite(err) else float("inf")
 
 
 def counter_normals(seed: int, nf: int, dof: int) -> np.ndarray:
