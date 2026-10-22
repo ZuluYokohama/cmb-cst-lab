@@ -85,7 +85,7 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `mk_core` | pass 8/8 | `20261022T171106Z-676f9cad61b0` |
 | `persistence` | pass 8/8 | `20261022T182619Z-703f2a4eadd6` |
 | `accel` | pass 10/10 | `20261022T172121Z-5cd7a09a18e0` |
-| `spatial` | pass 8/8 | `20261022T174604Z-cea3f175e138` |
+| `spatial` | pass 10/10 | `20261022T202537Z-066b960ada38` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).
