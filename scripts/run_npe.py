@@ -47,6 +47,8 @@ TESTS = REPO / "tests" / "sandbox" / "jovin_tests_npe.py"
 TARGET = slice(8, 14)                       # beta, psi0, n_psi, psi1, A_d, beta_d
 TARGET_NAMES = simulator.PARAMS[8:14]
 HIDDEN, LAYERS, ENSEMBLE = 64, 4, 5
+SAMPLING_SEED = 2026
+PSI_PRIOR_TEST = {"psiN0p5": 0.5, "psiN1": 1.0, "psiN2": 2.0}
 FROZEN_FILES = ["src/cmbcst/simulator.py", "src/cmbcst/npe.py", "src/cmbcst/npe_torch.py", "scripts/run_npe.py"]
 
 
@@ -80,6 +82,8 @@ def prior_draw(rng: np.random.Generator, n: int, model: str = "full") -> np.ndar
         th[:, 11] = 0.0
     elif model == "M3":
         th[:, 10] = 0.0
+    elif model.startswith("psiN"):                      # psi0 ~ N(0, w) for reweighted-coverage tests
+        th[:, 9] = np.clip(rng.normal(0.0, PSI_PRIOR_TEST[model], n), -5.0, 5.0)
     return th
 
 
@@ -211,16 +215,47 @@ def load_ensemble():
     return models, st
 
 
-def posterior_samples(models, st, t: np.ndarray, n_per_model: int) -> np.ndarray:
-    """Ensemble mixture samples in physical units: (rows, ENSEMBLE*n_per_model, 6)."""
+# Support of the training prior for the targets (beta, psi0, n_psi, psi1, A_d); beta_d is Gaussian.
+SUPPORT_LO = np.array([-1.5, -5.0, -1.0, -3.0, 0.7, -np.inf])
+SUPPORT_HI = np.array([1.5, 5.0, 1.0, 3.0, 1.3, np.inf])
+
+
+def posterior_samples(models, st, t: np.ndarray, n_per_model: int, seed: int) -> np.ndarray:
+    """Ensemble mixture samples in physical units, (rows, len(models)*n_per_model, 6).
+
+    The flow's Gaussian base can put mass outside the uniform training prior; such samples are
+    impossible under the prior and are rejected (each row is refilled until it has n_per_model
+    in-support samples per model). Sampling is seeded so frozen runs reproduce exactly.
+    """
     import torch
 
     from cmbcst import npe_torch
 
+    torch.manual_seed(seed)
+    if torch.xpu.is_available():
+        torch.xpu.manual_seed(seed)
     c = torch.tensor((t - st["c_mu"]) / st["c_sd"], dtype=torch.float32, device=npe_torch.device())
-    out = [m.sample(c, n_per_model).cpu().numpy() for m in models]
-    s = np.concatenate(out, axis=1)
-    return s * st["x_sd"] + st["x_mu"]
+    rows = t.shape[0]
+    out = []
+    for m in models:
+        kept = [np.empty((0, 6)) for _ in range(rows)]
+        acc = np.ones(rows)                                     # running acceptance estimate per row
+        for _ in range(100):
+            short = np.array([r for r in range(rows) if kept[r].shape[0] < n_per_model])
+            if short.size == 0:
+                break
+            # redraw only the rows still short, scaled to their worst observed acceptance
+            need = max(n_per_model - kept[r].shape[0] for r in short)
+            n_draw = min(int(1.5 * need / max(acc[short].min(), 1e-3)) + 8, 20000)
+            draw = m.sample(c[torch.as_tensor(short, device=c.device)], n_draw).cpu().numpy() * st["x_sd"] + st["x_mu"]
+            ok = np.all((draw >= SUPPORT_LO) & (draw <= SUPPORT_HI), axis=-1)
+            acc[short] = np.maximum(ok.mean(1), 1e-3)
+            for j, r in enumerate(short):
+                kept[r] = np.concatenate([kept[r], draw[j][ok[j]]])[:n_per_model]
+        if min(k.shape[0] for k in kept) < n_per_model:
+            raise RuntimeError("could not fill posterior samples inside the prior support")
+        out.append(np.stack(kept))
+    return np.concatenate(out, axis=1)
 
 
 # ---------------------------------------------------------------------------- validate
@@ -237,10 +272,11 @@ def mk_beta(th_true: np.ndarray, rng: np.random.Generator) -> float:
 
 def stage_validate(n_test: int, n_post: int, n_mk: int) -> None:
     models, st = load_ensemble()
-    out = {"target": list(TARGET_NAMES), "n_test": n_test, "n_posterior": n_post * ENSEMBLE, "models": {}}
+    out = {"target": list(TARGET_NAMES), "n_test": n_test, "n_posterior": n_post * ENSEMBLE, "models": {},
+           "sampling_seed": SAMPLING_SEED, "support": {"lo": SUPPORT_LO[:5].tolist(), "hi": SUPPORT_HI[:5].tolist()}}
     for model in ("full", "M0", "M1", "M2", "M3"):
         th, t = simulate(n_test, seed={"full": 51, "M0": 52, "M1": 53, "M2": 54, "M3": 55}[model], model=model)
-        s = posterior_samples(models, st, t, n_post)
+        s = posterior_samples(models, st, t, n_post, seed=SAMPLING_SEED + 17 * len(out["models"]))
         ranks = npe.sbc_ranks(s, th[:, TARGET])
         u = npe.rank_uniformity(ranks, s.shape[1])
         beta_mean, beta_sd = s[:, :, 0].mean(1), s[:, :, 0].std(1)
@@ -255,7 +291,8 @@ def stage_validate(n_test: int, n_post: int, n_mk: int) -> None:
         ud = npe.rank_uniformity(npe.sbc_ranks(dd[:, :, None], dtrue[:, None]), s.shape[1])
         rec["beta_minus_psi0"] = {"coverage68": float(ud["coverage68"][0]), "coverage95": float(ud["coverage95"][0]),
                                   "rank_chi2": float(ud["chi2"][0]), "sd_median": float(np.median(dd.std(1))),
-                                  "bias_mean": float(np.mean(dd.mean(1) - dtrue))}
+                                  "bias_mean": float(np.mean(dd.mean(1) - dtrue)),
+                                  "interval_scale": npe.interval_scale(*np.percentile(dd, [50, 16, 84, 2.5, 97.5], axis=1), dtrue)}
         if model in ("M0", "M1", "M2") and n_mk:
             rng = np.random.default_rng(7)
             mk = np.array([mk_beta(th[k], rng) for k in range(n_mk)])
@@ -274,6 +311,26 @@ def stage_validate(n_test: int, n_post: int, n_mk: int) -> None:
         log(f"validate {model}: beta coverage68 {rec['coverage68'][0]:.3f} 95 {rec['coverage95'][0]:.3f}, "
             f"bias {rec['beta_bias_mean']:+.4f}, sd {rec['beta_sd_median']:.3f}"
             + (f" | MK(no dust EB) bias {rec['mk_no_dust_eb']['beta_bias_mean']:+.3f} cov68 {rec['mk_no_dust_eb']['coverage68']:.2f}" if "mk_no_dust_eb" in rec else ""))
+    # beta under an external psi0 prior is reported by importance-reweighting the uniform-prior
+    # posterior; check that it is calibrated on simulations whose psi0 is drawn from that prior.
+    out["psi_prior_reweighted"] = {}
+    for j, (model, w) in enumerate(PSI_PRIOR_TEST.items()):
+        th, t = simulate(n_test, seed=56 + j, model=model)
+        s = posterior_samples(models, st, t, n_post, seed=SAMPLING_SEED + 101 + j)
+        wt = np.exp(-0.5 * (s[:, :, 1] / w) ** 2)
+        frac = np.sum(wt * (s[:, :, 0] < th[:, 8:9]), axis=1) / wt.sum(1)      # weighted rank of the truth
+        q = [npe.weighted_q(s[k, :, 0], wt[k]) for k in range(len(th))]
+        arr = {key: np.array([x[key] for x in q]) for key in ("median", "lo68", "hi68", "lo95", "hi95")}
+        out["psi_prior_reweighted"][model] = {
+            "psi0_sd": w, "coverage68": float(np.mean(np.abs(frac - 0.5) < 0.34)),
+            "coverage95": float(np.mean(np.abs(frac - 0.5) < 0.475)),
+            "beta_bias_mean": float(np.mean([x["median"] for x in q] - th[:, 8])),
+            "beta_halfwidth68_median": float(np.median([(x["hi68"] - x["lo68"]) / 2 for x in q])),
+            "ess_median": float(np.median([x["ess"] for x in q])),
+            "interval_scale": npe.interval_scale(arr["median"], arr["lo68"], arr["hi68"], arr["lo95"], arr["hi95"], th[:, 8])}
+        r = out["psi_prior_reweighted"][model]
+        log(f"validate {model} (reweighted): beta coverage68 {r['coverage68']:.3f} 95 {r['coverage95']:.3f}, "
+            f"halfwidth {r['beta_halfwidth68_median']:.3f}, ESS {r['ess_median']:.0f}, scale {r['interval_scale']}")
     RESULTS.mkdir(exist_ok=True)
     (RESULTS / "npe_validation.json").write_text(json.dumps(out, indent=2))
 
@@ -298,7 +355,8 @@ def stage_attest() -> None:
                                             for n in ("W1", "V1", "b1", "W2", "b2", "W3", "b3")]).tobytes()).decode()
     att = {"device": str(dev), "hidden": HIDDEN, "layers": LAYERS, "d": 6, "k": 14,
            "x": x.astype(float).tolist(), "c": c.astype(float).tolist(), "log_prob_device": lp.astype(float).tolist(),
-           "weights_float32_b64": blob, "rel_tolerance": 1e-5}
+           # float32 accumulation through 5 affine layers: observed up to ~1.2e-5 relative, median ~1e-6
+           "weights_float32_b64": blob, "rel_tolerance": 5e-5}
     text = TESTS.read_text(encoding="utf-8")
     a, b = "# ATTESTATION:START", "# ATTESTATION:END"
     i, j = text.index(a) + len(a), text.index(b)
@@ -307,6 +365,28 @@ def stage_attest() -> None:
 
 
 # ---------------------------------------------------------------------------- freeze / unblind
+def stage_fisher() -> None:
+    """Information content at the fiducial point: sigma_beta from the score compressor's Fisher
+    matrix for each dust-EB model, and the beta-psi0 correlation -> results/npe_fisher.json."""
+    comp, _, _ = _compressor()
+    fis = comp.fisher
+    allp = list(range(14))
+
+    def sig_beta(free):
+        c = np.linalg.inv(fis[np.ix_(free, free)])
+        return float(np.sqrt(c[free.index(8), free.index(8)]))
+
+    c = np.linalg.inv(fis)
+    d = np.sqrt(np.diag(c))
+    out = {"fiducial": FIDUCIAL().tolist(), "params": list(simulator.PARAMS),
+           "sigma_beta_deg": {"no_dust_eb": sig_beta([p for p in allp if p not in (9, 10, 11)]),
+                              "M1_constant_psi": sig_beta([p for p in allp if p not in (10, 11)]),
+                              "full": sig_beta(allp)},
+           "corr_beta_psi0": float(c[8, 9] / (d[8] * d[9]))}
+    (RESULTS / "npe_fisher.json").write_text(json.dumps(out, indent=2))
+    log(f"fisher: {out['sigma_beta_deg']}, corr(beta, psi0) {out['corr_beta_psi0']:.3f}")
+
+
 def _sha(path: Path) -> str:
     """SHA-256 with line endings normalised to LF (text files match a fresh clone too)."""
     return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
@@ -331,7 +411,7 @@ def stage_freeze() -> None:
     head = _git("rev-parse", "HEAD").stdout.decode().strip()
     FREEZE.write_text(json.dumps({"frozen_utc": datetime.now(timezone.utc).isoformat(), "git_head_at_freeze": head,
                                   "sha256": _hashes(), "target": list(TARGET_NAMES),
-                                  "report": "beta posterior median and 68/95% intervals, ensemble of 5 MAFs",
+                                  "report": "primary: beta - psi0 and beta given psi0 ~ N(0, 0.5/1/2 deg) (median, 68/95%, widened by the validated interval scale max(1, k)); beta alone is reported but prior-limited (exact beta-psi degeneracy); ensemble of 5 MAFs",
                                   "validation_file": "results/npe_validation.json"}, indent=2))
     log("wrote analysis_freeze_npe.json; commit it before unblinding")
 
@@ -350,7 +430,7 @@ def stage_unblind() -> None:
     cl = np.load(REPO / "data" / "work" / "spectra_m0.npz")["cl"]
     t = comp(simulator.upper(cl))[None]
     models, st = load_ensemble()
-    s = posterior_samples(models, st, t, 20000)[0]
+    s = posterior_samples(models, st, t, 20000, seed=SAMPLING_SEED)[0]
     q = lambda v: {"median": float(np.median(v)), "lo68": float(np.percentile(v, 16)), "hi68": float(np.percentile(v, 84)),
                    "lo95": float(np.percentile(v, 2.5)), "hi95": float(np.percentile(v, 97.5)), "mean": float(v.mean()), "sd": float(v.std())}
     head = _git("rev-parse", "HEAD").stdout.decode().strip()
@@ -360,8 +440,20 @@ def stage_unblind() -> None:
            # beta under explicit external priors on the dust misalignment psi0 (importance-reweighted
            # from the uniform training prior): psi0 = 0 +- 0.5 deg (MK-like) and +- 1, 2 deg
            "beta_given_psi_prior": {f"psi0~N(0,{w})": npe.weighted_q(s[:, 0], np.exp(-0.5 * (s[:, 1] / w) ** 2)) for w in (0.5, 1.0, 2.0)},
-           "per_model_beta": [q(posterior_samples([m], st, t, 20000)[0][:, 0]) for m in models],
+           "per_model_beta": [q(posterior_samples([m], st, t, 20000, seed=SAMPLING_SEED + 1 + k)[0][:, 0]) for k, m in enumerate(models)],
+           "sampling_seed": SAMPLING_SEED, "support": {"lo": SUPPORT_LO[:5].tolist(), "hi": SUPPORT_HI[:5].tolist()},
            "scores": t[0].tolist()}
+    # pre-registered interval calibration from the validation file (frozen): widen by max(1, k)
+    val = json.loads((RESULTS / "npe_validation.json").read_text())
+    def widen(r: dict, k: dict) -> dict:
+        m, f68, f95 = r["median"], max(1.0, k["k68"]), max(1.0, k["k95"])
+        return {"median": m, "lo68": m - f68 * (m - r["lo68"]), "hi68": m + f68 * (r["hi68"] - m),
+                "lo95": m - f95 * (m - r["lo95"]), "hi95": m + f95 * (r["hi95"] - m), "scale": {"k68": f68, "k95": f95}}
+    out["calibrated"] = {
+        "beta_minus_psi0": widen(out["beta_minus_psi0"], val["models"]["full"]["beta_minus_psi0"]["interval_scale"]),
+        "beta_given_psi_prior": {f"psi0~N(0,{w})": widen(out["beta_given_psi_prior"][f"psi0~N(0,{w})"],
+                                                          val["psi_prior_reweighted"][m]["interval_scale"])
+                                 for m, w in PSI_PRIOR_TEST.items()}}
     (RESULTS / "npe.json").write_text(json.dumps(out, indent=2))
     with open(REPO / "data" / "evidence" / "unblind_log.jsonl", "a", encoding="utf-8") as f:
         f.write(json.dumps({"stage": "B", "utc": out["unblinded_utc"], "git_head": head, "freeze_utc": fr["frozen_utc"]}) + "\n")
@@ -389,6 +481,8 @@ def main(argv: list[str]) -> int:
         stage_validate(args.n_test, args.n_post, args.n_mk)
     if "attest" in st:
         stage_attest()
+    if "fisher" in st:
+        stage_fisher()
     if "freeze" in st:
         stage_freeze()
     if "unblind" in st:

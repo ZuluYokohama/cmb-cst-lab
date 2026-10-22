@@ -9,10 +9,15 @@ the expected spectra in bin b are
     Sigma_b = R(alpha) [ R(beta) CMB_b R(beta)^T  +  DUST_b(psi, A_d, beta_d) ] R(alpha)^T + N_b,
 
 where CMB_b holds the beam/pixel-window/mask-transfer smoothed LCDM EE, BB per map pair, DUST_b
-holds s_i s_j A_d D_b^{EE,BB} w_ij (SED s, measured 353 GHz dust spectra D, window ratio w) with
-intrinsic EB_ij = 1/2 sin(4 psi_ij,b) (EE_ij - BB_ij), and
+holds s_i s_j A_d D_b^{EE,BB} w_ij (SED s, measured 353 GHz dust spectra D, window ratio w), with
+the dust of band i intrinsically rotated by its misalignment angle:
 
-    psi_ij,b = psi0 (l_b / 200)^n_psi + psi1 * (ln(nu_i/353) + ln(nu_j/353)) / 2.
+    DUST_b,ij = R(psi_i,b) diag(EE_ij, BB_ij) R(psi_j,b)^T,
+    psi_i,b   = psi0 (l_b / 200)^n_psi + psi1 ln(nu_i / 353 GHz).
+
+For equal angles this is the familiar EB = 1/2 sin(4 psi) (EE - BB); for psi_i != psi_j the
+E_iB_j and B_iE_j entries differ, so a frequency-dependent misalignment enters the antisymmetric
+(calibration-sensitive) spectra exactly like a calibration difference.
 
 M0 (no dust EB) is psi0 = psi1 = 0; M1 constant misalignment is n_psi = psi1 = 0; M2 scale-dependent
 is psi1 = 0; M3 frequency-decorrelated is n_psi = 0. Bandpowers are exact Wishart draws via the
@@ -42,10 +47,10 @@ def mbb_sed(nu_ghz: np.ndarray, beta_d: float, t_d: float = 19.6, nu0: float = 3
 
 
 def dust_angles(psi0: float, n_psi: float, psi1: float, ell: np.ndarray) -> np.ndarray:
-    """psi_ij,b in radians, shape (nb, 8, 8)."""
+    """Intrinsic dust misalignment psi_i,b of each map's band, in radians, shape (nb, 8)."""
     lnu = np.log(FREQ_GHZ / 353.0)
     scale = psi0 * (ell / L_PIVOT) ** n_psi
-    return np.radians(scale[:, None, None] + psi1 * 0.5 * (lnu[None, :, None] + lnu[None, None, :]))
+    return np.radians(scale[:, None] + psi1 * lnu[None, :])
 
 
 def model_covariance(theta: np.ndarray, fixed: dict) -> np.ndarray:
@@ -64,11 +69,16 @@ def model_covariance(theta: np.ndarray, fixed: dict) -> np.ndarray:
     ss = np.outer(s, s)[None] * fixed["wratio"] * a_d
     ee_d = ss * fixed["dust_ee"][:, None, None]
     bb_d = ss * fixed["dust_bb"][:, None, None]
-    eb_d = 0.5 * np.sin(4 * dust_angles(psi0, n_psi, psi1, fixed["ell"])) * (ee_d - bb_d)
-    sky[:, 0::2, 0::2] += ee_d
-    sky[:, 1::2, 1::2] += bb_d
-    sky[:, 0::2, 1::2] += eb_d
-    sky[:, 1::2, 0::2] += eb_d
+    # Dust in band i is intrinsically rotated by psi_i: block_ij = R(psi_i) diag(EE, BB) R(psi_j)^T.
+    # For psi_i != psi_j the E_iB_j and B_iE_j entries differ, so frequency-dependent misalignment
+    # enters the antisymmetric spectra exactly like a calibration difference.
+    psi = dust_angles(psi0, n_psi, psi1, fixed["ell"])
+    c, sn2 = np.cos(2 * psi), np.sin(2 * psi)
+    ci, cj, si, sj = c[:, :, None], c[:, None, :], sn2[:, :, None], sn2[:, None, :]
+    sky[:, 0::2, 0::2] += ci * cj * ee_d + si * sj * bb_d
+    sky[:, 1::2, 1::2] += si * sj * ee_d + ci * cj * bb_d
+    sky[:, 0::2, 1::2] += ci * sj * ee_d - si * cj * bb_d   # E_i B_j
+    sky[:, 1::2, 0::2] += si * cj * ee_d - ci * sj * bb_d   # B_i E_j
     r = rotation_matrix(alpha)
     out = np.einsum("ik,bkl,jl->bij", r, sky, r)
     idx = np.arange(8)

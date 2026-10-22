@@ -88,3 +88,23 @@ def test_score_compression_recovers_parameters_linearly():
     assert abs(est[8] - 0.05) < 5e-3
     # noise-free fiducial compresses to zero
     assert np.max(np.abs(comp(comp.mu))) < 1e-8 * np.max(np.abs(comp.fisher))
+
+
+def test_frequency_dependent_misalignment_acts_like_a_calibration_difference():
+    # Dust only (no CMB, no noise), scale-independent misalignment that depends on frequency:
+    # band i looks rotated by alpha_i + psi_i, so pair angles must be (alpha_i+psi_i)-(alpha_j+psi_j)
+    # exactly, and E_iB_j != B_iE_j when psi_i != psi_j (an averaged EB block cannot do this).
+    fx = _fixed()
+    fx["th_ee"] = fx["th_ee"] * 0
+    fx["th_bb"] = fx["th_bb"] * 0
+    fx["noise_ee"] = fx["noise_ee"] * 0 + 1e-12
+    fx["noise_bb"] = fx["noise_bb"] * 0 + 1e-12
+    th = THETA0.copy()
+    th[9:12] = [1.0, 0.0, 2.0]  # psi0 = 1 deg, n = 0, psi1 = 2 deg per unit ln(nu)
+    sig = model_covariance(th, fx)
+    psi = np.degrees(dust_angles(1.0, 0.0, 2.0, ELL))[0]
+    pa = np.degrees(pair_angles(sig, np.full(NB, 1e5), EDGES)["delta"])
+    total = th[:8] + psi
+    assert np.max(np.abs(pa - D0 @ total)) < 1e-8
+    i, j = 0, 7  # 100 GHz vs 353 GHz: different psi
+    assert abs(sig[0, 2 * i, 2 * j + 1] - sig[0, 2 * i + 1, 2 * j]) > 1e-6 * abs(sig[0, 2 * i, 2 * j])

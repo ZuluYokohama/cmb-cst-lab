@@ -535,5 +535,156 @@
     "duration_s": 3.74,
     "chain_valid": true,
     "chain_head_sha256": "ecf30d1ca1c76947c29e2473741d603efada2bcf28ef358f1e95f88160d6140f"
+  },
+  {
+    "suite": "simulator",
+    "verified_at": "2026-10-22T20:57:47.341626+00:00",
+    "passed": true,
+    "passed_count": 9,
+    "total": 9,
+    "receipt_id": "20261022T205747Z-5ac785164e57",
+    "receipt_sha256": "a6e2de2779fc5b8342aa174a4fe69cfe952073c38fd0aba01366c726a6784674",
+    "isolation": "shared",
+    "bundle_sha256": "dd90506e7fb961d60ba33a910990a190c7d2ce6df6cdfd81d329d4a9c21da53c",
+    "tests_sha256": "5a4edd5da5fb718fc0a104d4ae92b502a7d94c34ddcb0e7873f2f450783a74c0",
+    "source_function_sha256": {
+      "network.py": "54c29bb9e03a0753f55cc7475141fa7178ae116bc28396ff2cc8cfec11678e25",
+      "differential.py": "a5caa7eaa93939fb6e33b5ed0867a5e8dd0a1edc6bc2ce1ef7143b819c5977c2",
+      "simulator.py": "bbf8b823ca8b80703eb0af19cdbeaa7fd4e1e88f6d89f821ccba88cd7f689f42"
+    },
+    "failures": null,
+    "duration_s": 3.53,
+    "chain_valid": true,
+    "chain_head_sha256": "a6e2de2779fc5b8342aa174a4fe69cfe952073c38fd0aba01366c726a6784674"
+  },
+  {
+    "suite": "simulator",
+    "verified_at": "2026-10-22T21:05:17.032160+00:00",
+    "passed": true,
+    "passed_count": 9,
+    "total": 9,
+    "receipt_id": "20261022T210516Z-530e59daf343",
+    "receipt_sha256": "706e5b707700fe658c2cde3e2b0fafe342338d716e49158c8c737d0bc645fb38",
+    "isolation": "shared",
+    "bundle_sha256": "dd90506e7fb961d60ba33a910990a190c7d2ce6df6cdfd81d329d4a9c21da53c",
+    "tests_sha256": "5a4edd5da5fb718fc0a104d4ae92b502a7d94c34ddcb0e7873f2f450783a74c0",
+    "source_function_sha256": {
+      "network.py": "54c29bb9e03a0753f55cc7475141fa7178ae116bc28396ff2cc8cfec11678e25",
+      "differential.py": "a5caa7eaa93939fb6e33b5ed0867a5e8dd0a1edc6bc2ce1ef7143b819c5977c2",
+      "simulator.py": "bbf8b823ca8b80703eb0af19cdbeaa7fd4e1e88f6d89f821ccba88cd7f689f42"
+    },
+    "failures": null,
+    "duration_s": 25.9,
+    "chain_valid": true,
+    "chain_head_sha256": "b9f3050606a0f141b180c0826ed5ac1167fa8519aa3ed278b4ea7733e7161f35"
+  },
+  {
+    "suite": "npe",
+    "verified_at": "2026-10-22T21:05:46.640580+00:00",
+    "passed": true,
+    "passed_count": 6,
+    "total": 6,
+    "receipt_id": "20261022T210546Z-62782d673faf",
+    "receipt_sha256": "b9f3050606a0f141b180c0826ed5ac1167fa8519aa3ed278b4ea7733e7161f35",
+    "isolation": "shared",
+    "bundle_sha256": "e2ec134e1b3dc1edf14e465cea2a0f4dad8f21fb0238d65fbcf9af84374fb224",
+    "tests_sha256": "730a94b82603c6b3bd8710490c91644421d8821dfd2cce9a314cb2653e342feb",
+    "source_function_sha256": {
+      "npe.py": "335ef1b788ce24f45f59f71e74cb9e58dc8928134fdc9285e5bb339f92ebe109"
+    },
+    "failures": null,
+    "duration_s": 29.61,
+    "chain_valid": true,
+    "chain_head_sha256": "b9f3050606a0f141b180c0826ed5ac1167fa8519aa3ed278b4ea7733e7161f35"
+  },
+  {
+    "suite": "npe",
+    "verified_at": "2026-10-22T21:48:22.249629+00:00",
+    "passed": false,
+    "passed_count": 6,
+    "total": 7,
+    "receipt_id": "20261022T214822Z-2d596214b414",
+    "receipt_sha256": "a0e34cc2299b839dd9082cf471ea38bffa6aee3bda2a49a470f1cf6766579f33",
+    "isolation": "shared",
+    "bundle_sha256": "080a7553ac0fa9198697e826b2420b4b05a0f9c8f42ed9a59d68926a2af44120",
+    "tests_sha256": "3832f716f83b43723db0a5fdd52a8dea4ed5757da41794d7173a99f03eba1f86",
+    "source_function_sha256": {
+      "npe.py": "7ac27620c0d92619110fac3231aec9ccbaba03939455a92a5dc0ddff4dc8daf8"
+    },
+    "failures": [
+      {
+        "name": "test_device_log_density_recomputed_in_float64",
+        "outcome": "failed",
+        "message": "AssertionError at line 69: assert np.all(np.abs(lp - dev) <= a[\"rel_tolerance\"] * np.maximum(1.0, np.abs(dev)))"
+      }
+    ],
+    "duration_s": 2.46,
+    "chain_valid": true,
+    "chain_head_sha256": "a0e34cc2299b839dd9082cf471ea38bffa6aee3bda2a49a470f1cf6766579f33"
+  },
+  {
+    "suite": "npe",
+    "verified_at": "2026-10-22T21:48:35.203803+00:00",
+    "passed": false,
+    "passed_count": 6,
+    "total": 7,
+    "receipt_id": "20261022T214835Z-03b3b407d561",
+    "receipt_sha256": "4c2b44c25d511894079f16d07f55a74945d4ef4bdaf4bc72c1d3074d924956b3",
+    "isolation": "shared",
+    "bundle_sha256": "080a7553ac0fa9198697e826b2420b4b05a0f9c8f42ed9a59d68926a2af44120",
+    "tests_sha256": "3832f716f83b43723db0a5fdd52a8dea4ed5757da41794d7173a99f03eba1f86",
+    "source_function_sha256": {
+      "npe.py": "7ac27620c0d92619110fac3231aec9ccbaba03939455a92a5dc0ddff4dc8daf8"
+    },
+    "failures": [
+      {
+        "name": "test_device_log_density_recomputed_in_float64",
+        "outcome": "failed",
+        "message": "AssertionError at line 69: assert np.all(np.abs(lp - dev) <= a[\"rel_tolerance\"] * np.maximum(1.0, np.abs(dev)))"
+      }
+    ],
+    "duration_s": 2.55,
+    "chain_valid": true,
+    "chain_head_sha256": "4c2b44c25d511894079f16d07f55a74945d4ef4bdaf4bc72c1d3074d924956b3"
+  },
+  {
+    "suite": "simulator",
+    "verified_at": "2026-10-22T21:49:14.670352+00:00",
+    "passed": true,
+    "passed_count": 9,
+    "total": 9,
+    "receipt_id": "20261022T214914Z-3c4a576e585d",
+    "receipt_sha256": "5efe48038140fb5b86aebfc18425f927545680b501265bb86d01e7ee5307c736",
+    "isolation": "shared",
+    "bundle_sha256": "dd90506e7fb961d60ba33a910990a190c7d2ce6df6cdfd81d329d4a9c21da53c",
+    "tests_sha256": "5a4edd5da5fb718fc0a104d4ae92b502a7d94c34ddcb0e7873f2f450783a74c0",
+    "source_function_sha256": {
+      "network.py": "54c29bb9e03a0753f55cc7475141fa7178ae116bc28396ff2cc8cfec11678e25",
+      "differential.py": "a5caa7eaa93939fb6e33b5ed0867a5e8dd0a1edc6bc2ce1ef7143b819c5977c2",
+      "simulator.py": "bbf8b823ca8b80703eb0af19cdbeaa7fd4e1e88f6d89f821ccba88cd7f689f42"
+    },
+    "failures": null,
+    "duration_s": 2.58,
+    "chain_valid": true,
+    "chain_head_sha256": "ec509f2aed3601dd8c488d59ea824628d7af17c5a50bc3ebb7f661a5726b1987"
+  },
+  {
+    "suite": "npe",
+    "verified_at": "2026-10-22T21:49:16.987709+00:00",
+    "passed": true,
+    "passed_count": 7,
+    "total": 7,
+    "receipt_id": "20261022T214916Z-c3e848b7da18",
+    "receipt_sha256": "ec509f2aed3601dd8c488d59ea824628d7af17c5a50bc3ebb7f661a5726b1987",
+    "isolation": "shared",
+    "bundle_sha256": "080a7553ac0fa9198697e826b2420b4b05a0f9c8f42ed9a59d68926a2af44120",
+    "tests_sha256": "5e65f1e2f70ef50fd4a4a0fb1de83e35b30a7229ce1f0eb2e68869f00d97a16b",
+    "source_function_sha256": {
+      "npe.py": "7ac27620c0d92619110fac3231aec9ccbaba03939455a92a5dc0ddff4dc8daf8"
+    },
+    "failures": null,
+    "duration_s": 2.31,
+    "chain_valid": true,
+    "chain_head_sha256": "ec509f2aed3601dd8c488d59ea824628d7af17c5a50bc3ebb7f661a5726b1987"
   }
 ]

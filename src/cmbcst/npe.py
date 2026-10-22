@@ -84,3 +84,13 @@ def weighted_q(v: np.ndarray, w: np.ndarray) -> dict:
     pick = lambda p: float(v[order][min(np.searchsorted(cw, p), len(v) - 1)])
     return {"median": pick(0.5), "lo68": pick(0.16), "hi68": pick(0.84), "lo95": pick(0.025), "hi95": pick(0.975),
             "ess": float(w.sum() ** 2 / np.sum(w**2))}
+
+
+def interval_scale(med: np.ndarray, lo68: np.ndarray, hi68: np.ndarray, lo95: np.ndarray, hi95: np.ndarray,
+                   truth: np.ndarray) -> dict:
+    """Factors k by which the central 68/95% half-widths must be scaled (about the median) to cover
+    the truth at the nominal rate on simulations. Pre-registered: the unblind widens real-data
+    intervals by max(1, k) and never narrows them."""
+    err = np.abs(truth - med)
+    return {"k68": float(np.quantile(err / ((hi68 - lo68) / 2), 0.68)),
+            "k95": float(np.quantile(err / ((hi95 - lo95) / 2), 0.95))}
