@@ -143,7 +143,7 @@ def main(argv: list[str]) -> int:
     out["n_comparisons"] = len(flat)
     (REPO / "results" / "persistence_validation.json").write_text(json.dumps(out, indent=2))
     for n in ensembles:
-        zs = {p: round(out["nulls"][n][p]["n0"]["z"], 2) for p in PATCHES}
+        zs = {p: None if (z := out["nulls"][n][p]["n0"]["z"]) is None else round(z, 2) for p in PATCHES}
         ph = {p: round(out["nulls"][n][p]["n0"]["p_holm"], 3) for p in PATCHES}
         log(f"{n}: n0 z {zs}, Holm p {ph}")
     return 0
