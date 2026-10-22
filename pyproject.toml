@@ -1,8 +1,14 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "cmbcst"
 version = "0.1.0"
 description = "Reproduction of the Lonappan-Keating-Arnold (2026) differential calibration network on Planck PR4, with a cochain/Hodge reading"
 requires-python = ">=3.11"
+# ships the upstream MIT notice for the mk_likelihood.py port in built distributions (PEP 639)
+license-files = ["THIRD_PARTY_LICENSES/*"]
 dependencies = ["numpy>=2", "scipy", "astropy", "ducc0", "camb", "requests", "matplotlib"]
 
 [project.optional-dependencies]
