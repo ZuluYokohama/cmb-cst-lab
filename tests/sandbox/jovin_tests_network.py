@@ -118,8 +118,8 @@ def test_chi2_diff_ignores_common_mode():
 
 
 def test_residual_is_covariance_weighted_coexact():
-    # d0^T C^{-1} r = 0, so C^{-1} r lies in ker d0^T = im d1^T; r itself is generally NOT in
-    # im d1^T unless C is proportional to the identity.
+    # d0^T C^{-1} r = 0, so C^{-1} r lies in ker d0^T = im d1^T; r itself need NOT lie in
+    # im d1^T (it does when C preserves that subspace, e.g. C proportional to the identity).
     rng = np.random.default_rng(12)
     _, _, d0, d1 = complete_complex(8)
     cov = _cov(rng, 28)

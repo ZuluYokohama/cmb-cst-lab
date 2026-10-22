@@ -454,7 +454,7 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--stages", default="masks,alms,spectra,transfer,analyse,persistence")
     ap.add_argument("--force", default="")
     ap.add_argument("--n-sims", type=int, default=2000)
-    ap.add_argument("--n-persistence-sims", type=int, default=200)
+    ap.add_argument("--n-persistence-sims", type=int, default=1000)  # matches the committed results/persistence.json
     args = ap.parse_args(argv)
     WORK.mkdir(parents=True, exist_ok=True)
     stages, force = args.stages.split(","), set(args.force.split(","))

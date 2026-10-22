@@ -487,9 +487,11 @@ function persistence() {
   rows.push(`<tr><td>NGP − SGP</td><td>mean PD₀ lifetime</td><td class="n">${f(a.real, 3)}</td><td class="n">${f(a.sim_mean, 3)} ± ${f(a.sim_std, 3)}</td><td class="n">${sgn(a.z ?? 0, 2)}</td><td class="n">${f(a.p_two_sided, 3)}</td><td class="n">${f(a.p_holm, 2)}</td></tr>`);
   body.innerHTML = rows.join("");
   const n0p = Object.values(P.stats).map(s => s.n0.p_two_sided), allHigh = Object.values(P.stats).every(s => s.n0.real > s.n0.sim_mean);
+  const n0holm = Object.entries(P.stats).map(([k, s]) => [k, s.n0.p_holm]), sigHolm = n0holm.filter(([, p]) => p < 0.05);
   tx.textContent = `Sublevel persistence of the real ${P.map}, at three 20° patches, compared against ${P.n_sims} Gaussian skies drawn from the measured spectrum. ` +
     `The north–south difference in mean PD₀ lifetime is ${f(a.real, 3)} against a simulated spread of ±${f(a.sim_std, 3)} (p = ${f(a.p_two_sided, 2)}): no hemispherical asymmetry in this statistic. ` +
-    (allHigh ? `All three patches carry more PD₀ features than the simulations (raw p ≤ ${f(Math.max(...n0p), 3)}; after Holm correction over ${P.n_comparisons} comparisons, none is significant at 0.05). The shift has the same sign at the poles and at the Cold Spot, which points first to a simulation/data mismatch (anisotropic noise, foregrounds, pipeline) rather than sky topology. It stays unexplained until the validation track runs. ` : "") +
+    (allHigh ? `All three patches carry more PD₀ features than the simulations (raw p ≤ ${f(Math.max(...n0p), 3)}; after Holm correction over ${P.n_comparisons} comparisons, ` +
+      (sigHolm.length ? `${sigHolm.map(([k, p]) => `${k} (p = ${f(p, 3)})`).join(", ")} remain${sigHolm.length === 1 ? "s" : ""} significant at 0.05` : "none is significant at 0.05") + `). The shift has the same sign at the poles and at the Cold Spot, which points first to a simulation/data mismatch (anisotropic noise, foregrounds, pipeline) rather than sky topology. It stays unexplained until the validation track runs. ` : "") +
     `PD₁ is not used because its dual construction gives only lower bounds on loop lifetimes (pinned in the persistence suite).`;
 }
 
