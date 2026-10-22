@@ -432,7 +432,7 @@ def stage_persistence(n_sims: int) -> dict:
         v = np.array([s[patch][stat] for s in sims])
         r = real[patch][stat]
         return {"real": r, "sim_mean": float(v.mean()), "sim_std": float(v.std()),
-                "p_two_sided": float(min(1.0, 2 * min((v <= r).mean(), (v >= r).mean())))}
+                "p_two_sided": persistence.empirical_two_sided_mc_pvalue(r, v)}
 
     out = {"n_sims": n_sims, "map": "143 GHz (A+B)/2 temperature, 10' smoothing, l <= 1000, N_side 512",
            "patches_deg": {k: [float(np.degrees(c[0])), float(np.degrees(c[1]))] for k, c in PATCHES.items()},
@@ -440,7 +440,7 @@ def stage_persistence(n_sims: int) -> dict:
     asym_real = real["NGP"]["mean_life0"] - real["SGP"]["mean_life0"]
     asym = np.array([s["NGP"]["mean_life0"] - s["SGP"]["mean_life0"] for s in sims])
     out["ngp_minus_sgp_mean_life0"] = {"real": asym_real, "sim_mean": float(asym.mean()), "sim_std": float(asym.std()),
-                                       "p_two_sided": float(min(1.0, 2 * min((asym <= asym_real).mean(), (asym >= asym_real).mean())))}
+                                       "p_two_sided": persistence.empirical_two_sided_mc_pvalue(asym_real, asym)}
     RESULTS.mkdir(exist_ok=True)
     (RESULTS / "persistence.json").write_text(json.dumps(out, indent=2))
     log("wrote results/persistence.json")
