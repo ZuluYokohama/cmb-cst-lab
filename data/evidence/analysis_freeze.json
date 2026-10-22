@@ -1,13 +1,13 @@
 {
-  "frozen_utc": "2026-10-22T18:34:50.294433+00:00",
-  "git_head_at_freeze": "21706ab6f801ec27f42fb4573194db5bc759da5c",
+  "frozen_utc": "2026-10-22T20:13:26.532937+00:00",
+  "git_head_at_freeze": "858b23f2baec59d59cd545c1926f8efe6675f591",
   "file_sha256": {
     "src/cmbcst/spatial.py": "edfd6c511f470cd292af1d2b708b0f9d8d5d9b5c60e3186cd7defa6a4490baf8",
     "src/cmbcst/regions.py": "b4a5aaa43d8574d657516c42f89b5b7919ca022daf883e8d4e2e495bfcd1c570",
     "src/cmbcst/differential.py": "9c0763f9d155b1fd924e1d0da183a61a4aec8c8a4cadc77727d45355a33e0a6c",
     "src/cmbcst/network.py": "93cf89b0a5c9defa9aa719cbeea5855640b8fa9e8c114f7a4eba00abd7aec945",
     "src/cmbcst/spectra.py": "f49f508b30df565a94d466e70a0e79606721b50832893177a0ca6c20a55085e1",
-    "scripts/run_spatial.py": "2adde7f5c91bce9bf7571fbe42b58e980e31fcbdce44802808f50ad50a8cbfc8"
+    "scripts/run_spatial.py": "ba2c33957abc657f13db897ac84a711100df2d7a30b0a75204d41675c9d750bb"
   },
   "statistics": {
     "chi2_spatial": "stationarity of the per-map calibration pattern across regions, dof 7(R-1)",
