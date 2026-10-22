@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "supersedes": "data/evidence/analysis_freeze_npe_v1.json",
+  "correction_note": "v1 was unblinded with a simulator that applied one common dust rotation to all bands (frequency-dependent misalignment could not mimic a calibration difference), with posterior samples outside the uniform prior support, and unseeded sampling. v2 fixes the simulator (per-map rotation), rejects out-of-support samples, seeds sampling, retrains and revalidates. The exact rotation makes beta exactly degenerate with psi, so the primary statistics are beta - psi0 and beta under stated psi0 priors, with validated interval calibration. v1 results are preserved in results/npe_unblind_v1.json.",
+  "frozen_utc": "2026-10-22T21:50:13.747474+00:00",
+  "git_head_at_freeze": "62860dea302aae781846e5e9c9a8eb2b2753bbac",
+  "sha256": {
+    "src/cmbcst/simulator.py": "582e07d913c0526fbcf0fa7414c124c1fb1ea6658b44b0094b91b51f1f1bccce",
+    "src/cmbcst/npe.py": "64e0ee599b223ebd54bc2093dd83b6d1eb74f8e93976faa127c3e67a0bcfbc22",
+    "src/cmbcst/npe_torch.py": "eea7ba540d2d2ab09e6903eb616c05d47d292a9183a936ae631e97ed6dc46371",
+    "scripts/run_npe.py": "0a31fb7a9eb9ff05a48c4ad0d9dfef1d4bbefb956f5492140393c796c0299d6e",
+    "data/work/npe/maf_0.npz": "784465f6eda81c6bdfdeecc93ed2df2f8906378f4d48affaacb14e30a127d0e1",
+    "data/work/npe/maf_1.npz": "3b306630e62e520a91bf70d80a324afec40f5e4c8e85422ddce2fee266df779b",
+    "data/work/npe/maf_2.npz": "1097e15dfabca7ab8e18bd638211003227d64dbb063b672f7bb41dcf596cc281",
+    "data/work/npe/maf_3.npz": "c50368abedec8c58317d55c765a6851d822f343ae68effb64ef0f18e1b809c1c",
+    "data/work/npe/maf_4.npz": "2885a6afb4c7682a954c8de7456a872d457c3da2a39682943a4324248a4e3389",
+    "data/work/npe/fixed.npz": "7078103f6f2a0882abd23b9359768c2f139dafa015609f1caf57bf413296e4f9",
+    "data/work/npe/standardisers.npz": "8cc35b13ba45a9fc22bd62704fed0e640e96baf8a2d5dee6a61369c645aa5da4",
+    "data/work/npe/train_info.json": "d6bcf8d5d664b9c415e2a76f2eb7377643f18b8bb0996f373791177d5de08142",
+    "data/work/spectra_m0.npz": "8314223897be5c59bc98ff5c79fb5f2185e6b8ce965829c01718d300d44f28c7",
+    "results/reproduction.json": "89d4dd7d64a76bc3862a1094002cee4687ef4369e108a6f5903cea30f9e7fda9",
+    "results/npe_validation.json": "ec7fc294ce444d8ae3f72b440a99adf07f1e118bb51979e75dc203692b93f13a"
+  },
+  "target": [
+    "beta",
+    "psi0",
+    "n_psi",
+    "psi1",
+    "A_d",
+    "beta_d"
+  ],
+  "report": "primary: beta - psi0 and beta given psi0 ~ N(0, 0.5/1/2 deg) (median, 68/95%, widened by the validated interval scale max(1, k)); beta alone is reported but prior-limited (exact beta-psi degeneracy); ensemble of 5 MAFs",
+  "validation_file": "results/npe_validation.json"
+}

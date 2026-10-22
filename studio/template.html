@@ -462,6 +462,14 @@ function betaPlot() {
     { label: "This run, anchored, f_sky 0.92", beta: m0.anchored_beta_deg, sigma: m0.anchored_sigma_deg, kind: "reproduced" },
     { label: "This run, anchored, f_sky 0.62", beta: m30.anchored_beta_deg, sigma: m30.anchored_sigma_deg, kind: "reproduced" },
   ];
+  const N = DATA.npe;
+  if (N) {
+    const half = d => 0.5 * (d.hi68 - d.lo68);
+    const C = N.calibrated || N;   // intervals widened by the validated scale max(1, k)
+    rows.push({ label: "NPE, β − ψ₀ (identifiable)", beta: C.beta_minus_psi0.median, sigma: half(C.beta_minus_psi0), kind: "reproduced" });
+    rows.push({ label: "NPE, β with ψ₀ ~ N(0, 0.5°)", beta: C.beta_given_psi_prior["psi0~N(0,0.5)"].median, sigma: half(C.beta_given_psi_prior["psi0~N(0,0.5)"]), kind: "reproduced" });
+    rows.push({ label: "NPE, β, agnostic dust EB", beta: N.posterior.beta.median, sigma: half(N.posterior.beta), kind: "reproduced" });
+  }
   const L = 250, Rr = 700, T = 10, rowH = 30;
   const lo = Math.min(0, ...rows.map(r => r.beta - 1.5 * r.sigma)), hi = Math.max(...rows.map(r => r.beta + 1.5 * r.sigma));
   const x = v => L + (v - lo) / (hi - lo) * (Rr - L), B = T + rows.length * rowH;
@@ -475,7 +483,8 @@ function betaPlot() {
   });
   document.getElementById("beta-text").textContent =
     `Circles are quoted values, squares are computed here. The differential network cannot measure β: a common rotation is its gauge freedom. β comes from the MK likelihood (Galactic dust as the calibrator), ` +
-    `and the anchored value is the paper's conditional closure, β = mean(θ_m − α_m^MK) over the 100/143 GHz maps. It reuses the MK calibration, so it is not an independent detection.`;
+    `and the anchored value is the paper's conditional closure, β = mean(θ_m − α_m^MK) over the 100/143 GHz maps. It reuses the MK calibration, so it is not an independent detection.` +
+    (DATA.npe ? ` The neural posterior (5 flows trained on the Arc GPU, blinded and validated for coverage under several dust models) shows why β depends on the dust model: dust looks rotated by α + ψ and the CMB by α + β, so these channels constrain β − ψ₀ (here ${f(DATA.npe.beta_minus_psi0.median)}° ± ${f(0.5 * (DATA.npe.beta_minus_psi0.hi68 - DATA.npe.beta_minus_psi0.lo68))}°). Once ψ is free the degeneracy is exact: with no assumption about the dust misalignment ψ₀, β returns the prior.` : "");
 }
 
 /* ---------- persistence ---------- */
@@ -495,7 +504,7 @@ function persistence() {
   tx.textContent = `Sublevel persistence of the real ${P.map}, at three 20° patches, compared against ${P.n_sims} Gaussian skies drawn from the measured spectrum. ` +
     `The north–south difference in mean PD₀ lifetime is ${f(a.real, 3)} against a simulated spread of ±${f(a.sim_std, 3)} (p = ${f(a.p_two_sided, 2)}): no hemispherical asymmetry in this statistic. ` +
     (allHigh ? `All three patches carry more PD₀ features than the simulations (raw p ≤ ${f(Math.max(...n0p), 3)}; after Holm correction over ${P.n_comparisons} comparisons, ` +
-      (sigHolm.length ? `${sigHolm.map(([k, p]) => `${k} (p = ${f(p, 3)})`).join(", ")} remain${sigHolm.length === 1 ? "s" : ""} significant at 0.05` : "none is significant at 0.05") + `). The shift has the same sign at the poles and at the Cold Spot, which points first to a simulation/data mismatch (anisotropic noise, foregrounds, pipeline) rather than sky topology. It stays unexplained until the validation track runs. ` : "") +
+      (sigHolm.length ? `${sigHolm.map(([k, p]) => `${k} (p = ${f(p, 3)})`).join(", ")} remain${sigHolm.length === 1 ? "s" : ""} significant at 0.05` : "none is significant at 0.05") + `). The shift has the same sign at the poles and at the Cold Spot. The validation track narrows it down: neither Planck's anisotropic noise nor phase-randomized surrogates of the masked map (exact harmonic amplitudes, random phases) reproduce the excess (none is excluded either: the best Holm-adjusted p is 0.07). The leading candidate is compact sources and clusters in the patches, which no null contains; it remains unexplained and no cosmological claim is made. ` : "") +
     `PD₁ is not used because its dual construction gives only lower bounds on loop lifetimes (pinned in the persistence suite).`;
 }
 

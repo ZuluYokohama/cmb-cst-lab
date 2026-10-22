@@ -97,6 +97,17 @@ def readme_tables(data: dict) -> None:
                          f"χ² {o['chi2_spatial']:.1f} / {o['dof_spatial']}, PTE {o['pte_spatial']:.2f}", "new (not in paper)"))
             rows.append((f"Same-frequency A/B edges across regions, {name}",
                          f"χ² {o['chi2_ab']:.1f} / {o['dof_ab']}, PTE {o['pte_ab']:.3f}", "new (not in paper)"))
+    npe_r = data.get("npe")
+    if npe_r:
+        cal = npe_r.get("calibrated", {})       # intervals widened by the validated scale max(1, k)
+        q = cal.get("beta_minus_psi0", npe_r["beta_minus_psi0"])
+        rows.append(("β − ψ₀ (identifiable), neural posterior, agnostic dust EB",
+                     f"{q['median']:+.2f}° (68%: {q['lo68']:+.2f} … {q['hi68']:+.2f})", "new (not in paper)"))
+        g = cal.get("beta_given_psi_prior", npe_r["beta_given_psi_prior"])["psi0~N(0,0.5)"]
+        rows.append(("β given a dust-misalignment prior ψ₀ ~ N(0, 0.5°), neural posterior",
+                     f"{g['median']:+.2f}° (68%: {g['lo68']:+.2f} … {g['hi68']:+.2f})", "new (not in paper)"))
+        b = npe_r["posterior"]["beta"]
+        rows.append(("β with no assumption on dust misalignment", f"{b['median']:+.2f}° (68%: {b['lo68']:+.2f} … {b['hi68']:+.2f}), prior-limited", "new (not in paper)"))
     d = rep["dust_ee_over_bb_l_lt_300"]
     rows.append(("Dust EE/BB, ℓ < 300 (ΛCDM-subtracted) 143/217/353",
                  " / ".join(f"{d[q]['lcdm_subtracted']:.2f}" for q in ("143", "217", "353")),
