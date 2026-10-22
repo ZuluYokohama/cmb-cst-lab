@@ -301,7 +301,8 @@ def stage_analyse(n_sims: int) -> dict:
         # Parametric bootstrap for C_rel, C_MK and their cross term (the paper keeps it)
         if k == "0" and n_sims:
             chk = accel.check_float32(cl, nu, seed=7)
-            log(f"mask {k}: {n_sims} bootstrap draws on {chk['backend']}, float32 check {chk['max_rel_err']:.1e}")
+            prec = f"float32 check {chk['max_rel_err']:.1e}" if chk["applicable"] else "float32 check not applicable"
+            log(f"mask {k}: {n_sims} bootstrap draws on {chk['backend']}, {prec}")
             qs_rel, qs_mk, th_s, anc_s, unconverged = [], [], [], [], 0
             t_boot = time.perf_counter()
             for n_done, cls in enumerate(accel.wishart_draws(cl, nu, n_sims, seed=2026), 1):
@@ -320,7 +321,8 @@ def stage_analyse(n_sims: int) -> dict:
             diff = network.chi2_diff(q_rel, q_mk, c_rel, c_mk, c_x)
             rec["chi2_diff"] = {"chi2": diff["chi2"], "dof": diff["dof"], "pte": diff["pte"],
                                 "pulls": dict(zip(DETECTORS, diff["pulls"].tolist())), "n_sims": n_sims}
-            rec["bootstrap"] = {"n_draws": n_sims, "backend": chk["backend"], "float32_max_rel_err": chk["max_rel_err"],
+            rec["bootstrap"] = {"n_draws": n_sims, "backend": chk["backend"], "float32_check_applicable": chk["applicable"],
+                                "float32_max_rel_err": chk["max_rel_err"],
                                 "float32_tolerance": accel.REL_TOL, "unconverged_mk_fits": int(unconverged),
                                 "seconds": round(time.perf_counter() - t_boot, 1)}
             rec["bootstrap_sigma_rel_deg"] = (np.sqrt(np.diag(c_rel)) / DEG).tolist()

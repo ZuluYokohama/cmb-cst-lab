@@ -24,7 +24,8 @@ REL_TOL = 1e-5
 
 # ---- numpy kernels (sandbox-verified) ---------------------------------------------------------
 def square_roots(cl: np.ndarray) -> np.ndarray:
-    """L_b with L_b L_b^T = C_b (eigen square root, tiny negative eigenvalues clipped)."""
+    """L_b with L_b L_b^T = C_b (eigen square root, tiny negative eigenvalues clipped), float64."""
+    cl = np.asarray(cl, dtype=np.float64)
     out = np.empty_like(cl)
     for b in range(cl.shape[0]):
         w, v = np.linalg.eigh(cl[b])
@@ -71,7 +72,7 @@ def counter_normals(seed: int, nf: int, dof: int) -> np.ndarray:
 def numpy_draw(roots: np.ndarray, dof: np.ndarray, rng: np.random.Generator) -> np.ndarray:
     """One bootstrap draw entirely in float64 numpy (the CPU fallback)."""
     nb, nf, _ = roots.shape
-    out = np.empty_like(roots)
+    out = np.empty(roots.shape, dtype=np.float64)
     for b in range(nb):
         x = roots[b] @ rng.standard_normal((nf, int(dof[b])))
         out[b] = x @ x.T / dof[b]
@@ -112,11 +113,15 @@ def _gram_batch_gpu(torch, dev, nf: int, dof: int, batch: int, gen):
     return torch.bmm(z, z.transpose(1, 2)) / dof, z
 
 
-def check_float32(cl: np.ndarray, nu: np.ndarray, seed: int = 0, batch: int = 4) -> dict[str, float]:
-    """Max relative error of the float32 GPU Gram matrices against float64 from the same normals."""
+def check_float32(cl: np.ndarray, nu: np.ndarray, seed: int = 0, batch: int = 4) -> dict[str, object]:
+    """Max relative error of the float32 GPU Gram matrices against float64 from the same normals.
+
+    On the numpy backend nothing runs in float32, so the check does not apply: `applicable` is
+    False and `max_rel_err` is None rather than an unmeasured zero.
+    """
     torch, dev = _device()
     if dev is None:
-        return {"max_rel_err": 0.0, "backend": "numpy"}
+        return {"max_rel_err": None, "applicable": False, "backend": backend_name()}
     gen = torch.Generator(device=dev).manual_seed(seed)
     nf = cl.shape[1]
     worst = 0.0
@@ -124,11 +129,12 @@ def check_float32(cl: np.ndarray, nu: np.ndarray, seed: int = 0, batch: int = 4)
         dof = max(int(round(nu[b])), nf + 1)
         g32, z = _gram_batch_gpu(torch, dev, nf, dof, batch, gen)
         worst = max(worst, max_rel_err(g32.cpu().numpy(), gram64(z.cpu().numpy())))
-    return {"max_rel_err": worst, "backend": backend_name()}
+    return {"max_rel_err": worst, "applicable": True, "backend": backend_name()}
 
 
 def wishart_draws(cl: np.ndarray, nu: np.ndarray, n_sims: int, seed: int, batch: int = 50) -> Iterator[np.ndarray]:
-    """Yield n_sims bootstrap bandpower sets (nb, nf, nf), float64."""
+    """Yield n_sims bootstrap bandpower sets (nb, nf, nf), float64 whatever the input dtype."""
+    cl = np.asarray(cl, dtype=np.float64)
     nb, nf, _ = cl.shape
     roots = square_roots(cl)
     dof = np.maximum(np.round(nu).astype(int), nf + 1)

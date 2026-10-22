@@ -513,7 +513,11 @@ function methods() {
     ["Spectra", `Masked spin-2 transforms with ducc0 (ℓ ≤ 1520), all 16×16 field cross-spectra, 72 bins of width 20 over 51 ≤ ℓ < 1491. Pseudo-C_ℓ divided by ⟨w²⟩ (${f(m0.fsky_w2, 3)} / ${f(m30.fsky_w2, 3)}); NaMaster, used by the paper, has no Windows build.`],
     ["Estimators", `Pair angles by reweighted least squares on D = tan 2Δα · S with Gaussian covariance; joint 28×28 covariance by linear propagation. Network: GLS with α_143A = 0. MK: numpy port of the reference likelihood, 4 dust-EB amplitudes, Fisher scoring. Beams: ${R.beam_source}.`],
     ["Cross-covariance", `χ²_diff keeps Cov(network, MK) as the paper does, estimated from ${(m0.chi2_diff || {}).n_sims || 0} Wishart draws around the measured bandpowers with both estimators re-run on each draw.` +
-      (m0.bootstrap ? ` Draws ran on ${m0.bootstrap.backend}; the float32 Gram matrices matched float64 to ${m0.bootstrap.float32_max_rel_err.toExponential(1)} (limit ${m0.bootstrap.float32_tolerance.toExponential(0)}), and the run took ${Math.round(m0.bootstrap.seconds / 60)} min.` : "")],
+      (m0.bootstrap ? ` Draws ran on ${m0.bootstrap.backend}` +
+        (m0.bootstrap.float32_max_rel_err != null
+          ? `; the float32 Gram matrices matched float64 to ${m0.bootstrap.float32_max_rel_err.toExponential(1)} (limit ${m0.bootstrap.float32_tolerance.toExponential(0)})`
+          : "; no float32 step, so no precision check applies") +
+        `, and the run took ${Math.round(m0.bootstrap.seconds / 60)} min.` : "")],
     ["Known differences", `Pseudo-C_ℓ instead of NaMaster, rebuilt masks, Fisher-scoring point estimates instead of MCMC, a Monte Carlo pixel window. Differences from the paper's numbers are reported, not tuned away.`],
   ];
   document.getElementById("methods-body").innerHTML = blocks.map(([h, t]) => `<div class="panel"><h3>${h}</h3><p class="note">${t}</p></div>`).join("");

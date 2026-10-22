@@ -74,7 +74,7 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `differential` | pass 7/7 | `20261022T171103Z-7469960ebbb7` |
 | `mk_core` | pass 8/8 | `20261022T171106Z-676f9cad61b0` |
 | `persistence` | pass 6/6 | `20261022T171110Z-1c08a122f3ae` |
-| `accel` | pass 9/9 | `20261022T171108Z-69194bfa2be8` |
+| `accel` | pass 9/9 | `20261022T171313Z-384edd3e5a03` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).

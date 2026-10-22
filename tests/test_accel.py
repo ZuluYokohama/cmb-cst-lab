@@ -46,3 +46,24 @@ def test_draws_are_unbiased_with_gaussian_spread(monkeypatch, force_cpu):
     assert abs(z.mean()) < 0.3 and 0.7 < z.std() < 1.3
     ratio = diag(sd) / (np.sqrt(2 / np.round(nu))[:, None] * diag(cl))  # Var(C_ii) = 2 C_ii^2 / nu
     assert 0.9 < np.median(ratio) < 1.1
+
+
+def test_float32_input_gives_float64_draws(monkeypatch):
+    # Draws are float64 whatever the input dtype, on the numpy backend and (if present) the GPU
+    cl, nu = _spectra(nb=4)
+    for force_cpu in (True, False):
+        if not force_cpu and not _has_xpu():
+            continue
+        if force_cpu:
+            monkeypatch.setattr(accel, "_device", lambda: (None, None))
+        else:
+            monkeypatch.undo()
+        draws = list(accel.wishart_draws(cl.astype(np.float32), nu, 2, seed=1))
+        assert all(d.dtype == np.float64 for d in draws)
+    assert accel.square_roots(cl.astype(np.float32)).dtype == np.float64
+
+
+def test_precision_check_not_reported_without_a_float32_step(monkeypatch):
+    monkeypatch.setattr(accel, "_device", lambda: (None, None))
+    chk = accel.check_float32(*_spectra(nb=3))
+    assert chk["applicable"] is False and chk["max_rel_err"] is None

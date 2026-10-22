@@ -294,5 +294,24 @@
     "duration_s": 2.09,
     "chain_valid": true,
     "chain_head_sha256": "5f065bbff35b923fc3f9f7f11699d14b530441e378743b360ca2729e7302d102"
+  },
+  {
+    "suite": "accel",
+    "verified_at": "2026-10-22T17:13:13.921349+00:00",
+    "passed": true,
+    "passed_count": 9,
+    "total": 9,
+    "receipt_id": "20261022T171313Z-384edd3e5a03",
+    "receipt_sha256": "354566045042007fd9d271fdf2cdc22952e10aa55505046eaacc850d5fedf696",
+    "isolation": "shared",
+    "bundle_sha256": "edee77bb8fa11e697f32796e15d57667ca4afa3e3d755ed2453f9c74542a20e6",
+    "tests_sha256": "d2af144ab9041a023df558cfc58f9e51438f9bac6b889e647cf871c462ae1963",
+    "source_function_sha256": {
+      "accel.py": "058270c1189d57b81981f3336e4b5c4d8b901f10b008de361e309bdb9c529d5f"
+    },
+    "failures": null,
+    "duration_s": 2.63,
+    "chain_valid": true,
+    "chain_head_sha256": "354566045042007fd9d271fdf2cdc22952e10aa55505046eaacc850d5fedf696"
   }
 ]
