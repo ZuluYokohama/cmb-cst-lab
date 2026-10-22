@@ -1,5 +1,8 @@
 # CMB-CST Lab
 
+> **Rights and attribution:** Publicly viewable does not mean freely reusable. No project-wide open-source license is granted for eligible original material; rights are reserved by their respective holders. The codebase includes a separately MIT-licensed adapted calibration component, whose upstream rights and attribution are preserved. See [Rights and Reuse](RIGHTS_AND_REUSE.md) and [provenance audit](docs/PROVENANCE_AND_LICENSING_AUDIT.md). AI assistance and scientific citation do not establish exclusive authorship over every file or method.
+
+
 A first-pass, independent reproduction of the differential polarization-calibration network of
 **Lonappan, Keating & Arnold (2026)**, [arXiv:2609.09149](https://arxiv.org/abs/2609.09149)
 (ApJL 1009, L12), on the public Planck PR4 (NPIPE) maps. It is paired with a cochain/Hodge
