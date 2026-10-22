@@ -21,8 +21,12 @@ verification receipts. Open it in a browser.
    network fit's residual χ², and the sandbox checks that identity.
 3. **β agrees with the paper, at lower precision.** The MK β is consistent with the published
    value but carries about twice its error; see *Differences from the paper*.
-4. **The real sky shows no Galactic-cap asymmetry in sublevel persistence**, and the Cold Spot
-   patch is unremarkable in these statistics.
+4. **Sky-patch persistence is exploratory, not an anomaly claim.** The NGP-minus-SGP mean PD0
+   lifetime shows no clear difference under the 200-sky null, but component counts have
+   small *uncorrected* simulated tail probabilities (NGP 0.02, SGP 0.03, Cold Spot 0.01).
+   These are affected by multiple testing and uncertain noise/foreground/null modeling.
+   Their significance is not established; the persistence stage now includes a conservative
+   finite-Monte-Carlo p-value correction and must be rerun to update cached results.
 
 ## Results
 
@@ -54,7 +58,9 @@ Per-map angles (network, gauge α_143A = 0, f_sky 0.92):
 
 ## Verification
 
-The numerical kernels are numpy-only on purpose, so they can be checked in the **JoVin** sandbox:
+The numerical kernels are numpy-only on purpose, so they can be checked in the **JoVin** sandbox.
+These are *selected kernel-level receipts*, not third-party independent verification of the
+entire Planck-data analysis. The code and assumptions still require external review. The lab uses:
 a network-less container on WSL with Python 3.12 + numpy, 512 MB RAM and a 10 s limit. The
 verifier extracts the exact shipped functions with `ast` (never hand-copied), runs each suite, and
 appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
@@ -83,6 +89,24 @@ plus a common β are applied in map space, and the pipeline recovers them. Over 
 (N_side 256, |b| > 20° cut) the pair-angle pulls have standard deviation 0.90 and mean −0.02, and
 the network χ² averages 19.4 for 21 dof. The Gaussian errors are unbiased and about 10%
 conservative under a cut sky.
+
+## Manuscript-development and correctness notes (2026-10-22)
+
+- An audit draft and a strictly **synthetic** covariance-aware edge-fault GLR pilot are maintained
+  on the `research/cmb-calibration-audit-2026-10` branch, pending review.
+- The edge-fault GLR is standard generalized least squares (GLS) linear-model statistics, **not**
+  a novel CMB or topology estimator. It cannot detect detector-wide node offsets; those are
+  absorbed into the fitted map angles. Triangle closure is mathematically identical to the
+  GLS residual goodness-of-fit statistic when the same covariance is used.
+- The GLS residual termed `curl` in the API is orthogonal to the gradient subspace in the
+  inverse-covariance inner product; it is not generally the ordinary Euclidean `im(d1.T)`.
+- The `PD1` proxy is not a validated exact cubical persistence diagram. The current scientific
+  patch analysis uses `PD0`.
+- The new p-value algorithm affects future recomputations. Committed
+  `results/persistence.json` and the published studio still display *earlier* values.
+  They have deliberately not been overwritten without rerunning the full source-data analysis.
+- `sheaf cohomology`, extraction of physical `E/B curl invariants`, and claims about
+  non-Gaussian primordial phase structure are **not established by the current implementation**.
 
 ## Reproduce
 
