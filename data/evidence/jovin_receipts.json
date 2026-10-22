@@ -449,5 +449,26 @@
     "duration_s": 3.17,
     "chain_valid": true,
     "chain_head_sha256": "53f5c2246dc4d19ebc71d42633442431d949020f00030ef9044041468a4cf1cf"
+  },
+  {
+    "suite": "spatial",
+    "verified_at": "2026-10-22T20:25:37.225957+00:00",
+    "passed": true,
+    "passed_count": 10,
+    "total": 10,
+    "receipt_id": "20261022T202537Z-066b960ada38",
+    "receipt_sha256": "812b828b0ea76d10f28a1d121867df5f9f342bf5bc85d47b8dbb828ab513c3c8",
+    "isolation": "shared",
+    "bundle_sha256": "478dd16d0b4068fac473e1edadea51ced365db80afcce586403661711ba3540f",
+    "tests_sha256": "db022a9721a0e9bc35df669a093b52feac92376fbbd40ebd4ed756703a57c3f3",
+    "source_function_sha256": {
+      "network.py": "54c29bb9e03a0753f55cc7475141fa7178ae116bc28396ff2cc8cfec11678e25",
+      "differential.py": "a5caa7eaa93939fb6e33b5ed0867a5e8dd0a1edc6bc2ce1ef7143b819c5977c2",
+      "spatial.py": "c99abaafae35f13ad73a93efb449d226bae72f2dec097d5a013a4b5bac929024"
+    },
+    "failures": null,
+    "duration_s": 12.1,
+    "chain_valid": true,
+    "chain_head_sha256": "812b828b0ea76d10f28a1d121867df5f9f342bf5bc85d47b8dbb828ab513c3c8"
   }
 ]

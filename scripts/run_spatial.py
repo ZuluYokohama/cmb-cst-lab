@@ -226,16 +226,29 @@ def stage_leakage(n_sims: int) -> None:
 
 # ---------------------------------------------------------------------------- freeze / unblind
 def _hashes() -> dict[str, str]:
-    """SHA-256 of each frozen file with line endings normalised to LF, so the hashes match a fresh
-    clone (git stores LF) as well as a Windows checkout."""
+    """SHA-256 of each frozen code file with line endings normalised to LF, so the hashes match a
+    fresh clone (git stores LF) as well as a Windows checkout."""
     return {f: hashlib.sha256((REPO / f).read_bytes().replace(b"\r\n", b"\n")).hexdigest() for f in FROZEN_FILES}
 
 
+def _input_hashes() -> dict[str, str]:
+    """SHA-256 of every input the unblind step reads: the cached regional spectra and metadata, the
+    public global angles (results/reproduction.json) and the validation outputs the freeze cites."""
+    files = sorted(WORK.glob("*.npz")) + sorted(WORK.glob("*_meta.json"))
+    files += [RESULTS / "reproduction.json", RESULTS / "spatial_validation.json", RESULTS / "spatial_leakage.json"]
+    return {f.relative_to(REPO).as_posix(): hashlib.sha256(f.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+            for f in files}
+
+
+def _git(*args: str) -> subprocess.CompletedProcess:
+    return subprocess.run(["git", *args], cwd=REPO, capture_output=True, check=False)
+
+
 def stage_freeze() -> None:
-    head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPO, capture_output=True, text=True).stdout.strip()
+    head = _git("rev-parse", "HEAD").stdout.decode().strip()
     freeze = {
         "frozen_utc": datetime.now(timezone.utc).isoformat(), "git_head_at_freeze": head,
-        "file_sha256": _hashes(),
+        "file_sha256": _hashes(), "input_sha256": _input_hashes(),
         "statistics": {
             "chi2_spatial": "stationarity of the per-map calibration pattern across regions, dof 7(R-1)",
             "chi2_closure": "triangle closure within regions, dof 21R",
@@ -257,11 +270,15 @@ def stage_unblind() -> None:
     changed = [f for f, h in _hashes().items() if freeze["file_sha256"].get(f) != h]
     if changed:
         raise SystemExit(f"code changed since freeze: {changed}")
-    tracked = subprocess.run(["git", "ls-files", "--error-unmatch", str(FREEZE.relative_to(REPO))], cwd=REPO,
-                             capture_output=True, text=True).returncode == 0
-    if not tracked:
-        raise SystemExit("analysis_freeze.json is not committed")
-    head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPO, capture_output=True, text=True).stdout.strip()
+    if "input_sha256" in freeze:
+        changed_in = [f for f, h in _input_hashes().items() if freeze["input_sha256"].get(f) != h]
+        if changed_in:
+            raise SystemExit(f"inputs changed since freeze: {changed_in}")
+    # The manifest being enforced must be the one committed in HEAD (a staged file is not enough)
+    committed = _git("show", f"HEAD:{FREEZE.relative_to(REPO).as_posix()}")
+    if committed.returncode != 0 or committed.stdout.replace(b"\r\n", b"\n") != FREEZE.read_bytes().replace(b"\r\n", b"\n"):
+        raise SystemExit("analysis_freeze.json in the working tree is not the version committed in HEAD")
+    head = _git("rev-parse", "HEAD").stdout.decode().strip()
     out = {"unblinded_utc": datetime.now(timezone.utc).isoformat(), "git_head": head,
            "freeze_utc": freeze["frozen_utc"], "detection_pte": DETECTION_PTE, "schemes": {}}
     for scheme in SCHEMES:
@@ -279,7 +296,7 @@ def stage_unblind() -> None:
             "chi2_spatial_region": s["chi2_spatial_region"].tolist(), "chi2_closure_region": s["chi2_closure_region"].tolist(),
             "alpha_global_deg": s["alpha_global"].tolist(), "alpha_region_deg": s["alpha_region"].tolist(),
             "gamma_deg": s["gamma"].tolist(),
-            "gamma_sigma_deg": [np.insert(np.sqrt(np.diag(np.linalg.inv(f))), GAUGE, 0.0).tolist() for f in s["fisher_region"]],
+            "gamma_sigma_deg": [np.insert(np.sqrt(np.diag(c)), GAUGE, 0.0).tolist() for c in s["gamma_cov"]],
             "tracer_slope_deg_per_ln": reg["slope"].tolist(), "tracer_slope_sigma": np.insert(np.sqrt(np.diag(reg["slope_cov"])), GAUGE, 0.0).tolist(),
             "tracer_delta_chi2": reg["delta_chi2"], "tracer_dof": reg["dof"], "tracer_pte": network.chi2_sf(reg["delta_chi2"], reg["dof"]),
             "ab_mean_per_edge_deg": ab["mean_per_edge"], "ab_chi2_per_edge": ab["chi2_per_edge"],

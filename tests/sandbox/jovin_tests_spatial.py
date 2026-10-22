@@ -115,3 +115,48 @@ def test_blinded_null_spectra_impose_the_global_pattern_exactly():
     gam = np.array([0, 0, 0, 0, 0, 0, 0.2, 0.2])  # injection adds exactly d0 gamma
     pa2 = pair_angles(inject(n, gam), np.full(8, 1e4), EDGES)
     assert np.max(np.abs(pa2["delta"] / deg - D0 @ (alpha + gam))) < 1e-10
+
+
+def _unequal_covs(rng, r):
+    # regions with very different noise levels (as for different sky fractions)
+    return np.array([c * s for c, s in zip(_covs(rng, r, scale=0.04), np.linspace(0.3, 3.0, r))])
+
+
+def test_gamma_covariance_accounts_for_the_global_fit():
+    rng = np.random.default_rng(7)
+    covs = _unequal_covs(rng, 5)
+    alpha = rng.normal(0, 0.2, 8)
+    gams = np.array([stationarity_split(_draw(rng, covs, alpha), covs, D0, GAUGE)["gamma"] for _ in range(800)])
+    s = stationarity_split(_draw(rng, covs, alpha), covs, D0, GAUGE)
+    keep = [k for k in range(8) if k != GAUGE]
+    for r in range(5):
+        emp = np.var(gams[:, r, keep], axis=0)
+        pred = np.diag(s["gamma_cov"][r])
+        assert np.max(np.abs(emp / pred - 1)) < 0.22           # F_r^-1 - F_tot^-1, not F_r^-1
+        assert np.all(pred < np.diag(np.linalg.inv(s["fisher_region"][r])))
+
+
+def test_tracer_regression_profiles_the_vector_intercept():
+    # Unequal regional Fisher matrices: null slope calibration (delta chi2 ~ chi2_7) and agreement
+    # with an explicit stacked GLS over (a, k).
+    rng = np.random.default_rng(8)
+    covs = _unequal_covs(rng, 7)
+    tracer = np.linspace(0.2, 5.0, 7) ** 1.5
+    alpha = rng.normal(0, 0.2, 8)
+    dchi = []
+    for _ in range(200):
+        s = stationarity_split(_draw(rng, covs, alpha), covs, D0, GAUGE)
+        dchi.append(tracer_regression(s["gamma"], s["fisher_region"], tracer, GAUGE)["delta_chi2"])
+    assert abs(np.mean(dchi) - 7) < 3.5 * np.sqrt(14 / 200)
+    s = stationarity_split(_draw(rng, covs, alpha), covs, D0, GAUGE)
+    keep = [k for k in range(8) if k != GAUGE]
+    g, fis = s["gamma"][:, keep], s["fisher_region"]
+    rows, rhs = np.zeros((14, 14)), np.zeros(14)
+    for r in range(7):
+        x = np.hstack([np.eye(7), tracer[r] * np.eye(7)])
+        rows += x.T @ fis[r] @ x
+        rhs += x.T @ fis[r] @ g[r]
+    k_explicit = np.linalg.solve(rows, rhs)[7:]
+    reg = tracer_regression(s["gamma"], fis, tracer, GAUGE)
+    assert np.allclose(reg["slope"][keep], k_explicit, atol=1e-10)
+    assert np.allclose(reg["slope_cov"], np.linalg.inv(rows)[7:, 7:], atol=1e-10)

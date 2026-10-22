@@ -57,6 +57,9 @@ def stationarity_split(deltas: np.ndarray, covs: np.ndarray, d0: np.ndarray, gau
     return {
         "alpha_global": full(alpha_g), "alpha_region": full(alpha_r), "gamma": full(diff),
         "cov_global": np.linalg.inv(f_tot), "fisher_region": fis,
+        # gamma_r = alpha_r - alpha_global and region r is part of the global fit:
+        # Cov(gamma_r) = F_r^{-1} - F_tot^{-1} (reduced, gauge excluded)
+        "gamma_cov": np.linalg.inv(fis) - np.linalg.inv(f_tot)[None],
         "chi2_total": chi_total, "dof_total": r_count * e_count - (n - 1),
         "chi2_closure": float(chi_closure_r.sum()), "dof_closure": r_count * (e_count - (n - 1)),
         "chi2_closure_region": chi_closure_r,
@@ -85,22 +88,34 @@ def same_frequency_edges(detectors: list[str], edges: list[tuple[int, int]]) -> 
 
 
 def tracer_regression(gamma: np.ndarray, fisher: np.ndarray, tracer: np.ndarray, gauge: int) -> dict[str, object]:
-    """Fit gamma_r = k * t_r (one slope per map, centred tracer) by GLS with the regional Fisher
-    matrices as weights; chi^2 improvement tests whether the spatial pattern follows the tracer.
+    """Joint GLS of alpha_r = a + k t_r (vector intercept a, one slope per map) with the full
+    regional Fisher matrices F_r as weights. The intercept is profiled exactly, so the slope
+    Fisher matrix is the Schur complement S2 - S1 F_tot^{-1} S1 (S1 = sum t_r F_r,
+    S2 = sum t_r^2 F_r); a scalar-centred tracer is only equivalent when all F_r are proportional.
 
-    gamma: (R, n) with the gauge entry 0; fisher: (R, n-1, n-1); tracer: (R,).
+    gamma: (R, n) regional drifts (any common shift is absorbed by a); fisher: (R, n-1, n-1);
+    tracer: (R,). delta_chi2 = chi2(intercept only) - chi2(intercept + slopes), dof n-1.
     """
     keep = [k for k in range(gamma.shape[1]) if k != gauge]
     g = gamma[:, keep]
-    t = tracer - np.average(tracer, weights=np.trace(fisher, axis1=1, axis2=2))
-    lhs = np.einsum("r,rkl->kl", t * t, fisher)
-    rhs = np.einsum("r,rkl,rl->k", t, fisher, g)
-    k_hat = np.linalg.solve(lhs, rhs)
-    chi_before = float(np.einsum("rk,rkl,rl->", g, fisher, g))
-    resid = g - np.outer(t, k_hat)
-    chi_after = float(np.einsum("rk,rkl,rl->", resid, fisher, resid))
-    return {"slope": np.insert(k_hat, gauge, 0.0), "slope_cov": np.linalg.inv(lhs),
-            "delta_chi2": chi_before - chi_after, "dof": len(keep)}
+    t = np.asarray(tracer, dtype=float)
+    f_tot = fisher.sum(0)
+    s1 = np.einsum("r,rkl->kl", t, fisher)
+    s2 = np.einsum("r,rkl->kl", t * t, fisher)
+    b0 = np.einsum("rkl,rl->k", fisher, g)
+    b1 = np.einsum("r,rkl,rl->k", t, fisher, g)
+    m = len(keep)
+    big = np.block([[f_tot, s1], [s1, s2]])
+    sol = np.linalg.solve(big, np.r_[b0, b1])
+    a_hat, k_hat = sol[:m], sol[m:]
+    a0 = np.linalg.solve(f_tot, b0)  # intercept-only fit
+    r0 = g - a0
+    r1 = g - a_hat - np.outer(t, k_hat)
+    chi_before = float(np.einsum("rk,rkl,rl->", r0, fisher, r0))
+    chi_after = float(np.einsum("rk,rkl,rl->", r1, fisher, r1))
+    slope_fisher = s2 - s1 @ np.linalg.solve(f_tot, s1)
+    return {"slope": np.insert(k_hat, gauge, 0.0), "slope_cov": np.linalg.inv(slope_fisher),
+            "delta_chi2": chi_before - chi_after, "dof": m}
 
 
 def null_spectra(cl: np.ndarray, alpha_deg: np.ndarray) -> np.ndarray:
