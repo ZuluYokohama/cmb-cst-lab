@@ -228,9 +228,7 @@ def stage_leakage(n_sims: int) -> None:
 def _hashes() -> dict[str, str]:
     """SHA-256 of each frozen file with line endings normalised to LF, so the hashes match a fresh
     clone (git stores LF) as well as a Windows checkout."""
-    return {f: hashlib.sha256((REPO / f).read_bytes().replace(b"
-", b"
-")).hexdigest() for f in FROZEN_FILES}
+    return {f: hashlib.sha256((REPO / f).read_bytes().replace(b"\r\n", b"\n")).hexdigest() for f in FROZEN_FILES}
 
 
 def stage_freeze() -> None:

@@ -169,7 +169,7 @@ NaMaster are not needed.
   their cross-covariance from 2,000 Wishart draws of the bandpowers (drawn on the GPU when one
   is available; see *Hardware acceleration*).
 - **Persistence:** 20° patches of the 143 GHz (A+B)/2 temperature map at the Galactic caps and the
-  Cold Spot, PD₀ statistics, and 200 Gaussian skies from the measured spectrum.
+  Cold Spot, PD₀ statistics, and 1,000 Gaussian skies from the measured spectrum.
 
 ## Differences from the paper
 
