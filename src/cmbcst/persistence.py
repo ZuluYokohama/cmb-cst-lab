@@ -53,8 +53,11 @@ class UnionFindPersistence:
 def compute_cubical_persistent_homology_2d(
     field: np.ndarray, periodic: bool = True
 ) -> Tuple[np.ndarray, np.ndarray]:
-    """Computes exact 2D sublevel persistent homology diagrams PD_0 (connected components)
-    and PD_1 (loops / 1-cycles) on an H x W grid.
+    """Compute graph-based sublevel PD_0 and an approximate PD_1 diagnostic.
+
+    PD_0 is exact for the chosen four-neighbor pixel graph. The dual-superlevel
+    PD_1 computation is only a lower-bound proxy and must NOT be described as
+    a complete cubical-complex loop-persistence diagram.
     """
     h, w = field.shape
     flat = field.ravel()
@@ -133,6 +136,24 @@ def evaluate_betti_and_euler(
 def lifetimes(pd: np.ndarray, drop_essential: bool = False) -> np.ndarray:
     p = pd[:-1] if drop_essential else pd
     return p[:, 1] - p[:, 0] if len(p) else np.zeros(0)
+
+
+def empirical_two_sided_mc_pvalue(observed: float, null: np.ndarray) -> float:
+    """Conservative two-sided Monte Carlo tail with a +1 correction.
+
+    For exchangeable null draws and the observed statistic, prevents p=0.
+    This is a single-test p-value only: scanning patches/statistics additionally
+    requires a pre-specified multiplicity correction. The original cached
+    results/persistence.json remains from the earlier estimator until the
+    full real-data stage is rerun.
+    """
+    null = np.asarray(null, dtype=float)
+    if null.ndim != 1 or len(null) < 1 or not np.isfinite(observed) or not np.all(np.isfinite(null)):
+        raise ValueError("Observed statistic and finite null sample required")
+    n = len(null)
+    return float(min(1.0, 2.0 * min(
+        (1 + np.count_nonzero(null <= observed)) / (n + 1),
+        (1 + np.count_nonzero(null >= observed)) / (n + 1))))
 
 
 def patch_summary(field: np.ndarray) -> dict[str, float]:
