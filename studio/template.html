@@ -99,6 +99,7 @@ svg .lbl { fill: var(--ink); font: 500 12px var(--mono); }
 .note { font-size: 13px; color: var(--muted); max-width: 72ch; }
 .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
 code { font: 13px var(--mono); background: var(--grid); padding: 1px 5px; border-radius: 4px; }
+.srcline { font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 10px; }
 footer { padding-top: 28px; font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
 @media (prefers-reduced-motion: no-preference) { .edge { transition: stroke-width .15s, opacity .15s; } }
 </style>
@@ -108,6 +109,7 @@ footer { padding-top: 28px; font-size: 13px; color: var(--muted); display: grid;
     <div class="eyebrow" id="mast-eyebrow">Planck PR4 · NPIPE A/B detector splits · 8 maps · 28 pairs</div>
     <h1>Does the Planck polarization calibration network close?</h1>
     <p class="lede" id="lede"></p>
+    <p class="srcline"><a href="https://github.com/ZuluYokohama/cmb-cst-lab">Source, data manifest and sandbox evidence on GitHub</a> · <a href="https://arxiv.org/abs/2609.09149">The paper (arXiv:2609.09149)</a></p>
     <div class="verdict" id="verdict"></div>
   </header>
 
@@ -204,6 +206,7 @@ footer { padding-top: 28px; font-size: 13px; color: var(--muted); display: grid;
 
   <footer>
     <div>Data: ESA Planck PR4 (NPIPE) frequency maps via NERSC; masks from the Planck Legacy Archive; beam windows from PLANCK_RIMO_TF_R4.00. Estimator and likelihood follow Lonappan, Keating &amp; Arnold (2026) and their MIT-licensed pipeline.</div>
+    <div>Repository: <a href="https://github.com/ZuluYokohama/cmb-cst-lab">github.com/ZuluYokohama/cmb-cst-lab</a> · rebuild this page with <code>python scripts/build_studio.py</code>.</div>
     <div id="generated"></div>
   </footer>
 </div>

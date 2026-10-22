@@ -116,7 +116,17 @@ def main() -> int:
     out = tpl.replace("/*__DATA__*/null", payload)
     assert out != tpl, "data placeholder not found in template"
     (REPO / "studio" / "index.html").write_text(out, encoding="utf-8")
-    print(f"studio/index.html: {len(out) / 1024:.0f} KB")
+    # GitHub Pages serves docs/ on main: a full HTML document (the artifact host adds its own skeleton)
+    site = REPO / "docs"
+    site.mkdir(exist_ok=True)
+    split = out.index('<div class="wrap">')  # title, fonts and styles go in <head>, the page in <body>
+    head = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
+            '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
+            '<meta name="description" content="Planck PR4 differential polarization-calibration network, '
+            'reproduced on public maps.">\n' + out[:split] + '</head>\n<body>\n')
+    (site / "index.html").write_text(head + out[split:] + "\n</body>\n</html>\n", encoding="utf-8")
+    (site / ".nojekyll").write_text("", encoding="utf-8")
+    print(f"studio/index.html + docs/index.html: {len(out) / 1024:.0f} KB")
     readme_tables(data)
     print("README.md tables updated")
     return 0
