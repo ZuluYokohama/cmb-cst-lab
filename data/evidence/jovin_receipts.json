@@ -470,5 +470,70 @@
     "duration_s": 12.1,
     "chain_valid": true,
     "chain_head_sha256": "812b828b0ea76d10f28a1d121867df5f9f342bf5bc85d47b8dbb828ab513c3c8"
+  },
+  {
+    "suite": "simulator",
+    "verified_at": "2026-10-22T20:46:10.845845+00:00",
+    "passed": true,
+    "passed_count": 8,
+    "total": 8,
+    "receipt_id": "20261022T204610Z-c3fe16ae3a78",
+    "receipt_sha256": "d828b2b07c0df21b2843bea4b283eaf6d2594b679214082dad531a6fc1f2186a",
+    "isolation": "shared",
+    "bundle_sha256": "2c0b95f86446e7b2e2c76450bc1ceb2d936eb030f3d339c1bc1dc00c32b8d9a5",
+    "tests_sha256": "cde7abe3b9427aa203acc0285013a670b2420c5c52c93108c97bc2367d1f658b",
+    "source_function_sha256": {
+      "network.py": "54c29bb9e03a0753f55cc7475141fa7178ae116bc28396ff2cc8cfec11678e25",
+      "differential.py": "a5caa7eaa93939fb6e33b5ed0867a5e8dd0a1edc6bc2ce1ef7143b819c5977c2",
+      "simulator.py": "78534838b38ad8c94d3a1924c9a27cedd2d4aa6a4bd6c959fa130d907d47adf6"
+    },
+    "failures": null,
+    "duration_s": 3.71,
+    "chain_valid": true,
+    "chain_head_sha256": "e5bdd9717b16e0b2a4d06ddb7b2a26453128b4413aa02f5a4c34b5ea36c26df8"
+  },
+  {
+    "suite": "npe",
+    "verified_at": "2026-10-22T20:46:14.416360+00:00",
+    "passed": false,
+    "passed_count": 5,
+    "total": 6,
+    "receipt_id": "20261022T204614Z-051e6b733189",
+    "receipt_sha256": "e5bdd9717b16e0b2a4d06ddb7b2a26453128b4413aa02f5a4c34b5ea36c26df8",
+    "isolation": "shared",
+    "bundle_sha256": "e2ec134e1b3dc1edf14e465cea2a0f4dad8f21fb0238d65fbcf9af84374fb224",
+    "tests_sha256": "ccd695c9eac4fa7e01a310120bf24dc1a9ed771d0d42fc266b38155c58615abe",
+    "source_function_sha256": {
+      "npe.py": "335ef1b788ce24f45f59f71e74cb9e58dc8928134fdc9285e5bb339f92ebe109"
+    },
+    "failures": [
+      {
+        "name": "test_device_log_density_recomputed_in_float64",
+        "outcome": "failed",
+        "message": "AssertionError at line 67: assert np.max(np.abs(lp - np.array(a[\"log_prob_device\"]))) < a[\"tolerance\"]"
+      }
+    ],
+    "duration_s": 3.57,
+    "chain_valid": true,
+    "chain_head_sha256": "e5bdd9717b16e0b2a4d06ddb7b2a26453128b4413aa02f5a4c34b5ea36c26df8"
+  },
+  {
+    "suite": "npe",
+    "verified_at": "2026-10-22T20:47:03.699345+00:00",
+    "passed": true,
+    "passed_count": 6,
+    "total": 6,
+    "receipt_id": "20261022T204703Z-e4e6aa7bd505",
+    "receipt_sha256": "ecf30d1ca1c76947c29e2473741d603efada2bcf28ef358f1e95f88160d6140f",
+    "isolation": "shared",
+    "bundle_sha256": "e2ec134e1b3dc1edf14e465cea2a0f4dad8f21fb0238d65fbcf9af84374fb224",
+    "tests_sha256": "730a94b82603c6b3bd8710490c91644421d8821dfd2cce9a314cb2653e342feb",
+    "source_function_sha256": {
+      "npe.py": "335ef1b788ce24f45f59f71e74cb9e58dc8928134fdc9285e5bb339f92ebe109"
+    },
+    "failures": null,
+    "duration_s": 3.74,
+    "chain_valid": true,
+    "chain_head_sha256": "ecf30d1ca1c76947c29e2473741d603efada2bcf28ef358f1e95f88160d6140f"
   }
 ]

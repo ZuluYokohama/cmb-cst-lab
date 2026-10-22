@@ -68,6 +68,18 @@ SUITES: dict[str, tuple[list[tuple[str, list[str] | None]], str]] = {
         ],
         "tests/sandbox/jovin_tests_spatial.py",
     ),
+    "simulator": (
+        [
+            ("src/cmbcst/network.py", None),
+            ("src/cmbcst/differential.py", None),
+            ("src/cmbcst/simulator.py", None),
+        ],
+        "tests/sandbox/jovin_tests_simulator.py",
+    ),
+    "npe": (
+        [("src/cmbcst/npe.py", None)],
+        "tests/sandbox/jovin_tests_npe.py",
+    ),
     "persistence": (
         [("src/cmbcst/persistence.py", None)],
         "tests/sandbox/jovin_tests_persistence.py",
