@@ -497,6 +497,7 @@ function receipts() {
     differential: "exact recovery, blindness to β and sky EB, covariance calibrated over 40 Wishart skies",
     mk_core: "port matches the reference MK rows to 1e-14, exact α/β recovery, agreement with the network",
     persistence: "β₀ from PD₀ equals flood-fill counts; pins the PD₁ lower-bound behaviour",
+    accel: "bootstrap kernels, plus GPU (accepted) and NPU (rejected) Gram matrices recomputed in float64",
   };
   document.getElementById("receipt-body").innerHTML = Object.keys(what).map(s => {
     const r = RC[s]; if (!r) return `<tr><td class="n">${s}</td><td>${what[s]}</td><td>not run</td><td>–</td></tr>`;
