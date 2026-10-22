@@ -109,7 +109,13 @@ def main() -> int:
     rep = json.loads((REPO / "results" / "reproduction.json").read_text(encoding="utf-8"))
     add_curl_sigma(rep)
     pers_path = REPO / "results" / "persistence.json"
+    def opt(name):
+        p = REPO / "results" / name
+        return json.loads(p.read_text(encoding="utf-8")) if p.exists() else None
+
     data = {"reproduction": rep, "persistence": json.loads(pers_path.read_text(encoding="utf-8")) if pers_path.exists() else None,
+            "spatial": opt("spatial.json"), "spatial_validation": opt("spatial_validation.json"),
+            "spatial_leakage": opt("spatial_leakage.json"), "npe": opt("npe.json"), "npe_validation": opt("npe_validation.json"),
             "cited": CITED, "receipts": latest_receipts()}
     tpl = (REPO / "studio" / "template.html").read_text(encoding="utf-8")
     payload = json.dumps(data, separators=(",", ":")).replace("</", "<\\/")

@@ -372,6 +372,47 @@
     "chain_head_sha256": "2a98925fdf023e0502bc95bcfbb8f5daccbe313875b4de584c28567145935104"
   },
   {
+    "suite": "spatial",
+    "verified_at": "2026-10-22T17:43:40.468166+00:00",
+    "passed": true,
+    "passed_count": 7,
+    "total": 7,
+    "receipt_id": "20261022T174340Z-6d9060c6f91e",
+    "receipt_sha256": "30828e26e3ad1759607721efbf2b2eff1cbc37f64cd1f28f2fcabe35e0cd5eda",
+    "isolation": "shared",
+    "bundle_sha256": "21b53f58f06c339fc8609581ac4dd19f219274fc2a8241cf1a6b7fb83e43f6fe",
+    "tests_sha256": "5c0c7e183bee029bd8b8c02aac64f2ce1c3c4c2e444dbe144db524deae121d72",
+    "source_function_sha256": {
+      "network.py": "4ed7557deded4391b4a3424c9e8a3dbf3dd66e512bf6bc33f758e8cb82bd08a5",
+      "spatial.py": "cbb3ee08b5b9cded7b46961d3aa6c8f23d03e8fc4038b719452a4d76a50ae4b7"
+    },
+    "failures": null,
+    "duration_s": 2.56,
+    "chain_valid": true,
+    "chain_head_sha256": "30828e26e3ad1759607721efbf2b2eff1cbc37f64cd1f28f2fcabe35e0cd5eda"
+  },
+  {
+    "suite": "spatial",
+    "verified_at": "2026-10-22T17:46:04.174181+00:00",
+    "passed": true,
+    "passed_count": 8,
+    "total": 8,
+    "receipt_id": "20261022T174604Z-cea3f175e138",
+    "receipt_sha256": "fa54fe10faa5d99bd93a2bb1efdb9b5df1741cde072bf1c0102c7efdf8e3485a",
+    "isolation": "shared",
+    "bundle_sha256": "87a092018c8ed8320285a6411317919ad057a2bd15f011b2045be57303dbab6e",
+    "tests_sha256": "3399fd98673f1e529a83120691c96eb9f09277e07c4d58805b5959ea31dd30a9",
+    "source_function_sha256": {
+      "network.py": "4ed7557deded4391b4a3424c9e8a3dbf3dd66e512bf6bc33f758e8cb82bd08a5",
+      "differential.py": "a5caa7eaa93939fb6e33b5ed0867a5e8dd0a1edc6bc2ce1ef7143b819c5977c2",
+      "spatial.py": "a2ad6b048e3db98bcbeb3c77aa69dab3b3f391115ed3eda5bdcecc57663d99c4"
+    },
+    "failures": null,
+    "duration_s": 2.47,
+    "chain_valid": true,
+    "chain_head_sha256": "fa54fe10faa5d99bd93a2bb1efdb9b5df1741cde072bf1c0102c7efdf8e3485a"
+  },
+  {
     "suite": "network",
     "verified_at": "2026-10-22T18:26:16.114346+00:00",
     "passed": true,
