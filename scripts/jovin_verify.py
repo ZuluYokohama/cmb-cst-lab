@@ -56,6 +56,10 @@ SUITES: dict[str, tuple[list[tuple[str, list[str] | None]], str]] = {
         ],
         "tests/sandbox/jovin_tests_mk_core.py",
     ),
+    "accel": (
+        [("src/cmbcst/accel.py", None)],
+        "tests/sandbox/jovin_tests_accel.py",
+    ),
     "persistence": (
         [("src/cmbcst/persistence.py", None)],
         "tests/sandbox/jovin_tests_persistence.py",

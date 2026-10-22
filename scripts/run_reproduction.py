@@ -27,7 +27,7 @@ import numpy as np
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 
-from cmbcst import DETECTORS, FREQS, network, spectra, theory  # noqa: E402
+from cmbcst import DETECTORS, FREQS, accel, network, spectra, theory  # noqa: E402
 from cmbcst.data import path_of  # noqa: E402
 from cmbcst.differential import pair_angles  # noqa: E402
 from cmbcst.mk_likelihood import MKLikelihood, anchored_beta  # noqa: E402
@@ -198,24 +198,6 @@ def stage_transfer(force: bool, n_sims: int = 8) -> None:
         log(f"transfer mask {k}: EE {t_ee[[0, 20, 40, 60]].round(3)} BB {t_bb[[0, 20, 40, 60]].round(3)}")
 
 
-def wishart_sims(cl: np.ndarray, nu: np.ndarray, n_sims: int, seed: int):
-    """Parametric bootstrap: bin-level Wishart draws around the measured bandpowers."""
-    rng = np.random.default_rng(seed)
-    nb, nf, _ = cl.shape
-    chol = []
-    for b in range(nb):
-        w, v = np.linalg.eigh(cl[b])
-        w = np.clip(w, 1e-12 * w.max(), None)
-        chol.append(v * np.sqrt(w))
-    dof = np.maximum(np.round(nu).astype(int), nf + 1)
-    for _ in range(n_sims):
-        out = np.zeros_like(cl)
-        for b in range(nb):
-            x = chol[b] @ rng.standard_normal((nf, dof[b]))
-            out[b] = x @ x.T / dof[b]
-        yield out
-
-
 def pair_spectra_export(cl, nu, edges_k8, delta) -> dict:
     """D_ij, S_ij and the residual sigma per bin (uK^2) for the studio's per-pair panel."""
     from cmbcst.differential import pair_spectra, residual_cov
@@ -244,10 +226,12 @@ def beta_profile(lk: MKLikelihood, theta_best: np.ndarray, half_width_deg: float
             "quadratic_beta_deg": float(-c[1] / (2 * c[0])), "quadratic_sigma_deg": float(1 / np.sqrt(c[0]))}
 
 
-def run_estimators(cl, nu, th_ee, th_bb, psi, edges_k8, d0, d1):
+def run_estimators(cl, nu, th_ee, th_bb, psi, edges_k8, d0, d1, mk_start=None):
+    """Pair angles, network and MK fit. `mk_start` warm-starts the MK fit (bootstrap draws start
+    from the data solution; the converged point is the same to < 1e-9 rad)."""
     pa = pair_angles(cl, nu, edges_k8)
     net = network.solve_network(pa["delta"], pa["cov"], d0, GAUGE)
-    mk = MKLikelihood(cl, nu, th_ee, th_bb, psi=psi, n_a=4).fit()
+    mk = MKLikelihood(cl, nu, th_ee, th_bb, psi=psi, n_a=4).fit(theta0=mk_start)
     return pa, net, mk
 
 
@@ -316,16 +300,20 @@ def stage_analyse(n_sims: int) -> dict:
 
         # Parametric bootstrap for C_rel, C_MK and their cross term (the paper keeps it)
         if k == "0" and n_sims:
-            log(f"mask {k}: {n_sims} bootstrap sims")
-            qs_rel, qs_mk, th_s, anc_s = [], [], [], []
-            for n_done, cls in enumerate(wishart_sims(cl, nu, n_sims, seed=2026), 1):
-                _, nets, mks = run_estimators(cls, nu, th_ee, th_bb, psi, edges_k8, d0, d1)
+            chk = accel.check_float32(cl, nu, seed=7)
+            prec = f"float32 check {chk['max_rel_err']:.1e}" if chk["applicable"] else "float32 check not applicable"
+            log(f"mask {k}: {n_sims} bootstrap draws on {chk['backend']}, {prec}")
+            qs_rel, qs_mk, th_s, anc_s, unconverged = [], [], [], [], 0
+            t_boot = time.perf_counter()
+            for n_done, cls in enumerate(accel.wishart_draws(cl, nu, n_sims, seed=2026), 1):
+                _, nets, mks = run_estimators(cls, nu, th_ee, th_bb, psi, edges_k8, d0, d1, mk_start=mk["theta"])
+                unconverged += not mks["converged"]
                 qs_rel.append(network.centering(8) @ nets["alpha"])
                 qs_mk.append(network.centering(8) @ mks["alpha"])
                 anc_s.append(mks["alpha"][sub])
                 th_s.append(MKLikelihood(cls[:, fidx][:, :, fidx], nu, th_ee[:, sub][:, :, sub],
-                                         th_bb[:, sub][:, :, sub]).fit(free=np.arange(4))["alpha"])
-                if n_done % 25 == 0:
+                                         th_bb[:, sub][:, :, sub]).fit(theta0=th_fit["theta"], free=np.arange(4))["alpha"])
+                if n_done % 250 == 0:
                     log(f"  sims {n_done}/{n_sims}")
             qr, qm = np.array(qs_rel), np.array(qs_mk)
             c_rel, c_mk = np.cov(qr.T), np.cov(qm.T)
@@ -333,6 +321,10 @@ def stage_analyse(n_sims: int) -> dict:
             diff = network.chi2_diff(q_rel, q_mk, c_rel, c_mk, c_x)
             rec["chi2_diff"] = {"chi2": diff["chi2"], "dof": diff["dof"], "pte": diff["pte"],
                                 "pulls": dict(zip(DETECTORS, diff["pulls"].tolist())), "n_sims": n_sims}
+            rec["bootstrap"] = {"n_draws": n_sims, "backend": chk["backend"], "float32_check_applicable": chk["applicable"],
+                                "float32_max_rel_err": chk["max_rel_err"],
+                                "float32_tolerance": accel.REL_TOL, "unconverged_mk_fits": int(unconverged),
+                                "seconds": round(time.perf_counter() - t_boot, 1)}
             rec["bootstrap_sigma_rel_deg"] = (np.sqrt(np.diag(c_rel)) / DEG).tolist()
             rec["bootstrap_sigma_mk_deg"] = (np.sqrt(np.diag(c_mk)) / DEG).tolist()
             ths, ancs = np.array(th_s), np.array(anc_s)
@@ -451,7 +443,7 @@ def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--stages", default="masks,alms,spectra,transfer,analyse,persistence")
     ap.add_argument("--force", default="")
-    ap.add_argument("--n-sims", type=int, default=200)
+    ap.add_argument("--n-sims", type=int, default=2000)
     ap.add_argument("--n-persistence-sims", type=int, default=200)
     args = ap.parse_args(argv)
     WORK.mkdir(parents=True, exist_ok=True)

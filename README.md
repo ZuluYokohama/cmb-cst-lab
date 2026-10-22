@@ -35,8 +35,8 @@ comparison.
 | Sky fraction (masks "0" / "30") | 0.920 / 0.600 | 0.92 / 0.62 |
 | Network residual χ² (21 dof), f_sky 0.92 | 28.8, PTE 0.12 | not reported |
 | Network residual χ² (21 dof), f_sky 0.62 | 30.7, PTE 0.08 | not reported |
-| Network vs MK, χ²_diff (7 dof) | 3.27, PTE 0.86 | 8.18, PTE 0.32 |
-| Largest per-map pull | 143B +0.78 | 143B +1.8 |
+| Network vs MK, χ²_diff (7 dof) | 3.32, PTE 0.85 | 8.18, PTE 0.32 |
+| Largest per-map pull | 143B +0.70 | 143B +1.8 |
 | Pearson r over 28 pair angles | 0.984 | 0.98 |
 | MK β, f_sky 0.92 | 0.25° ± 0.23° | 0.37° ± 0.11° |
 | Anchored β, f_sky 0.92 | 0.24° ± 0.23° | 0.37° ± 0.12° |
@@ -65,17 +65,25 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `differential` | exact pair-angle recovery, blindness to β and sky EB, covariance calibrated over 40 Wishart skies |
 | `mk_core` | the likelihood port matches the reference model rows to 1e-14, exact α/β recovery, agreement with the network |
 | `persistence` | β₀ from PD₀ equals flood-fill counts; the PD₁ lower-bound behaviour is pinned |
+| `accel` | the bootstrap's numpy kernels, and **Gram matrices recorded on this machine's GPU and NPU**, recomputed in float64 from the same normals (see *Hardware acceleration*) |
 
 <!-- RECEIPTS:START -->
 | Suite | Result | Receipt |
 |---|---|---|
-| `network` | pass 11/11 | `20261022T162235Z-2682b8ed3d8e` |
-| `differential` | pass 7/7 | `20261022T162238Z-56a6af847c12` |
-| `mk_core` | pass 7/7 | `20261022T162240Z-d35036cacbf4` |
-| `persistence` | pass 6/6 | `20261022T162243Z-47da1c40da3c` |
+| `network` | pass 11/11 | `20261022T171100Z-580748193292` |
+| `differential` | pass 7/7 | `20261022T171103Z-7469960ebbb7` |
+| `mk_core` | pass 8/8 | `20261022T171106Z-676f9cad61b0` |
+| `persistence` | pass 6/6 | `20261022T171110Z-1c08a122f3ae` |
+| `accel` | pass 10/10 | `20261022T172121Z-5cd7a09a18e0` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).
+
+**Continuous integration.** `.github/workflows/verify.yml` runs on every push and pull request,
+on Ubuntu and Windows. It runs the local tests, and all sandbox suites under plain pytest via
+`scripts/run_sandbox_suites.py`, using the same `ast` bundles as JoVin. CI has no JoVin harness
+and no GPU, so it issues no receipts and skips the XPU tests. The recorded GPU/NPU attestation
+in the `accel` suite is still recomputed there.
 
 Steps that need ducc0 or the full-resolution maps cannot run in the sandbox. They are covered by
 local `pytest`, including an end-to-end injection on synthetic HEALPix maps: per-map rotations
@@ -84,11 +92,45 @@ plus a common β are applied in map space, and the pipeline recovers them. Over 
 the network χ² averages 19.4 for 21 dof. The Gaussian errors are unbiased and about 10%
 conservative under a cut sky.
 
+## Hardware acceleration
+
+The bootstrap behind χ²_diff draws 2,000 Wishart samples of the bandpowers and refits both
+estimators on each one. Two changes make that practical on a laptop:
+
+- **GPU draws (`src/cmbcst/accel.py`).** On an Intel Arc GPU (PyTorch XPU; developed on an Arc
+  140V) the normals Z and the Gram matrices ZZᵀ/ν, a 16 × ~5·10⁴ product per bin, are formed in
+  float32, because Xe2 has no fast float64. The 16 × 16 transform L·(ZZᵀ/ν)·Lᵀ stays in float64
+  on the CPU. Each run first recomputes a batch from the same normals in float64 and stops if the
+  float32 result differs by more than 10⁻⁵ relative (measured: ~3·10⁻⁶). Without an XPU device
+  the same draws run in numpy.
+- **Batched likelihood (float64, CPU).** The MK likelihood evaluates all 72 bins in one batched
+  pass instead of a per-bin loop. It is about 10× faster, equal to the loop to 1e-12 (sandbox
+  suite `mk_core`), and the fit reproduces the previous one to 2·10⁻¹⁰ degrees.
+
+Measured per draw: 41 ms on the Arc GPU against 414 ms in numpy, and 0.2 s per MK fit against
+~2 s before. The likelihoods stay in float64 throughout; only the Gram products use the GPU.
+**Device attestation (`scripts/gpu_attest.py`).** The sandbox cannot reach a GPU or NPU, but it
+can check their output. The attestation script builds normals with a counter-based generator
+(splitmix64 + Box–Muller, pure integer arithmetic, so the sandbox regenerates them bit for bit).
+It runs ZZᵀ/ν at three real Planck bin sizes (ν up to ~5·10⁴) on each accelerator and records
+the raw results in `tests/sandbox/jovin_tests_accel.py`. The `accel` suite recomputes everything
+in float64 and checks each device's error and its accept/reject decision:
+
+| Device | Max relative error vs float64 | Decision (limit 10⁻⁵) |
+|---|---|---|
+| Intel Arc 140V GPU, PyTorch XPU, float32 | 3.2e-06 | used |
+| Intel AI Boost NPU, OpenVINO | 6.8e-04 | not used (reduced-precision arithmetic, 68× over the limit) |
+
+The suite also asserts the GPU result is not a float64 copy (error > 10⁻⁹), so the receipt shows
+the GPU's own float32 arithmetic. The GPU's random-number stream cannot be replayed in the
+sandbox; its statistics are tested locally in `tests/test_accel.py`.
+
 ## Reproduce
 
 ```bash
 python -m venv .venv
 .venv/Scripts/python -m pip install -e ".[dev]"
+.venv/Scripts/python -m pip install torch --index-url https://download.pytorch.org/whl/xpu   # optional, Intel Arc GPU
 .venv/Scripts/python -m cmbcst.data                 # ~17 GB: 8 NPIPE maps, 3 PLA products, beam tarball
 .venv/Scripts/python scripts/run_reproduction.py    # masks -> alms -> spectra -> transfer -> analyse -> persistence
 .venv/Scripts/python scripts/build_studio.py        # studio/index.html + README tables
@@ -117,7 +159,8 @@ NaMaster are not needed.
   ΛCDM term. Fisher scoring gives the point estimate and covariance; a profile-likelihood scan
   over β confirms σ.
 - **χ²_diff:** the network and MK patterns on the 7-dimensional differential subspace, keeping
-  their cross-covariance from 200 Wishart draws of the bandpowers.
+  their cross-covariance from 2,000 Wishart draws of the bandpowers (drawn on the GPU when one
+  is available; see *Hardware acceleration*).
 - **Persistence:** 20° patches of the 143 GHz (A+B)/2 temperature map at the Galactic caps and the
   Cold Spot, PD₀ statistics, and 200 Gaussian skies from the measured spectrum.
 
@@ -140,8 +183,9 @@ NaMaster are not needed.
 ```
 src/cmbcst/      network.py (cochain complex, GLS, closures), differential.py (pair angles),
                  mk_likelihood.py (MK port), spectra.py (ducc0 SHTs), masks.py, beams.py,
-                 theory.py (CAMB, pixel window), persistence.py, data.py
-scripts/         run_reproduction.py, build_studio.py, jovin_verify.py
+                 theory.py (CAMB, pixel window), persistence.py, accel.py (GPU bootstrap), data.py
+scripts/         run_reproduction.py, build_studio.py, jovin_verify.py, gpu_attest.py,
+                 run_sandbox_suites.py (sandbox suites under plain pytest, used by CI)
 tests/           pytest (local) and tests/sandbox (JoVin suites)
 studio/          template.html -> index.html
 docs/            GitHub Pages copy of the studio (generated by build_studio.py)
