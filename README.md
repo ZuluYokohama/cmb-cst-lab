@@ -22,8 +22,12 @@ verification receipts. Open it in a browser.
    component (C⁻¹r ∈ im d₁ᵀ), not a Euclidean curl. The weighted closure χ² equals the
    network fit's residual χ², and the sandbox checks both statements. This edge-space curl is a
    graph-closure diagnostic; it is unrelated to CMB B-modes.
-3. **β agrees with the paper, at lower precision.** The MK β is consistent with the published
-   value but carries about twice its error; see *Differences from the paper*.
+3. **β agrees with the paper, at lower precision, and its dust dependence is structural.** The
+   MK β is consistent with the published value but carries about twice its error. A neural
+   posterior estimator, blinded and coverage-validated under several dust models, shows why β
+   moves with the dust model. Dust looks rotated by α + ψ (instrument plus intrinsic dust
+   misalignment) and the CMB by α + β, so these channels measure **β − ψ₀**. With no assumption
+   about ψ₀, β returns the prior (see the results table and `results/npe.json`).
 4. **Persistence on the real sky (exploratory).** No Galactic-cap asymmetry or lifetime anomaly
    appears. However, the PD₀ feature count is high in all three patches (NGP, SGP, Cold Spot)
    relative to the current Gaussian simulations. A shared offset like that points first to a
@@ -53,6 +57,8 @@ comparison.
 | Same-frequency A/B edges across regions, 12 equal-area regions (primary) | χ² 45.8 / 44, PTE 0.397 | new (not in paper) |
 | Spatial stationarity of the calibration pattern, 8 latitude bands (robustness) | χ² 67.9 / 49, PTE 0.04 | new (not in paper) |
 | Same-frequency A/B edges across regions, 8 latitude bands (robustness) | χ² 49.0 / 28, PTE 0.008 | new (not in paper) |
+| β − ψ₀ (identifiable), neural posterior, agnostic dust EB | -0.13° (68%: -0.37 … +0.13) | new (not in paper) |
+| β with no assumption on dust misalignment | -0.00° (68%: -0.88 … +0.91), prior-limited | new (not in paper) |
 | Dust EE/BB, ℓ < 300 (ΛCDM-subtracted) 143/217/353 | 1.41 / 1.40 / 1.40 | 1.41 / 1.37 / 1.42 |
 
 Per-map angles (network, gauge α_143A = 0, f_sky 0.92):
@@ -86,6 +92,8 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `persistence` | pass 8/8 | `20261022T182619Z-703f2a4eadd6` |
 | `accel` | pass 10/10 | `20261022T172121Z-5cd7a09a18e0` |
 | `spatial` | pass 10/10 | `20261022T202537Z-066b960ada38` |
+| `simulator` | pass 8/8 | `20261022T204610Z-c3fe16ae3a78` |
+| `npe` | pass 6/6 | `20261022T204703Z-e4e6aa7bd505` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).

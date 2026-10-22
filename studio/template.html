@@ -462,6 +462,13 @@ function betaPlot() {
     { label: "This run, anchored, f_sky 0.92", beta: m0.anchored_beta_deg, sigma: m0.anchored_sigma_deg, kind: "reproduced" },
     { label: "This run, anchored, f_sky 0.62", beta: m30.anchored_beta_deg, sigma: m30.anchored_sigma_deg, kind: "reproduced" },
   ];
+  const N = DATA.npe;
+  if (N) {
+    const half = d => 0.5 * (d.hi68 - d.lo68);
+    rows.push({ label: "NPE, β − ψ₀ (identifiable)", beta: N.beta_minus_psi0.median, sigma: half(N.beta_minus_psi0), kind: "reproduced" });
+    rows.push({ label: "NPE, β with ψ₀ ~ N(0, 0.5°)", beta: N.beta_given_psi_prior["psi0~N(0,0.5)"].median, sigma: half(N.beta_given_psi_prior["psi0~N(0,0.5)"]), kind: "reproduced" });
+    rows.push({ label: "NPE, β, agnostic dust EB", beta: N.posterior.beta.median, sigma: half(N.posterior.beta), kind: "reproduced" });
+  }
   const L = 250, Rr = 700, T = 10, rowH = 30;
   const lo = Math.min(0, ...rows.map(r => r.beta - 1.5 * r.sigma)), hi = Math.max(...rows.map(r => r.beta + 1.5 * r.sigma));
   const x = v => L + (v - lo) / (hi - lo) * (Rr - L), B = T + rows.length * rowH;
@@ -475,7 +482,8 @@ function betaPlot() {
   });
   document.getElementById("beta-text").textContent =
     `Circles are quoted values, squares are computed here. The differential network cannot measure β: a common rotation is its gauge freedom. β comes from the MK likelihood (Galactic dust as the calibrator), ` +
-    `and the anchored value is the paper's conditional closure, β = mean(θ_m − α_m^MK) over the 100/143 GHz maps. It reuses the MK calibration, so it is not an independent detection.`;
+    `and the anchored value is the paper's conditional closure, β = mean(θ_m − α_m^MK) over the 100/143 GHz maps. It reuses the MK calibration, so it is not an independent detection.` +
+    (DATA.npe ? ` The neural posterior (5 flows trained on the Arc GPU, blinded and validated for coverage under several dust models) shows why β depends on the dust model: dust looks rotated by α + ψ and the CMB by α + β, so these channels constrain β − ψ₀ (here ${f(DATA.npe.beta_minus_psi0.median)}° ± ${f(0.5 * (DATA.npe.beta_minus_psi0.hi68 - DATA.npe.beta_minus_psi0.lo68))}°). With no assumption about the dust misalignment ψ₀, β returns the prior.` : "");
 }
 
 /* ---------- persistence ---------- */
