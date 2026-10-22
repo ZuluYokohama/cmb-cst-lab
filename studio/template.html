@@ -97,7 +97,7 @@ svg .lbl { fill: var(--ink); font: 500 12px var(--mono); }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
 .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
 .note { font-size: 13px; color: var(--muted); max-width: 72ch; }
-.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 20px; }
 code { font: 13px var(--mono); background: var(--grid); padding: 1px 5px; border-radius: 4px; }
 .srcline { font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 10px; }
 footer { padding-top: 28px; font-size: 13px; color: var(--muted); display: grid; gap: 6px; }

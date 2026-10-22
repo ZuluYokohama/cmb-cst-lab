@@ -89,6 +89,14 @@ def readme_tables(data: dict) -> None:
         a = pers["ngp_minus_sgp_mean_life0"]
         rows.append(("NGP − SGP mean PD₀ lifetime, 143 GHz", f"{a['real']:+.3f} (sims {a['sim_mean']:+.3f} ± {a['sim_std']:.3f}, p = {a['p_two_sided']:.2f})",
                      "not in paper"))
+    sp = data.get("spatial")
+    if sp:
+        for sc, name in (("base12", "12 equal-area regions (primary)"), ("lat8", "8 latitude bands (robustness)")):
+            o = sp["schemes"][sc]
+            rows.append((f"Spatial stationarity of the calibration pattern, {name}",
+                         f"χ² {o['chi2_spatial']:.1f} / {o['dof_spatial']}, PTE {o['pte_spatial']:.2f}", "new (not in paper)"))
+            rows.append((f"Same-frequency A/B edges across regions, {name}",
+                         f"χ² {o['chi2_ab']:.1f} / {o['dof_ab']}, PTE {o['pte_ab']:.3f}", "new (not in paper)"))
     d = rep["dust_ee_over_bb_l_lt_300"]
     rows.append(("Dust EE/BB, ℓ < 300 (ΛCDM-subtracted) 143/217/353",
                  " / ".join(f"{d[q]['lcdm_subtracted']:.2f}" for q in ("143", "217", "353")),

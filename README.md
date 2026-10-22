@@ -49,6 +49,10 @@ comparison.
 | Anchored β, f_sky 0.62 | 0.23° ± 0.23° | 0.40° ± 0.13° |
 | H¹(K₈), filled complex | b₁ = 0 (rank d₀ = 7, rank d₁ = 21) | not discussed |
 | NGP − SGP mean PD₀ lifetime, 143 GHz | -0.001 (sims +0.001 ± 0.030, p = 0.92) | not in paper |
+| Spatial stationarity of the calibration pattern, 12 equal-area regions (primary) | χ² 70.9 / 77, PTE 0.67 | new (not in paper) |
+| Same-frequency A/B edges across regions, 12 equal-area regions (primary) | χ² 45.8 / 44, PTE 0.397 | new (not in paper) |
+| Spatial stationarity of the calibration pattern, 8 latitude bands (robustness) | χ² 67.9 / 49, PTE 0.04 | new (not in paper) |
+| Same-frequency A/B edges across regions, 8 latitude bands (robustness) | χ² 49.0 / 28, PTE 0.008 | new (not in paper) |
 | Dust EE/BB, ℓ < 300 (ΛCDM-subtracted) 143/217/353 | 1.41 / 1.40 / 1.40 | 1.41 / 1.37 / 1.42 |
 
 Per-map angles (network, gauge α_143A = 0, f_sky 0.92):
