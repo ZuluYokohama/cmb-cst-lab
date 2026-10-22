@@ -2,7 +2,6 @@
 
 > **Rights and attribution:** Publicly viewable does not mean freely reusable. No project-wide open-source license is granted for eligible original material; rights are reserved by their respective holders. The codebase includes a separately MIT-licensed adapted calibration component, whose upstream rights and attribution are preserved. See [Rights and Reuse](RIGHTS_AND_REUSE.md) and [provenance audit](docs/PROVENANCE_AND_LICENSING_AUDIT.md). AI assistance and scientific citation do not establish exclusive authorship over every file or method.
 
-
 A first-pass, independent reproduction of the differential polarization-calibration network of
 **Lonappan, Keating & Arnold (2026)**, [arXiv:2609.09149](https://arxiv.org/abs/2609.09149)
 (ApJL 1009, L12), on the public Planck PR4 (NPIPE) maps. It is paired with a cochain/Hodge
@@ -52,6 +51,10 @@ comparison.
 | Anchored β, f_sky 0.62 | 0.23° ± 0.23° | 0.40° ± 0.13° |
 | H¹(K₈), filled complex | b₁ = 0 (rank d₀ = 7, rank d₁ = 21) | not discussed |
 | NGP − SGP mean PD₀ lifetime, 143 GHz | -0.001 (sims +0.001 ± 0.030, p = 0.92) | not in paper |
+| Spatial stationarity of the calibration pattern, 12 equal-area regions (primary) | χ² 70.9 / 77, PTE 0.67 | new (not in paper) |
+| Same-frequency A/B edges across regions, 12 equal-area regions (primary) | χ² 45.8 / 44, PTE 0.397 | new (not in paper) |
+| Spatial stationarity of the calibration pattern, 8 latitude bands (robustness) | χ² 67.9 / 49, PTE 0.04 | new (not in paper) |
+| Same-frequency A/B edges across regions, 8 latitude bands (robustness) | χ² 49.0 / 28, PTE 0.008 | new (not in paper) |
 | Dust EE/BB, ℓ < 300 (ΛCDM-subtracted) 143/217/353 | 1.41 / 1.40 / 1.40 | 1.41 / 1.37 / 1.42 |
 
 Per-map angles (network, gauge α_143A = 0, f_sky 0.92):
@@ -84,6 +87,7 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `mk_core` | pass 8/8 | `20261022T171106Z-676f9cad61b0` |
 | `persistence` | pass 8/8 | `20261022T182619Z-703f2a4eadd6` |
 | `accel` | pass 10/10 | `20261022T172121Z-5cd7a09a18e0` |
+| `spatial` | pass 10/10 | `20261022T202537Z-066b960ada38` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).
@@ -171,7 +175,7 @@ NaMaster are not needed.
   their cross-covariance from 2,000 Wishart draws of the bandpowers (drawn on the GPU when one
   is available; see *Hardware acceleration*).
 - **Persistence:** 20° patches of the 143 GHz (A+B)/2 temperature map at the Galactic caps and the
-  Cold Spot, PD₀ statistics, and 200 Gaussian skies from the measured spectrum.
+  Cold Spot, PD₀ statistics, and 1,000 Gaussian skies from the measured spectrum.
 
 ## Differences from the paper
 

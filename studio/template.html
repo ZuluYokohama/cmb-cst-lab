@@ -97,7 +97,7 @@ svg .lbl { fill: var(--ink); font: 500 12px var(--mono); }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
 .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
 .note { font-size: 13px; color: var(--muted); max-width: 72ch; }
-.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 20px; }
 code { font: 13px var(--mono); background: var(--grid); padding: 1px 5px; border-radius: 4px; }
 .srcline { font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 10px; }
 footer { padding-top: 28px; font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
@@ -168,6 +168,18 @@ footer { padding-top: 28px; font-size: 13px; color: var(--muted); display: grid;
     <h2>Triangle closures in units of their own error</h2>
     <p id="closure-text"></p>
     <div class="panel"><svg id="closure-plot" viewBox="0 0 720 230" role="img" aria-label="Distribution of 56 triangle closure pulls"></svg></div>
+  </section>
+
+  <section id="spatial">
+    <div class="eyebrow">Region-resolved network</div>
+    <h2>Is the calibration pattern the same across the sky?</h2>
+    <p>The 28 pair angles are measured separately in each sky region, and the joint fit splits the misfit exactly into closure inside regions and a <em>spatial-stationarity</em> term that asks whether the per-map angles differ between regions. A sky-dependent common rotation (anisotropic birefringence) is gauge and cannot appear. The four same-frequency A/B edges compare detectors in one band, so dust cancels there: drift on those edges would be instrumental.</p>
+    <p id="spatial-text" class="muted"></p>
+    <div class="tablewrap"><table><thead><tr><th>Partition</th><th>Statistic</th><th>χ² / dof</th><th>PTE</th><th>Null mean (blinded sims)</th></tr></thead><tbody id="spatial-body"></tbody></table></div>
+    <div class="grid2">
+      <div class="panel"><h3>Contribution to χ²<sub>spatial</sub> by region</h3><svg id="spatial-bars" viewBox="0 0 520 260" role="img" aria-label="Per-region spatial chi-squared"></svg><div class="note" id="spatial-bars-note"></div></div>
+      <div class="panel"><h3>Calibration drift γ / σ, maps × regions</h3><svg id="spatial-grid" viewBox="0 0 520 260" role="img" aria-label="Per-map per-region drift"></svg><div class="note">Gauge 143A = 0. Blue negative, orange positive; colour saturates at |γ/σ| = 3.</div></div>
+    </div>
   </section>
 
   <section id="beta">
@@ -487,6 +499,55 @@ function persistence() {
     `PD₁ is not used because its dual construction gives only lower bounds on loop lifetimes (pinned in the persistence suite).`;
 }
 
+/* ---------- region-resolved network ---------- */
+function spatialSection() {
+  const S = DATA.spatial, V = DATA.spatial_validation, L = DATA.spatial_leakage;
+  const body = document.getElementById("spatial-body"), tx = document.getElementById("spatial-text");
+  if (!V) { document.getElementById("spatial").hidden = true; return; }
+  const rows = [];
+  for (const sc of Object.keys(V.schemes)) {
+    const v = V.schemes[sc], s = S ? S.schemes[sc] : null;
+    const line = (name, chi, dof, pte, nm) => rows.push(`<tr><td>${sc}</td><td>${name}</td><td class="n">${s ? `${f(chi, 1)} / ${dof}` : "blinded"}</td><td class="n">${s ? f(pte, 3) : "–"}</td><td class="n">${nm == null ? "–" : `${f(nm, 1)} / ${dof}`}</td></tr>`);
+    line("spatial stationarity", s && s.chi2_spatial, v.dof_spatial, s && s.pte_spatial, v.null_mean.spatial);
+    line("closure in regions", s && s.chi2_closure, v.dof_closure, s && s.pte_closure, v.null_mean.closure);
+    line("A/B edges (instrument control)", s && s.chi2_ab, v.dof_ab, s && s.pte_ab, v.null_mean.ab);
+    if (s) line("drift vs dust tracer", s.tracer_delta_chi2, s.tracer_dof, s.tracer_pte, null);
+  }
+  body.innerHTML = rows.join("");
+  const b12 = V.schemes.base12;
+  const p02 = (b12.power.dust_like.find(p => p.amp_deg === 0.2) || {}).detection_rate;
+  const i01 = (b12.power.instrument_like.find(p => p.amp_deg === 0.1) || {}).detection_rate;
+  tx.textContent = (S ? `Unblinded ${S.unblinded_utc.slice(0, 10)} from the frozen analysis (freeze ${S.freeze_utc.slice(0, 16).replace("T", " ")} UTC). ` : "Real-data statistics are blinded until the analysis is frozen. ") +
+    `On ${b12.n_null} blinded null skies the statistics match their dof; at the pre-registered PTE < ${S ? S.detection_pte : 0.01} the base12 partition detects a 0.2° dust-like drift ${Math.round(100 * p02)}% of the time and a 0.1° instrument-like drift ${Math.round(100 * i01)}% of the time.` +
+    (L ? ` Map-level simulations put the cross-region correlation of pair angles at ${f(L.mean_corr_offdiag, 3)} (max ${f(L.max_abs_corr_offdiag, 2)}, noise floor ${f(L.sd_expected_noise, 2)}).` : "");
+  const bars = document.getElementById("spatial-bars"), grid = document.getElementById("spatial-grid");
+  clear(bars); clear(grid);
+  if (!S) {
+    txt(bars, 260, 130, "blinded until the analysis freeze", { "text-anchor": "middle" });
+    txt(grid, 260, 130, "blinded until the analysis freeze", { "text-anchor": "middle" });
+    return;
+  }
+  const s = S.schemes.base12, nR = s.n_regions, contrib = s.chi2_spatial_region, dust = s.dust_tracer;
+  const L0 = 40, Rr = 510, T = 10, Bt = 220, ymax = Math.max(14, ...contrib) * 1.1, w = (Rr - L0) / nR;
+  const y = v => Bt - v / ymax * (Bt - T);
+  const lmin = Math.log(Math.min(...dust)), lmax = Math.log(Math.max(...dust));
+  ticks(0, ymax, 4).forEach(v => { el("line", { x1: L0, x2: Rr, y1: y(v), y2: y(v), stroke: css("--grid") }, bars); txt(bars, L0 - 6, y(v) + 4, v, { "text-anchor": "end" }); });
+  el("line", { x1: L0, x2: Rr, y1: y(7), y2: y(7), stroke: css("--accent"), "stroke-dasharray": "4 3" }, bars);
+  contrib.forEach((c, k) => {
+    const t = (Math.log(dust[k]) - lmin) / (lmax - lmin);
+    el("rect", { x: L0 + k * w + 2, y: y(c), width: w - 4, height: Bt - y(c), fill: lerpColor(css("--zero"), css("--f353"), t) }, bars);
+    txt(bars, L0 + (k + 0.5) * w, Bt + 14, s.labels[k], { "text-anchor": "middle" });
+  });
+  document.getElementById("spatial-bars-note").textContent = "Dashed line: expected 7 per region. Darker bars carry more 353 GHz dust.";
+  const g = s.gamma_deg, gs = s.gamma_sigma_deg, cw = (Rr - 60) / nR, ch = (Bt - T) / 8;
+  R.detectors.forEach((d, i) => txt(grid, 54, T + (i + 0.6) * ch, d, { "text-anchor": "end" }));
+  for (let k = 0; k < nR; k++) for (let i = 0; i < 8; i++) {
+    const z = gs[k][i] > 0 ? g[k][i] / gs[k][i] : 0;
+    el("rect", { x: 60 + k * cw + 1, y: T + i * ch + 1, width: cw - 2, height: ch - 2, fill: divColor(z, 3) }, grid);
+  }
+  s.labels.forEach((lab, k) => txt(grid, 60 + (k + 0.5) * cw, Bt + 14, lab, { "text-anchor": "middle" }));
+}
+
 /* ---------- dust, receipts, methods ---------- */
 function dust() {
   const d = R.dust_ee_over_bb_l_lt_300;
@@ -499,6 +560,9 @@ function receipts() {
     differential: "exact recovery, blindness to β and sky EB, covariance calibrated over 40 Wishart skies",
     mk_core: "port matches the reference MK rows to 1e-14, exact α/β recovery, agreement with the network",
     persistence: "β₀ from PD₀ equals flood-fill counts; pins the PD₁ lower-bound behaviour",
+    spatial: "exact closure/stationarity χ² split, gauge invisibility, null calibration, blinded-null exactness",
+    simulator: "SED, PD model, β cancels in M0, A/B immunity to dust EB, Wishart moments, score recovery",
+    npe: "MADE autoregressive masks, normalisation, SBC detection, device log-densities recomputed",
     accel: "bootstrap kernels, plus GPU (accepted) and NPU (rejected) Gram matrices recomputed in float64",
   };
   document.getElementById("receipt-body").innerHTML = Object.keys(what).map(s => {
@@ -533,8 +597,8 @@ function syncButtons() {
 }
 document.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { state.mode = b.dataset.mode; save(); syncButtons(); drawK8(); }));
 document.querySelectorAll("[data-mask]").forEach(b => b.addEventListener("click", () => { state.mask = b.dataset.mask; state.edge = null; save(); syncButtons(); drawK8(); edgePanel(); }));
-function renderAll() { masthead(); ledger(); syncButtons(); drawK8(); edgePanel(); alphaPlot(); pairSelect(); closurePlot(); betaPlot(); persistence(); dust(); receipts(); methods(); }
+function renderAll() { masthead(); ledger(); syncButtons(); drawK8(); edgePanel(); alphaPlot(); pairSelect(); closurePlot(); spatialSection(); betaPlot(); persistence(); dust(); receipts(); methods(); }
 renderAll();
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { drawK8(); alphaPlot(); pairPlot(); closurePlot(); betaPlot(); });
-new MutationObserver(() => { drawK8(); alphaPlot(); pairPlot(); closurePlot(); betaPlot(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+new MutationObserver(() => { drawK8(); alphaPlot(); pairPlot(); closurePlot(); spatialSection(); betaPlot(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 </script>
