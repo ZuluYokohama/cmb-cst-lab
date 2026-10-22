@@ -15,6 +15,7 @@ import argparse
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -99,7 +100,9 @@ def main() -> int:
             "release_gate": "external review before interpreting results; NOT a discovery claim",
         }
         out.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
-        with out.open("x", encoding="utf-8") as f:
+        # exclusive create with owner-only permissions (the umask could otherwise make it world-readable)
+        fd = os.open(out, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
             f.write(json.dumps(data, indent=2) + "\n")
     except (OSError, ValueError, KeyError, RuntimeError, np.linalg.LinAlgError) as exc:
         print("COVARIANCE_AUDIT_FAILED:", type(exc).__name__, str(exc)[:220], file=sys.stderr)
