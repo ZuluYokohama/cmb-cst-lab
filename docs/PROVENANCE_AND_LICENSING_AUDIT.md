@@ -20,14 +20,14 @@ Its module header describes it as a NumPy port of the model in:
 - Upstream also notes an earlier code lineage ('from Johannes code'); review that provenance before final redistribution conclusions.
 - Original license: https://github.com/antolonappan/cosmic_birefringence/blob/main/LICENSE
 
-**Action required before a redistributable licensed release:** include the upstream copyright and complete MIT permission notice with all copies or substantial portions of any code derived from it. Attribution alone is not a substitute. This file links to the exact upstream license rather than rewriting its legal text.
+**Current action completed on this draft branch:** the upstream copyright and complete MIT permission notice are retained verbatim in `THIRD_PARTY_LICENSES/cosmic_birefringence-MIT.txt` (checked against the upstream file on 2026-10-22). Attribution alone would not be a substitute. The precise source correspondence and earlier code lineage still need independent review before a redistribution or legal clearance conclusion.
 
 ## Additional materials requiring separate rights analysis
 
 - Planck PR4/NPIPE input data: scientific source and credit requirements, not owned by this repository.
 - Python package dependencies: independently licensed; see `pyproject.toml`.
 - `scripts/jovin_verify.py`: a local wrapper calling a configured external JoVin harness. Presence of this wrapper does **not** establish ownership of the external harness executable or its license.
-- `studio/` and `docs/`: exported HTML, scripts, visuals and referenced third-party assets must be checked at the individual-asset level.
+- `studio/` and `docs/`: the live studio and generated page reference Google Fonts externally (Spectral, IBM Plex Sans, IBM Plex Mono), and contain scientific source links. These are not locally bundled font binaries; attribution, privacy/hosting and asset permissions still need source-specific review.
 - Manuscript, figures and simulation outputs: establish actual authorship, upstream contributions, citations and AI assistance separately.
 
 ## AI-assisted development evidence to preserve
