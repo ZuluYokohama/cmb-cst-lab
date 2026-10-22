@@ -33,8 +33,26 @@
   ],
   "sigma_beta_deg": {
     "no_dust_eb": 0.1490422219165183,
-    "M1_constant_psi": 90147.29978377608,
-    "full": 90148.96004808444
+    "M1_constant_psi": null,
+    "full": null
   },
-  "corr_beta_psi0": 0.9999999999947712
+  "corr_beta_psi0": 0.9999999999947712,
+  "full_fisher_singular": true,
+  "full_min_relative_eigenvalue": 3.767813709108522e-15,
+  "null_direction": {
+    "a100A": -1.0,
+    "a100B": -1.0,
+    "a143A": -1.0,
+    "a143B": -1.0,
+    "a217A": -1.0,
+    "a217B": -1.0,
+    "a353A": -1.0,
+    "a353B": -1.0,
+    "beta": 1.0,
+    "psi0": 1.0,
+    "n_psi": 0.0,
+    "psi1": -0.0,
+    "A_d": -0.0,
+    "beta_d": -0.0
+  }
 }

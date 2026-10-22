@@ -7,8 +7,9 @@ Stages (cached under data/work/npe):
     simulate  N parameter draws from the prior -> exact Wishart bandpowers -> 14 score summaries.
     train     an ensemble of conditional MAFs on (beta, psi0, n_psi, psi1, A_d, beta_d | scores),
               on the Arc GPU when present.
-    validate  simulation-based calibration on held-out draws, per dust sub-model (M0..M3) and an
-              out-of-family dust model; MK (no dust EB) on the same draws for comparison
+    validate  simulation-based calibration on held-out draws, per dust sub-model (M0..M3, all in
+              the training family; no out-of-family dust model is tested), the psi0-prior
+              reweighted beta on draws from that prior, and MK (no dust EB) on the same draws
               -> results/npe_validation.json
     attest    device log-densities for fixed inputs written into the sandbox suite
     freeze    data/evidence/analysis_freeze_npe.json
@@ -49,7 +50,10 @@ TARGET_NAMES = simulator.PARAMS[8:14]
 HIDDEN, LAYERS, ENSEMBLE = 64, 4, 5
 SAMPLING_SEED = 2026
 PSI_PRIOR_TEST = {"psiN0p5": 0.5, "psiN1": 1.0, "psiN2": 2.0}
-FROZEN_FILES = ["src/cmbcst/simulator.py", "src/cmbcst/npe.py", "src/cmbcst/npe_torch.py", "scripts/run_npe.py"]
+# differential.py (rotation_matrix) is on the unblind path via the simulator; it was added after the
+# v2 unblind, having been unchanged since the first commit (c7766d5)
+FROZEN_FILES = ["src/cmbcst/simulator.py", "src/cmbcst/differential.py", "src/cmbcst/npe.py",
+                "src/cmbcst/npe_torch.py", "scripts/run_npe.py"]
 
 
 def log(msg: str) -> None:
@@ -372,7 +376,18 @@ def stage_fisher() -> None:
     fis = comp.fisher
     allp = list(range(14))
 
+    def singular(f, tol=1e-10):
+        """Smallest eigenvalue of the unit-diagonal Fisher matrix relative to the largest, and its
+        eigenvector in the original parameters."""
+        dd = 1.0 / np.sqrt(np.diag(f))
+        w, v = np.linalg.eigh(f * dd[:, None] * dd[None, :])
+        vec = v[:, 0] * dd
+        return w[0] / w[-1] < tol, float(w[0] / w[-1]), vec / np.abs(vec).max()
+
     def sig_beta(free):
+        # a singular Fisher matrix gives rounding artefacts on inversion: report None (unbounded)
+        if singular(fis[np.ix_(free, free)])[0]:
+            return None
         c = np.linalg.inv(fis[np.ix_(free, free)])
         return float(np.sqrt(c[free.index(8), free.index(8)]))
 
@@ -383,6 +398,10 @@ def stage_fisher() -> None:
                               "M1_constant_psi": sig_beta([p for p in allp if p not in (10, 11)]),
                               "full": sig_beta(allp)},
            "corr_beta_psi0": float(c[8, 9] / (d[8] * d[9]))}
+    sing, cond, vec = singular(fis)
+    out["full_fisher_singular"] = bool(sing)
+    out["full_min_relative_eigenvalue"] = cond
+    out["null_direction"] = {n: round(float(x), 4) for n, x in zip(simulator.PARAMS, vec)}
     (RESULTS / "npe_fisher.json").write_text(json.dumps(out, indent=2))
     log(f"fisher: {out['sigma_beta_deg']}, corr(beta, psi0) {out['corr_beta_psi0']:.3f}")
 

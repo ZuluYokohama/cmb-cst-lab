@@ -7,8 +7,13 @@ three null ensembles:
     noise_aniso  Gaussian CMB from the A x B cross spectrum (signal only) plus anisotropic white
                  noise with Planck's per-pixel variance (II_COV of the A and B maps), so the real
                  scan-pattern noise structure is in the null
-    phase        phase-randomised surrogates of the real map: |a_lm| kept, phases random. This
+    phase        phase-randomised surrogates of the masked map: |a_lm| kept, phases random. This
                  is the literal "structure beyond the power spectrum" null.
+
+Null spectra and phase-surrogate amplitudes come from the masked (mask_30) map, so excluded
+Galactic-plane power enters no null. The real patches use the map as observed, as in Stage 0:
+mask_30 also has compact-source holes inside the patches, and multiplying by it would cut them
+into the real map as artificial minima (one at the NGP reaches -10.7 sigma).
 
 p-values: two-sided Monte Carlo with the +1 correction; Holm over every comparison reported.
 -> results/persistence_validation.json
@@ -59,6 +64,8 @@ def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--n-sims", type=int, default=1000)
     args = ap.parse_args(argv)
+    if args.n_sims < 2:
+        ap.error("--n-sims must be at least 2 (z-scores need a simulated standard deviation)")
     geom_hi = ducc0.healpix.Healpix_Base(2048, "RING").sht_info()
     geom_lo = ducc0.healpix.Healpix_Base(NSIDE_LO, "RING").sht_info()
     nt = spectra.NTHREADS
@@ -74,7 +81,8 @@ def main(argv: list[str]) -> int:
     smooth = theory.gaussian_beam(10.0, LMAX)
     ell_idx, m_idx = spectra.alm_ell_m(LMAX)
     w2, _ = spectra.mask_moments(mask)
-    alm_data = alm_hi(t)
+    alm_data = alm_hi(t)                                 # real patches: the map as observed
+    alm_masked = alm_hi(t * mask) / np.sqrt(w2)          # phase null: masked sky only
     a_m, b_m = alm_hi(ta * mask), alm_hi(tb * mask)
     cl_total = spectra.cross_cl(alm_hi(t * mask), alm_hi(t * mask), LMAX) / w2
     cl_signal = spectra.cross_cl(a_m, b_m, LMAX) / w2     # A x B: no noise bias
@@ -106,13 +114,14 @@ def main(argv: list[str]) -> int:
         cmb = to_map(spectra.random_alm(cl_signal, LMAX, rng))
         noise = smooth_lo_map(sd_lo * rng.standard_normal(sd_lo.size))
         ensembles["noise_aniso"].append(summaries(cmb + noise))
-        phase = np.exp(2j * np.pi * rng.random(alm_data.size))
+        phase = np.exp(2j * np.pi * rng.random(alm_masked.size))
         phase[m_idx == 0] = np.sign(rng.standard_normal(int(np.sum(m_idx == 0))))  # m = 0 stays real
-        ensembles["phase"].append(summaries(to_map(np.abs(alm_data) * phase)))
+        ensembles["phase"].append(summaries(to_map(np.abs(alm_masked) * phase)))
         if (s + 1) % 100 == 0:
             log(f"{s + 1}/{args.n_sims} ({(time.perf_counter() - t0) / (s + 1):.2f} s per draw)")
 
     out = {"n_sims": args.n_sims, "map": "143 GHz (A+B)/2 temperature, 10' smoothing, l <= 1000, N_side 512",
+           "real_source": "a_lm of the unmasked map", "phase_null_source": "a_lm of the mask_30 masked map / sqrt(w2)",
            "nulls": {}, "p_value_method": "two-sided Monte Carlo with +1 correction; Holm over all comparisons"}
     flat = []
     for null, sims in ensembles.items():

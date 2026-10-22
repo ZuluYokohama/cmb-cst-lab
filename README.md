@@ -30,12 +30,13 @@ verification receipts. Open it in a browser.
    about ψ₀, β returns the prior (see the results table and `results/npe.json`).
 4. **Persistence on the real sky (exploratory).** No Galactic-cap asymmetry or lifetime anomaly
    appears. However, the PD₀ feature count is high in all three patches (NGP, SGP, Cold Spot)
-   relative to Gaussian simulations, and adding Planck's anisotropic noise does not change that.
-   Against phase-randomized surrogates of the real map (same harmonic amplitudes, random phases)
-   the caps are typical, so the excess comes from the map's spectral shape, not its phase
-   structure. The Cold Spot patch has fewer features than every surrogate (Holm p ≈ 0.07, at the
-   resolution floor of 1,000 surrogates), as expected for a coherent known anomaly. See
-   `results/persistence.json` and `results/persistence_validation.json`.
+   relative to Gaussian simulations (z ≈ +2.2 to +2.9). Adding Planck's anisotropic noise does
+   not remove it, and neither do phase-randomized surrogates of the masked map, which keep its
+   exact harmonic amplitudes (z ≈ +3.0 to +3.7). The best Holm-adjusted p is 0.07, the floor
+   for 1,000 simulations. So it is neither noise anisotropy nor spectral shape. The leading
+   candidate is compact sources and clusters inside the patches, which no null contains. It
+   stays unexplained, and no cosmological claim is made. See `results/persistence.json` and
+   `results/persistence_validation.json`.
 
 ## Results
 
