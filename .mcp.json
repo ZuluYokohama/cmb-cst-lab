@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "jovin": {
+      "command": "C:/DevProjects/SSI_Artifacts/environment-jovin-harness/Scripts/jovin-harness.exe",
+      "args": ["serve"],
+      "env": {
+        "JOVIN_HARNESS_RUNTIME": "wsl:Renigma-Evaluator@root"
+      }
+    }
+  }
+}

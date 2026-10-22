@@ -1,0 +1,14 @@
+[project]
+name = "cmbcst"
+version = "0.1.0"
+description = "Reproduction of the Lonappan-Keating-Arnold (2026) differential calibration network on Planck PR4, with a cochain/Hodge reading"
+requires-python = ">=3.11"
+dependencies = ["numpy>=2", "scipy", "astropy", "ducc0", "camb", "requests", "matplotlib"]
+
+[project.optional-dependencies]
+dev = ["pytest", "pypdf"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["tests/sandbox"]
+pythonpath = ["src"]

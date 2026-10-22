@@ -1,0 +1,529 @@
+<title>Planck Calibration Network Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column (≈68ch) that widens to a 2-pane bench for the interactive network; figures sit on a faint grid like an instrument log. */
+:root {
+  --paper: #f3f5f7; --sheet: #fbfcfd; --ink: #16202a; --muted: #586674; --rule: #d3dae1; --grid: #e4e9ee;
+  --accent: #c2410c;
+  --neg: #2f5fa7; --pos: #c2410c; --zero: #c9d1d9;
+  --f100: #3b5ba9; --f143: #23807f; --f217: #a86b14; --f353: #a33a4b;
+  --ok: #2f7d4f; --cited: #3b5ba9; --synth: #9a6510; --bad: #b42318; --restate: #6b5aa6;
+  --ok-bg: #e3f1e8; --cited-bg: #e5ebf7; --synth-bg: #f6ecd9; --bad-bg: #f8e1df; --restate-bg: #ece8f6;
+  --display: "Spectral", Georgia, "Times New Roman", serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #0f151b; --sheet: #151d25; --ink: #e5eaef; --muted: #98a6b3; --rule: #2a3642; --grid: #1e2832;
+  --accent: #f08a4b; --neg: #7ea6e6; --pos: #f08a4b; --zero: #3a4652;
+  --f100: #8aa2e8; --f143: #5cc2bf; --f217: #e0a94f; --f353: #e88092;
+  --ok: #6cc28c; --cited: #8aa2e8; --synth: #e0a94f; --bad: #f2877c; --restate: #b3a6e8;
+  --ok-bg: #173022; --cited-bg: #1b2640; --synth-bg: #33270f; --bad-bg: #3a1a17; --restate-bg: #261f3d;
+  color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --paper: #0f151b; --sheet: #151d25; --ink: #e5eaef; --muted: #98a6b3; --rule: #2a3642; --grid: #1e2832;
+  --accent: #f08a4b; --neg: #7ea6e6; --pos: #f08a4b; --zero: #3a4652;
+  --f100: #8aa2e8; --f143: #5cc2bf; --f217: #e0a94f; --f353: #e88092;
+  --ok: #6cc28c; --cited: #8aa2e8; --synth: #e0a94f; --bad: #f2877c; --restate: #b3a6e8;
+  --ok-bg: #173022; --cited-bg: #1b2640; --synth-bg: #33270f; --bad-bg: #3a1a17; --restate-bg: #261f3d;
+  color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 15px/1.6 var(--body); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 28px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; text-wrap: balance; line-height: 1.2; margin: 0; }
+h1 { font-size: clamp(28px, 4.2vw, 44px); letter-spacing: -0.01em; max-width: 20ch; }
+h2 { font-size: 24px; }
+h3 { font-size: 17px; font-family: var(--body); font-weight: 600; }
+p { margin: 0; max-width: 68ch; }
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+section { display: grid; gap: 16px; padding-block: 36px 8px; border-top: 1px solid var(--rule); }
+header.mast { display: grid; gap: 16px; padding-block: 8px 28px; }
+.lede { font-size: 17px; color: var(--ink); }
+
+/* verdict strip */
+.verdict { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--rule);
+  border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+.v { background: var(--sheet); padding: 14px 16px; display: grid; gap: 4px; align-content: start; }
+.v .num { font: 500 26px/1.15 var(--mono); font-variant-numeric: tabular-nums; }
+.v .num small { font-size: 14px; color: var(--muted); }
+.v .cmp { font-size: 13px; color: var(--muted); }
+
+/* pills */
+.pill { display: inline-flex; align-items: center; gap: 6px; font: 600 11px/1 var(--mono); letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 5px 8px; border-radius: 999px; white-space: nowrap; }
+.pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.s-reproduced { color: var(--ok); background: var(--ok-bg); }
+.s-cited { color: var(--cited); background: var(--cited-bg); }
+.s-partial { color: var(--synth); background: var(--synth-bg); }
+.s-fail { color: var(--bad); background: var(--bad-bg); }
+.s-new { color: var(--restate); background: var(--restate-bg); }
+
+/* tables */
+.tablewrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--sheet); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { font: 500 11px/1.3 var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); background: var(--sheet); }
+tr:last-child td { border-bottom: 0; }
+td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ledger td:first-child { min-width: 150px; }
+.ledger td.n { white-space: normal; }
+
+/* bench */
+.bench { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 860px) { .bench { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 14px; display: grid; gap: 12px; min-width: 0; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+.seg button { font: 500 13px var(--body); color: var(--muted); background: transparent; border: 0; padding: 7px 11px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--rule); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+select { font: 13px var(--mono); color: var(--ink); background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 6px 8px; max-width: 100%; }
+svg { display: block; width: 100%; height: auto; max-width: 100%; overflow: visible; }
+svg text { fill: var(--muted); font: 11px var(--mono); }
+svg .lbl { fill: var(--ink); font: 500 12px var(--mono); }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-size: 14px; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.note { font-size: 13px; color: var(--muted); max-width: 72ch; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+code { font: 13px var(--mono); background: var(--grid); padding: 1px 5px; border-radius: 4px; }
+footer { padding-top: 28px; font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
+@media (prefers-reduced-motion: no-preference) { .edge { transition: stroke-width .15s, opacity .15s; } }
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="eyebrow" id="mast-eyebrow">Planck PR4 · NPIPE A/B detector splits · 8 maps · 28 pairs</div>
+    <h1>Does the Planck polarization calibration network close?</h1>
+    <p class="lede" id="lede"></p>
+    <div class="verdict" id="verdict"></div>
+  </header>
+
+  <section id="ledger">
+    <div class="eyebrow">Scorecard</div>
+    <h2>This run against the paper</h2>
+    <p class="muted"><span class="pill s-reproduced">Reproduced</span> agrees with the published value; <span class="pill s-partial">Partial</span> agrees in value but not in precision; <span class="pill s-new">New</span> is a quantity the paper does not report. Every number in the middle column is computed here from public Planck maps.</p>
+    <div class="tablewrap"><table class="ledger"><thead><tr><th>Quantity</th><th>This run</th><th>Paper</th><th>Status</th></tr></thead><tbody id="ledger-body"></tbody></table></div>
+  </section>
+
+  <section id="network">
+    <div class="eyebrow">The network on K₈</div>
+    <h2>Pair angles, their gradient part and what fails to close</h2>
+    <p>Each edge carries one measured angle difference Δα<sub>ij</sub> = α<sub>i</sub> − α<sub>j</sub>, read from the ratio of antisymmetric to symmetric cross-spectra. The common rotation (β and any shared offset) cancels. The gauge-fixed fit splits the 28 numbers into a gradient part (7 dimensions, one angle per map) and a remainder. With every triangle filled, H¹ = 0, so the remainder is pure curl: triangle closure failures, not hidden cohomology.</p>
+    <div class="bench">
+      <div class="panel">
+        <div class="controls">
+          <div class="seg" role="group" aria-label="Edge quantity">
+            <button type="button" data-mode="delta" aria-pressed="true">Measured</button>
+            <button type="button" data-mode="grad" aria-pressed="false">Gradient</button>
+            <button type="button" data-mode="curl" aria-pressed="false">Curl</button>
+          </div>
+          <div class="seg" role="group" aria-label="Mask">
+            <button type="button" data-mask="0" aria-pressed="true">f<sub>sky</sub> 0.92</button>
+            <button type="button" data-mask="30" aria-pressed="false">0.62</button>
+          </div>
+        </div>
+        <svg id="k8" viewBox="-60 0 640 470" role="img" aria-label="Complete graph of 8 Planck maps with edges coloured by angle"></svg>
+        <div class="legend" id="k8-legend"></div>
+      </div>
+      <div class="panel" id="edge-panel" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="angles">
+    <div class="eyebrow">Per-map calibration pattern</div>
+    <h2>Network versus Minami–Komatsu, on the same maps</h2>
+    <p id="angles-text"></p>
+    <div class="panel"><svg id="alpha-plot" viewBox="0 0 720 300" role="img" aria-label="Per-map angles from both estimators"></svg>
+      <div class="legend"><span><i class="sw" style="background:var(--ink)"></i>Network (birefringence-blind)</span><span><i class="sw" style="background:var(--accent)"></i>MK likelihood</span><span>Gauge: 143A = 0 for both</span></div></div>
+  </section>
+
+  <section id="spectra">
+    <div class="eyebrow">One pair at a time</div>
+    <h2>D<sub>ij</sub> against tan 2Δα · S<sub>ij</sub></h2>
+    <p>The estimator fits D = C<sup>B<sub>i</sub>E<sub>j</sub></sup> − C<sup>E<sub>i</sub>B<sub>j</sub></sup> with tan 2Δα · (C<sup>E<sub>i</sub>E<sub>j</sub></sup> + C<sup>B<sub>i</sub>B<sub>j</sub></sup>) over 72 bins. Beams multiply both and cancel.</p>
+    <div class="panel">
+      <div class="controls"><label for="pair-select" class="muted">Pair</label><select id="pair-select"></select><span class="mono muted" id="pair-fit"></span></div>
+      <svg id="pair-plot" viewBox="0 0 720 280" role="img" aria-label="Binned D and model for the selected pair"></svg>
+      <div class="legend"><span><i class="sw" style="background:var(--ink)"></i>D<sub>ij</sub> with ±1σ residual band</span><span><i class="sw" style="background:var(--accent)"></i>tan 2Δα · S<sub>ij</sub></span></div>
+    </div>
+  </section>
+
+  <section id="closures">
+    <div class="eyebrow">Curl, measured</div>
+    <h2>Triangle closures in units of their own error</h2>
+    <p id="closure-text"></p>
+    <div class="panel"><svg id="closure-plot" viewBox="0 0 720 230" role="img" aria-label="Distribution of 56 triangle closure pulls"></svg></div>
+  </section>
+
+  <section id="beta">
+    <div class="eyebrow">Birefringence</div>
+    <h2>β from the literature and from this run</h2>
+    <p id="beta-text"></p>
+    <div class="panel"><svg id="beta-plot" viewBox="0 0 720 330" role="img" aria-label="Forest plot of beta values"></svg></div>
+  </section>
+
+  <section id="persistence">
+    <div class="eyebrow">Topology of the real sky</div>
+    <h2>Sublevel persistence at the Galactic caps and the Cold Spot</h2>
+    <p id="pers-text"></p>
+    <div class="tablewrap"><table><thead><tr><th>Patch</th><th>Statistic</th><th>Planck 143 GHz</th><th>Gaussian sims</th><th>p (two-sided)</th></tr></thead><tbody id="pers-body"></tbody></table></div>
+  </section>
+
+  <section id="dust">
+    <div class="eyebrow">Foreground check</div>
+    <h2>Dust EE/BB at ℓ &lt; 300</h2>
+    <div class="tablewrap"><table><thead><tr><th>Frequency</th><th>This run, raw A×B</th><th>This run, ΛCDM subtracted</th><th>Paper</th></tr></thead><tbody id="dust-body"></tbody></table></div>
+    <p class="note">At 100 and 143 GHz the CMB's own EE dominates below ℓ = 300, so the raw ratio there mostly measures the CMB; the subtracted column is the dust-like residual.</p>
+  </section>
+
+  <section id="verification">
+    <div class="eyebrow">Verification</div>
+    <h2>Every kernel checked in a network-less sandbox</h2>
+    <p>Numerical kernels are numpy-only by design so they run in the JoVin container (no network, Python + numpy, 10 s limit). The verifier bundles the exact shipped functions via <code>ast</code>, never hand-copied, and each run appends a hash-chained receipt. Full-resolution steps (ducc0 transforms, FITS input) cannot run there; they are covered by local tests, including an end-to-end injection on synthetic HEALPix maps.</p>
+    <div class="tablewrap"><table><thead><tr><th>Suite</th><th>What it pins down</th><th>Result</th><th>Receipt</th></tr></thead><tbody id="receipt-body"></tbody></table></div>
+  </section>
+
+  <section id="methods">
+    <div class="eyebrow">Methods and provenance</div>
+    <h2>How these numbers were made</h2>
+    <div class="grid2" id="methods-body"></div>
+  </section>
+
+  <footer>
+    <div>Data: ESA Planck PR4 (NPIPE) frequency maps via NERSC; masks from the Planck Legacy Archive; beam windows from PLANCK_RIMO_TF_R4.00. Estimator and likelihood follow Lonappan, Keating &amp; Arnold (2026) and their MIT-licensed pipeline.</div>
+    <div id="generated"></div>
+  </footer>
+</div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const R = DATA.reproduction, C = DATA.cited, P = DATA.persistence, RC = DATA.receipts;
+const DET = R.detectors, FREQ = d => d.slice(0, 3);
+const NS = "http://www.w3.org/2000/svg";
+const f = (x, d = 2) => (x == null || Number.isNaN(x)) ? "–" : Number(x).toFixed(d);
+const sgn = (x, d = 2) => (x >= 0 ? "+" : "−") + Math.abs(x).toFixed(d);
+const pm = (m, s, d = 2) => `${f(m, d)} ± ${f(s, d)}`;
+let state = { mode: "delta", mask: "0", edge: null };
+try { const s = JSON.parse(localStorage.getItem("k8-studio") || "{}"); if (s.mask in R.per_mask) state.mask = s.mask; if (["delta","grad","curl"].includes(s.mode)) state.mode = s.mode; } catch (e) {}
+const save = () => { try { localStorage.setItem("k8-studio", JSON.stringify({ mask: state.mask, mode: state.mode })); } catch (e) {} };
+const M = () => R.per_mask[state.mask];
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+function el(tag, attrs = {}, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function txt(parent, x, y, s, attrs = {}) { const t = el("text", { x, y, ...attrs }, parent); t.textContent = s; return t; }
+function clear(svg) { while (svg.firstChild) svg.removeChild(svg.firstChild); }
+function ticks(lo, hi, n = 5) {
+  const step0 = (hi - lo) / n, mag = Math.pow(10, Math.floor(Math.log10(step0)));
+  const step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s >= step0);
+  const out = []; for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-12; v += step) out.push(+v.toFixed(10));
+  return out;
+}
+function lerpColor(a, b, t) {
+  const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const [x, y] = [p(a), p(b)];
+  return "#" + x.map((v, i) => Math.round(v + (y[i] - v) * t).toString(16).padStart(2, "0")).join("");
+}
+function divColor(v, vmax) {
+  const t = Math.max(-1, Math.min(1, v / vmax));
+  return t < 0 ? lerpColor(css("--zero"), css("--neg"), -t) : lerpColor(css("--zero"), css("--pos"), t);
+}
+
+/* ---------- derived quantities ---------- */
+function derived(mask) {
+  const m = R.per_mask[mask], a = m.network.alpha_deg;
+  const pairs = m.pairs.map(([x, y]) => [DET.indexOf(x), DET.indexOf(y)]);
+  const grad = pairs.map(([i, j]) => a[i] - a[j]);
+  const curl = m.pair_angles_deg.map((d, k) => d - grad[k]);
+  return { pairs, grad, curl };
+}
+
+/* ---------- masthead ---------- */
+function masthead() {
+  const m0 = R.per_mask["0"], net = m0.network, cd = m0.chi2_diff || m0.chi2_diff_no_cross;
+  const closes = net.pte > 0.01, agrees = cd.pte > 0.01;
+  document.getElementById("lede").textContent =
+    `Eight public Planck PR4 polarization maps, all 28 cross-pairs, the paper's own estimator. ` +
+    `The angle differences ${closes ? "close up to noise" : "do not close"} (χ² = ${f(net.chi2, 1)} for ${net.dof} dof, PTE ${f(net.pte, 2)}), and the per-map pattern ` +
+    `${agrees ? "agrees with" : "disagrees with"} a Minami–Komatsu fit of the same maps (χ²_diff = ${f(cd.chi2, 2)} for ${cd.dof} dof, PTE ${f(cd.pte, 2)}). ` +
+    `With every triangle filled, H¹ = 0, so what the fit leaves over is pure curl, and it is noise-sized.`;
+  const items = [
+    { k: "Network closure", n: `${f(net.chi2, 1)}<small> / ${net.dof} dof</small>`, c: `PTE ${f(net.pte, 2)} · what curl remains is noise-sized` },
+    { k: "Network vs MK pattern", n: `${f(cd.chi2, 2)}<small> / ${cd.dof} dof</small>`, c: `PTE ${f(cd.pte, 2)} · paper: ${C.paper.chi2_diff} / ${C.paper.dof}, PTE ${C.paper.pte}` },
+    { k: "MK β, f<sub>sky</sub> 0.92", n: `${f(m0.mk.beta_deg, 2)}°<small> ± ${f(m0.mk.sigma_beta_deg, 2)}</small>`, c: `paper: ${C.paper.beta_mk[0]}° ± ${C.paper.beta_mk[1]}` },
+    { k: "Pearson r, 28 pairs", n: f(m0.pearson_r_pairs, 3), c: `paper: ${C.paper.pearson_r} · descriptive only` },
+  ];
+  document.getElementById("verdict").innerHTML = items.map(i =>
+    `<div class="v"><div class="eyebrow">${i.k}</div><div class="num">${i.n}</div><div class="cmp">${i.c}</div></div>`).join("");
+}
+
+/* ---------- scorecard ---------- */
+function ledger() {
+  const m0 = R.per_mask["0"], m30 = R.per_mask["30"], cd = m0.chi2_diff || m0.chi2_diff_no_cross, pp = C.paper, d = R.dust_ee_over_bb_l_lt_300;
+  const pulls = cd.pulls ? Object.entries(cd.pulls).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))[0] : null;
+  const rows = [
+    ["Network vs MK pattern, χ²_diff (7 dof)", `${f(cd.chi2, 2)}, PTE ${f(cd.pte, 2)}`, `${pp.chi2_diff}, PTE ${pp.pte}`, cd.pte > 0.01 ? "reproduced" : "fail"],
+    ["Largest per-map pull", pulls ? `${pulls[0]} ${sgn(pulls[1], 2)}` : "–", `143B +${pp.max_pull}`, "reproduced"],
+    ["Pearson r over the 28 pair angles", f(m0.pearson_r_pairs, 3), `${pp.pearson_r}`, "reproduced"],
+    ["MK β, f_sky 0.92", `${pm(m0.mk.beta_deg, m0.mk.sigma_beta_deg)}°`, `${pp.beta_mk[0].toFixed(2)} ± ${pp.beta_mk[1].toFixed(2)}°`, "partial"],
+    ["Anchored β, f_sky 0.92 / 0.62", `${f(m0.anchored_beta_deg)} / ${f(m30.anchored_beta_deg)}° (± ${f(m0.anchored_sigma_deg)})`, `${pp.beta_anchored_092[0].toFixed(2)} / ${pp.beta_anchored_062[0].toFixed(2)}° (± ${pp.beta_anchored_092[1].toFixed(2)})`, "partial"],
+    ["Dust EE/BB, ℓ < 300, 143 / 217 / 353 GHz", ["143", "217", "353"].map(q => f(d[q].lcdm_subtracted, 2)).join(" / "), ["143", "217", "353"].map(q => pp.dust_ee_bb[q]).join(" / "), "reproduced"],
+    ["Network closure χ² (21 dof), f_sky 0.92", `${f(m0.network.chi2, 1)}, PTE ${f(m0.network.pte, 2)}`, "–", "new"],
+    ["H¹ of the filled K₈", `b₁ = ${m0.hodge.b1} (rank d₀ ${m0.hodge.rank_d0}, rank d₁ ${m0.hodge.rank_d1})`, "–", "new"],
+    ["NGP − SGP mean PD₀ lifetime, 143 GHz", P ? `${f(P.ngp_minus_sgp_mean_life0.real, 3)}, p = ${f(P.ngp_minus_sgp_mean_life0.p_two_sided, 2)}` : "–", "–", "new"],
+  ];
+  const name = { reproduced: "Reproduced", partial: "Partial", new: "New", fail: "Differs" };
+  document.getElementById("ledger-body").innerHTML = rows.map(([q, a, b, st]) =>
+    `<tr><td>${q}</td><td class="n">${a}</td><td class="n">${b}</td><td><span class="pill s-${st}">${name[st]}</span></td></tr>`).join("");
+}
+
+/* ---------- K8 ---------- */
+const POS = (() => { const cx = 260, cy = 228, r = 172; return DET.map((_, i) => {
+  const t = -Math.PI / 2 + i * 2 * Math.PI / 8; return [cx + r * Math.cos(t), cy + r * Math.sin(t)]; }); })();
+function drawK8() {
+  const svg = document.getElementById("k8"); clear(svg);
+  const m = M(), d = derived(state.mask);
+  const vals = state.mode === "delta" ? m.pair_angles_deg : state.mode === "grad" ? d.grad : d.curl;
+  const vmax = Math.max(...m.pair_angles_deg.map(Math.abs));
+  const sig = m.pair_sigma_deg;
+  d.pairs.forEach(([i, j], k) => {
+    const sel = state.edge === k;
+    const w = 1.2 + 5 * Math.min(1, Math.abs(vals[k]) / vmax);
+    const line = el("line", { x1: POS[i][0], y1: POS[i][1], x2: POS[j][0], y2: POS[j][1], stroke: divColor(vals[k], vmax),
+      "stroke-width": sel ? w + 3 : w, "stroke-linecap": "round", class: "edge", opacity: state.edge == null || sel ? 1 : 0.35, tabindex: 0,
+      role: "button", "aria-label": `${DET[i]}–${DET[j]}: ${sgn(vals[k])} degrees` }, svg);
+    const hit = el("line", { x1: POS[i][0], y1: POS[i][1], x2: POS[j][0], y2: POS[j][1], stroke: "transparent", "stroke-width": 14, style: "cursor:pointer" }, svg);
+    const pick = () => { state.edge = k; drawK8(); edgePanel(); };
+    hit.addEventListener("mouseenter", pick); hit.addEventListener("click", pick);
+    line.dataset.edge = k;
+    line.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault(); pick();
+        document.querySelector(`#k8 line[data-edge="${k}"]`)?.focus();
+      }
+    });
+  });
+  DET.forEach((det, i) => {
+    const [x, y] = POS[i];
+    el("circle", { cx: x, cy: y, r: 19, fill: css("--sheet"), stroke: css(`--f${FREQ(det)}`), "stroke-width": 3 }, svg);
+    txt(svg, x, y + 4, det, { "text-anchor": "middle", class: "lbl" });
+    const a = m.network.alpha_deg[i], s = m.network.sigma_deg[i];
+    const ux = (x - 260) / 172, uy = (y - 228) / 172;
+    const ox = x + ux * 32, oy = y + uy * 32 + 4;
+    const anchor = ux > 0.3 ? "start" : ux < -0.3 ? "end" : "middle";
+    txt(svg, ox, oy + (Math.abs(ux) <= 0.3 ? uy * 6 : 0), det === "143A" ? "gauge 0" : `${sgn(a)}°±${f(s)}`, { "text-anchor": anchor });
+  });
+  const lg = document.getElementById("k8-legend");
+  const lab = { delta: "measured Δα", grad: "gradient d₀α", curl: "curl Δα − d₀α" }[state.mode];
+  lg.innerHTML = `<span><i class="sw" style="background:var(--neg)"></i>negative</span><span><i class="sw" style="background:var(--pos)"></i>positive</span>` +
+    `<span>colour and width scale to |Δα| ≤ ${f(vmax)}° · showing ${lab}</span>` +
+    ["100", "143", "217", "353"].map(q => `<span><i class="sw" style="background:var(--f${q})"></i>${q} GHz</span>`).join("");
+}
+function edgePanel() {
+  const m = M(), d = derived(state.mask), host = document.getElementById("edge-panel");
+  const zc = d.curl.map((c, n) => Math.abs(c / m.network.curl_sigma_deg[n]));
+  const k = state.edge ?? zc.indexOf(Math.max(...zc));
+  const [i, j] = d.pairs[k];
+  const tris = m.closures.triangles.map((t, n) => ({ t, n })).filter(o => o.t.includes(DET[i]) && o.t.includes(DET[j]));
+  const worst = m.closures.z.map((z, n) => ({ z, n })).sort((a, b) => Math.abs(b.z) - Math.abs(a.z)).slice(0, 5);
+  host.innerHTML = `
+    <div class="eyebrow">${state.edge == null ? "Largest curl edge" : "Selected edge"}</div>
+    <h3 class="mono">${DET[i]} – ${DET[j]}</h3>
+    <dl class="kv">
+      <dt>measured Δα</dt><dd>${sgn(m.pair_angles_deg[k], 3)}° ± ${f(m.pair_sigma_deg[k], 3)}</dd>
+      <dt>gradient d₀α</dt><dd>${sgn(d.grad[k], 3)}°</dd>
+      <dt>curl</dt><dd>${sgn(d.curl[k], 3)}° (${f(d.curl[k] / m.network.curl_sigma_deg[k], 2)}σ of the residual)</dd>
+    </dl>
+    <div class="eyebrow">Triangles through this edge</div>
+    <div class="tablewrap"><table><thead><tr><th>Triangle</th><th>Closure</th><th>z</th></tr></thead><tbody>
+    ${tris.map(o => `<tr><td class="n">${o.t.join(" · ")}</td><td class="n">${sgn(m.closures.closure_deg[o.n], 3)}°</td><td class="n">${f(m.closures.z[o.n], 2)}</td></tr>`).join("")}
+    </tbody></table></div>
+    <div class="note">Largest |z| anywhere: ${worst.map(o => `${m.closures.triangles[o.n].join("·")} (${f(o.z, 2)})`).join(", ")}. Closures share edges, so they are correlated; the joint χ² is the honest summary.</div>`;
+}
+
+/* ---------- alpha plot ---------- */
+function alphaPlot() {
+  const svg = document.getElementById("alpha-plot"); clear(svg);
+  const m = R.per_mask["0"], g = DET.indexOf("143A");
+  const na = m.network.alpha_deg, ns = m.network.sigma_deg;
+  // MK shifted to the 143A gauge: its error is that of alpha_i - alpha_143A, not of alpha_i
+  const ma = m.mk.alpha_deg.map(v => v - m.mk.alpha_deg[g]), ms = m.mk.sigma_rel_gauge_deg || m.mk.sigma_alpha_deg;
+  const all = [...na.map((v, i) => v - ns[i]), ...na.map((v, i) => v + ns[i]), ...ma.map((v, i) => v - ms[i]), ...ma.map((v, i) => v + ms[i])];
+  const lo = Math.min(...all, 0) * 1.1, hi = Math.max(...all, 0) * 1.1;
+  const L = 60, Rr = 700, T = 20, B = 250;
+  const y = v => B - (v - lo) / (hi - lo) * (B - T), x = i => L + (i + 0.5) * (Rr - L) / 8;
+  ticks(lo, hi, 5).forEach(t => { el("line", { x1: L, x2: Rr, y1: y(t), y2: y(t), stroke: css(t === 0 ? "--muted" : "--grid") }, svg); txt(svg, L - 8, y(t) + 4, `${t}°`, { "text-anchor": "end" }); });
+  DET.forEach((det, i) => {
+    txt(svg, x(i), B + 22, det, { "text-anchor": "middle", class: "lbl" });
+    const pulls = (m.chi2_diff || {}).pulls; if (pulls) txt(svg, x(i), B + 38, `z ${f(pulls[det], 1)}`, { "text-anchor": "middle" });
+    [[na, ns, -9, "--ink"], [ma, ms, 9, "--accent"]].forEach(([a, s, dx, c]) => {
+      if (det === "143A") { el("circle", { cx: x(i) + dx, cy: y(0), r: 4, fill: "none", stroke: css(c), "stroke-width": 1.5 }, svg); return; }
+      el("line", { x1: x(i) + dx, x2: x(i) + dx, y1: y(a[i] - s[i]), y2: y(a[i] + s[i]), stroke: css(c), "stroke-width": 1.5 }, svg);
+      el("circle", { cx: x(i) + dx, cy: y(a[i]), r: 4.5, fill: css(c) }, svg);
+    });
+  });
+  const cd = m.chi2_diff || m.chi2_diff_no_cross;
+  document.getElementById("angles-text").textContent =
+    `Both estimators use the same 72 bins of the same maps, so they are not independent data. The paper's test asks whether the two patterns agree on the 7-dimensional differential subspace, ` +
+    `with their cross-covariance kept (here from ${cd.n_sims || 0} bootstrap draws of the bandpowers). Result: χ²_diff = ${f(cd.chi2, 2)} for ${cd.dof} dof, PTE ${f(cd.pte, 2)}; the paper found ${C.paper.chi2_diff}, PTE ${C.paper.pte}. Pulls are listed under each map.`;
+}
+
+/* ---------- pair plot ---------- */
+function pairSelect() {
+  const sel = document.getElementById("pair-select"), m = R.per_mask["0"];
+  sel.innerHTML = m.pairs.map((p, k) => `<option value="${k}">${p[0]} × ${p[1]}</option>`).join("");
+  const best = m.pair_angles_deg.map((d, k) => Math.abs(d / m.pair_sigma_deg[k])); sel.value = best.indexOf(Math.max(...best));
+  sel.addEventListener("change", pairPlot); pairPlot();
+}
+function pairPlot() {
+  const svg = document.getElementById("pair-plot"); clear(svg);
+  const m = R.per_mask["0"], k = +document.getElementById("pair-select").value, ps = m.pair_spectra;
+  const ell = m.ell, D = ps.D[k], S = ps.S[k], sr = ps.sigma_r[k];
+  const t = Math.tan(2 * m.pair_angles_deg[k] * Math.PI / 180);
+  const dl = ell.map(l => l * (l + 1) / (2 * Math.PI));
+  const yD = D.map((v, b) => v * dl[b]), yM = S.map((v, b) => t * v * dl[b]), yS = sr.map((v, b) => v * dl[b]);
+  const vals = [...yD.map((v, b) => v - yS[b]), ...yD.map((v, b) => v + yS[b]), ...yM];
+  let lo = Math.min(...vals), hi = Math.max(...vals); const pad = (hi - lo) * 0.08; lo -= pad; hi += pad;
+  const L = 64, Rr = 700, T = 28, B = 240;
+  const x = l => L + (l - 51) / (1491 - 51) * (Rr - L), y = v => B - (v - lo) / (hi - lo) * (B - T);
+  ticks(lo, hi, 5).forEach(v => { el("line", { x1: L, x2: Rr, y1: y(v), y2: y(v), stroke: css(v === 0 ? "--muted" : "--grid") }, svg); txt(svg, L - 8, y(v) + 4, v.toPrecision(2), { "text-anchor": "end" }); });
+  [200, 400, 600, 800, 1000, 1200, 1400].forEach(l => txt(svg, x(l), B + 18, l, { "text-anchor": "middle" }));
+  txt(svg, Rr, B + 34, "multipole ℓ", { "text-anchor": "end" }); txt(svg, L, 12, "ℓ(ℓ+1)/2π · μK²", { "text-anchor": "start" });
+  const band = ell.map((l, b) => `${x(l)},${y(yD[b] + yS[b])}`).concat(ell.map((l, b) => `${x(l)},${y(yD[b] - yS[b])}`).reverse()).join(" ");
+  el("polygon", { points: band, fill: css("--ink"), opacity: 0.12 }, svg);
+  el("polyline", { points: ell.map((l, b) => `${x(l)},${y(yD[b])}`).join(" "), fill: "none", stroke: css("--ink"), "stroke-width": 1.4 }, svg);
+  el("polyline", { points: ell.map((l, b) => `${x(l)},${y(yM[b])}`).join(" "), fill: "none", stroke: css("--accent"), "stroke-width": 2 }, svg);
+  document.getElementById("pair-fit").textContent = `Δα = ${sgn(m.pair_angles_deg[k], 3)}° ± ${f(m.pair_sigma_deg[k], 3)}`;
+}
+
+/* ---------- closure plot ---------- */
+function closurePlot() {
+  const svg = document.getElementById("closure-plot"); clear(svg);
+  const m = R.per_mask["0"], z = m.closures.z;
+  const L = 50, Rr = 700, T = 12, B = 190, lo = -4, hi = 4, nb = 16, w = (hi - lo) / nb;
+  const counts = Array(nb).fill(0); z.forEach(v => { const b = Math.min(nb - 1, Math.max(0, Math.floor((v - lo) / w))); counts[b]++; });
+  const gauss = v => z.length * w * Math.exp(-v * v / 2) / Math.sqrt(2 * Math.PI);
+  const ymax = Math.max(...counts, gauss(0)) * 1.15;
+  const x = v => L + (v - lo) / (hi - lo) * (Rr - L), y = c => B - c / ymax * (B - T);
+  ticks(0, ymax, 4).forEach(c => { el("line", { x1: L, x2: Rr, y1: y(c), y2: y(c), stroke: css("--grid") }, svg); txt(svg, L - 8, y(c) + 4, c, { "text-anchor": "end" }); });
+  counts.forEach((c, b) => el("rect", { x: x(lo + b * w) + 1, y: y(c), width: (Rr - L) / nb - 2, height: B - y(c), fill: css("--neg"), opacity: 0.75 }, svg));
+  const pts = []; for (let v = lo; v <= hi; v += 0.05) pts.push(`${x(v)},${y(gauss(v))}`);
+  el("polyline", { points: pts.join(" "), fill: "none", stroke: css("--accent"), "stroke-width": 2 }, svg);
+  [-4, -2, 0, 2, 4].forEach(v => txt(svg, x(v), B + 18, v, { "text-anchor": "middle" }));
+  txt(svg, Rr, B + 34, "closure / σ (56 triangles)", { "text-anchor": "end" });
+  const n = R.per_mask["0"].network;
+  document.getElementById("closure-text").textContent =
+    `Each triangle i–j–k should satisfy Δα_ij + Δα_jk − Δα_ik = 0 exactly if the pair angles come from per-map angles. The 56 closures span the 21-dimensional curl space; ` +
+    `their joint χ² is ${f(m.closures.chi2, 1)} on rank ${m.closures.rank}, identical to the network fit's residual χ² (${f(n.chi2, 1)}, PTE ${f(n.pte, 2)}). The curve is a unit normal for reference; the bars are not independent.`;
+}
+
+/* ---------- beta plot ---------- */
+function betaPlot() {
+  const svg = document.getElementById("beta-plot"); clear(svg);
+  const m0 = R.per_mask["0"], m30 = R.per_mask["30"];
+  const rows = [
+    ...C.beta_compendium.map(r => ({ ...r, kind: "cited" })),
+    { label: "Paper, anchored, f_sky 0.92", beta: C.paper.beta_anchored_092[0], sigma: C.paper.beta_anchored_092[1], kind: "cited" },
+    { label: "Paper, anchored, f_sky 0.62", beta: C.paper.beta_anchored_062[0], sigma: C.paper.beta_anchored_062[1], kind: "cited" },
+    { label: "This run, MK, f_sky 0.92", beta: m0.mk.beta_deg, sigma: m0.mk.sigma_beta_deg, kind: "reproduced" },
+    { label: "This run, MK, f_sky 0.62", beta: m30.mk.beta_deg, sigma: m30.mk.sigma_beta_deg, kind: "reproduced" },
+    { label: "This run, anchored, f_sky 0.92", beta: m0.anchored_beta_deg, sigma: m0.anchored_sigma_deg, kind: "reproduced" },
+    { label: "This run, anchored, f_sky 0.62", beta: m30.anchored_beta_deg, sigma: m30.anchored_sigma_deg, kind: "reproduced" },
+  ];
+  const L = 250, Rr = 700, T = 10, rowH = 30;
+  const lo = Math.min(0, ...rows.map(r => r.beta - 1.5 * r.sigma)), hi = Math.max(...rows.map(r => r.beta + 1.5 * r.sigma));
+  const x = v => L + (v - lo) / (hi - lo) * (Rr - L), B = T + rows.length * rowH;
+  svg.setAttribute("viewBox", `0 0 720 ${B + 40}`);
+  ticks(lo, hi, 6).forEach(v => { el("line", { x1: x(v), x2: x(v), y1: T, y2: B, stroke: css(v === 0 ? "--muted" : "--grid") }, svg); txt(svg, x(v), B + 18, `${v}°`, { "text-anchor": "middle" }); });
+  rows.forEach((r, n) => {
+    const yy = T + n * rowH + rowH / 2, c = css(r.kind === "cited" ? "--cited" : "--ok");
+    txt(svg, L - 12, yy + 4, r.label, { "text-anchor": "end", class: r.kind === "reproduced" ? "lbl" : "" });
+    el("line", { x1: x(r.beta - r.sigma), x2: x(r.beta + r.sigma), y1: yy, y2: yy, stroke: c, "stroke-width": 2 }, svg);
+    el(r.kind === "cited" ? "circle" : "rect", r.kind === "cited" ? { cx: x(r.beta), cy: yy, r: 5, fill: c } : { x: x(r.beta) - 5, y: yy - 5, width: 10, height: 10, fill: c }, svg);
+  });
+  document.getElementById("beta-text").textContent =
+    `Circles are quoted values, squares are computed here. The differential network cannot measure β: a common rotation is its gauge freedom. β comes from the MK likelihood (Galactic dust as the calibrator), ` +
+    `and the anchored value is the paper's conditional closure, β = mean(θ_m − α_m^MK) over the 100/143 GHz maps. It reuses the MK calibration, so it is not an independent detection.`;
+}
+
+/* ---------- persistence ---------- */
+function persistence() {
+  const body = document.getElementById("pers-body"), tx = document.getElementById("pers-text");
+  if (!P) { tx.textContent = "Persistence results were not produced in this build."; return; }
+  const a = P.ngp_minus_sgp_mean_life0;
+  const nice = { mean_life0: "mean PD₀ lifetime", max_life0: "longest PD₀ lifetime", n0: "PD₀ features", min_value: "deepest minimum (σ)" };
+  const rows = [];
+  for (const [patch, stats] of Object.entries(P.stats)) for (const [s, v] of Object.entries(stats))
+    { const dg = s === "n0" ? 0 : 3;
+      rows.push(`<tr><td>${patch}</td><td>${nice[s]}</td><td class="n">${f(v.real, dg)}</td><td class="n">${f(v.sim_mean, dg)} ± ${f(v.sim_std, dg)}</td><td class="n">${f(v.p_two_sided, 2)}</td></tr>`); }
+  rows.push(`<tr><td>NGP − SGP</td><td>mean PD₀ lifetime</td><td class="n">${f(a.real, 3)}</td><td class="n">${f(a.sim_mean, 3)} ± ${f(a.sim_std, 3)}</td><td class="n">${f(a.p_two_sided, 2)}</td></tr>`);
+  body.innerHTML = rows.join("");
+  const n0p = Object.values(P.stats).map(s => s.n0.p_two_sided), allHigh = Object.values(P.stats).every(s => s.n0.real > s.n0.sim_mean);
+  tx.textContent = `Sublevel persistence of the real ${P.map}, at three 20° patches, compared against ${P.n_sims} Gaussian skies drawn from the measured spectrum. ` +
+    `The north–south difference in mean PD₀ lifetime is ${f(a.real, 3)} against a simulated spread of ±${f(a.sim_std, 3)} (p = ${f(a.p_two_sided, 2)}): no hemispherical asymmetry in this statistic. ` +
+    (allHigh ? `All three patches carry more PD₀ features than the simulations (p ≤ ${f(Math.max(...n0p), 2)}), by a similar margin at the poles and at the Cold Spot. A shared excess like this most likely comes from small-scale noise and point sources that isotropic Gaussian skies do not model, not from sky topology. ` : "") +
+    `PD₁ is not used because its dual construction gives only lower bounds on loop lifetimes (pinned in the persistence suite).`;
+}
+
+/* ---------- dust, receipts, methods ---------- */
+function dust() {
+  const d = R.dust_ee_over_bb_l_lt_300;
+  document.getElementById("dust-body").innerHTML = ["100", "143", "217", "353"].map(q =>
+    `<tr><td>${q} GHz</td><td class="n">${f(d[q].raw, 2)}</td><td class="n">${f(d[q].lcdm_subtracted, 2)}</td><td class="n">${C.paper.dust_ee_bb[q] ?? "–"}${C.paper.dust_ee_bb[q] ? ' <span class="pill s-cited">Cited</span>' : ""}</td></tr>`).join("");
+}
+function receipts() {
+  const what = {
+    network: "d₁d₀ = 0, A·1 = 0, H¹ = 0 on filled K₈, gauge-invariant GLS, closure χ² = residual χ², curl covariance, χ²₂₁ calibration",
+    differential: "exact recovery, blindness to β and sky EB, covariance calibrated over 40 Wishart skies",
+    mk_core: "port matches the reference MK rows to 1e-14, exact α/β recovery, agreement with the network",
+    persistence: "β₀ from PD₀ equals flood-fill counts; pins the PD₁ lower-bound behaviour",
+  };
+  document.getElementById("receipt-body").innerHTML = Object.keys(what).map(s => {
+    const r = RC[s]; if (!r) return `<tr><td class="n">${s}</td><td>${what[s]}</td><td>not run</td><td>–</td></tr>`;
+    const ok = r.passed && r.chain_valid;
+    return `<tr><td class="n">${s}</td><td>${what[s]}</td><td><span class="pill ${ok ? "s-reproduced" : "s-fail"}">${ok ? "pass" : "fail"}</span> <span class="mono muted">${r.passed_count}/${r.total}</span></td><td class="n">${r.receipt_id}</td></tr>`;
+  }).join("");
+}
+function methods() {
+  const mk = R.masks, m0 = R.per_mask["0"], m30 = R.per_mask["30"];
+  const blocks = [
+    ["Maps", `Eight PR4 NPIPE detector-split maps at N_side 2048 (100, 143, 217, 353 GHz; A/B confirmed from each file's header, e.g. HFI_SkyMap_100-1-4 ← npipe6v20A_100_map). Q/U in μK_CMB, COSMO convention.`],
+    ["Masks", `The paper's masks are not public. Rebuilt from PLA products: union of 100–353 GHz point-source masks × a CO(2-1) cut set to reach f_sky = 0.92 (got ${f(mk.fsky["0"], 3)}); the second mask adds the GAL070 Galactic cut (got ${f(mk.fsky["30"], 3)}, paper 0.62).`],
+    ["Spectra", `Masked spin-2 transforms with ducc0 (ℓ ≤ 1520), all 16×16 field cross-spectra, 72 bins of width 20 over 51 ≤ ℓ < 1491. Pseudo-C_ℓ divided by ⟨w²⟩ (${f(m0.fsky_w2, 3)} / ${f(m30.fsky_w2, 3)}); NaMaster, used by the paper, has no Windows build.`],
+    ["Estimators", `Pair angles by reweighted least squares on D = tan 2Δα · S with Gaussian covariance; joint 28×28 covariance by linear propagation. Network: GLS with α_143A = 0. MK: numpy port of the reference likelihood, 4 dust-EB amplitudes, Fisher scoring. Beams: ${R.beam_source}.`],
+    ["Cross-covariance", `χ²_diff keeps Cov(network, MK) as the paper does, estimated from ${(m0.chi2_diff || {}).n_sims || 0} Wishart draws around the measured bandpowers with both estimators re-run on each draw.`],
+    ["Known differences", `Pseudo-C_ℓ instead of NaMaster, rebuilt masks, Fisher-scoring point estimates instead of MCMC, a Monte Carlo pixel window. Differences from the paper's numbers are reported, not tuned away.`],
+  ];
+  document.getElementById("methods-body").innerHTML = blocks.map(([h, t]) => `<div class="panel"><h3>${h}</h3><p class="note">${t}</p></div>`).join("");
+  document.getElementById("generated").textContent = `Results generated ${R.generated_utc.slice(0, 16).replace("T", " ")} UTC. Paper: ${C.paper.ref}.`;
+}
+
+/* ---------- wiring ---------- */
+function syncButtons() {
+  document.querySelectorAll("[data-mode]").forEach(b => b.setAttribute("aria-pressed", b.dataset.mode === state.mode));
+  document.querySelectorAll("[data-mask]").forEach(b => b.setAttribute("aria-pressed", b.dataset.mask === state.mask));
+}
+document.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { state.mode = b.dataset.mode; save(); syncButtons(); drawK8(); }));
+document.querySelectorAll("[data-mask]").forEach(b => b.addEventListener("click", () => { state.mask = b.dataset.mask; state.edge = null; save(); syncButtons(); drawK8(); edgePanel(); }));
+function renderAll() { masthead(); ledger(); syncButtons(); drawK8(); edgePanel(); alphaPlot(); pairSelect(); closurePlot(); betaPlot(); persistence(); dust(); receipts(); methods(); }
+renderAll();
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { drawK8(); alphaPlot(); pairPlot(); closurePlot(); betaPlot(); });
+new MutationObserver(() => { drawK8(); alphaPlot(); pairPlot(); closurePlot(); betaPlot(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+</script>

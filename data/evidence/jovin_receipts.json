@@ -1,0 +1,81 @@
+[
+  {
+    "suite": "network",
+    "verified_at": "2026-10-22T16:22:35.420685+00:00",
+    "passed": true,
+    "passed_count": 11,
+    "total": 11,
+    "receipt_id": "20261022T162235Z-2682b8ed3d8e",
+    "receipt_sha256": "b514a62e032ca547987964666e168e9bb1d2ce2ae3839a98382c99b2fcf801c1",
+    "isolation": "shared",
+    "bundle_sha256": "d7d0d504329add2ea0cc0ba4c4a70edde642f43790cf719cb1d57c83758bac4f",
+    "tests_sha256": "f3d2ce22ec11aaeec825ab21dd75c60b5d01a391dfe6ece2da0378e9a5107d0e",
+    "source_function_sha256": {
+      "network.py": "76ac4b11352b32c2b42c3e0abd3aa9563d8ab578fb9b3ca4e7be6eb19b4772ad"
+    },
+    "failures": null,
+    "duration_s": 2.97,
+    "chain_valid": true,
+    "chain_head_sha256": "9667defcb6ba14aab53da96b587ba184dad578814c08c6f8b6cb5a0481d8192b"
+  },
+  {
+    "suite": "differential",
+    "verified_at": "2026-10-22T16:22:38.476734+00:00",
+    "passed": true,
+    "passed_count": 7,
+    "total": 7,
+    "receipt_id": "20261022T162238Z-56a6af847c12",
+    "receipt_sha256": "9cef785d264ca3a375142899c9669043f03225c0837ccd789ad037beed6934d0",
+    "isolation": "shared",
+    "bundle_sha256": "65145fc4aa0947fd339926549ced57265c03274c1474531b63e174821b8824ac",
+    "tests_sha256": "546b6d4bf48efb6d60c4a2be6ea4f9a22db8a2d8702a45aec29ea513721b359b",
+    "source_function_sha256": {
+      "network.py": "76ac4b11352b32c2b42c3e0abd3aa9563d8ab578fb9b3ca4e7be6eb19b4772ad",
+      "differential.py": "a5caa7eaa93939fb6e33b5ed0867a5e8dd0a1edc6bc2ce1ef7143b819c5977c2"
+    },
+    "failures": null,
+    "duration_s": 3.06,
+    "chain_valid": true,
+    "chain_head_sha256": "9667defcb6ba14aab53da96b587ba184dad578814c08c6f8b6cb5a0481d8192b"
+  },
+  {
+    "suite": "mk_core",
+    "verified_at": "2026-10-22T16:22:40.996395+00:00",
+    "passed": true,
+    "passed_count": 7,
+    "total": 7,
+    "receipt_id": "20261022T162240Z-d35036cacbf4",
+    "receipt_sha256": "501ee9a8d4e7a04feb320c8e23019ef77ce3df79ed245d08a94e7025d05865e9",
+    "isolation": "shared",
+    "bundle_sha256": "43bdf54899c1e73a81c3dedf8b88c88dbe99a142637f2928f70c2d2d3ec53f7c",
+    "tests_sha256": "9297518740f73578965336cc2bc37f7f1f88aac9ff4317eb623614785bce044e",
+    "source_function_sha256": {
+      "network.py": "76ac4b11352b32c2b42c3e0abd3aa9563d8ab578fb9b3ca4e7be6eb19b4772ad",
+      "differential.py": "a5caa7eaa93939fb6e33b5ed0867a5e8dd0a1edc6bc2ce1ef7143b819c5977c2",
+      "mk_likelihood.py": "9f2af56abf411f412e445926d0a9f3075ca5f2c6e708c6fdb635005440cafebe"
+    },
+    "failures": null,
+    "duration_s": 2.51,
+    "chain_valid": true,
+    "chain_head_sha256": "9667defcb6ba14aab53da96b587ba184dad578814c08c6f8b6cb5a0481d8192b"
+  },
+  {
+    "suite": "persistence",
+    "verified_at": "2026-10-22T16:22:43.121413+00:00",
+    "passed": true,
+    "passed_count": 6,
+    "total": 6,
+    "receipt_id": "20261022T162243Z-47da1c40da3c",
+    "receipt_sha256": "9667defcb6ba14aab53da96b587ba184dad578814c08c6f8b6cb5a0481d8192b",
+    "isolation": "shared",
+    "bundle_sha256": "3aecac2afd6555515e4d38ea1ba76b05d88aad09ece75d4e2c7104cb6e92ac84",
+    "tests_sha256": "b89c49834301d868ab8b095143900b459a5d74e26583caacf25d613399aa8236",
+    "source_function_sha256": {
+      "persistence.py": "d379ed5a39eeaf4bddcbce387044383a7ef294220ee1e5486f74ea73b76ed1f4"
+    },
+    "failures": null,
+    "duration_s": 2.13,
+    "chain_valid": true,
+    "chain_head_sha256": "9667defcb6ba14aab53da96b587ba184dad578814c08c6f8b6cb5a0481d8192b"
+  }
+]
