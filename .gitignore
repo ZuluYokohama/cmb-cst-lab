@@ -7,3 +7,15 @@ data/work/
 *.part
 data/*.log
 private/
+
+# Private records and local service credentials
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+*.secrets.*
+*.credentials.*
+private-evidence/
