@@ -175,3 +175,26 @@ def project_patch(hpx_map: np.ndarray, center_theta: float, center_phi: float, s
     th, ph = gnomonic_angles(center_theta, center_phi, size, patch_deg)
     pix = ducc0.healpix.Healpix_Base(nside, "RING").ang2pix(np.stack([th.ravel(), ph.ravel()], axis=1))
     return hpx_map[pix].reshape(th.shape)
+
+
+def mc_pvalue(sims: np.ndarray, observed: float) -> float:
+    """Two-sided Monte Carlo p-value with the +1 correction (never zero):
+    p = min(1, 2 min((1 + #{T_sim <= T_obs}) / (1 + N), (1 + #{T_sim >= T_obs}) / (1 + N)))."""
+    sims = np.asarray(sims, dtype=float)
+    n = sims.size
+    lo = (1 + np.sum(sims <= observed)) / (1 + n)
+    hi = (1 + np.sum(sims >= observed)) / (1 + n)
+    return float(min(1.0, 2 * min(lo, hi)))
+
+
+def holm(pvals) -> np.ndarray:
+    """Holm step-down adjusted p-values (family-wise error control), in the input order."""
+    p = np.asarray(pvals, dtype=float)
+    m = p.size
+    order = np.argsort(p)
+    adj = np.empty(m)
+    running = 0.0
+    for rank, idx in enumerate(order):
+        running = max(running, (m - rank) * p[idx])
+        adj[idx] = min(1.0, running)
+    return adj

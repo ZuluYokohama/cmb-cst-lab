@@ -8,10 +8,14 @@ Maps are the 8 vertices of the complete graph K_8, pairs are its 28 edges and th
     (d1 w)_t = w_ij + w_jk - w_ik           for triangle t = (i, j, k), i < j < k.
 
 d1 d0 = 0, ker d0 = span{1} (the common rotation: beta plus any shared offset), and because
-every triangle is filled, ker d1 = im d0. So H^1 = 0: the 21-dimensional complement of
-im d0 in C^1 is im d1^T (curl), not cohomology. A "curl" in measured pair angles is
-therefore a failure of triangle closure, and its weighted size is exactly the residual
-chi^2 of the gauge-fixed network fit (see `closure_chi2`).
+every triangle is filled, ker d1 = im d0. So H^1 = 0: there is no harmonic component, and
+anything outside im d0 is a failure of triangle closure.
+
+The fit uses the edge covariance C, so the decomposition is orthogonal in the C^{-1} inner
+product. The GLS residual r obeys d0^T C^{-1} r = 0, i.e. C^{-1} r lies in ker d0^T = im d1^T:
+r is a *covariance-weighted* coexact component (in im d1^T only if C is proportional to the
+identity). The triangle closures d1 dalpha are the metric-free statement of inconsistency, and
+their weighted chi^2 equals the residual chi^2 of the gauge-fixed fit (see `closure_chi2`).
 """
 from __future__ import annotations
 

@@ -16,13 +16,19 @@ verification receipts. Open it in a browser.
    birefringence-blind pair angles. A gauge-fixed network fit turns them into one angle per map,
    and a Minami–Komatsu (MK) fit of the same maps gives the same pattern.
 2. **The network is a cochain complex.** The paper's incidence matrix is the coboundary d₀ on K₈
-   (the paper notes A·1 = 0 is the gauge). With all 56 triangles filled, H¹(K₈) = 0, so whatever
-   the fit does not explain is curl: triangle-closure failure. Its weighted size is exactly the
-   network fit's residual χ², and the sandbox checks that identity.
+   (the paper notes A·1 = 0 is the gauge). With all 56 triangles filled, H¹(K₈) = 0, so there is
+   no harmonic part, and what the fit does not explain is triangle-closure failure. Because the
+   fit is weighted by the edge covariance C, that residual is a covariance-weighted coexact
+   component (C⁻¹r ∈ im d₁ᵀ), not a Euclidean curl. The weighted closure χ² equals the
+   network fit's residual χ², and the sandbox checks both statements. This edge-space curl is a
+   graph-closure diagnostic; it is unrelated to CMB B-modes.
 3. **β agrees with the paper, at lower precision.** The MK β is consistent with the published
    value but carries about twice its error; see *Differences from the paper*.
-4. **The real sky shows no Galactic-cap asymmetry in sublevel persistence**, and the Cold Spot
-   patch is unremarkable in these statistics.
+4. **Persistence on the real sky (exploratory).** No Galactic-cap asymmetry or lifetime anomaly
+   appears. However, the PD₀ feature count is high in all three patches (NGP, SGP, Cold Spot)
+   relative to the current Gaussian simulations. A shared offset like that points first to a
+   simulation/data mismatch (noise anisotropy, foregrounds, pipeline), and it is unexplained
+   until the validation track runs; see `results/persistence.json`.
 
 ## Results
 
@@ -42,7 +48,7 @@ comparison.
 | Anchored β, f_sky 0.92 | 0.24° ± 0.23° | 0.37° ± 0.12° |
 | Anchored β, f_sky 0.62 | 0.23° ± 0.23° | 0.40° ± 0.13° |
 | H¹(K₈), filled complex | b₁ = 0 (rank d₀ = 7, rank d₁ = 21) | not discussed |
-| NGP − SGP mean PD₀ lifetime, 143 GHz | -0.001 (sims -0.000 ± 0.030, p = 0.98) | not in paper |
+| NGP − SGP mean PD₀ lifetime, 143 GHz | -0.001 (sims +0.001 ± 0.030, p = 0.92) | not in paper |
 | Dust EE/BB, ℓ < 300 (ΛCDM-subtracted) 143/217/353 | 1.41 / 1.40 / 1.40 | 1.41 / 1.37 / 1.42 |
 
 Per-map angles (network, gauge α_143A = 0, f_sky 0.92):
@@ -70,10 +76,10 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 <!-- RECEIPTS:START -->
 | Suite | Result | Receipt |
 |---|---|---|
-| `network` | pass 11/11 | `20261022T171100Z-580748193292` |
+| `network` | pass 12/12 | `20261022T174052Z-6be1cc5058ca` |
 | `differential` | pass 7/7 | `20261022T171103Z-7469960ebbb7` |
 | `mk_core` | pass 8/8 | `20261022T171106Z-676f9cad61b0` |
-| `persistence` | pass 6/6 | `20261022T171110Z-1c08a122f3ae` |
+| `persistence` | pass 8/8 | `20261022T174054Z-c6e1fea88f6d` |
 | `accel` | pass 10/10 | `20261022T172121Z-5cd7a09a18e0` |
 <!-- RECEIPTS:END -->
 

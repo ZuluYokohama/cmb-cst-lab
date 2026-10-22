@@ -424,7 +424,7 @@ def stage_persistence(n_sims: int) -> dict:
         v = np.array([s[patch][stat] for s in sims])
         r = real[patch][stat]
         return {"real": r, "sim_mean": float(v.mean()), "sim_std": float(v.std()),
-                "p_two_sided": float(min(1.0, 2 * min((v <= r).mean(), (v >= r).mean())))}
+                "z": float((r - v.mean()) / v.std()), "p_two_sided": persistence.mc_pvalue(v, r)}
 
     out = {"n_sims": n_sims, "map": "143 GHz (A+B)/2 temperature, 10' smoothing, l <= 1000, N_side 512",
            "patches_deg": {k: [float(np.degrees(c[0])), float(np.degrees(c[1]))] for k, c in PATCHES.items()},
@@ -432,7 +432,17 @@ def stage_persistence(n_sims: int) -> dict:
     asym_real = real["NGP"]["mean_life0"] - real["SGP"]["mean_life0"]
     asym = np.array([s["NGP"]["mean_life0"] - s["SGP"]["mean_life0"] for s in sims])
     out["ngp_minus_sgp_mean_life0"] = {"real": asym_real, "sim_mean": float(asym.mean()), "sim_std": float(asym.std()),
-                                       "p_two_sided": float(min(1.0, 2 * min((asym <= asym_real).mean(), (asym >= asym_real).mean())))}
+                                       "z": float((asym_real - asym.mean()) / asym.std()),
+                                       "p_two_sided": persistence.mc_pvalue(asym, asym_real)}
+    # Family-wise control over every comparison reported (patch statistics + the cap contrast)
+    family = [(p, s) for p in out["stats"] for s in out["stats"][p]]
+    adj = persistence.holm([out["stats"][p][s]["p_two_sided"] for p, s in family]
+                           + [out["ngp_minus_sgp_mean_life0"]["p_two_sided"]])
+    for (p, s), a in zip(family, adj[:-1]):
+        out["stats"][p][s]["p_holm"] = float(a)
+    out["ngp_minus_sgp_mean_life0"]["p_holm"] = float(adj[-1])
+    out["n_comparisons"] = len(adj)
+    out["p_value_method"] = "two-sided Monte Carlo with +1 correction; Holm-adjusted over n_comparisons"
     RESULTS.mkdir(exist_ok=True)
     (RESULTS / "persistence.json").write_text(json.dumps(out, indent=2))
     log("wrote results/persistence.json")
