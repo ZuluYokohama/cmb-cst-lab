@@ -23,3 +23,5 @@ jobs:
         run: python scripts/provenance_audit.py check
       - name: Exercise deterministic public inventory
         run: python scripts/provenance_audit.py inventory --summary
+      - name: Scan reachable Git history for credential signatures (redacted)
+        run: python scripts/history_credential_scan.py
