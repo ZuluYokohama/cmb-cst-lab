@@ -24,3 +24,8 @@ See [estimated-covariance validation](ESTIMATED_COVARIANCE_VALIDATION.md). With 
 ## Non-Gaussian contamination
 
 The [heavy-tailed negative control](NON_GAUSSIAN_CLOSURE.md) tests the conditional F correction on an equal-covariance Student-t noise model; a correct second moment does not imply a correct Gaussian false-alarm reference.
+
+
+## Temporally dependent calibration
+
+See [temporal correlation audit](TEMPORAL_CALIBRATION.md) for a negative control showing how finite-F false-alarm calibration can fail when calibration rows are serially correlated despite Gaussian marginals.

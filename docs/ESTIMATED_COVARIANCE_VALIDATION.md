@@ -31,3 +31,8 @@ The K>=q+3 guard excludes particularly low denominator-degrees-of-freedom cases 
 ## Distributional negative control
 
 The [Student-t negative control](NON_GAUSSIAN_CLOSURE.md) demonstrates why equal population covariance alone does not justify the Gaussian scaled-F reference under heavy-tailed noise.
+
+
+## Temporal dependence in calibration
+
+The [AR(1) calibration negative control](TEMPORAL_CALIBRATION.md) demonstrates that matching marginal Gaussian covariance does not supply independence and that the exact finite-F reference must not be applied uncritically to serially correlated calibration observations.
