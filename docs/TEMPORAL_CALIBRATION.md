@@ -27,3 +27,7 @@ This is an **assumption-failure demonstration**, not a new estimator. F-based p-
 A heuristic effective-sample-size substitution does **not** automatically restore the exact Wishart/F law. No such unverified adjustment is applied here. The test says nothing about particular real sensors, field deployments, unique fault attribution, operational safety, or cryptographic sandbox assurance.
 
 The next useful tests are correlation-robust calibration with external held-out sessions, controlled drift and nonstationarity, and comparison with independently implemented time-series inference procedures under explicit assumptions.
+
+## Empirical calibration across independent whole sessions
+
+An optional [rank-based reference](SESSION_RANK_CALIBRATION.md) demonstrates how *between-session* score exchangeability, rather than independent within-session rows, can support a conservative empirical p-value. A changed session autocorrelation is an explicit nonexchangeability counterexample. It does not establish operational performance.

@@ -79,6 +79,10 @@ Run `python scripts/audit_non_gaussian_closure.py` for an independent synthetic 
 
 The finite-covariance F reference requires independent calibration observations. The new synthetic paired Gaussian AR(1) audit varies only calibration-row dependence while holding marginal edge covariance fixed. See [temporal-dependence validation](docs/TEMPORAL_CALIBRATION.md) and run `python scripts/audit_temporal_calibration.py`. This is an assumption-failure test, not a correlated-data correction.
 
+## Independent-session rank calibration
+
+The experimental scalar closure testbed now includes an empirical upper-tail reference based on independent **whole calibration sessions**. This permits within-session temporal dependence if reference and held-out session scores are exchangeable under a fixed null, while a deliberately shifted-session negative control demonstrates failure when that assumption breaks. Run `python scripts/audit_session_rank.py` and read [assumptions and scope](docs/SESSION_RANK_CALIBRATION.md).
+
 ## Results
 
 Every number in the first column is computed in this repository. Paper values are quoted for

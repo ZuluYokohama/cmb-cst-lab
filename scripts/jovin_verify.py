@@ -41,6 +41,10 @@ SUITES: dict[str, tuple[list[tuple[str, list[str] | None]], str]] = {
         [("src/cmbcst/network.py", None)],
         "tests/sandbox/jovin_tests_network.py",
     ),
+    "empirical_calibration": (
+        [("src/cmbcst/empirical_calibration.py", None)],
+        "tests/sandbox/jovin_tests_empirical_calibration.py",
+    ),
     "estimated_covariance": (
         [("src/cmbcst/network.py", None), ("src/cmbcst/sparse_network.py", None), ("src/cmbcst/estimated_covariance.py", None)],
         "tests/sandbox/jovin_tests_estimated_covariance.py",
