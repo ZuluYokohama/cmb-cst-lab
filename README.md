@@ -63,6 +63,10 @@ The network residual statistic (~28.8 for 21 dof) and the network-vs-MK statisti
 
 The synthetic scalar offset testbed supports connected sparse measurement graphs and independent fundamental-cycle closure diagnostics. A tree has no redundant cycle checks, so corrupted measurements cannot be detected from its closures. Run python scripts/demo_sparse_network.py and consult docs/SPARSE_NETWORK_VALIDATION.md for evidence limits.
 
+## Noise-assumption stress test
+
+Run python scripts/audit_sparse_noise.py to compare a nominal 5% closure-test false-alarm rate under correctly specified Gaussian noise against the badly miscalibrated result when the reported covariance is too small. This is a synthetic negative control, not a field performance claim. See docs/NOISE_MODEL_CALIBRATION.md.
+
 ## Results
 
 Every number in the first column is computed in this repository. Paper values are quoted for
