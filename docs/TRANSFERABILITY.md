@@ -45,3 +45,8 @@ Before choosing AGPL, dual licensing, or a private commercial module, audit copy
 3. **Efficiency:** measure wall time, RAM, and scaling versus sensor count; this initial full-triangle implementation is not optimized for large arrays.
 4. **Security:** threat-model AST extraction, the JoVin runtime, receipt forging, replay, and ledger anchoring before making assurances.
 5. **IP:** review provenance and licensing before public release of any commercial components.
+
+
+## Sparse graph validation
+
+The experimental connected sparse-graph extension (SPARSE_NETWORK_VALIDATION.md) compares the weighted cycle statistic and GLS and explicitly tests the no-redundancy tree case.
