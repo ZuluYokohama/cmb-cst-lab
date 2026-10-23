@@ -10,3 +10,4 @@ tests/**/*.py -text
 docs/**/*.md -text
 results/** -text
 data/evidence/** -text
+formal/** -text

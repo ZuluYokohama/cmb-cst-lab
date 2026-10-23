@@ -30,3 +30,20 @@ jobs:
         run: python -m pytest -q
       - name: Sandbox suites under plain pytest (same ast bundles as JoVin, no receipts)
         run: python scripts/run_sandbox_suites.py
+
+  lean:
+    name: Lean rational invariants
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Download and verify pinned official Lean compiler
+        shell: bash
+        run: |
+          curl -L --fail --retry 2 -o "$RUNNER_TEMP/lean.tar.zst" https://github.com/leanprover/lean4/releases/download/v4.35.0/lean-4.35.0-linux.tar.zst
+          echo "7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d  $RUNNER_TEMP/lean.tar.zst" | sha256sum --check
+          mkdir -p "$RUNNER_TEMP/lean"
+          tar --zstd -xf "$RUNNER_TEMP/lean.tar.zst" --strip-components=1 -C "$RUNNER_TEMP/lean"
+      - name: Kernel-check supporting algebra
+        run: python3 scripts/verify_lean.py --lean "$RUNNER_TEMP/lean/bin/lean" --archive "$RUNNER_TEMP/lean.tar.zst" --output "$RUNNER_TEMP/lean-verification.json"

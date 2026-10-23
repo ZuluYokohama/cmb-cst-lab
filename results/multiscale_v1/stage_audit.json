@@ -1,0 +1,15 @@
+{
+  "status": "exploratory_complete",
+  "started_utc": "2026-10-23T20:51:46.349413+00:00",
+  "plan_sha256": "428535466d96838209aef62c87d22dcec7a29aff6a7a28545919383482e66288",
+  "completed_utc": "2026-10-23T20:54:35.619797+00:00",
+  "elapsed_s": 169.68667380600002,
+  "control_flags": 4,
+  "precision_failures": 0,
+  "max_curve_error": 2.5216531034515557e-14,
+  "max_feature_error": 3.9876925723645e-15,
+  "max_shell_error": 5.10702591327572e-15,
+  "cpu_feature_seconds": 3.8441823849999235,
+  "gpu_feature_seconds": 0.975795259999952,
+  "result_sha256": "ae19e9b18eca3625f27a2c37e3db32e1d5d1b2b98872fe751831c1358bced4c5"
+}

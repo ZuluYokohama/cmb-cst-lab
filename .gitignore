@@ -6,6 +6,9 @@ __pycache__/
 data/raw/
 data/work/
 data/reference/
+results/**/progress.json
+results/**/analysis_progress.json
+results/**/validation_progress.json
 *.part
 data/*.log
 private/

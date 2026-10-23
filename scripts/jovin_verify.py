@@ -39,6 +39,10 @@ HEADER = (
 # suite -> (sources, sandbox tests file). A source is (path, [function names]) or (path, None) for a
 # whole standalone module (its own imports are kept; it must not import other cmbcst modules).
 SUITES: dict[str, tuple[list[tuple[str, list[str] | None]], str]] = {
+    "multiscale": (
+        [("src/cmbcst/multiscale.py", None)],
+        "tests/sandbox/jovin_tests_multiscale.py",
+    ),
     "spherical_surrogates": (
         [("src/cmbcst/spectra.py", ["alm_ell_m", "cross_cl"]),
          ("src/cmbcst/persistence.py", None), ("src/cmbcst/surrogate_topology.py", None),

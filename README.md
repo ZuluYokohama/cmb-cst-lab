@@ -53,6 +53,14 @@ The supplied CST working paper informed the projection and negative-control
 design; its separate [27-check local replay](data/evidence/cst_package_audit.json)
 does not establish CMB or other application performance.
 
+The [finite-scale roughness and intermittency study](docs/MULTISCALE_RUN.md)
+compares every structure-function curve independently on CPU and CUDA. None of
+its 18 adjusted comparisons flagged (minimum adjusted p=0.18). The supporting
+[Lean proof](formal/README.md) checks nine exact rational invariants; it does not
+prove a sky anomaly, a fractal dimension or the floating-point implementation
+for every input. The [frozen protocol](docs/MULTISCALE_SPEC.md), raw curves,
+control results and source-bound receipts remain available for review.
+
 **Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every result taken from `results/*.json`
 is written into it by `paper/make_inputs.py` (macros and figures). Two values come from checks
 whose output is not in `results/`: the injection pull width and the post-hoc A/B covariance
@@ -169,6 +177,7 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `surrogate_topology` | pass 6/6 | `20261023T185704Z-58ac2ab53e53` |
 | `copula_topology` | pass 4/4 | `20261023T190416Z-f73e0022af1e` |
 | `spherical_surrogates` | pass 6/6 | `20261023T201811Z-764956b0e705` |
+| `multiscale` | pass 6/6 | `20261023T204940Z-b587588deae4` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).
