@@ -38,9 +38,11 @@ verification receipts. Open it in a browser.
    stays unexplained, and no cosmological claim is made. See `results/persistence.json` and
    `results/persistence_validation.json`.
 
-**Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every number in it is generated from
-`results/*.json` by `paper/make_inputs.py`; `paper/make_arxiv.py` builds and test-compiles
-`paper/arxiv.tar.gz`.
+**Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every result taken from `results/*.json`
+is written into it by `paper/make_inputs.py` (macros and figures). Two values come from checks
+whose output is not in `results/`: the injection pull width and the post-hoc A/B covariance
+audit, which writes outside the repository by design. They are typed in `main.tex` and marked
+with a comment. `paper/make_arxiv.py` builds and test-compiles `paper/arxiv.tar.gz`.
 
 ## Results
 

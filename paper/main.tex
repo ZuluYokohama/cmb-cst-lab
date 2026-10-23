@@ -99,6 +99,7 @@ receipts (Appendix~\ref{app:vv}).
 \section{Reproduction}
 Pair angles come from a reweighted least-squares fit of Eq.~1 across bins with Gaussian bandpower
 covariance propagated to the $28\times28$ pair covariance; their calibration was validated on
+% typed value: 0.90 is from the local injection test (README), not in results/*.json
 injected synthetic skies (pull standard deviation $0.90$). The gauge-fixed network fit gives
 $\chi^2=\netChiA$ for 21 dof (PTE $\netPteA$) at $f_{\rm sky}=\fskyA$ and $\netChiB$ (PTE $\netPteB$) at
 $f_{\rm sky}=\fskyB$. A numpy port of the MK likelihood of \citet{lka2026}, with four dust-EB
@@ -188,7 +189,7 @@ misalignment is free. Dust appears rotated by $\alpha+\psi$
 and the CMB by $\alpha+\beta$, so a common shift of $\alpha$, $\beta$ and $\psi$ leaves the model
 unchanged; numerically, the Fisher matrix has a single null direction,
 $\delta\alpha_i=-\epsilon$ for all $i$ and $\delta\beta=\delta\psi_0=\epsilon$ (relative
-eigenvalue $\sim10^{-15}$). The data constrain $\beta-\psi$ and $\alpha+\beta$, and $\beta$ alone is set by the
+eigenvalue $\fisEig$). The data constrain $\beta-\psi$ and $\alpha+\beta$, and $\beta$ alone is set by the
 priors. Its marginal posterior is then a flat box bounded by prior edges, which the flows
 represent imperfectly; this is the origin of the mild under-coverage of $\beta$ alone. The
 identifiable combination $\beta-\psi_0$ is recovered with $\sigma\simeq\dsdF^\circ$ and coverage
@@ -248,6 +249,7 @@ blind to anisotropic birefringence by construction, and regions are coarse (seve
 region). The A/B edge-constancy statistic treats the four same-frequency edges as independent
 within a region. A post-hoc check that keeps their full within-region covariance finds
 correlations $|\rho|\le0.024$ and leaves the statistics essentially unchanged (latitude bands
+% typed values: 0.024, 49.3, 49.0 are from the post-hoc audit (scripts/audit_spatial_ab.py), which writes outside the repo by design
 $\chi^2=49.3$ for 28 dof instead of 49.0), but correlations between regions and uncertainty in the
 covariance itself are not modelled. None of the analyses here uses end-to-end NPIPE simulations.
 

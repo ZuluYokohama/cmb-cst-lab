@@ -9,6 +9,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import gzip
 import subprocess
 import sys
 import tarfile
@@ -25,7 +26,8 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--tectonic", default=str(REPO / "data" / "work" / "tools" / "tectonic.exe"))
     args = ap.parse_args(argv)
     out = PAPER / "arxiv.tar.gz"
-    with tarfile.open(out, "w:gz") as tar:
+    # fixed gzip header (mtime 0, no file name) so identical inputs give an identical archive
+    with open(out, "wb") as raw, gzip.GzipFile(filename="", fileobj=raw, mode="wb", mtime=0) as gz,             tarfile.open(fileobj=gz, mode="w") as tar:
         for name in FILES:
             # fixed metadata so the archive depends only on the file contents
             info = tar.gettarinfo(PAPER / name, arcname=name)
