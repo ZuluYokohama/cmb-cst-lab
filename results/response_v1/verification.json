@@ -1,0 +1,205 @@
+{
+  "verified_utc": "2026-10-23T22:08:03.242114+00:00",
+  "status": "passed",
+  "scope": "Authentic receipt membership, source/artifact identity and independent saved-data calculations; a verified negative benchmark is not a method improvement",
+  "verification_environment": {
+    "platform": "win32",
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "numpy": "2.4.6"
+  },
+  "jovin_suites": {
+    "response": {
+      "matched": true,
+      "receipt_id": "20261023T215313Z-4fb94bd93228",
+      "total": 9
+    },
+    "orientation": {
+      "matched": true,
+      "receipt_id": "20261023T212557Z-3470461f116f",
+      "total": 5
+    },
+    "multiscale": {
+      "matched": true,
+      "receipt_id": "20261023T204940Z-b587588deae4",
+      "total": 6
+    },
+    "spherical_surrogates": {
+      "matched": true,
+      "receipt_id": "20261023T201811Z-764956b0e705",
+      "total": 6
+    },
+    "copula_topology": {
+      "matched": true,
+      "receipt_id": "20261023T190416Z-f73e0022af1e",
+      "total": 4
+    },
+    "surrogate_topology": {
+      "matched": true,
+      "receipt_id": "20261023T185704Z-58ac2ab53e53",
+      "total": 6
+    },
+    "data_integrity": {
+      "matched": true,
+      "receipt_id": "20261023T175103Z-7966048f9fc7",
+      "total": 6
+    },
+    "network": {
+      "matched": true,
+      "receipt_id": "20261023T173048Z-8a8d7c5da533",
+      "total": 12
+    },
+    "empirical_calibration": {
+      "matched": true,
+      "receipt_id": "20261023T173051Z-1f9310a44f3a",
+      "total": 4
+    },
+    "estimated_covariance": {
+      "matched": true,
+      "receipt_id": "20261023T173053Z-dd5dab68ee37",
+      "total": 3
+    },
+    "sparse_network": {
+      "matched": true,
+      "receipt_id": "20261023T173056Z-0d03ece6fed1",
+      "total": 4
+    },
+    "sensor_network": {
+      "matched": true,
+      "receipt_id": "20261023T173059Z-5cb4d69f6875",
+      "total": 4
+    },
+    "differential": {
+      "matched": true,
+      "receipt_id": "20261023T173103Z-ba6bdf1bcc28",
+      "total": 7
+    },
+    "mk_core": {
+      "matched": true,
+      "receipt_id": "20261023T173106Z-f8238746ed49",
+      "total": 8
+    },
+    "accel": {
+      "matched": true,
+      "receipt_id": "20261023T173220Z-0f5c704fb64f",
+      "total": 11
+    },
+    "gpu_calibration": {
+      "matched": true,
+      "receipt_id": "20261023T173137Z-48cb897d1a8b",
+      "total": 7
+    },
+    "spatial": {
+      "matched": true,
+      "receipt_id": "20261023T173111Z-fffbb6ebc58c",
+      "total": 10
+    },
+    "simulator": {
+      "matched": true,
+      "receipt_id": "20261023T173114Z-fc57d47d8819",
+      "total": 9
+    },
+    "npe": {
+      "matched": true,
+      "receipt_id": "20261023T173117Z-e9115ff5937b",
+      "total": 7
+    },
+    "persistence": {
+      "matched": true,
+      "receipt_id": "20261023T173121Z-8aebdd6510a7",
+      "total": 8
+    }
+  },
+  "chain": {
+    "valid": true,
+    "count": 47,
+    "head_sha256": "20f50f8ee9673a0a5ae51249017ff5257e423fd71f571dfa4fbaf247c26339dc",
+    "problems": []
+  },
+  "frozen_sources": {
+    "results\\copula_boundary_audit_v1\\plan.json": true,
+    "results\\copula_topology_v2\\plan.json": true,
+    "results\\multiscale_v1\\plan.json": true,
+    "results\\orientation_v1\\plan.json": true,
+    "results\\response_v1\\plan.json": true,
+    "results\\spherical_topology_v1\\plan.json": true,
+    "results\\surrogate_topology_v1\\plan.json": true
+  },
+  "prior_artifacts_preserved": {
+    "results\\copula_topology_v2\\verification.json": true,
+    "results\\multiscale_v1\\verification.json": true,
+    "results\\orientation_v1\\verification.json": true,
+    "results\\spherical_topology_v1\\verification.json": true
+  },
+  "calculation_checks": {
+    "feature_dimensions": true,
+    "all_finite_features_scores": true,
+    "fixed_design": true,
+    "complete_fixed_seed_role_domain": true,
+    "all_signal_power_checks": true,
+    "all_nuisance_draw_bounds": true,
+    "all_batch_numerics": true,
+    "stage_precision_aggregates": true,
+    "training_only_fit_reconstructed": true,
+    "precision_covariance_inverse_identities": true,
+    "conditioning_recomputed": true,
+    "all_scores_recomputed": true,
+    "all_heldout_pvalues_recomputed": true,
+    "no_training_calibration_decisions": true,
+    "matched_null_gate_recomputed": true,
+    "null_wilson_intervals_recomputed": true,
+    "all_nuisance_subgroups": true,
+    "all_six_paired_tests_bootstrap_and_holm": true,
+    "all_gain_decisions": true,
+    "honest_outcome_and_scope": true,
+    "omitted_stripe_counts": true,
+    "separate_30_case_replay": true,
+    "initial_replay_preserved_before_whitespace_cleanup": true,
+    "actual_cuda_fixture_preserved": true
+  },
+  "bindings": {
+    "plan_sha256": true,
+    "conditioning_sha256": true,
+    "model_sha256": true,
+    "ensemble_sha256": true,
+    "validation_sha256": true,
+    "stage_result": true,
+    "replay_plan": true,
+    "replay_ensemble": true,
+    "replay_source": true,
+    "response_receipt": true,
+    "conditioning_cache": true,
+    "example_cache": true,
+    "data/evidence/response_cuda_development.json": true
+  },
+  "local_tests": {
+    "passed": 185,
+    "skipped": 3,
+    "matched": true,
+    "log_sha256": "54672040545af56971c5a6659c079cdd017b0606d0177ddfa11911d856dcf3ed"
+  },
+  "ci_equivalent_sandbox_suites": {
+    "passed": 20,
+    "matched": true,
+    "log_sha256": "3678ac8fab64afb8532c1f31b2a607de7b84f4f8f0ed700c067f6c59f0d72432"
+  },
+  "artifact_sha256": {
+    "plan.json": "d4777b587af8a6f37649970414062c375ef34f20659069d2dfa0e534e46de9d8",
+    "conditioning.json": "cb30e0ed37c1e773bffdec4a5057f194efebc89ca5d650ae6705743304a5bb4d",
+    "model.json": "0e87d42480045c753d3e3c3f7e0d5e3d22c6d1b4ef348874957df77430867ae9",
+    "ensemble.json": "c7540b2cb52d14c13ea741c698fd9243295381bc2e0d75afdc4fb1238a2c833d",
+    "validation.json": "24c95d0ad0caa016775ead4dd84c80c05b7987d79367b57f13f1f133cc31e690",
+    "result.json": "bf78a5e80f4bf1dc3426727f813d66bce78fd5142e7454bdc2ba0d616e40c73c",
+    "stage_audit.json": "535d257d4d631cde6a64ed1b434f269dcdd88de081beae73275d3a50b08c1011",
+    "replay.json": "340a7abaaa05446729194bed8bfe7ed82a636c8af162035433fc2455b31dfe26",
+    "replay_initial.json": "9b88679a53c6ad0a27593717c3e8e879666f338bb1675986f13c38ec7aa77afa",
+    "replay_initial_source.py.gz": "bbff6c9a47073ab3955bab462f864f82e4901624fcb622f14c8d563c3aeaca28",
+    "benchmark.png": "68106b13ffe6729c48f5015837c3f696d56120995779f7118e28c975a06c78ac",
+    "sampling.png": "6c966475f54cad9b0199b819e4b6a780e772acca47fa1097fce9ef8d17b0101a"
+  },
+  "report_sha256": "0ff35ce80818004e18bc5bcdb1660c0ecd1d2cf9cf2836b1e2192b5b1ee5627f",
+  "supporting_source_sha256": {
+    "scripts/verify_response_evidence.py": "622a2ff0f9dcb36810553c0eef5376696f635a03cc7bedc0527c5a0ba92c19c9",
+    "scripts/report_response_benchmark.py": "f938da853d3b26a4f3169090c3a5b59e1c003324beec10ffef8780a45be57c99",
+    "scripts/replay_response_samples.py": "50df7fae736f383c3e1195cb9872ed4602c19f6558a24b6bd63e73427c0eada6"
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "created_utc": "2026-10-23T21:57:21.705101+00:00",
+  "scope": "Synthetic method-development benchmark; observational Planck testing remains withheld",
+  "base_seed": 765902132026,
+  "groups": [
+    {
+      "name": "training",
+      "draws": 768,
+      "seed_offset": 0,
+      "kind": "null",
+      "amplitude": 0.0
+    },
+    {
+      "name": "calibration",
+      "draws": 999,
+      "seed_offset": 10000,
+      "kind": "null",
+      "amplitude": 0.0
+    },
+    {
+      "name": "matched_null",
+      "draws": 512,
+      "seed_offset": 20000,
+      "kind": "null",
+      "amplitude": 0.0
+    },
+    {
+      "name": "quadratic_0.15",
+      "draws": 128,
+      "seed_offset": 30000,
+      "kind": "quadratic",
+      "amplitude": 0.15
+    },
+    {
+      "name": "quadratic_0.35",
+      "draws": 128,
+      "seed_offset": 31000,
+      "kind": "quadratic",
+      "amplitude": 0.35
+    },
+    {
+      "name": "compact_0.15",
+      "draws": 128,
+      "seed_offset": 40000,
+      "kind": "compact",
+      "amplitude": 0.15
+    },
+    {
+      "name": "compact_0.35",
+      "draws": 128,
+      "seed_offset": 41000,
+      "kind": "compact",
+      "amplitude": 0.35
+    },
+    {
+      "name": "filament_0.15",
+      "draws": 128,
+      "seed_offset": 50000,
+      "kind": "filament",
+      "amplitude": 0.15
+    },
+    {
+      "name": "filament_0.35",
+      "draws": 128,
+      "seed_offset": 51000,
+      "kind": "filament",
+      "amplitude": 0.35
+    },
+    {
+      "name": "stripe_stress",
+      "draws": 256,
+      "seed_offset": 60000,
+      "kind": "stripe_stress",
+      "amplitude": 0.0
+    }
+  ],
+  "total_draws": 3303,
+  "batch_size": 8,
+  "lmax": 256,
+  "nside": 128,
+  "patch_size": 64,
+  "patch_width_degrees": 20.0,
+  "center_radians": [
+    0.7853981633974483,
+    0.7
+  ],
+  "angles_degrees": [
+    0.0,
+    22.5,
+    45.0,
+    67.5
+  ],
+  "smoothing_arcmin": [
+    30.0,
+    60.0,
+    120.0
+  ],
+  "representations": [
+    "raw",
+    "normal_scores"
+  ],
+  "baseline_dimensions": 17,
+  "response_dimensions": 90,
+  "joint_dimensions": 107,
+  "ridge": 0.1,
+  "shrinkage": 0.1,
+  "candidate_p": 0.05,
+  "max_null_flags": 40,
+  "power_family_size": 6,
+  "minimum_power_gain": 0.1,
+  "paired_bootstrap_draws": 2000,
+  "paired_bootstrap_seed": 833600,
+  "scaled_numerical_tolerance": 1e-10,
+  "synthesis_epsilon": 1e-11,
+  "threads": 8,
+  "fiducial_parameters": {
+    "tau": 0.0544,
+    "ns": 0.9649,
+    "H0": 67.36,
+    "ombh2": 0.02237,
+    "omch2": 0.12,
+    "As": 2.1e-09
+  },
+  "numpy": "2.5.4",
+  "torch": "2.14.1+cu130",
+  "cuda": "13.0",
+  "ducc0": "0.42.0",
+  "camb": "2.0.5",
+  "device": "NVIDIA GeForce RTX 5070",
+  "jovin_receipt_id": "20261023T215313Z-4fb94bd93228",
+  "jovin_bundle_sha256": "f2f6e258b288294553fc8557da4d5f2d453067ebf01f94b2fa1bbb3598636d9e",
+  "jovin_tests_sha256": "d7a9b9f7c588e6ecdd06d13eadc61e5346c057aadce8d85f223f8cb4f6d43e24",
+  "source_sha256": {
+    "scripts/run_response_benchmark.py": "491fef622a316df35227a541e4cbb709d730456f3f414fb00837476530f61e56",
+    "docs/RESPONSE_SPEC.md": "54c54219d224d47a94be9fcb0811d29beceecd0f5c5468e6b7d70e5a67db1bdf",
+    "scripts/record_response_cuda.py": "33fd8e714cc724ef12cc4133db43ccbb43083e28890e590ce7178bf6b139b3e8",
+    "src/cmbcst/response.py": "405188c125abfb59f9871855c1c9b14f2fdb5ffb7c567a40e718445014dc7659",
+    "src/cmbcst/response_sky.py": "0ca637658205f1d39f8823a3acd565d5fddc93374d532eb232b0149ae41ea126",
+    "src/cmbcst/multiscale.py": "ed967a9bc082a70ce913552cbff15d5493f9e2a066ffc9e353d4c5dda3be9e25",
+    "src/cmbcst/copula_topology.py": "d9b760dddf002eb7b9bc1094b6ad716940fc9391a8ffd61fa48831826767aaca",
+    "src/cmbcst/surrogate_topology.py": "fbe8123721a14e22294252f91aa26ce6cbbf7ab0c2d009705be5f2220a560ae8",
+    "src/cmbcst/persistence.py": "353b240eeb6826d8d7fce5a2592e2e60e0c803ad9aa8125a77da4d400e77f498",
+    "src/cmbcst/spherical_surrogates.py": "7c9cc7107ab60e8ca77007b0c0eb380081e534a250dcad15321930a312500ccb",
+    "src/cmbcst/spectra.py": "f49f508b30df565a94d466e70a0e79606721b50832893177a0ca6c20a55085e1",
+    "src/cmbcst/theory.py": "2f08159499b17db9ddb4878563fbe30bb06da735a90968dd924624fb6e4f7e5e",
+    "tests/sandbox/jovin_tests_response.py": "d7a9b9f7c588e6ecdd06d13eadc61e5346c057aadce8d85f223f8cb4f6d43e24",
+    "tests/test_response.py": "45b6e791430361ed2292df708e91fb09176c472b64298a4d7575b1c536ae375a"
+  },
+  "source_artifacts_sha256": {
+    "data/evidence/response_cuda_development.json": "171b09cd6e46e4a5ce955291e8926b32e994714994717b28e3da3af9aaa9c26d"
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "status": "no_validated_gain",
+  "completed_utc": "2026-10-23T22:00:42.067422+00:00",
+  "plan_sha256": "d4777b587af8a6f37649970414062c375ef34f20659069d2dfa0e534e46de9d8",
+  "conditioning_sha256": "cb30e0ed37c1e773bffdec4a5057f194efebc89ca5d650ae6705743304a5bb4d",
+  "model_sha256": "0e87d42480045c753d3e3c3f7e0d5e3d22c6d1b4ef348874957df77430867ae9",
+  "validation_sha256": "24c95d0ad0caa016775ead4dd84c80c05b7987d79367b57f13f1f133cc31e690",
+  "methods": [
+    "baseline",
+    "baseline_plus_responses"
+  ],
+  "comparisons": [
+    {
+      "group": "quadratic_0.15",
+      "kind": "quadratic",
+      "amplitude": 0.15,
+      "draws": 128,
+      "flags": [
+        89,
+        44
+      ],
+      "rates": [
+        0.6953125,
+        0.34375
+      ],
+      "gain": -0.3515625,
+      "paired_gain_bootstrap_95": [
+        -0.4375,
+        -0.2578125
+      ],
+      "combined_only_wins": 3,
+      "baseline_only_losses": 48,
+      "raw_p": 0.9999999999994107,
+      "p_holm": 1.0,
+      "provisional_gain": false
+    },
+    {
+      "group": "quadratic_0.35",
+      "kind": "quadratic",
+      "amplitude": 0.35,
+      "draws": 128,
+      "flags": [
+        128,
+        128
+      ],
+      "rates": [
+        1.0,
+        1.0
+      ],
+      "gain": 0.0,
+      "paired_gain_bootstrap_95": [
+        0.0,
+        0.0
+      ],
+      "combined_only_wins": 0,
+      "baseline_only_losses": 0,
+      "raw_p": 1.0,
+      "p_holm": 1.0,
+      "provisional_gain": false
+    },
+    {
+      "group": "compact_0.15",
+      "kind": "compact",
+      "amplitude": 0.15,
+      "draws": 128,
+      "flags": [
+        8,
+        6
+      ],
+      "rates": [
+        0.0625,
+        0.046875
+      ],
+      "gain": -0.015625,
+      "paired_gain_bootstrap_95": [
+        -0.0703125,
+        0.0390625
+      ],
+      "combined_only_wins": 5,
+      "baseline_only_losses": 7,
+      "raw_p": 0.80615234375,
+      "p_holm": 1.0,
+      "provisional_gain": false
+    },
+    {
+      "group": "compact_0.35",
+      "kind": "compact",
+      "amplitude": 0.35,
+      "draws": 128,
+      "flags": [
+        73,
+        70
+      ],
+      "rates": [
+        0.5703125,
+        0.546875
+      ],
+      "gain": -0.0234375,
+      "paired_gain_bootstrap_95": [
+        -0.1015625,
+        0.0546875
+      ],
+      "combined_only_wins": 11,
+      "baseline_only_losses": 14,
+      "raw_p": 0.787821888923645,
+      "p_holm": 1.0,
+      "provisional_gain": false
+    },
+    {
+      "group": "filament_0.15",
+      "kind": "filament",
+      "amplitude": 0.15,
+      "draws": 128,
+      "flags": [
+        7,
+        8
+      ],
+      "rates": [
+        0.0546875,
+        0.0625
+      ],
+      "gain": 0.0078125,
+      "paired_gain_bootstrap_95": [
+        -0.0234375,
+        0.046875
+      ],
+      "combined_only_wins": 3,
+      "baseline_only_losses": 2,
+      "raw_p": 0.5,
+      "p_holm": 1.0,
+      "provisional_gain": false
+    },
+    {
+      "group": "filament_0.35",
+      "kind": "filament",
+      "amplitude": 0.35,
+      "draws": 128,
+      "flags": [
+        16,
+        18
+      ],
+      "rates": [
+        0.125,
+        0.140625
+      ],
+      "gain": 0.015625,
+      "paired_gain_bootstrap_95": [
+        -0.046875,
+        0.078125
+      ],
+      "combined_only_wins": 9,
+      "baseline_only_losses": 7,
+      "raw_p": 0.4018096923828125,
+      "p_holm": 1.0,
+      "provisional_gain": false
+    }
+  ],
+  "stripe_stress": {
+    "draws": 256,
+    "flags": [
+      97,
+      60
+    ],
+    "rates": [
+      0.37890625,
+      0.234375
+    ],
+    "scope": "Unmodeled scan-stripe discrepancy; flags do not identify a cosmological signal"
+  },
+  "score_scaled_error": 1.1200448280789751e-14,
+  "fit_seconds": 0.009290606999968531,
+  "condition_numbers": [
+    62.00523316895466,
+    76.3148743985472
+  ],
+  "accepted_cosmological_claims": [],
+  "observational_planck_test_performed": false,
+  "limits": "Synthetic lensed-TT conditional Gaussian directions, simple foreground proxy and anisotropic band-limited noise. Not a calibrated Planck simulator, universal novelty test, or proof of unique information beyond all conventional statistics.",
+  "ensemble_sha256": "c7540b2cb52d14c13ea741c698fd9243295381bc2e0d75afdc4fb1238a2c833d",
+  "example_cache_sha256": "4c60ff70dbe68870154cfaf6baa151682feddbb95a325dbf7a98b4526f6aaf3c"
+}

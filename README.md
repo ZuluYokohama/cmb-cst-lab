@@ -68,6 +68,16 @@ when axes swap, as expected. These are numerical symmetry controls, not an
 arbitrary celestial-rotation test or a new sky detection. The report ranks
 foreground/noise reference checks ahead of expanding the feature search.
 
+The [controlled spherical response benchmark](docs/RESPONSE_BENCHMARK_RUN.md)
+tests whether responses to continuous spherical sampling turns, smoothing and
+rank normalization add detection power beyond 17 conventional summaries.
+Across 3,303 synthetic skies it found **no validated gain** in six planned
+comparisons; weak quadratic-coupling sensitivity fell from 89/128 to 44/128.
+The augmented detector had 37/512 matched-null flags versus 29/512 for the
+baseline. The simple foreground/noise model is a controlled benchmark, and
+observational Planck testing remains withheld. All draw records, numerical
+checks and the negative outcome are preserved.
+
 **Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every result taken from `results/*.json`
 is written into it by `paper/make_inputs.py` (macros and figures). Two values come from checks
 whose output is not in `results/`: the injection pull width and the post-hoc A/B covariance
@@ -186,6 +196,7 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `spherical_surrogates` | pass 6/6 | `20261023T201811Z-764956b0e705` |
 | `multiscale` | pass 6/6 | `20261023T204940Z-b587588deae4` |
 | `orientation` | pass 5/5 | `20261023T212557Z-3470461f116f` |
+| `response` | pass 9/9 | `20261023T215313Z-4fb94bd93228` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).

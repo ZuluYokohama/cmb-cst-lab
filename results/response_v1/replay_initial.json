@@ -1,0 +1,311 @@
+{
+  "status": "passed",
+  "created_utc": "2026-10-23T22:01:43.559434+00:00",
+  "seconds": 2.0549936019999677,
+  "scope": "Separate CPU regeneration using frozen forward/feature kernels and stored fiducial C_ell; not an independent physics simulator",
+  "records": [
+    {
+      "group": "training",
+      "index": 0,
+      "seed": 765902132026,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "training",
+      "index": 17,
+      "seed": 765902132043,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "training",
+      "index": 767,
+      "seed": 765902132793,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "calibration",
+      "index": 0,
+      "seed": 765902142026,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "calibration",
+      "index": 17,
+      "seed": 765902142043,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "calibration",
+      "index": 998,
+      "seed": 765902143024,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "matched_null",
+      "index": 0,
+      "seed": 765902152026,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "matched_null",
+      "index": 17,
+      "seed": 765902152043,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "matched_null",
+      "index": 511,
+      "seed": 765902152537,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "quadratic_0.15",
+      "index": 0,
+      "seed": 765902162026,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "quadratic_0.15",
+      "index": 17,
+      "seed": 765902162043,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "quadratic_0.15",
+      "index": 127,
+      "seed": 765902162153,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "quadratic_0.35",
+      "index": 0,
+      "seed": 765902163026,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "quadratic_0.35",
+      "index": 17,
+      "seed": 765902163043,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "quadratic_0.35",
+      "index": 127,
+      "seed": 765902163153,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "compact_0.15",
+      "index": 0,
+      "seed": 765902172026,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "compact_0.15",
+      "index": 17,
+      "seed": 765902172043,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "compact_0.15",
+      "index": 127,
+      "seed": 765902172153,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "compact_0.35",
+      "index": 0,
+      "seed": 765902173026,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "compact_0.35",
+      "index": 17,
+      "seed": 765902173043,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "compact_0.35",
+      "index": 127,
+      "seed": 765902173153,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "filament_0.15",
+      "index": 0,
+      "seed": 765902182026,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "filament_0.15",
+      "index": 17,
+      "seed": 765902182043,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "filament_0.15",
+      "index": 127,
+      "seed": 765902182153,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "filament_0.35",
+      "index": 0,
+      "seed": 765902183026,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "filament_0.35",
+      "index": 17,
+      "seed": 765902183043,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "filament_0.35",
+      "index": 127,
+      "seed": 765902183153,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "stripe_stress",
+      "index": 0,
+      "seed": 765902192026,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "stripe_stress",
+      "index": 17,
+      "seed": 765902192043,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    },
+    {
+      "group": "stripe_stress",
+      "index": 255,
+      "seed": 765902192281,
+      "passed": true,
+      "baseline_error": 0.0,
+      "response_error": 0.0,
+      "parameter_error": 0.0,
+      "example_error": 0.0
+    }
+  ],
+  "source_sha256": "18d802b8cda544d7eb244aafd00d03461fe3d640bfefb4ecae38f257645a746d",
+  "plan_sha256": "d4777b587af8a6f37649970414062c375ef34f20659069d2dfa0e534e46de9d8",
+  "ensemble_sha256": "c7540b2cb52d14c13ea741c698fd9243295381bc2e0d75afdc4fb1238a2c833d"
+}
