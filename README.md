@@ -59,6 +59,10 @@ assumptions, what the receipts establish, potential applications, and licensing 
 The network residual statistic (~28.8 for 21 dof) and the network-vs-MK statistic
 (~3.32 for 7 dof) are distinct; the latter should not be called triangle closure.
 
+## Sparse-graph transfer (experimental)
+
+The synthetic scalar offset testbed supports connected sparse measurement graphs and independent fundamental-cycle closure diagnostics. A tree has no redundant cycle checks, so corrupted measurements cannot be detected from its closures. Run python scripts/demo_sparse_network.py and consult docs/SPARSE_NETWORK_VALIDATION.md for evidence limits.
+
 ## Results
 
 Every number in the first column is computed in this repository. Paper values are quoted for
