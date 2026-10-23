@@ -44,6 +44,21 @@ whose output is not in `results/`: the injection pull width and the post-hoc A/B
 audit, which writes outside the repository by design. They are typed in `main.tex` and marked
 with a comment. `paper/make_arxiv.py` builds and test-compiles `paper/arxiv.tar.gz`.
 
+## Experimental transfer: scalar multi-sensor networks
+
+The CMB calibration cochain/GLS method also has a **synthetic scalar sensor-array** demonstration.
+Run `python scripts/demo_sensor_network.py` for a complete-graph additive-offset model,
+including a corrupted pair measurement. It reuses the actual `cmbcst.network` kernels and
+has local pytest plus an AST-bundled `sensor_network` suite. It is not yet a sensor product,
+real-time detector, security control, or general SO(3) alignment method.
+
+See [transferability and verification limits](docs/TRANSFERABILITY.md) for the exact
+assumptions, what the receipts establish, potential applications, and licensing boundaries.
+
+**Terminology:** the closure residual is covariance-**weighted** coexact.
+The network residual statistic (~28.8 for 21 dof) and the network-vs-MK statistic
+(~3.32 for 7 dof) are distinct; the latter should not be called triangle closure.
+
 ## Results
 
 Every number in the first column is computed in this repository. Paper values are quoted for
