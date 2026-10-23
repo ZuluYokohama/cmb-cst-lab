@@ -1,0 +1,163 @@
+{
+  "verified_utc": "2026-10-23T19:19:42.126869+00:00",
+  "status": "passed",
+  "scope": "Implementation/provenance checks; does not validate physical surrogate assumptions",
+  "jovin_chain": {
+    "valid": true,
+    "count": 43,
+    "head_sha256": "1111c18dc5fa9a194bc351e92db3aa46a2840956c0561d15e2d56251c16399e1",
+    "problems": []
+  },
+  "jovin_suites": {
+    "copula_topology": {
+      "receipt_id": "20261023T190416Z-f73e0022af1e",
+      "matched": true,
+      "passed_count": 4,
+      "total": 4
+    },
+    "surrogate_topology": {
+      "receipt_id": "20261023T185704Z-58ac2ab53e53",
+      "matched": true,
+      "passed_count": 6,
+      "total": 6
+    },
+    "data_integrity": {
+      "receipt_id": "20261023T175103Z-7966048f9fc7",
+      "matched": true,
+      "passed_count": 6,
+      "total": 6
+    },
+    "network": {
+      "receipt_id": "20261023T173048Z-8a8d7c5da533",
+      "matched": true,
+      "passed_count": 12,
+      "total": 12
+    },
+    "empirical_calibration": {
+      "receipt_id": "20261023T173051Z-1f9310a44f3a",
+      "matched": true,
+      "passed_count": 4,
+      "total": 4
+    },
+    "estimated_covariance": {
+      "receipt_id": "20261023T173053Z-dd5dab68ee37",
+      "matched": true,
+      "passed_count": 3,
+      "total": 3
+    },
+    "sparse_network": {
+      "receipt_id": "20261023T173056Z-0d03ece6fed1",
+      "matched": true,
+      "passed_count": 4,
+      "total": 4
+    },
+    "sensor_network": {
+      "receipt_id": "20261023T173059Z-5cb4d69f6875",
+      "matched": true,
+      "passed_count": 4,
+      "total": 4
+    },
+    "differential": {
+      "receipt_id": "20261023T173103Z-ba6bdf1bcc28",
+      "matched": true,
+      "passed_count": 7,
+      "total": 7
+    },
+    "mk_core": {
+      "receipt_id": "20261023T173106Z-f8238746ed49",
+      "matched": true,
+      "passed_count": 8,
+      "total": 8
+    },
+    "accel": {
+      "receipt_id": "20261023T173220Z-0f5c704fb64f",
+      "matched": true,
+      "passed_count": 11,
+      "total": 11
+    },
+    "gpu_calibration": {
+      "receipt_id": "20261023T173137Z-48cb897d1a8b",
+      "matched": true,
+      "passed_count": 7,
+      "total": 7
+    },
+    "spatial": {
+      "receipt_id": "20261023T173111Z-fffbb6ebc58c",
+      "matched": true,
+      "passed_count": 10,
+      "total": 10
+    },
+    "simulator": {
+      "receipt_id": "20261023T173114Z-fc57d47d8819",
+      "matched": true,
+      "passed_count": 9,
+      "total": 9
+    },
+    "npe": {
+      "receipt_id": "20261023T173117Z-e9115ff5937b",
+      "matched": true,
+      "passed_count": 7,
+      "total": 7
+    },
+    "persistence": {
+      "receipt_id": "20261023T173121Z-8aebdd6510a7",
+      "matched": true,
+      "passed_count": 8,
+      "total": 8
+    }
+  },
+  "frozen_sources": {
+    "surrogate_topology_v1": {
+      "scripts/run_surrogate_topology.py": true,
+      "src/cmbcst/surrogate_topology.py": true,
+      "src/cmbcst/persistence.py": true,
+      "src/cmbcst/spectra.py": true,
+      "src/cmbcst/theory.py": true,
+      "docs/SURROGATE_TOPOLOGY_SPEC.md": true
+    },
+    "copula_topology_v2": {
+      "scripts/run_copula_topology.py": true,
+      "src/cmbcst/surrogate_topology.py": true,
+      "src/cmbcst/persistence.py": true,
+      "src/cmbcst/spectra.py": true,
+      "src/cmbcst/theory.py": true,
+      "src/cmbcst/copula_topology.py": true,
+      "docs/COPULA_TOPOLOGY_SPEC.md": true,
+      "docs/SURROGATE_TOPOLOGY_SPEC.md": true
+    },
+    "copula_boundary_audit_v1": {
+      "scripts/run_copula_topology.py": true,
+      "src/cmbcst/surrogate_topology.py": true,
+      "src/cmbcst/persistence.py": true,
+      "src/cmbcst/spectra.py": true,
+      "src/cmbcst/theory.py": true,
+      "src/cmbcst/copula_topology.py": true,
+      "docs/COPULA_TOPOLOGY_SPEC.md": true,
+      "docs/SURROGATE_TOPOLOGY_SPEC.md": true,
+      "scripts/audit_copula_boundaries.py": true
+    }
+  },
+  "local_tests": {
+    "passed": 175,
+    "skipped": 3,
+    "summary_matched": true,
+    "log_sha256": "460309004e28d9f6d6acf4562f75cd9b685cd396dbcd5fcbcb71244845c957d0"
+  },
+  "result_bindings": {
+    "plan": true,
+    "validation": true,
+    "patches": true,
+    "boundary_plan": true,
+    "scientific_assessment": true
+  },
+  "boundary_result_sha256": "99d71e0a266488fbbe09c5fcf5ddcf20d324a7993610627be6ad245222834a29",
+  "artifact_sha256": {
+    "plan.json": "b87b41c2a1a450bfc38b6992f1689a32b9d2689f74f38fde3aca0d877c4823a1",
+    "validation.json": "2461f6a5bf6653086ff167697f2d9f610621ab5c8db21d8bce89b4fef88b8f84",
+    "result.json": "4f0a0920d54fdc47ebe8e296c96c04c6c40bddeed50032f31539a29a8a6fdf4c",
+    "assessment.json": "3d3fef479ec26056207bacbe0f54f9382e3876a4ce5d03ce797277fa0ba626ae",
+    "topology.png": "89fe03318dd9f5915f60e805f412c36e836ffdaf1bbd38f4e7303433b25eb0e0",
+    "calibration_controls.png": "dd90fc1f30a29f166b4cc47859c2386457c76b22816f8329f58430f471e38608"
+  },
+  "report_sha256": "84df0e29a2014fcae3efde9ddc89d3f6e67f3c9dd3b3c3921bff79af5f1121b6"
+}

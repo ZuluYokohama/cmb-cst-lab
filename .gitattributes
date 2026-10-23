@@ -1,2 +1,12 @@
 * text=auto eol=lf
+* whitespace=trailing-space,space-before-tab,cr-at-eol
 *.fits binary
+
+# Preserve the exact bytes identified by frozen SHA256 plans and receipts.
+# -text disables newline conversion without disabling textual diffs.
+src/**/*.py -text
+scripts/**/*.py -text
+tests/**/*.py -text
+docs/**/*.md -text
+results/** -text
+data/evidence/** -text

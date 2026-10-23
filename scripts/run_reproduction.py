@@ -1,6 +1,6 @@
 """Real-data reproduction of Lonappan, Keating & Arnold (2026) on public Planck PR4 maps.
 
-Stages (each cached under data/work, rerun with --force STAGE):
+Stages (cached under --work-dir, default data/work; rerun with --force STAGE):
     masks    build masks "0" and "30" from PLA products
     alms     E/B alms of the 8 split maps (and T of 353A/B for the dust angle psi_l) per mask
     spectra  16x16 field cross-spectra, binned 51 <= l < 1491, width 20
@@ -11,12 +11,19 @@ Stages (each cached under data/work, rerun with --force STAGE):
              -> results/persistence.json
 
 Usage:
-    python scripts/run_reproduction.py [--stages masks,alms,spectra,analyse] [--force STAGE] [--n-sims 200]
+    python scripts/run_reproduction.py --stages masks,alms,spectra,transfer,analyse \
+        --work-dir data/work/rtx5070_real --results-dir results/rtx5070_real \
+        --n-transfer-sims 8 --n-sims 200 --threads 8
+
+Directory defaults can also be set with CMB_CST_WORK_DIR and CMB_CST_RESULTS_DIR;
+CMB_CST_THREADS controls ducc0 CPU transforms. Explicit CLI options take precedence.
+The GPU accelerates bootstrap Gram matrices, not the full-sky harmonic transforms.
 """
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import time
 from datetime import datetime, timezone
@@ -27,13 +34,16 @@ import numpy as np
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 
-from cmbcst import DETECTORS, FREQS, accel, network, spectra, theory  # noqa: E402
+from cmbcst import DETECTORS, FREQS, accel, beams, network, spectra, theory  # noqa: E402
 from cmbcst.data import path_of  # noqa: E402
 from cmbcst.differential import pair_angles  # noqa: E402
 from cmbcst.mk_likelihood import MKLikelihood, anchored_beta  # noqa: E402
 
-WORK = REPO / "data" / "work"
-RESULTS = REPO / "results"
+DEFAULT_WORK = REPO / "data" / "work"
+DEFAULT_RESULTS = REPO / "results"
+WORK = DEFAULT_WORK
+RESULTS = DEFAULT_RESULTS
+STAGES = ("masks", "alms", "spectra", "transfer", "analyse", "persistence")
 LMAX = 1520
 LMIN_BIN, LMAX_BIN, WIDTH = 51, 1491, 20
 MASKS = ("0", "30")
@@ -166,6 +176,20 @@ def stage_transfer(force: bool, n_sims: int = 8) -> None:
     beam-smoothed input spectrum). Captures mode coupling from the point-source holes and E->B
     leakage, which the f_sky division alone does not.
     """
+    # Changing the requested ensemble must not silently reuse an incompatible cache.
+    pending = []
+    for k in MASKS:
+        cached = WORK / f"transfer_m{k}.npz"
+        if cached.exists() and not force:
+            with np.load(cached) as existing:
+                cached_n = int(existing["n_sims"]) if "n_sims" in existing else None
+            if cached_n != n_sims:
+                raise ValueError(f"{cached} used {cached_n} transfer simulations, requested {n_sims}; use --force transfer or a new --work-dir")
+        else:
+            pending.append(k)
+    if not pending:
+        return
+
     import ducc0
 
     lsim = 2500
@@ -178,15 +202,14 @@ def stage_transfer(force: bool, n_sims: int = 8) -> None:
     in_ee, in_bb = ee * wee[i143a, i143b], bb * wbb[i143a, i143b]
     geom = ducc0.healpix.Healpix_Base(2048, "RING").sht_info()
     edges = np.arange(LMIN_BIN, LMAX_BIN + 1, WIDTH)
-    for k in MASKS:
+    for k in pending:
         out = WORK / f"transfer_m{k}.npz"
-        if out.exists() and not force:
-            continue
         mask = _mask(k)
         w2, _ = spectra.mask_moments(mask)
         rng = np.random.default_rng(100 + int(k))
         acc_ee, acc_bb = np.zeros(LMAX + 1), np.zeros(LMAX + 1)
-        for _ in range(n_sims):
+        for simulation in range(n_sims):
+            log(f"transfer mask {k}: simulation {simulation + 1}/{n_sims}")
             alm = np.stack([spectra.random_alm(in_ee, lsim, rng), spectra.random_alm(in_bb, lsim, rng)])
             q, u = ducc0.sht.experimental.synthesis(alm=alm, spin=2, lmax=lsim, mmax=lsim, nthreads=spectra.NTHREADS, **geom)
             a = spectra.map2alm_pol(q, u, mask, LMAX)
@@ -351,9 +374,9 @@ def stage_analyse(n_sims: int) -> dict:
             r["anchored_with_cross"] = {"beta_deg": ax["beta"] / DEG, "sigma_deg": ax["sigma"] / DEG}
     res.pop("_mk_full")
     dust_ratios(res)
-    RESULTS.mkdir(exist_ok=True)
+    RESULTS.mkdir(parents=True, exist_ok=True)
     (RESULTS / "reproduction.json").write_text(json.dumps(res, indent=2))
-    log("wrote results/reproduction.json")
+    log(f"wrote {RESULTS / 'reproduction.json'}")
     return res
 
 
@@ -443,21 +466,92 @@ def stage_persistence(n_sims: int) -> dict:
     out["ngp_minus_sgp_mean_life0"]["p_holm"] = float(adj[-1])
     out["n_comparisons"] = len(adj)
     out["p_value_method"] = "two-sided Monte Carlo with +1 correction; Holm-adjusted over n_comparisons"
-    RESULTS.mkdir(exist_ok=True)
+    RESULTS.mkdir(parents=True, exist_ok=True)
     (RESULTS / "persistence.json").write_text(json.dumps(out, indent=2))
-    log("wrote results/persistence.json")
+    log(f"wrote {RESULTS / 'persistence.json'}")
     return out
 
 
-def main(argv: list[str]) -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--stages", default="masks,alms,spectra,transfer,analyse,persistence")
+def _stage_names(value: str, allow_empty: bool = False) -> list[str]:
+    """Validate explicit stage names before any filesystem writes or computation."""
+    if allow_empty and not value.strip():
+        return []
+    names = [name.strip() for name in value.split(",")]
+    unknown = set(names) - set(STAGES)
+    if unknown:
+        raise ValueError(f"unknown or empty stage names: {', '.join(repr(name) for name in sorted(unknown))}; choose from {', '.join(STAGES)}")
+    if len(set(names)) != len(names):
+        raise ValueError("stage names must not repeat")
+    return names
+
+
+def _output_directory(value: Path) -> Path:
+    """Resolve writable artifact destinations without selecting source or drive roots."""
+    path = value.expanduser().resolve()
+    if path == Path(path.anchor) or path == REPO or path in REPO.parents:
+        raise ValueError(f"choose a dedicated artifact directory, not a drive or repository root: {path}")
+    protected = [REPO / name for name in (".git", ".github", ".agents", ".codex", "src", "scripts", "tests", "data/raw")]
+    if any(path == root or root in path.parents for root in protected):
+        raise ValueError(f"artifact directory overlaps source, settings, tests, or raw inputs: {path}")
+    nearest = path
+    while not nearest.exists():
+        if nearest.parent == nearest:
+            raise ValueError(f"artifact directory is on an unavailable drive or filesystem: {path}")
+        nearest = nearest.parent
+    if not nearest.is_dir():
+        raise ValueError(f"artifact path has an existing file in place of a directory: {nearest}")
+    return path
+
+
+def parse_args(argv: list[str]) -> argparse.Namespace:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--stages", default=",".join(STAGES))
     ap.add_argument("--force", default="")
     ap.add_argument("--n-sims", type=int, default=2000)
     ap.add_argument("--n-persistence-sims", type=int, default=1000)  # matches the committed results/persistence.json
+    ap.add_argument("--n-transfer-sims", type=int, default=8, help="Skies per mask for transfer estimation (default: 8).")
+    ap.add_argument("--work-dir", type=Path, default=os.environ.get("CMB_CST_WORK_DIR", DEFAULT_WORK),
+                    help="Intermediate cache directory (env: CMB_CST_WORK_DIR).")
+    ap.add_argument("--results-dir", type=Path, default=os.environ.get("CMB_CST_RESULTS_DIR", DEFAULT_RESULTS),
+                    help="Output directory for reproduction.json and persistence.json (env: CMB_CST_RESULTS_DIR).")
+    ap.add_argument("--threads", type=int, default=os.environ.get("CMB_CST_THREADS", os.cpu_count() or 4),
+                    help="ducc0 CPU transform threads (env: CMB_CST_THREADS; default: CPU count).")
     args = ap.parse_args(argv)
+    try:
+        args.stages = _stage_names(args.stages)
+        args.force = set(_stage_names(args.force, allow_empty=True))
+        if not args.force.issubset(args.stages):
+            raise ValueError("--force stages must also be selected by --stages")
+        if args.force - {"masks", "alms", "spectra", "transfer"}:
+            raise ValueError("--force applies only to cached stages: masks, alms, spectra, transfer")
+        if args.n_sims != 0 and args.n_sims < 2:
+            raise ValueError("--n-sims must be 0 (skip bootstrap) or at least 2")
+        if args.n_persistence_sims < 2 or args.n_transfer_sims < 1 or args.threads < 1:
+            raise ValueError("--n-persistence-sims must be >= 2; --n-transfer-sims and --threads must be >= 1")
+        args.work_dir = _output_directory(args.work_dir)
+        args.results_dir = _output_directory(args.results_dir)
+        if args.work_dir == args.results_dir or args.work_dir in args.results_dir.parents or args.results_dir in args.work_dir.parents:
+            raise ValueError("--work-dir and --results-dir must be separate directories, neither inside the other")
+    except (OSError, RuntimeError, ValueError) as error:
+        ap.error(str(error))
+    return args
+
+
+def main(argv: list[str]) -> int:
+    global WORK, RESULTS
+    args = parse_args(argv)
+    WORK, RESULTS = args.work_dir, args.results_dir
+    beams.BEAM_DIR = WORK / "beams"
+    _THEORY_CACHE.clear()
+    spectra.NTHREADS = args.threads
+    # masks imports the thread count by value; update it too when already loaded.
+    masks_module = sys.modules.get("cmbcst.masks")
+    if masks_module is not None:
+        masks_module.NTHREADS = args.threads
     WORK.mkdir(parents=True, exist_ok=True)
-    stages, force = args.stages.split(","), set(args.force.split(","))
+    RESULTS.mkdir(parents=True, exist_ok=True)
+    log(f"work directory: {WORK}; results directory: {RESULTS}; CPU transform threads: {args.threads}")
+    stages, force = args.stages, args.force
     if "masks" in stages:
         stage_masks("masks" in force)
     if "alms" in stages:
@@ -465,7 +559,7 @@ def main(argv: list[str]) -> int:
     if "spectra" in stages:
         stage_spectra("spectra" in force)
     if "transfer" in stages:
-        stage_transfer("transfer" in force)
+        stage_transfer("transfer" in force, args.n_transfer_sims)
     if "analyse" in stages:
         stage_analyse(args.n_sims)
     if "persistence" in stages:

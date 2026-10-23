@@ -38,6 +38,21 @@ verification receipts. Open it in a browser.
    stays unexplained, and no cosmological claim is made. See `results/persistence.json` and
    `results/persistence_validation.json`.
 
+**New GPU experiment:** [rank geometry with matched surrogates](docs/COPULA_TOPOLOGY_RUN.md)
+tests temperature-patch structure beyond the Gaussianized patch's two-point spectrum.
+It records the rejected first pilot, fresh synthetic controls, all nine planned comparisons,
+matching diagnostics and JoVin receipt references. A later cropped-Gaussian control failed
+(20/64 flags), preventing a calibrated anomaly claim. This exploratory follow-up preserves
+the original results and paper.
+
+The [whole-sphere follow-up](docs/SPHERICAL_TOPOLOGY_RUN.md) replaces periodic
+patch surrogates with full spherical skies conditional on the empirical C_ell,
+then applies identical smoothing and patch extraction. It compares topology
+and conventional moments in one 15-test family, with held-out full-sky controls.
+The supplied CST working paper informed the projection and negative-control
+design; its separate [27-check local replay](data/evidence/cst_package_audit.json)
+does not establish CMB or other application performance.
+
 **Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every result taken from `results/*.json`
 is written into it by `paper/make_inputs.py` (macros and figures). Two values come from checks
 whose output is not in `results/`: the injection pull width and the post-hoc A/B covariance
@@ -121,7 +136,8 @@ Per-map angles (network, gauge α_143A = 0, f_sky 0.92):
 ## Verification
 
 The numerical kernels are numpy-only on purpose, so they can be checked in the **JoVin** sandbox:
-a network-less container on WSL with Python 3.12 + numpy, 512 MB RAM and a 10 s limit. The
+a network-less container using the upgraded CST science profile on `wsl:JovinHarness`,
+with 2 GiB RAM and a 30 s limit on this workstation. See [current setup and isolation limits](docs/RTX5070_RUN.md). The
 verifier extracts the exact shipped functions with `ast` (never hand-copied), runs each suite, and
 appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 
@@ -136,14 +152,23 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 <!-- RECEIPTS:START -->
 | Suite | Result | Receipt |
 |---|---|---|
-| `network` | pass 12/12 | `20261022T182616Z-55c98a3fc8f4` |
-| `differential` | pass 7/7 | `20261022T171103Z-7469960ebbb7` |
-| `mk_core` | pass 8/8 | `20261022T171106Z-676f9cad61b0` |
-| `persistence` | pass 8/8 | `20261022T182619Z-703f2a4eadd6` |
-| `accel` | pass 10/10 | `20261022T172121Z-5cd7a09a18e0` |
-| `spatial` | pass 10/10 | `20261022T202537Z-066b960ada38` |
-| `simulator` | pass 9/9 | `20261022T214914Z-3c4a576e585d` |
-| `npe` | pass 7/7 | `20261022T214916Z-c3e848b7da18` |
+| `network` | pass 12/12 | `20261023T173048Z-8a8d7c5da533` |
+| `differential` | pass 7/7 | `20261023T173103Z-ba6bdf1bcc28` |
+| `mk_core` | pass 8/8 | `20261023T173106Z-f8238746ed49` |
+| `persistence` | pass 8/8 | `20261023T173121Z-8aebdd6510a7` |
+| `accel` | pass 11/11 | `20261023T173220Z-0f5c704fb64f` |
+| `spatial` | pass 10/10 | `20261023T173111Z-fffbb6ebc58c` |
+| `simulator` | pass 9/9 | `20261023T173114Z-fc57d47d8819` |
+| `npe` | pass 7/7 | `20261023T173117Z-e9115ff5937b` |
+| `empirical_calibration` | pass 4/4 | `20261023T173051Z-1f9310a44f3a` |
+| `estimated_covariance` | pass 3/3 | `20261023T173053Z-dd5dab68ee37` |
+| `sparse_network` | pass 4/4 | `20261023T173056Z-0d03ece6fed1` |
+| `sensor_network` | pass 4/4 | `20261023T173059Z-5cb4d69f6875` |
+| `gpu_calibration` | pass 7/7 | `20261023T173137Z-48cb897d1a8b` |
+| `data_integrity` | pass 6/6 | `20261023T175103Z-7966048f9fc7` |
+| `surrogate_topology` | pass 6/6 | `20261023T185704Z-58ac2ab53e53` |
+| `copula_topology` | pass 4/4 | `20261023T190416Z-f73e0022af1e` |
+| `spherical_surrogates` | pass 6/6 | `20261023T201811Z-764956b0e705` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).
@@ -162,6 +187,18 @@ the network χ² averages 19.4 for 21 dof. The Gaussian errors are unbiased and 
 conservative under a cut sky.
 
 ## Hardware acceleration
+
+**NVIDIA CUDA / RTX 5070:** the same precision-gated Wishart sampler now supports
+PyTorch CUDA as well as Intel XPU. Select `CMB_CST_DEVICE=cuda:0` explicitly;
+`auto` prefers CUDA, then XPU, and `cpu` forces NumPy. An explicitly requested
+unavailable device fails. CUDA matrix products use IEEE float32 with TF32 disabled
+for the operation, while covariance assembly and inference stay in float64.
+See [the RTX 5070 run and current JoVin setup](docs/RTX5070_RUN.md) for reproducible
+commands, fresh device attestation, and the separate synthetic calibration experiment.
+The [full-resolution scale-up](docs/PLANCK_SCALEUP_RUN.md) records the newly acquired
+19.210 GB Planck input set, completed scientific input audit, and versioned real-data run.
+
+The measurements below describe the original Intel machine.
 
 The bootstrap behind χ²_diff draws 2,000 Wishart samples of the bandpowers and refits both
 estimators on each one. Two changes make that practical on a laptop:

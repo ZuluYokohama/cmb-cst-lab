@@ -1,20 +1,26 @@
-"""Bandpower bootstrap draws, on the Intel Arc GPU (PyTorch XPU) when available, else numpy.
+"""Bandpower bootstrap draws on PyTorch CUDA/XPU when available, else numpy.
 
 A draw is a bin-level Wishart sample around measured bandpowers C_b:
 
     C_hat_b = L_b (Z Z^T / nu_b) L_b^T,   Z ~ N(0, 1) of shape (n_fields, nu_b),   L_b L_b^T = C_b.
 
 The heavy part, generating Z and forming the Gram matrix Z Z^T / nu_b (16 x ~5e4 per bin), runs on
-the GPU in float32: Xe2 has no fast float64. The 16 x 16 transform with L_b stays in float64 on
+the GPU in float32, with CUDA TF32 disabled. The 16 x 16 transform with L_b stays in float64 on
 the CPU. `check_float32` recomputes one batch from the same normals in float64; the accelerated
 path must agree to REL_TOL relative or the run stops.
 
 The numpy-only kernels (`square_roots`, `assemble`, `gram64`, `max_rel_err`, `counter_normals`,
 `numpy_draw`) are verified in the JoVin sandbox, together with Gram matrices recorded from the
 real devices by scripts/gpu_attest.py (tests/sandbox/jovin_tests_accel.py).
+
+CMB_CST_DEVICE selects auto (CUDA first, then XPU), cpu, cuda:N, or xpu:N. An explicitly
+requested accelerator must be available; device failures never trigger a silent CPU fallback.
 """
 from __future__ import annotations
 
+from contextlib import contextmanager
+import os
+import re
 from typing import Iterator
 
 import numpy as np
@@ -89,36 +95,81 @@ def numpy_draw(roots: np.ndarray, dof: np.ndarray, rng: np.random.Generator) -> 
 
 # ---- devices ----------------------------------------------------------------------------------
 def _device():
+    """Resolve the requested accelerator without catching selected-device failures."""
+    request = os.environ.get("CMB_CST_DEVICE", "auto").strip().lower()
+    selected = re.fullmatch(r"(cuda|xpu):([0-9]+)", request)
+    if request not in ("auto", "cpu") and selected is None:
+        raise ValueError("CMB_CST_DEVICE must be auto, cpu, cuda:N, or xpu:N (N >= 0)")
+    if request == "cpu":
+        return None, None
     try:
         import torch
-
-        if torch.xpu.is_available():
-            return torch, torch.device("xpu")
-    except ImportError:
-        pass
+    except ImportError as exc:
+        if request == "auto":
+            return None, None
+        raise RuntimeError(f"CMB_CST_DEVICE={request} requires PyTorch") from exc
+    candidates = ((selected.group(1), int(selected.group(2))),) if selected else (("cuda", 0), ("xpu", 0))
+    for kind, index in candidates:
+        backend = getattr(torch, kind, None)
+        if backend is not None and backend.is_available() and index < backend.device_count():
+            return torch, torch.device(f"{kind}:{index}")
+    if selected:
+        raise RuntimeError(f"CMB_CST_DEVICE={request} is not available")
     return None, None
 
 
 def backend_name() -> str:
     torch, dev = _device()
-    return f"PyTorch {torch.__version__} on {torch.xpu.get_device_name(0)} (float32 Gram, float64 transform)" if dev else "numpy float64 (CPU)"
+    if dev is None:
+        return "numpy float64 (CPU)"
+    name = getattr(torch, dev.type).get_device_name(dev.index)
+    return f"PyTorch {torch.__version__} on {name} [{dev}] (float32 Gram, float64 transform)"
+
+
+@contextmanager
+def _ieee_matmul(torch, dev):
+    """Scope CUDA precision changes to our product and restore them even on failure.
+
+    PyTorch >=2.9 uses fp32_precision. The legacy branch supports older installations;
+    the two precision APIs are deliberately never mixed in a single execution.
+    """
+    if dev.type != "cuda":
+        yield
+        return
+    matmul = torch.backends.cuda.matmul
+    setting = "fp32_precision" if hasattr(matmul, "fp32_precision") else "allow_tf32"
+    previous = getattr(matmul, setting)
+    try:
+        setattr(matmul, setting, "ieee" if setting == "fp32_precision" else False)
+        yield
+    finally:
+        setattr(matmul, setting, previous)
 
 
 def gpu_gram(z32: np.ndarray) -> np.ndarray:
-    """Float32 Gram of given normals computed on the XPU (for attestation and checks)."""
+    """Float32 Gram on the selected GPU (for attestation and same-normal checks)."""
     torch, dev = _device()
     if dev is None:
-        raise RuntimeError("no XPU device")
+        raise RuntimeError("no CUDA/XPU device selected")
     z = torch.from_numpy(np.ascontiguousarray(z32, dtype=np.float32)).to(dev)
     if z.ndim == 2:
         z = z[None]
-    return (torch.bmm(z, z.transpose(1, 2)) / z.shape[-1]).cpu().numpy()
+    with _ieee_matmul(torch, dev):
+        gram = torch.bmm(z, z.transpose(1, 2)) / z.shape[-1]
+    return gram.cpu().numpy()
 
 
 def _gram_batch_gpu(torch, dev, nf: int, dof: int, batch: int, gen):
     """(batch, nf, nf) float32 Z Z^T / dof on the GPU, plus the Z it used (for checking)."""
     z = torch.randn(batch, nf, dof, device=dev, dtype=torch.float32, generator=gen)
-    return torch.bmm(z, z.transpose(1, 2)) / dof, z
+    with _ieee_matmul(torch, dev):
+        gram = torch.bmm(z, z.transpose(1, 2)) / dof
+    return gram, z
+
+
+def _validate_batch(batch: int) -> None:
+    if isinstance(batch, (bool, np.bool_)) or not isinstance(batch, (int, np.integer)) or batch <= 0:
+        raise ValueError("batch must be a positive integer")
 
 
 def check_float32(cl: np.ndarray, nu: np.ndarray, seed: int = 0, batch: int = 4) -> dict[str, object]:
@@ -127,6 +178,7 @@ def check_float32(cl: np.ndarray, nu: np.ndarray, seed: int = 0, batch: int = 4)
     On the numpy backend nothing runs in float32, so the check does not apply: `applicable` is
     False and `max_rel_err` is None rather than an unmeasured zero.
     """
+    _validate_batch(batch)
     torch, dev = _device()
     if dev is None:
         return {"max_rel_err": None, "applicable": False, "backend": backend_name()}
@@ -142,6 +194,9 @@ def check_float32(cl: np.ndarray, nu: np.ndarray, seed: int = 0, batch: int = 4)
 
 def wishart_draws(cl: np.ndarray, nu: np.ndarray, n_sims: int, seed: int, batch: int = 50) -> Iterator[np.ndarray]:
     """Yield n_sims bootstrap bandpower sets (nb, nf, nf), float64 whatever the input dtype."""
+    _validate_batch(batch)
+    if isinstance(n_sims, (bool, np.bool_)) or not isinstance(n_sims, (int, np.integer)) or n_sims < 0:
+        raise ValueError("n_sims must be a nonnegative integer")
     cl = np.asarray(cl, dtype=np.float64)
     nb, nf, _ = cl.shape
     roots = square_roots(cl)
@@ -153,7 +208,7 @@ def wishart_draws(cl: np.ndarray, nu: np.ndarray, n_sims: int, seed: int, batch:
             yield numpy_draw(roots, dof, rng)
         return
     chk = check_float32(cl, nu, seed=seed + 1)
-    if chk["max_rel_err"] > REL_TOL:
+    if not np.isfinite(chk["max_rel_err"]) or chk["max_rel_err"] > REL_TOL:
         raise RuntimeError(f"float32 GPU Gram differs from float64 by {chk['max_rel_err']:.2e} > {REL_TOL:g}")
     gen = torch.Generator(device=dev).manual_seed(seed)
     done = 0
@@ -163,6 +218,8 @@ def wishart_draws(cl: np.ndarray, nu: np.ndarray, n_sims: int, seed: int, batch:
         for b in range(nb):
             g, _ = _gram_batch_gpu(torch, dev, nf, int(dof[b]), k, gen)
             grams[:, b] = g.cpu().numpy()
+            if not np.all(np.isfinite(grams[:, b])):
+                raise RuntimeError("non-finite GPU Gram matrix in Wishart draws")
         for s in range(k):
             yield assemble(roots, grams[s])
         done += k

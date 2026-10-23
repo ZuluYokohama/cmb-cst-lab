@@ -1,0 +1,314 @@
+{
+  "schema": "cmbcst.planck-dataset.v1",
+  "started_utc": "2026-10-23T17:53:07.646080+00:00",
+  "finished_utc": "2026-10-23T18:06:53.645993+00:00",
+  "status": "complete",
+  "raw_directory": "/mnt/e/New folder/cmb-cst-lab/data/raw",
+  "workers": 4,
+  "products": [
+    {
+      "schema": "cmbcst.product-provenance.v1",
+      "key": "100A",
+      "filename": "HFI_SkyMap_100-1-4_2048_R4.00_full.fits",
+      "role": "map",
+      "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_100-1-4_2048_R4.00_full.fits",
+      "observed_utc": "2026-10-23T17:55:41.382887+00:00",
+      "origin": "downloaded",
+      "bytes": 2013275520,
+      "sha256": "41270c37c0f9a6575fc95d124ded25b95d1a75d6bccbb14eb64478841faa4ce1",
+      "publisher_checksum": null,
+      "checksum_scope": "Locally computed SHA256 identifies these bytes; no publisher checksum was supplied.",
+      "http": {
+        "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_100-1-4_2048_R4.00_full.fits",
+        "resolved_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_100-1-4_2048_R4.00_full.fits",
+        "total": 2013275520,
+        "etag": "\"78002580-5a836cedf6300\"",
+        "last_modified": "Tue, 16 Jun 2020 17:23:56 GMT"
+      },
+      "structure": {
+        "format": "FITS",
+        "hdus": 2,
+        "complete_block_layout": true
+      }
+    },
+    {
+      "schema": "cmbcst.product-provenance.v1",
+      "key": "100B",
+      "filename": "HFI_SkyMap_100-2-3_2048_R4.00_full.fits",
+      "role": "map",
+      "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_100-2-3_2048_R4.00_full.fits",
+      "observed_utc": "2026-10-23T17:55:07.346440+00:00",
+      "origin": "downloaded",
+      "bytes": 2013275520,
+      "sha256": "e07c79999ba13872573a1ead8f97b3ab08d548852280fe062fba20d8b662c5d0",
+      "publisher_checksum": null,
+      "checksum_scope": "Locally computed SHA256 identifies these bytes; no publisher checksum was supplied.",
+      "http": {
+        "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_100-2-3_2048_R4.00_full.fits",
+        "resolved_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_100-2-3_2048_R4.00_full.fits",
+        "total": 2013275520,
+        "etag": "\"78002580-5a836d3a41700\"",
+        "last_modified": "Tue, 16 Jun 2020 17:25:16 GMT"
+      },
+      "structure": {
+        "format": "FITS",
+        "hdus": 2,
+        "complete_block_layout": true
+      }
+    },
+    {
+      "schema": "cmbcst.product-provenance.v1",
+      "key": "143A",
+      "filename": "HFI_SkyMap_143-1-3-5-7_2048_R4.00_full.fits",
+      "role": "map",
+      "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_143-1-3-5-7_2048_R4.00_full.fits",
+      "observed_utc": "2026-10-23T17:59:32.352208+00:00",
+      "origin": "downloaded",
+      "bytes": 2013275520,
+      "sha256": "41ea9f9ad5b3fb8ff65241199681357e6c53f2c3acb376b1d5aeabc97247d8a3",
+      "publisher_checksum": null,
+      "checksum_scope": "Locally computed SHA256 identifies these bytes; no publisher checksum was supplied.",
+      "http": {
+        "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_143-1-3-5-7_2048_R4.00_full.fits",
+        "resolved_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_143-1-3-5-7_2048_R4.00_full.fits",
+        "total": 2013275520,
+        "etag": "\"78002580-5a836d81c7fc0\"",
+        "last_modified": "Tue, 16 Jun 2020 17:26:31 GMT"
+      },
+      "structure": {
+        "format": "FITS",
+        "hdus": 2,
+        "complete_block_layout": true
+      }
+    },
+    {
+      "schema": "cmbcst.product-provenance.v1",
+      "key": "143B",
+      "filename": "HFI_SkyMap_143-2-4-6_2048_R4.00_full.fits",
+      "role": "map",
+      "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_143-2-4-6_2048_R4.00_full.fits",
+      "observed_utc": "2026-10-23T17:59:25.454389+00:00",
+      "origin": "downloaded",
+      "bytes": 2013275520,
+      "sha256": "b929bb68cd2714d354fb0b858d77f844d499543fc1ad2f44c28633e5f2afe349",
+      "publisher_checksum": null,
+      "checksum_scope": "Locally computed SHA256 identifies these bytes; no publisher checksum was supplied.",
+      "http": {
+        "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_143-2-4-6_2048_R4.00_full.fits",
+        "resolved_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_143-2-4-6_2048_R4.00_full.fits",
+        "total": 2013275520,
+        "etag": "\"78002580-5a836daaca080\"",
+        "last_modified": "Tue, 16 Jun 2020 17:27:14 GMT"
+      },
+      "structure": {
+        "format": "FITS",
+        "hdus": 2,
+        "complete_block_layout": true
+      }
+    },
+    {
+      "schema": "cmbcst.product-provenance.v1",
+      "key": "217A",
+      "filename": "HFI_SkyMap_217-1-3-5-7_2048_R4.00_full.fits",
+      "role": "map",
+      "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_217-1-3-5-7_2048_R4.00_full.fits",
+      "observed_utc": "2026-10-23T18:02:01.590855+00:00",
+      "origin": "downloaded",
+      "bytes": 2013275520,
+      "sha256": "c76701cc1a9293706577f7924491860a5dd27246bf1e6f6aae5c669aa1668ddc",
+      "publisher_checksum": null,
+      "checksum_scope": "Locally computed SHA256 identifies these bytes; no publisher checksum was supplied.",
+      "http": {
+        "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_217-1-3-5-7_2048_R4.00_full.fits",
+        "resolved_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_217-1-3-5-7_2048_R4.00_full.fits",
+        "total": 2013275520,
+        "etag": "\"78002580-5a836df9f1b40\"",
+        "last_modified": "Tue, 16 Jun 2020 17:28:37 GMT"
+      },
+      "structure": {
+        "format": "FITS",
+        "hdus": 2,
+        "complete_block_layout": true
+      }
+    },
+    {
+      "schema": "cmbcst.product-provenance.v1",
+      "key": "217B",
+      "filename": "HFI_SkyMap_217-2-4-6-8_2048_R4.00_full.fits",
+      "role": "map",
+      "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_217-2-4-6-8_2048_R4.00_full.fits",
+      "observed_utc": "2026-10-23T18:03:27.733260+00:00",
+      "origin": "downloaded",
+      "bytes": 2013275520,
+      "sha256": "31c26d567523d6c93e4aa679afd8c07ace30e18f0097f160bdd8da72fbd4d1b2",
+      "publisher_checksum": null,
+      "checksum_scope": "Locally computed SHA256 identifies these bytes; no publisher checksum was supplied.",
+      "http": {
+        "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_217-2-4-6-8_2048_R4.00_full.fits",
+        "resolved_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_217-2-4-6-8_2048_R4.00_full.fits",
+        "total": 2013275520,
+        "etag": "\"78002580-5a836e48253c0\"",
+        "last_modified": "Tue, 16 Jun 2020 17:29:59 GMT"
+      },
+      "structure": {
+        "format": "FITS",
+        "hdus": 2,
+        "complete_block_layout": true
+      }
+    },
+    {
+      "schema": "cmbcst.product-provenance.v1",
+      "key": "353A",
+      "filename": "HFI_SkyMap_353-1-3-5-7_2048_R4.00_full.fits",
+      "role": "map",
+      "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_353-1-3-5-7_2048_R4.00_full.fits",
+      "observed_utc": "2026-10-23T18:05:10.556111+00:00",
+      "origin": "downloaded",
+      "bytes": 2013275520,
+      "sha256": "1900297a18385ed936178f4792634d4cb383706130119f3ceeedde0755a959eb",
+      "publisher_checksum": null,
+      "checksum_scope": "Locally computed SHA256 identifies these bytes; no publisher checksum was supplied.",
+      "http": {
+        "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_353-1-3-5-7_2048_R4.00_full.fits",
+        "resolved_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_353-1-3-5-7_2048_R4.00_full.fits",
+        "total": 2013275520,
+        "etag": "\"78002580-5a836e8622600\"",
+        "last_modified": "Tue, 16 Jun 2020 17:31:04 GMT"
+      },
+      "structure": {
+        "format": "FITS",
+        "hdus": 2,
+        "complete_block_layout": true
+      }
+    },
+    {
+      "schema": "cmbcst.product-provenance.v1",
+      "key": "353B",
+      "filename": "HFI_SkyMap_353-2-4-6-8_2048_R4.00_full.fits",
+      "role": "map",
+      "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_353-2-4-6-8_2048_R4.00_full.fits",
+      "observed_utc": "2026-10-23T18:05:17.261557+00:00",
+      "origin": "downloaded",
+      "bytes": 2013275520,
+      "sha256": "664e6d943945ef2421cfb3cbc41ed58f796ec1c027c1265a6034f94ac01728b4",
+      "publisher_checksum": null,
+      "checksum_scope": "Locally computed SHA256 identifies these bytes; no publisher checksum was supplied.",
+      "http": {
+        "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_353-2-4-6-8_2048_R4.00_full.fits",
+        "resolved_url": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/Multi-detector/HFI_SkyMap_353-2-4-6-8_2048_R4.00_full.fits",
+        "total": 2013275520,
+        "etag": "\"78002580-5a836ed455e80\"",
+        "last_modified": "Tue, 16 Jun 2020 17:32:26 GMT"
+      },
+      "structure": {
+        "format": "FITS",
+        "hdus": 2,
+        "complete_block_layout": true
+      }
+    },
+    {
+      "schema": "cmbcst.product-provenance.v1",
+      "key": "galplane",
+      "filename": "HFI_Mask_GalPlane-apo0_2048_R2.00.fits",
+      "role": "mask",
+      "requested_url": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=HFI_Mask_GalPlane-apo0_2048_R2.00.fits",
+      "observed_utc": "2026-10-23T18:02:59.695012+00:00",
+      "origin": "downloaded",
+      "bytes": 402664320,
+      "sha256": "1fb28a9c37a4dd5c6578638abf059e581cb97609799d8ae04f4bb25516c6ecfe",
+      "publisher_checksum": null,
+      "checksum_scope": "Locally computed SHA256 identifies these bytes; no publisher checksum was supplied.",
+      "http": {
+        "requested_url": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=HFI_Mask_GalPlane-apo0_2048_R2.00.fits",
+        "resolved_url": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=HFI_Mask_GalPlane-apo0_2048_R2.00.fits",
+        "total": null,
+        "etag": null,
+        "last_modified": null
+      },
+      "structure": {
+        "format": "FITS",
+        "hdus": 2,
+        "complete_block_layout": true
+      }
+    },
+    {
+      "schema": "cmbcst.product-provenance.v1",
+      "key": "pointsrc",
+      "filename": "HFI_Mask_PointSrc_2048_R2.00.fits",
+      "role": "mask",
+      "requested_url": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=HFI_Mask_PointSrc_2048_R2.00.fits",
+      "observed_utc": "2026-10-23T18:03:58.920288+00:00",
+      "origin": "downloaded",
+      "bytes": 503334720,
+      "sha256": "1ef59061c15caee95ee1e3e5c4ea6ed5d4e0e910ceba6cdad57310fb0ff0f763",
+      "publisher_checksum": null,
+      "checksum_scope": "Locally computed SHA256 identifies these bytes; no publisher checksum was supplied.",
+      "http": {
+        "requested_url": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=HFI_Mask_PointSrc_2048_R2.00.fits",
+        "resolved_url": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=HFI_Mask_PointSrc_2048_R2.00.fits",
+        "total": null,
+        "etag": null,
+        "last_modified": null
+      },
+      "structure": {
+        "format": "FITS",
+        "hdus": 3,
+        "complete_block_layout": true
+      }
+    },
+    {
+      "schema": "cmbcst.product-provenance.v1",
+      "key": "co",
+      "filename": "HFI_CompMap_CO-Type1_2048_R2.00.fits",
+      "role": "mask",
+      "requested_url": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=HFI_CompMap_CO-Type1_2048_R2.00.fits",
+      "observed_utc": "2026-10-23T18:06:38.947848+00:00",
+      "origin": "downloaded",
+      "bytes": 1962947520,
+      "sha256": "4697eef73cafcdaec6c561a66e7f6dae26e6d8a4d9690c3f9f4671f8eee8cd3a",
+      "publisher_checksum": null,
+      "checksum_scope": "Locally computed SHA256 identifies these bytes; no publisher checksum was supplied.",
+      "http": {
+        "requested_url": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=HFI_CompMap_CO-Type1_2048_R2.00.fits",
+        "resolved_url": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=HFI_CompMap_CO-Type1_2048_R2.00.fits",
+        "total": null,
+        "etag": null,
+        "last_modified": null
+      },
+      "structure": {
+        "format": "FITS",
+        "hdus": 2,
+        "complete_block_layout": true
+      }
+    },
+    {
+      "schema": "cmbcst.product-provenance.v1",
+      "key": "rimo",
+      "filename": "PLANCK_RIMO_TF_R4.00.tar.gz",
+      "role": "beams",
+      "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/misc/PLANCK_RIMO_TF_R4.00.tar.gz",
+      "observed_utc": "2026-10-23T18:04:37.701983+00:00",
+      "origin": "downloaded",
+      "bytes": 235039576,
+      "sha256": "fd964fdb48829b506089c80d85626c03b55e47467e01ed420861940052e86bf9",
+      "publisher_checksum": null,
+      "checksum_scope": "Locally computed SHA256 identifies these bytes; no publisher checksum was supplied.",
+      "http": {
+        "requested_url": "https://portal.nersc.gov/cfs/cmb/planck2020/misc/PLANCK_RIMO_TF_R4.00.tar.gz",
+        "resolved_url": "https://portal.nersc.gov/cfs/cmb/planck2020/misc/PLANCK_RIMO_TF_R4.00.tar.gz",
+        "total": 235039576,
+        "etag": "\"e026b58-5b803c8831600\"",
+        "last_modified": "Sun, 03 Jan 2021 19:14:32 GMT"
+      },
+      "structure": {
+        "format": "tar.gz",
+        "members": 1026,
+        "gzip_crc_checked": true
+      }
+    }
+  ],
+  "failures": {},
+  "total_bytes": 19210190296,
+  "downloader_source_sha256": "086b2699a0340e3bdadf3f3cdb633efb42e6ecac4b4e041fbf87db57ba4a969f",
+  "hash_scope": "Local SHA256 provenance; these are not publisher-supplied cryptographic digests."
+}

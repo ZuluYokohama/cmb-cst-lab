@@ -1,0 +1,171 @@
+{
+  "completed_utc": "2026-10-23T20:27:33.522273+00:00",
+  "status": "exploratory_complete",
+  "candidate_flags": [
+    {
+      "patch": "NGP",
+      "statistic": "rank_PD0_count",
+      "p_holm": 0.03
+    },
+    {
+      "patch": "NGP",
+      "statistic": "temperature_std_uK",
+      "p_holm": 0.03
+    },
+    {
+      "patch": "SGP",
+      "statistic": "rank_PD0_count",
+      "p_holm": 0.03
+    },
+    {
+      "patch": "SGP",
+      "statistic": "temperature_std_uK",
+      "p_holm": 0.03
+    },
+    {
+      "patch": "ColdSpot",
+      "statistic": "rank_PD0_count",
+      "p_holm": 0.03
+    },
+    {
+      "patch": "ColdSpot",
+      "statistic": "temperature_std_uK",
+      "p_holm": 0.03
+    }
+  ],
+  "statistics": [
+    "rank_PD0_count",
+    "rank_total_PD0_lifetime",
+    "temperature_std_uK",
+    "temperature_skewness",
+    "temperature_excess_kurtosis"
+  ],
+  "patches": [
+    "NGP",
+    "SGP",
+    "ColdSpot"
+  ],
+  "plan_sha256": "670c918caf64503c6465900866e5d7ee2b093e4179fa7a36f6157aeac4a73f9b",
+  "conditioning_sha256": "f25d9bcd75231b73dd3691703cd6305bb82c131f04272a874e717e5212f69960",
+  "ensemble_sha256": "723fedbd51900b179b0387fc1d0920ebe64d31d52ca15bab268d97006d08a891",
+  "validation_sha256": "04e47bfb54b0695b9059eb470d0b30465d5f48660b0b29df57d55c0163fa1753",
+  "jovin_receipt_id": "20261023T201811Z-764956b0e705",
+  "accepted_cosmological_claims": [],
+  "observed": [
+    [
+      821.0,
+      290.19329337887945,
+      98.11975487797781,
+      0.08553498553888693,
+      0.1539384271925761
+    ],
+    [
+      804.0,
+      280.2120236831984,
+      96.60609045295183,
+      -0.09075701779918814,
+      0.06347475325693175
+    ],
+    [
+      882.0,
+      275.69402963779675,
+      101.41571825114592,
+      -0.07731736063250924,
+      0.05160756950594525
+    ]
+  ],
+  "raw_p": [
+    [
+      0.002,
+      0.452,
+      0.002,
+      0.586,
+      0.278
+    ],
+    [
+      0.002,
+      0.652,
+      0.002,
+      0.644,
+      0.42
+    ],
+    [
+      0.002,
+      0.904,
+      0.002,
+      0.696,
+      0.48
+    ]
+  ],
+  "p_holm": [
+    [
+      0.03,
+      1.0,
+      0.03,
+      1.0,
+      1.0
+    ],
+    [
+      0.03,
+      1.0,
+      0.03,
+      1.0,
+      1.0
+    ],
+    [
+      0.03,
+      1.0,
+      0.03,
+      1.0,
+      1.0
+    ]
+  ],
+  "reference_mean": [
+    [
+      1084.017017017017,
+      266.2788108994987,
+      399.48234377700277,
+      0.0012744209113659652,
+      -0.09417160737637847
+    ],
+    [
+      1082.7477477477478,
+      266.18165955232257,
+      399.1579640154054,
+      -0.008896040687719124,
+      -0.10078449099551319
+    ],
+    [
+      1152.1351351351352,
+      272.664258704701,
+      400.8941679219421,
+      -0.012183540810619205,
+      -0.09312804937633772
+    ]
+  ],
+  "reference_sd": [
+    [
+      23.19540394645435,
+      29.807238456433463,
+      42.12773028338435,
+      0.18113389174518724,
+      0.2403499727485307
+    ],
+    [
+      23.064656711315973,
+      29.81070399712396,
+      42.6224819715316,
+      0.18380959579203454,
+      0.23920526831114627
+    ],
+    [
+      24.10171242547796,
+      31.297561404415916,
+      42.30790260311247,
+      0.18222190749620024,
+      0.2426245834132319
+    ]
+  ],
+  "patches_sha256": "ec5cb43d2ae1a7dd5cbb42592ab122760cf693d2451fa452676b015faef90f43",
+  "limitations": "Uncleaned temperature and previously inspected patches. Isotropic Gaussian conditional null excludes foreground coherence, anisotropic/correlated noise, beams/systematics. Higher-order or anisotropy discrepancies are not new cosmology or unique topology information."
+}
