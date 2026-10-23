@@ -37,4 +37,4 @@ def test_fixed_seed_exact_replay():
 ])
 def test_invalid_scenario_rejected(kwargs):
     with pytest.raises(ValueError):
-        audit(trials=200, **kwargs)
+        audit(**({"trials": 200} | kwargs))
