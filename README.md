@@ -75,6 +75,10 @@ The scalar sensor testbed now reports the finite-sample F reference for closure 
 
 Run `python scripts/audit_non_gaussian_closure.py` for an independent synthetic negative control: covariance-matched heavy-tailed edge noise breaks the Gaussian finite-F false-alarm calibration. This test illustrates an assumption boundary, not robust detection performance. See [the non-Gaussian audit notes](docs/NON_GAUSSIAN_CLOSURE.md).
 
+## Temporal-correlation negative control
+
+The finite-covariance F reference requires independent calibration observations. The new synthetic paired Gaussian AR(1) audit varies only calibration-row dependence while holding marginal edge covariance fixed. See [temporal-dependence validation](docs/TEMPORAL_CALIBRATION.md) and run `python scripts/audit_temporal_calibration.py`. This is an assumption-failure test, not a correlated-data correction.
+
 ## Results
 
 Every number in the first column is computed in this repository. Paper values are quoted for
