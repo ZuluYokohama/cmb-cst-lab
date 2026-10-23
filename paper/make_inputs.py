@@ -126,9 +126,11 @@ def main() -> int:
         # with psi free the Fisher matrix is singular in beta (exact degeneracy); report it as such
         full = fis["sigma_beta_deg"]["full"]
         add("fisFull", r"\infty" if full is None or full > 100 else f(full))
-        if fis.get("full_min_relative_eigenvalue") is not None:
-            e = int(np.floor(np.log10(fis["full_min_relative_eigenvalue"])))
-            add("fisEig", rf"\sim10^{{{e}}}")
+        eig = fis.get("full_min_relative_eigenvalue")
+        if eig is not None and eig > 0:
+            add("fisEig", rf"\sim10^{{{int(np.floor(np.log10(eig)))}}}")
+        else:                                  # main.tex uses the macro unconditionally
+            add("fisEig", r"	ext{n/a}")
         if fis["corr_beta_psi0"] is not None:
             add("fisCorr", f(fis["corr_beta_psi0"]))
     if npe:
