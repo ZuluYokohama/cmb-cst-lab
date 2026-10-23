@@ -6,7 +6,7 @@
 
 \begin{document}
 
-\title{Region-resolved closure tests of the Planck PR4 polarization-angle calibration network and the exact degeneracy of birefringence with dust misalignment}
+\title{Region-resolved closure tests of the Planck PR4 polarization-angle calibration network and the degeneracy of birefringence with dust misalignment}
 
 \author{Nomo Zulu}
 \affiliation{Independent Researcher}
@@ -31,8 +31,8 @@ $0.1^\circ$ instrument-like drift $\powInstTw\%$ of the time. A latitude-band pa
 hint of variation on the dust-immune same-frequency edges that does not survive correction for
 the number of statistics reported.
 Finally, a coverage-validated neural posterior estimator over a family of dust-EB models shows
-that, once the dust misalignment $\psi$ is free, $\beta$ is exactly degenerate with it: these
-channels measure $\beta-\psi_0=\dBeta^{+\dUp}_{-\dLo}$\,deg, and $\beta$ itself follows only from
+that, once the dust misalignment $\psi$ is free, $\beta$ is degenerate with it (exactly so for a
+scale-independent misalignment): these channels measure $\beta-\psi_0=\dBeta^{+\dUp}_{-\dLo}$\,deg, and $\beta$ itself follows only from
 an assumed prior on $\psi_0$ ($\beta=\bPsiH^{+\bPsiHUp}_{-\bPsiHLo}$\,deg for
 $\psi_0\sim\mathcal N(0,0.5^\circ)$).
 \end{abstract}
@@ -187,10 +187,13 @@ is wide, $\sigma_\beta\simeq\bsdF^\circ$, and a Fisher analysis at the fiducial 
 $\sigma_\beta=\fisNoDust^\circ$ with no dust EB, but $\sigma_\beta=\fisFull$ once a constant
 misalignment is free. Dust appears rotated by $\alpha+\psi$
 and the CMB by $\alpha+\beta$, so a common shift of $\alpha$, $\beta$ and $\psi$ leaves the model
-unchanged; numerically, the Fisher matrix has a single null direction,
-$\delta\alpha_i=-\epsilon$ for all $i$ and $\delta\beta=\delta\psi_0=\epsilon$ (relative
-eigenvalue $\fisEig$). The data constrain $\beta-\psi$ and $\alpha+\beta$, and $\beta$ alone is set by the
-priors. Its marginal posterior is then a flat box bounded by prior edges, which the flows
+unchanged. For a scale-independent misalignment ($n=0$, the fiducial point) this is exact:
+the Fisher matrix has a single null direction, $\delta\alpha_i=-\epsilon$ for all $i$ and
+$\delta\beta=\delta\psi_0=\epsilon$ (relative eigenvalue $\fisEig$). For $n\neq0$ the same shift
+changes $\psi$ by $\epsilon[(\ell/200)^n-1]$, so only the scale dependence of the misalignment can
+break the degeneracy, and in the full model family the validated posterior for $\beta$ is still
+prior-limited. The data constrain $\beta-\psi_0$ and $\alpha+\beta$, and $\beta$ alone is set by
+the priors. Its marginal posterior is then a flat box bounded by prior edges, which the flows
 represent imperfectly; this is the origin of the mild under-coverage of $\beta$ alone. The
 identifiable combination $\beta-\psi_0$ is recovered with $\sigma\simeq\dsdF^\circ$ and coverage
 $\dcovF$ (68\%) and $\dcovnF$ (95\%). For $\beta$ under an external prior on $\psi_0$, obtained by
@@ -259,7 +262,8 @@ independent pipeline. Its cochain structure makes the gauge, the absence of harm
 equivalence of closure and fit $\chi^2$ explicit, and it extends naturally to a region-resolved
 test, under which the Planck calibration pattern is spatially stationary within the sensitivity
 stated above. A coverage-validated neural posterior shows that, with the dust misalignment free,
-$\beta$ is exactly degenerate with it: these channels measure $\beta-\psi_0$, and any value of
+$\beta$ is degenerate with it, exactly so when the misalignment is scale-independent: these
+channels measure $\beta-\psi_0$, and any value of
 $\beta$ quoted from them carries an assumption about $\psi_0$. Separating the two needs
 information that does not rotate with the dust, such as an absolute calibrator or a measured
 dust misalignment.

@@ -484,7 +484,7 @@ function betaPlot() {
   document.getElementById("beta-text").textContent =
     `Circles are quoted values, squares are computed here. The differential network cannot measure β: a common rotation is its gauge freedom. β comes from the MK likelihood (Galactic dust as the calibrator), ` +
     `and the anchored value is the paper's conditional closure, β = mean(θ_m − α_m^MK) over the 100/143 GHz maps. It reuses the MK calibration, so it is not an independent detection.` +
-    (DATA.npe ? ` The neural posterior (5 flows trained on the Arc GPU, blinded and validated for coverage under several dust models) shows why β depends on the dust model: dust looks rotated by α + ψ and the CMB by α + β, so these channels constrain β − ψ₀ (here ${f(DATA.npe.beta_minus_psi0.median)}° ± ${f(0.5 * (DATA.npe.beta_minus_psi0.hi68 - DATA.npe.beta_minus_psi0.lo68))}°). Once ψ is free the degeneracy is exact: with no assumption about the dust misalignment ψ₀, β returns the prior.` : "");
+    (DATA.npe ? ` The neural posterior (5 flows trained on the Arc GPU, blinded and validated for coverage under several dust models) shows why β depends on the dust model: dust looks rotated by α + ψ and the CMB by α + β, so these channels constrain β − ψ₀ (here ${f(DATA.npe.beta_minus_psi0.median)}° ± ${f(0.5 * (DATA.npe.beta_minus_psi0.hi68 - DATA.npe.beta_minus_psi0.lo68))}°). For a scale-independent misalignment the degeneracy is exact, and across the full dust family β with no assumption about ψ₀ still returns the prior.` : "");
 }
 
 /* ---------- persistence ---------- */

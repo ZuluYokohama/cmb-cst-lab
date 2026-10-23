@@ -1,7 +1,10 @@
 """Generate paper/numbers.tex (LaTeX macros) and paper/figures/*.pdf from results/*.json.
 
-No number in main.tex is typed by hand: every quantitative statement is a macro defined here
-from the committed results, so the manuscript cannot drift from the analysis.
+Every result value taken from results/*.json is a macro defined here, so regenerating keeps the
+manuscript in step with the analysis. Values from checks whose output is not in results/ (the
+injection pull width; the post-hoc A/B covariance audit, written outside the repository) are
+typed in main.tex next to a "% typed value" comment and need manual review when those checks
+are rerun.
 
 Usage:
     python paper/make_inputs.py
@@ -24,6 +27,7 @@ OUT = REPO / "paper"
 FIG = OUT / "figures"
 DET = ["100A", "100B", "143A", "143B", "217A", "217B", "353A", "353B"]
 
+PDF_META = {"CreationDate": None}          # no timestamp: identical results give identical figures
 plt.rcParams.update({"font.size": 8, "axes.linewidth": 0.6, "figure.dpi": 150, "savefig.bbox": "tight",
                      "font.family": "serif", "mathtext.fontset": "dejavuserif"})
 
@@ -153,7 +157,7 @@ def main() -> int:
     ax.set_xticks(x, DET, rotation=45)
     ax.set_ylabel(r"$\alpha_i - \alpha_{143A}$ [deg]")
     ax.legend(frameon=False, fontsize=6.5)
-    fig.savefig(FIG / "fig_pattern.pdf")
+    fig.savefig(FIG / "fig_pattern.pdf", metadata=PDF_META)
     plt.close(fig)
 
     # Figure 2: spatial contributions and drift grid
@@ -172,7 +176,7 @@ def main() -> int:
         axs[1].set_yticks(range(8), DET, fontsize=6)
         axs[1].set_xticks(range(len(c)), s["labels"], rotation=90, fontsize=6)
         fig.colorbar(im, ax=axs[1], label=r"$\gamma_i(r)/\sigma$")
-        fig.savefig(FIG / "fig_spatial.pdf")
+        fig.savefig(FIG / "fig_spatial.pdf", metadata=PDF_META)
         plt.close(fig)
 
     # Figure 3: SBC coverage per dust model (if available)
@@ -192,7 +196,7 @@ def main() -> int:
         ax.set_ylabel(r"coverage of $\beta$")
         ax.set_ylim(0, 1.05)
         ax.legend(frameon=False, fontsize=6)
-        fig.savefig(FIG / "fig_coverage.pdf")
+        fig.savefig(FIG / "fig_coverage.pdf", metadata=PDF_META)
         plt.close(fig)
     print("wrote", OUT / "numbers.tex", "and figures:", sorted(p.name for p in FIG.glob("*.pdf")))
     return 0

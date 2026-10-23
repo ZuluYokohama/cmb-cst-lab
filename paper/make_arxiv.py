@@ -36,8 +36,14 @@ def main(argv: list[str]) -> int:
                 tar.addfile(info, f)
     with tempfile.TemporaryDirectory() as tmp:
         with tarfile.open(out) as tar:
-            tar.extractall(tmp, filter="data")
-        run = subprocess.run([args.tectonic, "-X", "compile", "main.tex"], cwd=tmp, capture_output=True, text=True)
+            # the "data" filter exists from Python 3.11.4; the archive is our own either way
+            tar.extractall(tmp, **({"filter": "data"} if hasattr(tarfile, "data_filter") else {}))
+        # a path (not a bare command for PATH lookup) must not be resolved from inside tmp
+        exe = str(Path(args.tectonic).resolve()) if ("/" in args.tectonic or "\\" in args.tectonic) else args.tectonic
+        try:
+            run = subprocess.run([exe, "-X", "compile", "main.tex"], cwd=tmp, capture_output=True, text=True, timeout=900)
+        except subprocess.TimeoutExpired:
+            raise SystemExit("arxiv.tar.gz compile check timed out")
         if run.returncode != 0 or not (Path(tmp) / "main.pdf").exists():
             print(run.stderr[-2000:], file=sys.stderr)
             raise SystemExit("arxiv.tar.gz does not compile on its own")
