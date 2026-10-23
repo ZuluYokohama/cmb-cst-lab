@@ -41,6 +41,13 @@ SUITES: dict[str, tuple[list[tuple[str, list[str] | None]], str]] = {
         [("src/cmbcst/network.py", None)],
         "tests/sandbox/jovin_tests_network.py",
     ),
+    "sensor_network": (
+        [
+            ("src/cmbcst/network.py", None),
+            ("src/cmbcst/sensor_network.py", None),
+        ],
+        "tests/sandbox/jovin_tests_sensor_network.py",
+    ),
     "differential": (
         [
             ("src/cmbcst/network.py", None),
