@@ -1,0 +1,92 @@
+{
+  "created_utc": "2026-10-23T22:44:20.551095+00:00",
+  "selected": {
+    "quadratic": "q00",
+    "compact": "c01",
+    "filament": "f03"
+  },
+  "final_roles": [
+    {
+      "name": "final_cal",
+      "count": 999,
+      "offset": 80000,
+      "recipe": null
+    },
+    {
+      "name": "final_null",
+      "count": 1024,
+      "offset": 82000,
+      "recipe": null
+    },
+    {
+      "name": "final_quadratic",
+      "count": 256,
+      "offset": 90000,
+      "recipe": {
+        "id": "q00",
+        "family": "quadratic",
+        "amplitude": 0.1,
+        "variant": -1
+      }
+    },
+    {
+      "name": "final_compact",
+      "count": 256,
+      "offset": 91000,
+      "recipe": {
+        "id": "c01",
+        "family": "compact",
+        "amplitude": 0.1,
+        "variant": 1.0
+      }
+    },
+    {
+      "name": "final_filament",
+      "count": 256,
+      "offset": 92000,
+      "recipe": {
+        "id": "f03",
+        "family": "filament",
+        "amplitude": 0.2,
+        "variant": 1.0
+      }
+    },
+    {
+      "name": "strong_quadratic",
+      "count": 128,
+      "offset": 100000,
+      "recipe": {
+        "id": "strong_quadratic",
+        "family": "quadratic",
+        "amplitude": 0.35,
+        "variant": 1
+      }
+    },
+    {
+      "name": "strong_compact",
+      "count": 128,
+      "offset": 101000,
+      "recipe": {
+        "id": "strong_compact",
+        "family": "compact",
+        "amplitude": 0.35,
+        "variant": 0.5
+      }
+    },
+    {
+      "name": "strong_filament",
+      "count": 128,
+      "offset": 102000,
+      "recipe": {
+        "id": "strong_filament",
+        "family": "filament",
+        "amplitude": 0.35,
+        "variant": 0.5
+      }
+    }
+  ],
+  "plan_sha256": "63d37ed74b4ce6740ea39be73a4323818c3c3e4c284fa63cecaf670e9a1335ac",
+  "model_sha256": "b2084f8df9d4702b2a7a0307493a9fe8bd1872c90916d1ce1c667eb664a21c32",
+  "development_sha256": "10e1e9f583f6ac8bd41abce3cdd86c84433f14ea8405133358eca0361e38c207",
+  "elapsed_seconds": 219.56001388299998
+}

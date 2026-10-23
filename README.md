@@ -78,6 +78,16 @@ baseline. The simple foreground/noise model is a controlled benchmark, and
 observational Planck testing remains withheld. All draw records, numerical
 checks and the negative outcome are preserved.
 
+The [targeted physical blind-spot pilot](docs/TARGETED_RUN.md) replaces the large
+response model with six fixed responses and equal-training linear baselines.
+It locks development selections before generating final holdouts. Across 6,682
+synthetic skies, calibration and strong-signal retention gates passed, but no
+final comparison showed a validated gain (largest measured gain 0.78 percentage
+points). In the selected quadratic case, the original omnibus detected 88/256
+examples versus 28/256 for both learned detectors, suggesting a scoring-rule
+limitation. This remains a synthetic negative result, with all 21 JoVin suites
+authenticated and original analyses preserved.
+
 **Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every result taken from `results/*.json`
 is written into it by `paper/make_inputs.py` (macros and figures). Two values come from checks
 whose output is not in `results/`: the injection pull width and the post-hoc A/B covariance
@@ -197,6 +207,7 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `multiscale` | pass 6/6 | `20261023T204940Z-b587588deae4` |
 | `orientation` | pass 5/5 | `20261023T212557Z-3470461f116f` |
 | `response` | pass 9/9 | `20261023T215313Z-4fb94bd93228` |
+| `targeted` | pass 6/6 | `20261023T223751Z-b7ba43ffca03` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).

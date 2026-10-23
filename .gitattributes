@@ -11,3 +11,7 @@ docs/**/*.md -text
 results/** -text
 data/evidence/** -text
 formal/** -text
+
+# Keep full machine-generated draw matrices available without enormous text diffs.
+results/targeted_v1/development.json -diff
+results/targeted_v1/final.json -diff

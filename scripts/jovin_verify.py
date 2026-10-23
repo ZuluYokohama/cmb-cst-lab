@@ -39,6 +39,11 @@ HEADER = (
 # suite -> (sources, sandbox tests file). A source is (path, [function names]) or (path, None) for a
 # whole standalone module (its own imports are kept; it must not import other cmbcst modules).
 SUITES: dict[str, tuple[list[tuple[str, list[str] | None]], str]] = {
+    "targeted": (
+        [("src/cmbcst/multiscale.py", None), ("src/cmbcst/response.py", None),
+         ("src/cmbcst/targeted.py", None)],
+        "tests/sandbox/jovin_tests_targeted.py",
+    ),
     "response": (
         [("src/cmbcst/multiscale.py", None), ("src/cmbcst/response.py", None),
          ("src/cmbcst/response_sky.py", ["foreground_proxy", "localized_template"])],
