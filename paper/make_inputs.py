@@ -130,7 +130,7 @@ def main() -> int:
         if eig is not None and eig > 0:
             add("fisEig", rf"\sim10^{{{int(np.floor(np.log10(eig)))}}}")
         else:                                  # main.tex uses the macro unconditionally
-            add("fisEig", r"	ext{n/a}")
+            add("fisEig", r"\text{n/a}")
         if fis["corr_beta_psi0"] is not None:
             add("fisCorr", f(fis["corr_beta_psi0"]))
     if npe:
