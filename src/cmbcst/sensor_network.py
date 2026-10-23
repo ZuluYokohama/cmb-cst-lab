@@ -37,7 +37,7 @@ def fit_scalar_offsets(pair_offsets: np.ndarray, covariance: np.ndarray,
         raise ValueError(f"expected covariance shape ({n_edges}, {n_edges})")
     if not (np.isfinite(values).all() and np.isfinite(cov).all()):
         raise ValueError("measurements and covariance must be finite")
-    if not np.allclose(cov, cov.T, rtol=1e-10, atol=1e-12 * max(1.0, np.max(np.abs(cov)))):
+    if not np.allclose(cov, cov.T, rtol=1e-10, atol=1e-12 * float(np.max(np.abs(cov)))):
         raise ValueError("covariance must be symmetric")
     if not np.array_equal(cov, cov.T):
         cov = (cov + cov.T) / 2.0
