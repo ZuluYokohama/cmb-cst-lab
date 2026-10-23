@@ -61,6 +61,13 @@ prove a sky anomaly, a fractal dimension or the floating-point implementation
 for every input. The [frozen protocol](docs/MULTISCALE_SPEC.md), raw curves,
 control results and source-bound receipts remain available for review.
 
+The [rotated-representation audit](docs/ORIENTATION_MERIT_RUN.md) passed all 312
+CPU/CUDA checks across exact quarter turns and reflections of original,
+standardized and normal-score grids. The directional contrast changes sign
+when axes swap, as expected. These are numerical symmetry controls, not an
+arbitrary celestial-rotation test or a new sky detection. The report ranks
+foreground/noise reference checks ahead of expanding the feature search.
+
 **Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every result taken from `results/*.json`
 is written into it by `paper/make_inputs.py` (macros and figures). Two values come from checks
 whose output is not in `results/`: the injection pull width and the post-hoc A/B covariance
@@ -178,6 +185,7 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `copula_topology` | pass 4/4 | `20261023T190416Z-f73e0022af1e` |
 | `spherical_surrogates` | pass 6/6 | `20261023T201811Z-764956b0e705` |
 | `multiscale` | pass 6/6 | `20261023T204940Z-b587588deae4` |
+| `orientation` | pass 5/5 | `20261023T212557Z-3470461f116f` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).

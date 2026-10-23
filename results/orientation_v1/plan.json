@@ -1,0 +1,50 @@
+{
+  "created_utc": "2026-10-23T21:27:44.163931+00:00",
+  "scope": "Exact D4 representation/axis-labeling control; not an SO(3) or sky discovery experiment",
+  "source_sha256": {
+    "scripts/run_orientation_audit.py": "457efd786d8a4a573db66eb0e0780f2e0a6807b6ca9ad7dd14d68567bb6f2da5",
+    "docs/ORIENTATION_SPEC.md": "d894d20a6a7b79aa2d3fe250d2beff7e7221fa3814adb97f50d0fb2f91b200b5",
+    "src/cmbcst/orientation.py": "349727aabb2a00e9c0e62f79d04f3a414fde8204f41b18139895ef9a1141500c",
+    "src/cmbcst/multiscale.py": "ed967a9bc082a70ce913552cbff15d5493f9e2a066ffc9e353d4c5dda3be9e25",
+    "src/cmbcst/persistence.py": "353b240eeb6826d8d7fce5a2592e2e60e0c803ad9aa8125a77da4d400e77f498",
+    "src/cmbcst/surrogate_topology.py": "fbe8123721a14e22294252f91aa26ce6cbbf7ab0c2d009705be5f2220a560ae8",
+    "src/cmbcst/copula_topology.py": "d9b760dddf002eb7b9bc1094b6ad716940fc9391a8ffd61fa48831826767aaca"
+  },
+  "patch_source_sha256": "ec5cb43d2ae1a7dd5cbb42592ab122760cf693d2451fa452676b015faef90f43",
+  "gaussian_seeds": [
+    710395,
+    710396,
+    710397,
+    710398,
+    710399,
+    710400,
+    710401,
+    710402
+  ],
+  "spike_seed": 710410,
+  "shape": [
+    128,
+    128
+  ],
+  "representations": [
+    "raw",
+    "standardized",
+    "normal_scores"
+  ],
+  "quarter_turns": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "reflections": [
+    false,
+    true
+  ],
+  "scaled_tolerance": 1e-10,
+  "jovin_receipt_id": "20261023T212557Z-3470461f116f",
+  "jovin_bundle_sha256": "5a68341360965d1cdf33d5a5d948b7307886fc476403ac92e00405198752d559",
+  "device": "NVIDIA GeForce RTX 5070",
+  "torch": "2.14.1+cu130",
+  "numpy": "2.5.4"
+}

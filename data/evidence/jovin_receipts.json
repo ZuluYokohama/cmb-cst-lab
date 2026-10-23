@@ -4206,5 +4206,183 @@
       "head_sha256": "76827ca9049b323b525070755fcde2bf715cbd7a67563c003afd9f94ab631566",
       "problems": []
     }
+  },
+  {
+    "suite": "orientation",
+    "verified_at": "2026-10-23T21:25:58.244962+00:00",
+    "passed": true,
+    "harness_status": "passed",
+    "passed_count": 5,
+    "total": 5,
+    "receipt_id": "20261023T212557Z-3470461f116f",
+    "receipt_sha256": "360ed55b6f4bb5dc6d3e0925576333cc30d5e8361f3d7b54040505a1fd9bcaaa",
+    "isolation": "shared",
+    "integrity": "shared_interpreter",
+    "timeout_s": 30,
+    "harness_version": "0.2.0.dev0",
+    "runtime": "wsl:JovinHarness",
+    "image": "sha256:b125b813cae0052127f1dc0e7e6353ead2ba10ebcac3c4fd42a10eae468a0ed7",
+    "runner_sha256": "8a847c3e8ac4d31afd86fe9b415e077d4be2ef3ede7cbf28696b6010f58ddfb2",
+    "bundle_sha256": "5a68341360965d1cdf33d5a5d948b7307886fc476403ac92e00405198752d559",
+    "tests_sha256": "86fa71b6e6b38e4c4f9091d35695004a3264547a38249eea2be3a732440d52e9",
+    "tests_text_sha256": "86fa71b6e6b38e4c4f9091d35695004a3264547a38249eea2be3a732440d52e9",
+    "source_function_sha256": {
+      "persistence.py": "8cb944b6767e962c0541b2d292e5f2bbe3edbf19e0f8d173915f8acd070bee3e",
+      "surrogate_topology.py": "b006540a61968a11f569baf1c145e0fab689d78743087ad4979447f0f8eba57a",
+      "copula_topology.py": "639b258d958f6c1cfb8381142a68ebd6193fda4147e7b684102645ba5b280f04",
+      "multiscale.py": "9afd2999e7eb8fe3c09c20523e4fb23331576d5b9ce7eb8e3057ae20a1a21d75",
+      "orientation.py": "83a0ac6e952d7c9a51f0f96fcc354a3cb33331b76a6d37ee56691c9e5060538e"
+    },
+    "receipt_verified": true,
+    "receipt_membership": {
+      "valid": true,
+      "chain": "linked",
+      "problems": [],
+      "head": {
+        "count": 46,
+        "head_sha256": "360ed55b6f4bb5dc6d3e0925576333cc30d5e8361f3d7b54040505a1fd9bcaaa",
+        "head_id": "20261023T212557Z-3470461f116f"
+      }
+    },
+    "receipt": {
+      "created_at": "2026-10-23T21:25:57.890Z",
+      "format": "jovin-harness.receipt.v1",
+      "harness_version": "0.2.0.dev0",
+      "id": "20261023T212557Z-3470461f116f",
+      "inputs": {
+        "code_sha256": "5a68341360965d1cdf33d5a5d948b7307886fc476403ac92e00405198752d559",
+        "params": {
+          "isolation": "shared",
+          "timeout_s": 30
+        },
+        "tests_sha256": "86fa71b6e6b38e4c4f9091d35695004a3264547a38249eea2be3a732440d52e9"
+      },
+      "integrity": "shared_interpreter",
+      "notice": "A content hash is not a signature and a passing check is not a proof of correctness; the receipt records what ran, under which limits, and what the sandbox reported.",
+      "prev_sha256": "76827ca9049b323b525070755fcde2bf715cbd7a67563c003afd9f94ab631566",
+      "result": {
+        "duration_s": 0.2254,
+        "exit_code": 0,
+        "format": "jovin-harness.sandbox-result.v1",
+        "isolation": "shared",
+        "kernel": {
+          "locked_shared_scratch": [
+            "/tmp",
+            "/dev/shm"
+          ],
+          "memory_max": "2147483648",
+          "pids_max": "64",
+          "worker": {
+            "cap_eff": "0000000000000000",
+            "gid": [
+              "65534",
+              "65534",
+              "65534",
+              "65534"
+            ],
+            "no_new_privs": "1",
+            "seccomp": "2",
+            "uid": [
+              "65534",
+              "65534",
+              "65534",
+              "65534"
+            ]
+          }
+        },
+        "mode": "verify",
+        "output_truncated": false,
+        "passed_count": 5,
+        "status": "passed",
+        "stderr_bytes": 0,
+        "stderr_tail": "",
+        "stdout_bytes": 0,
+        "stdout_tail": "",
+        "tests": [
+          {
+            "message": "",
+            "name": "<module>",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_permutation_identity_and_group_relations",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_all_eight_symmetries_have_expected_feature_covariance",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_rank_and_topology_on_plateaus_commute_with_grid_symmetries",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_invalid_transform_parameters_rejected",
+            "outcome": "passed"
+          }
+        ],
+        "timed_out": false,
+        "total": 5
+      },
+      "sandbox": {
+        "cleanup": "removed",
+        "engine": {
+          "cgroup_version": "2",
+          "docker_host": null,
+          "docker_host_local": true,
+          "engine_id": "e95ecb10-fdc8-4759-b4ba-7b8238391773",
+          "os_type": "linux",
+          "security_options": [
+            "name=seccomp,profile=builtin",
+            "name=cgroupns"
+          ],
+          "server_version": "29.9.0"
+        },
+        "execution_may_have_started": true,
+        "image": {
+          "architecture": "amd64",
+          "harness_version": "0.2.0.dev0",
+          "id": "sha256:b125b813cae0052127f1dc0e7e6353ead2ba10ebcac3c4fd42a10eae468a0ed7",
+          "runner_sha256": "8a847c3e8ac4d31afd86fe9b415e077d4be2ef3ede7cbf28696b6010f58ddfb2"
+        },
+        "inspect_verified": true,
+        "kernel_verified": true,
+        "limits": {
+          "cpus": 1.0,
+          "fsize_bytes": 16777216,
+          "max_input_bytes": 262144,
+          "max_output_bytes": 65536,
+          "memory_bytes": 2147483648,
+          "nofile": 64,
+          "pids": 64,
+          "timeout_s": 30,
+          "tmpfs_bytes": 16777216
+        },
+        "run_id": "a8244c0a631df5b8",
+        "runtime": "wsl:JovinHarness",
+        "timings_s": {
+          "cleanup": 0.48399999999674037,
+          "create_inspect": 0.5310000000172295,
+          "execution": 1.0320000000065193,
+          "preflight": 0.5160000000032596
+        }
+      },
+      "sha256": "360ed55b6f4bb5dc6d3e0925576333cc30d5e8361f3d7b54040505a1fd9bcaaa",
+      "tool": "verify_python"
+    },
+    "failures": null,
+    "duration_s": 3.09,
+    "chain_valid": true,
+    "chain_head_sha256": "360ed55b6f4bb5dc6d3e0925576333cc30d5e8361f3d7b54040505a1fd9bcaaa",
+    "chain_verification": {
+      "valid": true,
+      "count": 46,
+      "head_sha256": "360ed55b6f4bb5dc6d3e0925576333cc30d5e8361f3d7b54040505a1fd9bcaaa",
+      "problems": []
+    }
   }
 ]
