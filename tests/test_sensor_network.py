@@ -64,3 +64,10 @@ def test_rejects_invalid_inputs():
         bad = np.zeros(6)
         bad[0] = np.nan
         fit_scalar_offsets(bad, np.eye(6), 4)
+
+
+def test_small_scale_covariance_asymmetry_is_not_hidden_by_absolute_tolerance():
+    cov = np.eye(6) * 1e-12
+    cov[0, 1] = 5e-11
+    with pytest.raises(ValueError, match="symmetric"):
+        fit_scalar_offsets(np.zeros(6), cov, 4)
