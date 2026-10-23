@@ -7,3 +7,4 @@ data/work/
 *.part
 data/*.log
 private/
+paper/*.log

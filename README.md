@@ -38,6 +38,10 @@ verification receipts. Open it in a browser.
    stays unexplained, and no cosmological claim is made. See `results/persistence.json` and
    `results/persistence_validation.json`.
 
+**Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every number in it is generated from
+`results/*.json` by `paper/make_inputs.py`; `paper/make_arxiv.py` builds and test-compiles
+`paper/arxiv.tar.gz`.
+
 ## Results
 
 Every number in the first column is computed in this repository. Paper values are quoted for
