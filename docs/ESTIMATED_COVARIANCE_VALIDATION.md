@@ -27,3 +27,7 @@ The deterministic audit compares nominal 5% rejection to observed rejection over
 The F reference assumes the **test measurement is independent** of calibration observations and every observation has the same stationary multivariate Gaussian noise covariance. It relies on a **known-zero cycle mean**. Subtracting an estimated mean from the held-out vector changes the reference law. Shared calibration/test samples, temporal correlation, changing topology, drift, heavy tails, censoring, adaptive threshold choices, or non-Gaussian errors can invalidate the correction.
 
 The K>=q+3 guard excludes particularly low denominator-degrees-of-freedom cases for numerical stability; the F distribution itself does not require this stronger guard. A tree has no cycle statistic. These checks are synthetic and do not establish field sensor performance, fault attribution, real-time behavior, or security certification. The F identity is established statistical theory rather than a new theorem.
+
+## Distributional negative control
+
+The [Student-t negative control](NON_GAUSSIAN_CLOSURE.md) demonstrates why equal population covariance alone does not justify the Gaussian scaled-F reference under heavy-tailed noise.

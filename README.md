@@ -71,6 +71,10 @@ Run python scripts/audit_sparse_noise.py to compare a nominal 5% closure-test fa
 
 The scalar sensor testbed now reports the finite-sample F reference for closure statistics when Gaussian edge covariance is estimated from an independent calibration sample rather than known. This is a model-conditional statistical check, not a field performance guarantee. Run `python scripts/audit_finite_covariance.py` and review [the assumption boundaries](docs/ESTIMATED_COVARIANCE_VALIDATION.md).
 
+## Non-Gaussian stress test
+
+Run `python scripts/audit_non_gaussian_closure.py` for an independent synthetic negative control: covariance-matched heavy-tailed edge noise breaks the Gaussian finite-F false-alarm calibration. This test illustrates an assumption boundary, not robust detection performance. See [the non-Gaussian audit notes](docs/NON_GAUSSIAN_CLOSURE.md).
+
 ## Results
 
 Every number in the first column is computed in this repository. Paper values are quoted for

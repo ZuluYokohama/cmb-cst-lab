@@ -19,3 +19,8 @@ Next gates: covariance estimated from a finite number of observations, spatial/t
 ## Finite independent calibration samples
 
 See [estimated-covariance validation](ESTIMATED_COVARIANCE_VALIDATION.md). With finite independent Gaussian calibration, the closure score has a scaled F—not chi-square—reference; empirical covariance from correlated or reused observations still needs a separate treatment.
+
+
+## Non-Gaussian contamination
+
+The [heavy-tailed negative control](NON_GAUSSIAN_CLOSURE.md) tests the conditional F correction on an equal-covariance Student-t noise model; a correct second moment does not imply a correct Gaussian false-alarm reference.
