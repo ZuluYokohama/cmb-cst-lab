@@ -14,3 +14,8 @@ The script is deterministic for a supplied seed, verifies its batched cycle stat
 This demonstration is **not evidence of a novel statistical result**. It operationalizes a known assumption check and prevents the repository's cochain language from being interpreted as automatic fault detection, identification, or security certification.
 
 Next gates: covariance estimated from a finite number of observations, spatial/time correlation, rare outliers, changing sensor bias, incomplete edges, and independent field datasets. None has been resolved by this experiment.
+
+
+## Finite independent calibration samples
+
+See [estimated-covariance validation](ESTIMATED_COVARIANCE_VALIDATION.md). With finite independent Gaussian calibration, the closure score has a scaled F—not chi-square—reference; empirical covariance from correlated or reused observations still needs a separate treatment.
