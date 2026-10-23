@@ -67,6 +67,10 @@ The synthetic scalar offset testbed supports connected sparse measurement graphs
 
 Run python scripts/audit_sparse_noise.py to compare a nominal 5% closure-test false-alarm rate under correctly specified Gaussian noise against the badly miscalibrated result when the reported covariance is too small. This is a synthetic negative control, not a field performance claim. See docs/NOISE_MODEL_CALIBRATION.md.
 
+## Finite-calibration covariance correction
+
+The scalar sensor testbed now reports the finite-sample F reference for closure statistics when Gaussian edge covariance is estimated from an independent calibration sample rather than known. This is a model-conditional statistical check, not a field performance guarantee. Run `python scripts/audit_finite_covariance.py` and review [the assumption boundaries](docs/ESTIMATED_COVARIANCE_VALIDATION.md).
+
 ## Results
 
 Every number in the first column is computed in this repository. Paper values are quoted for
