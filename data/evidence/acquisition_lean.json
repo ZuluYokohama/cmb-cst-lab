@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "exit_code": 0,
+  "source_sha256": "d7cd17def75af9e8ac1d08b917ccb7fe8a0fe56f2611af9d0adad34636fd263f",
+  "compiler_sha256": "bf8d54e4714cc4b03d3f6bb34c83b7202b87e49c8bfcbff6895c085bb90ceb38",
+  "archive_sha256": "7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d",
+  "version": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "stdout": "'CmbCst.polarization_amplitude_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CmbCst.corotated_measurement_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "stderr": "",
+  "theorem_count": 2,
+  "scope": "Exact rational polarization basis identities under c*c+s*s=1; not empirical or floating-point correctness"
+}

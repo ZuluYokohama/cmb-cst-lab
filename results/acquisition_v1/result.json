@@ -1,0 +1,44 @@
+{
+  "status": "geometry_checks_passed",
+  "completed_utc": "2026-10-23T23:52:44.727998+00:00",
+  "devices": [
+    {
+      "noiseless_max_RMSE_uK": 2.459945301310997e-14,
+      "noise_variance_ratio": [
+        0.9999384811626488,
+        0.9999634454412749,
+        1.000018665120914
+      ],
+      "predicted_noise_variance": [
+        0.0003649190650813861,
+        0.0008104834281474079,
+        0.0007904962519234055
+      ],
+      "noiseless_passed": true,
+      "noise_variance_passed": true,
+      "max_roll_amplitude_error": 6.570131002479527e-14
+    },
+    {
+      "noiseless_max_RMSE_uK": 2.4566667056897877e-14,
+      "noise_variance_ratio": [
+        1.0000652406114883,
+        1.0000635861241318,
+        1.000125171661002
+      ],
+      "predicted_noise_variance": [
+        0.00036491906508138614,
+        0.0008104834281474079,
+        0.0007904962519234057
+      ],
+      "noiseless_passed": true,
+      "noise_variance_passed": true,
+      "max_roll_amplitude_error": 6.309169274687621e-14
+    }
+  ],
+  "cross_gpu_scaled_error": 3.720637869703473e-16,
+  "total_skies": 263168,
+  "detector_pixel_samples": 551903297536,
+  "accepted_cosmological_claims": [],
+  "limits": "Declared periodic tangent-plane Stokes instrument, not actual Planck TOD, radial depth, validated optics or a new physical discovery",
+  "plan_sha256": "98cc3379951f8d433571c426e16ebdc25a292afb9a34c14afd854c1a308a49f6"
+}

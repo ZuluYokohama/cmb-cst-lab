@@ -15,3 +15,7 @@ formal/** -text
 # Keep full machine-generated draw matrices available without enormous text diffs.
 results/targeted_v1/development.json -diff
 results/targeted_v1/final.json -diff
+
+# Preserve complete acquisition batch/counter records without huge review diffs.
+results/acquisition_v1/device_cuda*.json -diff
+results/acquisition_v1/telemetry.json -diff

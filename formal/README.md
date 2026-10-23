@@ -30,3 +30,17 @@ hashes, nine theorem names, compiler output, assumptions and limits in
 `results/multiscale_v1/lean_verification.json`. CI repeats the proof with the
 same pinned compiler archive. SHA256 identifies bytes; these receipts are not
 digital signatures and do not establish authorship or scientific truth.
+
+## Acquisition geometry
+
+[PolarizationGeometry.lean](PolarizationGeometry.lean) adds two exact rational
+identities: rotating Q/U preserves their squared norm, and rotating both a
+projection vector and Q/U preserves the measured projection. The assumption
+is c²+s²=1. Both use the same pinned compiler and standard foundations.
+
+These identities explain an amplitude-only diagnostic's blindness to a uniform
+polarization-basis rotation. They do not prove floating-point reconstruction,
+valid beam optics or a physical discovery. The separate
+[compiler record](../data/evidence/acquisition_lean.json) and
+[acquisition report](../docs/ACQUISITION_RUN.md) preserve their scope; CI checks
+both proof files. The original nine theorem sources and evidence remain intact.

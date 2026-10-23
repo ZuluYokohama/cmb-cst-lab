@@ -88,6 +88,19 @@ examples versus 28/256 for both learned detectors, suggesting a scoring-rule
 limitation. This remains a synthetic negative result, with all 21 JoVin suites
 authenticated and original analyses preserved.
 
+The [dual-GPU acquisition experiment](docs/ACQUISITION_RUN.md) tests the effect
+of detector pointing, incidence, elliptical beams and polarization orientation
+in a separate periodic tangent-plane model. It processed 263,168 synthetic skies
+in 21.5 minutes, with mean sampled busy levels of 97.08% on RTX 5070 and 97.63%
+on GTX 1660 Ti. Numerical and declared noise-model checks passed. Ignoring
+pointing produced 12.36 µK polarization RMS from intensity-only skies, versus
+0.0400 µK with correct geometry; a uniform roll changed Q/U while hiding in
+amplitude. These are expected instrument effects, not a new sky discovery or
+radial-depth inference. The [corrected indexed sample rows](results/acquisition_v1/labeled_samples_corrected.csv)
+and explicit [coordinate-label erratum](docs/ACQUISITION_COORDINATE_ERRATUM.md)
+preserve the original export. There are now 23 authenticated JoVin suites and
+two additional exact rational [Lean geometry identities](formal/PolarizationGeometry.lean).
+
 **Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every result taken from `results/*.json`
 is written into it by `paper/make_inputs.py` (macros and figures). Two values come from checks
 whose output is not in `results/`: the injection pull width and the post-hoc A/B covariance
@@ -208,6 +221,8 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `orientation` | pass 5/5 | `20261023T212557Z-3470461f116f` |
 | `response` | pass 9/9 | `20261023T215313Z-4fb94bd93228` |
 | `targeted` | pass 6/6 | `20261023T223751Z-b7ba43ffca03` |
+| `acquisition` | pass 6/6 | `20261023T232459Z-151d1b4bcb0e` |
+| `acquisition_index` | pass 4/4 | `20261023T234104Z-58f1101a658f` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).

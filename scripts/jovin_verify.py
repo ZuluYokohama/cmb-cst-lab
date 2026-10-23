@@ -39,6 +39,14 @@ HEADER = (
 # suite -> (sources, sandbox tests file). A source is (path, [function names]) or (path, None) for a
 # whole standalone module (its own imports are kept; it must not import other cmbcst modules).
 SUITES: dict[str, tuple[list[tuple[str, list[str] | None]], str]] = {
+    "acquisition_index": (
+        [("src/cmbcst/acquisition.py", None), ("src/cmbcst/acquisition_index.py", None)],
+        "tests/sandbox/jovin_tests_acquisition_index.py",
+    ),
+    "acquisition": (
+        [("src/cmbcst/acquisition.py", None)],
+        "tests/sandbox/jovin_tests_acquisition.py",
+    ),
     "targeted": (
         [("src/cmbcst/multiscale.py", None), ("src/cmbcst/response.py", None),
          ("src/cmbcst/targeted.py", None)],
