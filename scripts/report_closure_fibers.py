@@ -54,6 +54,7 @@ def pytest_summary(path):
 def _empty_arrays(count=128,planes=128):
     return dict(theta=np.zeros((count,planes)),best_theta=np.zeros((count,planes)),
         initial_theta=np.zeros((count,planes)),started=np.zeros(count,dtype=int),
+        initial_retraction_succeeded=np.zeros(count,dtype=bool),signs=np.zeros(count,dtype=float),
         iterations=np.zeros(count,dtype=int),stalls=np.zeros(count,dtype=int),
         rejected=np.zeros(count,dtype=int),nonfinite_trials=np.zeros(count,dtype=int),
         rank=np.zeros(count,dtype=int),status=np.full(count,'not_started',dtype='<U32'),
@@ -426,7 +427,7 @@ def main():
         'Fresh representation comparisons remain restricted to complete matched groups below.')
     audit_error='not available' if context['maximum_endpoint_error'] is None else f"{context['maximum_endpoint_error']:.17g}"
     max_gap='not available' if context['maximum_saved_gap'] is None else f"{context['maximum_saved_gap']:.17g}"
-    replay_scope=('No provisional candidate met the declared witness threshold, so no production full-harmonic direct replay or production invariant certificate was performed. The separately recorded real-operator preflight verifies only its fixed-angle controls.'
+    replay_scope=('No saved certificate records a provisional candidate. No production full-harmonic direct replay or production invariant certificate is recorded. The separately recorded real-operator preflight verifies only its fixed-angle controls.'
         if context['provisional_candidates']==context['direct_replay_candidates']==0 else
         f"Saved provisional candidates: {context['provisional_candidates']}; directly replayed selected candidates: {context['direct_replay_candidates']}. Only explicit passing certificates support witness claims.")
     svd_note=(f"The [preserved run log](../results/closure_fibers_v1/run.log) contains {context['svd_fallback_warnings']} SVD convergence warning(s): the initially selected CUDA driver did not converge for a batch and PyTorch announced a more accurate fallback. The warning does not state that the fallback failed."
