@@ -15,6 +15,7 @@ sys.path.insert(0,str(ROOT/'src'))
 from cmbcst.acquisition import batch_reference,instrument_design,decoder_reference,frequency_grid,detector_table
 from cmbcst.acquisition_index import analytic_phase_error
 from jovin_verify import SUITES,build_bundle,configuration,_harness
+from verify_acquisition_lean import PINNED_COMPILER_SHA256
 OUT = ROOT/'results/acquisition_v1'
 read = lambda p:json.loads(Path(p).read_text(encoding='utf-8'))
 sha = lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
@@ -31,7 +32,11 @@ def main():
     history = read(ROOT/'data/evidence/jovin_receipts.json')
     suites = {}
     for name,(_,tests) in SUITES.items():
-        record = [r for r in history if r['suite']==name][-1]
+        matches = [r for r in history if r['suite']==name]
+        if not matches:
+            suites[name] = dict(matched=False,receipt_id=None,total=0)
+            continue
+        record = matches[-1]
         sr,authentic = _harness(command,env,['receipts','show',record['receipt_id']])
         mr,membership = _harness(command,env,['receipts','verify',record['receipt_id']])
         matched = record['passed'] and record['receipt_verified'] and record['chain_valid'] and sr==mr==0 and authentic==record['receipt'] and membership.get('valid') is True and membership.get('chain')=='linked'
@@ -126,7 +131,9 @@ def main():
     checks['lean_exact_identities'] = (proof['status']=='passed' and proof['exit_code']==0 and proof['theorem_count']==2
         and proof['source_sha256']==sha(ROOT/'formal/PolarizationGeometry.lean')
         and proof['archive_sha256']=='7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d'
-        and not re.search(r'\b(sorry|admit)\b|^\s*axiom\s',text,re.MULTILINE))
+        and proof['compiler_sha256']==PINNED_COMPILER_SHA256
+        and 'sorryAx' not in proof['stdout']+proof['stderr']
+        and not re.search(r'\b(sorry|admit)\b|^\s*(axiom|opaque)\s',text,re.MULTILINE))
     fixture = read(ROOT/'data/evidence/acquisition_gpu_preflight.json')
     tree = ast.parse((ROOT/'tests/sandbox/jovin_tests_acquisition.py').read_text())
     embedded = next(ast.literal_eval(node.value) for node in tree.body if isinstance(node,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='GPU_ATTESTATION' for t in node.targets))
@@ -139,7 +146,7 @@ def main():
     telemetry = read(OUT/'telemetry.json')['samples']
     performance = read(OUT/'performance.json')['devices']
     for i in (0,1):
-        rows = [d for sample in telemetry if sample.get('seconds',0)<=records[i]['elapsed_seconds'] for d in sample.get('devices',[]) if d['index']==i]
+        rows = [d for sample in telemetry if sample.get('seconds',0)<=records[i]['elapsed_seconds'] for d in sample.get('devices',[]) if d['name']==records[i]['name']]
         if not rows:
             checks[f'telemetry_{i}_honest'] = performance[i]['available'] is False
         else:
@@ -150,7 +157,8 @@ def main():
         preflight=plan['preflight_sha256']==sha(ROOT/'data/evidence/acquisition_gpu_preflight.json'),proof=plan['proof_sha256']==sha(ROOT/'data/evidence/acquisition_lean.json'),
         receipt=plan['jovin_receipt_id']==suites['acquisition']['receipt_id'])
     tests,sandbox = ROOT/'data/acquisition_tests.log',ROOT/'data/acquisition_sandbox_tests.log'
-    tests_ok = '192 passed, 3 skipped' in tests.read_text()
+    tests_text = tests.read_text()
+    tests_ok = '192 passed, 3 skipped' in tests_text and not re.search(r'\b(failed|errors?)\b',tests_text,re.IGNORECASE)
     sandbox_ok = sandbox.read_text().count('[PASS]')==23 and '[FAIL]' not in sandbox.read_text()
     checks = {name:bool(value) for name,value in checks.items()}
     ok = ret==0 and chain.get('valid') is True and len(suites)==23 and all(v['matched'] for v in suites.values()) and all(frozen.values()) and all(prior.values()) and all(checks.values()) and all(bindings.values()) and tests_ok and sandbox_ok

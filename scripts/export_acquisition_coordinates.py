@@ -31,6 +31,8 @@ def main():
             row[f'look_{axis}_unwrapped_deg'] = u[j]
             row[f'look_{axis}_wrapped_deg'] = w[j]
         rows.append(row)
+    if not rows:
+        raise ValueError('source contains no sample rows')
     error,opposite = analytic_phase_error(instrument_design(32)[0],table)
     if error>1e-10 or opposite<=.01:
         raise ValueError('independent phase convention check failed')

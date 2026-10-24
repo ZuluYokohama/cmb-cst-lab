@@ -27,7 +27,7 @@ def main():
     fig.text(.085,.845,f"Campaign wall time {stage['elapsed_seconds']:.1f}s; one-hour cap. Device-wide counters include other applications.",fontsize=10)
     statistics = []
     for i,record in enumerate(devices):
-        series = [(s['seconds'],d) for s in samples for d in s.get('devices',[]) if d['index']==i and s['seconds']<=record['elapsed_seconds']]
+        series = [(s['seconds'],d) for s in samples for d in s.get('devices',[]) if d['name']==record['name'] and s['seconds']<=record['elapsed_seconds']]
         if not series:
             statistics.append(dict(device=i,available=False))
             continue

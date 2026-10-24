@@ -123,6 +123,7 @@ def run():
             for role,count,offset in (('noiseless',256,1000000),('intensity_only',256,2000000),('production',item['production'],0)):
                 metrics = np.empty((count,4,4),dtype=np.float64)
                 done = 0
+                first = seed = None
                 try:
                     for first in range(0,count,batch):
                         budget()

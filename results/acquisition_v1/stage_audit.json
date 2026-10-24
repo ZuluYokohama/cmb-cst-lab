@@ -3,7 +3,7 @@
   "started_utc": "2026-10-23T23:31:35.618521+00:00",
   "plan_sha256": "98cc3379951f8d433571c426e16ebdc25a292afb9a34c14afd854c1a308a49f6",
   "completed_utc": "2026-10-23T23:52:44.738002+00:00",
-  "elapsed_seconds": 1290.50096759,
+  "elapsed_seconds": 1269.119481,
   "numerical_failures": 0,
   "result_sha256": "84b81aeab192e61cf16c13c9739b25220ac337c98effe710496f5c560da9e8fc"
 }
