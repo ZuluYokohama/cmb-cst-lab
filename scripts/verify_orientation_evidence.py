@@ -5,6 +5,9 @@ import hashlib
 import json
 import math
 from pathlib import Path
+import re
+import subprocess
+import sys
 from jovin_verify import REPO, SUITES, build_bundle, configuration, _harness
 
 OUT = REPO/'results/orientation_v1'
@@ -22,6 +25,16 @@ def scaled_error(measured, expected):
     if len(measured) != len(expected) or not all(math.isfinite(v) for v in measured+expected):
         return math.inf
     return max(abs(a-b)/(1+abs(b)) for a,b in zip(measured, expected))
+
+
+def test_command_checks(tests_run, sandbox_run):
+    lines = tests_run.stdout.strip().splitlines()
+    tests_ok = (tests_run.returncode == 0 and bool(lines) and re.fullmatch(
+        r'(?:=+\s*)?182 passed, 3 skipped(?:, \d+ warnings?)? in \d+(?:\.\d+)?s'
+        r'(?: \(\d+(?::\d+){1,2}\))?(?:\s*=+)?', lines[-1]) is not None)
+    sandbox_ok = (sandbox_run.returncode == 0 and sandbox_run.stdout.count('[PASS]') == 19
+        and '[FAIL]' not in sandbox_run.stdout)
+    return tests_ok, sandbox_ok
 
 
 def main():
@@ -103,8 +116,13 @@ def main():
             and plan['jovin_bundle_sha256'] == orientation_receipt['bundle_sha256'] and suites['orientation']['matched']}
     tests = REPO/'data/orientation_tests.log'
     sandbox = REPO/'data/orientation_sandbox_tests.log'
-    tests_ok = '182 passed, 3 skipped' in tests.read_text()
-    sandbox_ok = sandbox.read_text().count('[PASS]') == 19 and '[FAIL]' not in sandbox.read_text()
+    tests_run = subprocess.run([sys.executable, '-m', 'pytest', '-q'], cwd=REPO,
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, check=False)
+    tests.write_text(tests_run.stdout)
+    sandbox_run = subprocess.run([sys.executable, 'scripts/run_sandbox_suites.py'], cwd=REPO,
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, check=False)
+    sandbox.write_text(sandbox_run.stdout)
+    tests_ok, sandbox_ok = test_command_checks(tests_run, sandbox_run)
     ok = (ret == 0 and chain.get('valid') is True and len(suites) == 19 and all(r['matched'] for r in suites.values())
         and all(frozen.values()) and all(preserved.values()) and all(checks.values()) and all(bindings.values())
         and tests_ok and sandbox_ok)
@@ -112,8 +130,10 @@ def main():
         'scope':'Current source/test byte identity, authentic receipt membership and saved numerical invariance checks; not SO(3) invariance, scientific truth or novelty',
         'jovin_suites':suites, 'chain':chain, 'frozen_sources':frozen, 'prior_artifacts_preserved':preserved,
         'calculation_checks':checks, 'bindings':bindings,
-        'local_tests':{'passed':182, 'skipped':3, 'summary_matched':tests_ok, 'log_sha256':sha(tests)},
-        'ci_equivalent_sandbox_suites':{'passed':19, 'matched':sandbox_ok, 'log_sha256':sha(sandbox)},
+        'local_tests':{'passed':182, 'skipped':3, 'exit_code':tests_run.returncode,
+            'summary_matched':tests_ok, 'log_sha256':sha(tests)},
+        'ci_equivalent_sandbox_suites':{'passed':19, 'exit_code':sandbox_run.returncode,
+            'matched':sandbox_ok, 'log_sha256':sha(sandbox)},
         'artifact_sha256':{name:sha(OUT/name) for name in ('plan.json','result.json','representations.png')},
         'report_sha256':sha(REPO/'docs/ORIENTATION_MERIT_RUN.md'),
         'supporting_source_sha256':{name:sha(REPO/name) for name in

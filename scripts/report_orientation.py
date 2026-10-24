@@ -21,6 +21,12 @@ OUT = ROOT/'results/orientation_v1'
 def main():
     plan = json.loads((OUT/'plan.json').read_text())
     result = json.loads((OUT/'result.json').read_text())
+    passed_checks = result['transform_checks'] - result['failures']
+    audit_passed = result['status'] == 'passed' and result['failures'] == 0
+    audit_status = 'passed' if audit_passed else 'failed'
+    numerical_claim = ('Every CPU/CUDA comparison was finite and below the frozen scaled tolerance of\n'
+        '1e-10.' if audit_passed else
+        'The audit did not pass. See the frozen result for failed checks and diagnostics.')
     source = ROOT/'data/work/spherical_topology_v1/observed_patches.npz'
     if hashlib.sha256(source.read_bytes()).hexdigest() != plan['patch_source_sha256']:
         raise ValueError('patch cache changed since the frozen audit')
@@ -34,7 +40,7 @@ def main():
     fig, axes = plt.subplots(3, 4, figsize=(12.8, 9))
     fig.subplots_adjust(left=.12, right=.88, top=.83, bottom=.14, wspace=.14, hspace=.25)
     fig.text(.12, .955, 'Rotated representations | exact pixel permutations', fontsize=21, weight='bold')
-    fig.text(.12, .905, f"{result['transform_checks']}/{result['transform_checks']} checks passed · 13 cases · CPU and RTX 5070 float64", fontsize=12)
+    fig.text(.12, .905, f"{passed_checks}/{result['transform_checks']} checks passed · {result['failures']} failures · audit {audit_status}\n13 cases · CPU and RTX 5070 float64", fontsize=12)
     for row, (label, field, unit) in enumerate(representations):
         limit = float(np.max(np.abs(field)))
         for k in range(4):
@@ -66,9 +72,8 @@ def main():
     rows = '\n'.join(f"| {labels[key]} | {value:.6g} |" for key, value in result['maximum_scaled_errors'].items())
     report = f'''# Rotated representations and research merit
 
-**{result['transform_checks']}/{result['transform_checks']} exact-grid checks passed; {result['failures']} failures.**
-Every CPU/CUDA comparison was finite and below the frozen scaled tolerance of
-1e-10. This is a numerical symmetry result, not a new sky anomaly. The user
+**{passed_checks}/{result['transform_checks']} exact-grid checks passed; {result['failures']} failures. Audit {audit_status}.**
+{numerical_claim} This is a numerical symmetry audit, not a new sky anomaly. The user
 confirmed that “represent and rotate” meant testing rotated representations.
 
 ![Original, standardized and normal-score NGP grids under quarter turns](../results/orientation_v1/representations.png)
