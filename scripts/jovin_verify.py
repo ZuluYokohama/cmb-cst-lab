@@ -405,7 +405,7 @@ def main(argv: list[str]) -> int:
         print(json.dumps(doctor, indent=2))
         return 0
     limit = doctor.get("limits", {}).get("timeout_s")
-    timeout = args.timeout if args.timeout is not None else limit
+    timeout = args.timeout if args.timeout is not None else (min(limit, 30) if type(limit) is int else limit)
     if type(limit) is not int or type(timeout) is not int or not 1 <= timeout <= min(limit, 30):
         parser.error("timeout must be within the inspected profile's 1..30 second limit")
     # Read before executing: never replace malformed historical evidence with a fresh ledger.
@@ -430,6 +430,9 @@ def main(argv: list[str]) -> int:
         r["chain_valid"] = chain_valid
         r["chain_head_sha256"] = chain.get("head_sha256")
         r["chain_verification"] = chain
+        if r["passed"] and not chain_valid:
+            r["failures"] = {"adapter_problems": ["receipt-chain verification failed"],
+                             "chain_verification": chain, "harness_exit": ret}
         r["passed"] = r["passed"] and chain_valid
     # Never terminate a shared WSL runtime: another job may have started since preflight.
     args.ledger.parent.mkdir(parents=True, exist_ok=True)

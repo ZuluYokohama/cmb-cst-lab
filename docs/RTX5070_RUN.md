@@ -31,7 +31,7 @@ discovery are excluded. In a separate 50-draw comparison, CPU Bartlett took
 These are different algorithms generating the same Wishart law, not a hardware
 speedup comparison. CPU inference is the main bottleneck in this experiment.
 
-## Actual JoVin verification
+## Actual JoVin verification (calibration-run state)
 
 This workstation uses the reliability-upgraded harness under
 `D:/JovinHarness_Artifacts`, **not** the older `D:/jovin-harness` checkout.
@@ -41,6 +41,8 @@ the science image while preserving the upgraded runner and isolation checks.
 Image: `sha256:b125b813cae0052127f1dc0e7e6353ead2ba10ebcac3c4fd42a10eae468a0ed7`.
 
 - All **13 JoVin suites passed: 94 checks**, including 13 harness collection checks.
+  The [README receipt table](../README.md#verification) lists the current suites;
+  the counts and receipts here describe the calibration run.
 - Final CUDA attestation receipt: `20261023T173220Z-0f5c704fb64f`.
 - Synthetic summary/injection helper receipt: `20261023T173137Z-48cb897d1a8b`.
 - The receipt chain verified: 40 receipts, head

@@ -90,7 +90,7 @@ was **2.1491 × 10⁻⁷**, below the **10⁻⁵** acceptance limit.
   suite. Current source and test hashes match their authentic receipts.
 - New data-integrity receipt: `20261023T175103Z-7966048f9fc7`.
 - CUDA attestation receipt: `20261023T173220Z-0f5c704fb64f`.
-- **173 local tests passed, 3 skipped** for unavailable Intel XPU hardware.
+- Validation-time count: **173 local tests passed, 3 skipped** for unavailable Intel XPU hardware.
 - [Receipt ledger](../data/evidence/jovin_receipts.json).
 - [Final source, artifact and receipt validation](../data/evidence/planck_final_validation.json).
 
@@ -105,6 +105,4 @@ covariance estimate under the existing bandpower model, not a new end-to-end
 instrument simulation. Spatial and NPE blind analyses, persistence tests, and
 their frozen reference artifacts were not rerun in this reproduction.
 
-The plot was rendered from the saved results and visually inspected. The
-completion monitor is removed after delivering this final report; no further
-periodic checks are needed for this completed run.
+The plot was rendered from the saved results and visually inspected.

@@ -2,7 +2,7 @@
 
 Completed 2026-10-23T19:15:10.014822+00:00. Run status: **completed**.
 Scientific assessment: **calibration_failed** ([machine-readable assessment](../results/copula_topology_v2/assessment.json)).
-9 sky comparisons crossed the numerical threshold and passed matching checks. **The cropped-Gaussian boundary audit failed; these sky flags are not calibrated anomaly evidence.**
+9 comparisons crossed the adjusted .05 threshold and passed the run's quality gate. These are exploratory leads. **The cropped-Gaussian boundary audit failed; these sky flags are not calibrated anomaly evidence.**
 Elapsed wall time from plan freeze: 612.1 seconds (10.2 minutes).
 
 ![Control calibration across the retained experiments](../results/copula_topology_v2/calibration_controls.png)
@@ -69,7 +69,7 @@ that cosmology is true or false. The smallest available raw two-sided p is .002.
 ## Constraint diagnostics and implementation evidence
 
 - Matching failures: **0 / 2,997** real-patch surrogates.
-- Largest S exact-spectrum relative error: 4.697e-16 (limit1e-10).
+- Largest S exact-spectrum relative error: 4.697e-16 (limit 1e-10).
 - Largest H spectrum mismatch: 0.0003835 (limit .01).
 - Largest S histogram Kolmogorov distance: 0.0003052 (limit .01).
 - H histograms and S/H component-count agreement are checked for every draw.

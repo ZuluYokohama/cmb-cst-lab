@@ -66,6 +66,21 @@ def test_wrong_provenance_source_is_rejected(tmp_path, monkeypatch):
     assert not result["passed"] and "requested_url" in result["failures"][0]
 
 
+@pytest.mark.parametrize("origin", ["downloaded", "existing_file_validated_origin_unverified", None])
+def test_download_origin_is_reported_without_weakening_integrity_checks(tmp_path, monkeypatch, origin):
+    product, _, provenance, sidecar = _co_input(tmp_path, monkeypatch)
+    provenance["origin"] = origin
+    sidecar.write_text(json.dumps(provenance))
+    if origin == "downloaded":
+        result = audit.audit_product(product, tmp_path)
+    else:
+        with pytest.warns(UserWarning, match="download origin is unverified"):
+            result = audit.audit_product(product, tmp_path)
+    assert result["passed"]
+    assert result["provenance"]["origin_verified"] is (origin == "downloaded")
+    assert result["sha256"] == provenance["sha256"]
+
+
 def test_map_source_cards_detect_swapped_detector_split(monkeypatch):
     monkeypatch.setattr(audit, "NPIX", 4)
     product = next(p for p in data.MANIFEST if p.key == "100B")

@@ -218,7 +218,7 @@ claim would require justified foreground/noise modeling and independent data.
 [raw result](../results/spherical_topology_v1/result.json),
 [scientific assessment](../results/spherical_topology_v1/assessment.json).
 '''
-    (ROOT / "docs/SPHERICAL_TOPOLOGY_RUN.md").write_text(report)
+    (ROOT / "docs/SPHERICAL_TOPOLOGY_RUN.md").write_text(report, encoding="utf-8")
     print(json.dumps({"status": result["status"], "topology_flags": topology_flags,
                       "moment_flags": conventional_flags, "control_flags": validation["familywise_flags"]}, indent=2))
 

@@ -162,8 +162,12 @@ def audit_product(product: data.Product, directory: Path) -> dict:
         require(isinstance(provenance.get("sha256"), str) and re.fullmatch(r"[0-9a-f]{64}", provenance["sha256"]) is not None,
                 "provenance must contain a lowercase SHA256")
         result["provenance"] = {"path": str(sidecar), "record_sha256": sha256_file(sidecar),
-                                "origin": provenance.get("origin"), "requested_url": provenance["requested_url"],
+                                "origin": provenance.get("origin"), "origin_verified": provenance.get("origin") == "downloaded",
+                                "requested_url": provenance["requested_url"],
                                 "observed_utc": provenance.get("observed_utc")}
+        if not result["provenance"]["origin_verified"]:
+            warnings.warn(f"{product.key}: download origin is unverified ({provenance.get('origin')!r})",
+                          stacklevel=2)
         result["sha256"] = sha256_file(path)
         require(result["sha256"] == provenance["sha256"], "local bytes do not match provenance SHA256")
         result["structure"] = data.validate_payload(path)

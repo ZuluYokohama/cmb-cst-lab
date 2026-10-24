@@ -9,6 +9,7 @@ import math
 from pathlib import Path
 
 from jovin_verify import REPO, SUITES, build_bundle, configuration, _harness
+from evidence_test_summary import parse_test_summary
 
 OUT = REPO / "results/spherical_topology_v1"
 
@@ -110,19 +111,28 @@ def main():
                 "stage_plan": stage["plan_sha256"] == sha(OUT / "plan.json"),
                 "input_audit": plan["input_audit_sha256"] == sha(REPO / "data/evidence/planck_input_audit.json"),
                 "package_audit": plan["package_audit_sha256"] == sha(REPO / "data/evidence/cst_package_audit.json"),
-                "input_inventory": plan["input_inventory_sha256"] == sha(REPO / "data/evidence/planck_dataset.json"),
-                "observed_alm": conditioning["observed_alm_sha256"] == sha(REPO / "data/work/spherical_topology_v1/observed_alm.npy"),
-                "conditional_cl": conditioning["cl_sha256"] == sha(REPO / "data/work/spherical_topology_v1/conditional_cl.npy")}
+                "input_inventory": plan["input_inventory_sha256"] == sha(REPO / "data/evidence/planck_dataset.json")}
     for key, filename in (("plan_sha256", "plan.json"), ("conditioning_sha256", "conditioning.json"),
                           ("ensemble_sha256", "ensemble.json"), ("validation_sha256", "validation.json")):
         bindings[key] = result[key] == sha(OUT / filename)
+    cache = REPO / "data/work/spherical_topology_v1"
+    cache_inputs = [("observed_alm", "observed_alm.npy", conditioning["observed_alm_sha256"]),
+                    ("conditional_cl", "conditional_cl.npy", conditioning["cl_sha256"])]
     if "patches_sha256" in result:
-        bindings["observed_patches"] = result["patches_sha256"] == sha(REPO / "data/work/spherical_topology_v1/observed_patches.npz")
+        cache_inputs.append(("observed_patches", "observed_patches.npz", result["patches_sha256"]))
+    cache_checks = {}
+    for name, filename, digest in cache_inputs:
+        available = (cache / filename).is_file()
+        cache_checks[name] = {"available": available,
+                              "matched": sha(cache / filename) == digest if available else None}
     log = REPO / "data/spherical_topology_tests.log"
-    tests_ok = "177 passed, 3 skipped" in log.read_text()
+    summary = parse_test_summary(log.read_text())
+    tests_ok = (summary is not None and summary["passed"] == 177 and summary["skipped"] == 3
+                and summary["failed"] == 0 and summary["errors"] == 0)
     ok = (ret == 0 and chain.get("valid") is True and all(s["matched"] for s in suites.values())
           and all(all(s.values()) for s in frozen.values()) and all(preserved.values())
-          and all(scientific.values()) and all(bindings.values()) and tests_ok)
+          and all(scientific.values()) and all(bindings.values())
+          and all(c["matched"] for c in cache_checks.values() if c["available"]) and tests_ok)
     artifacts = ["plan.json", "conditioning.json", "ensemble.json", "validation.json", "positive_control.json",
                  "result.json", "stage_audit.json", "assessment.json", "calibration.png"]
     if (OUT / "topology.png").exists():
@@ -131,7 +141,10 @@ def main():
         "scope": "Implementation and provenance verification; physical null assumptions are separate",
         "jovin_suites": suites, "jovin_chain": chain, "frozen_sources": frozen,
         "prior_artifacts_preserved": preserved, "scientific_calculation_checks": scientific,
-        "bindings": bindings, "local_tests": {"passed": 177, "skipped": 3, "summary_matched": tests_ok, "log_sha256": sha(log)},
+        "bindings": bindings, "local_cache_checks": cache_checks,
+        "local_tests": {"passed": summary["passed"] if summary else None,
+                        "skipped": summary["skipped"] if summary else None,
+                        "summary_matched": tests_ok, "log_sha256": sha(log)},
         "artifact_sha256": {name: sha(OUT / name) for name in artifacts},
         "report_sha256": sha(REPO / "docs/SPHERICAL_TOPOLOGY_RUN.md")}
     (OUT / "verification.json").write_text(json.dumps(evidence, indent=2)+"\n")

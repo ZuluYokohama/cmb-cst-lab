@@ -98,3 +98,48 @@ def test_unlinked_receipt_cannot_pass_even_with_a_passing_payload(monkeypatch, t
     report = adapter.run_suite("accel", tmp_path, ["unused"], {}, 30, doctor)
     assert report["passed"] is False
     assert "linked member" in report["failures"]["adapter_problems"][0]
+
+
+@pytest.mark.parametrize("limit,explicit,expected", [
+    (60, None, 30), (12, None, 12), (30, 7, 7),
+    (0, None, None), ("30", None, None), (None, None, None),
+    (True, None, None), (60, 31, None), (12, 13, None), (30, 0, None),
+])
+def test_timeout_respects_profile_and_default_cap(monkeypatch, tmp_path, limit, explicit, expected):
+    monkeypatch.setattr(adapter, "configuration", lambda args: (["unused"], {}))
+    monkeypatch.setattr(adapter, "_harness", lambda *args: (0, {"ready": True,
+        "limits": {"timeout_s": limit}, "valid": True}))
+    timeouts = []
+    def run(*args):
+        timeouts.append(args[4])
+        return dict(passed=True, passed_count=1, total=1, receipt_id="fixture", failures=None)
+    monkeypatch.setattr(adapter, "run_suite", run)
+    args = ["accel", "--ledger", str(tmp_path / "ledger.json")]
+    if explicit is not None:
+        args += ["--timeout", str(explicit)]
+    if expected is None:
+        with pytest.raises(SystemExit):
+            adapter.main(args)
+        assert not timeouts
+    else:
+        assert adapter.main(args) == 0
+        assert timeouts == [expected]
+
+
+def test_failed_chain_records_details_and_preserves_prior_failures(monkeypatch, tmp_path):
+    monkeypatch.setattr(adapter, "configuration", lambda args: (["unused"], {}))
+    chain = {"valid": False, "reason": "broken link"}
+    monkeypatch.setattr(adapter, "_harness", lambda command, env, args:
+        (0, {"ready": True, "limits": {"timeout_s": 30}}) if args == ["doctor"] else (2, chain))
+    prior = {"adapter_problems": ["original failure"]}
+    reports = iter([dict(passed=True, failures=None), dict(passed=False, failures=prior)])
+    def run(*args):
+        return dict(next(reports), passed_count=1, total=1, receipt_id="fixture")
+    monkeypatch.setattr(adapter, "run_suite", run)
+    ledger = tmp_path / "ledger.json"
+    assert adapter.main(["accel", "network", "--ledger", str(ledger)]) == 1
+    first, second = json.loads(ledger.read_text())
+    assert not first["passed"] and not second["passed"]
+    assert first["failures"] == {"adapter_problems": ["receipt-chain verification failed"],
+                                 "chain_verification": chain, "harness_exit": 2}
+    assert second["failures"] == prior

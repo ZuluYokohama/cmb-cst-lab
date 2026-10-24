@@ -1,6 +1,7 @@
 """Report every planned topology comparison and retain the failed pilot."""
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 from datetime import datetime
@@ -14,7 +15,10 @@ import numpy as np
 REPO = Path(__file__).resolve().parents[1]
 
 
-def main():
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--report-only", action="store_true", help="refresh text from shipped results without rendering cached maps")
+    args = parser.parse_args(argv)
     out = REPO / "results/copula_topology_v2"
     result = json.loads((out / "result.json").read_text())
     validation = json.loads((out / "validation.json").read_text())
@@ -35,46 +39,47 @@ def main():
     for path, digest in plan["source_sha256"].items():
         if hashlib.sha256((REPO / path).read_bytes()).hexdigest() != digest:
             raise ValueError(f"source changed: {path}")
-    fields = np.load(REPO / "data/work/copula_topology_v2/patches.npz")
-    plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10,
-                         "axes.spines.top": False, "axes.spines.right": False,
-                         "text.color": "#24364b", "axes.labelcolor": "#24364b"})
-    fig, axes = plt.subplots(2, 3, figsize=(12, 8))
-    fig.subplots_adjust(left=.07, right=.96, top=.80, bottom=.14, wspace=.3, hspace=.35)
-    fig.text(.07, .95, "Planck 143 GHz | Rank geometry", fontsize=24, weight="bold")
-    fig.text(.07, .90, f"999 matched surrogates per patch · 9 planned tests · matching status: {result['status']}", fontsize=12)
-    fig.text(.07, .855, f"Periodic controls: {validation['familywise_flags']}/64 flags | Cropped controls: {boundary['familywise_flags']}/64 ({boundary['status']})", fontsize=11)
-    for col, (name, record) in enumerate(result["records"].items()):
-        axes[0, col].imshow(fields[name], cmap="RdBu_r", vmin=-3, vmax=3, origin="lower")
-        axes[0, col].set_title(f"{name}: fixed 20° patch")
-        axes[0, col].set_xticks([])
-        axes[0, col].set_yticks([])
-        simulations = np.asarray(record["surrogate_statistics"])
-        axes[1, col].hist(simulations[:, 0], bins=25, color="#087f8c", alpha=.7)
-        axes[1, col].axvline(record["observed"][0], color="#d88620", linewidth=2, label="Observed")
-        axes[1, col].set(xlabel="Finite connected components (PD0)", ylabel="Surrogates",
-                         title=f"Count: Holm p = {record['p_holm'][0]:.3f}")
-        axes[1, col].legend(frameon=False)
-    fig.text(.07, .075, "Histograms condition on the Gaussianized patch's spectrum and marginal distribution, within measured tolerances.", fontsize=9)
-    fig.text(.07, .043, "Boundary audit determines calibration eligibility. These plots do not establish a cosmological anomaly.", fontsize=9)
-    fig.savefig(out / "topology.png", dpi=160, facecolor="white")
-    plt.close(fig)
-    fig, ax = plt.subplots(figsize=(9, 5.5))
-    fig.subplots_adjust(left=.11, right=.96, bottom=.23, top=.78)
-    counts = [pilot["familywise_flags"], validation["familywise_flags"], boundary["familywise_flags"]]
-    bars = ax.bar(["Original pilot\n(skewed controls included)", "Rank method\n(periodic Gaussian)",
-                   "Rank method\n(cropped Gaussian)"], counts, color=["#ba5c45", "#087f8c", "#ba5c45"], width=.55)
-    for bar, count in zip(bars, counts):
-        ax.text(bar.get_x()+bar.get_width()/2, count+.5, f"{count}/64", ha="center", weight="bold")
-    ax.axhline(8, color="#586579", linestyle="--", label="Preset gross failure: more than 8")
-    ax.set(ylabel="Control fields flagged (Holm across 3 tests)", ylim=(0, max(20, max(counts)+5)))
-    ax.legend(loc="upper left", frameon=False, fontsize=9)
-    fig.text(.11, .92, "Check the comparison before trusting the sky", fontsize=20, weight="bold")
-    fig.text(.11, .85, f"Cropped-Gaussian calibration: {boundary['status'].upper()}", fontsize=13)
-    fig.text(.11, .10, "All flags shown before per-draw matching gates; 199 surrogates per field.", fontsize=9)
-    fig.text(.11, .055, "Cropped controls were a separately frozen post-hoc stress test, not discovery confirmation.", fontsize=9)
-    fig.savefig(out / "calibration_controls.png", dpi=160, facecolor="white")
-    plt.close(fig)
+    if not args.report_only:
+        fields = np.load(REPO / "data/work/copula_topology_v2/patches.npz")
+        plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10,
+                             "axes.spines.top": False, "axes.spines.right": False,
+                             "text.color": "#24364b", "axes.labelcolor": "#24364b"})
+        fig, axes = plt.subplots(2, 3, figsize=(12, 8))
+        fig.subplots_adjust(left=.07, right=.96, top=.80, bottom=.14, wspace=.3, hspace=.35)
+        fig.text(.07, .95, "Planck 143 GHz | Rank geometry", fontsize=24, weight="bold")
+        fig.text(.07, .90, f"999 matched surrogates per patch · 9 planned tests · matching status: {result['status']}", fontsize=12)
+        fig.text(.07, .855, f"Periodic controls: {validation['familywise_flags']}/64 flags | Cropped controls: {boundary['familywise_flags']}/64 ({boundary['status']})", fontsize=11)
+        for col, (name, record) in enumerate(result["records"].items()):
+            axes[0, col].imshow(fields[name], cmap="RdBu_r", vmin=-3, vmax=3, origin="lower")
+            axes[0, col].set_title(f"{name}: fixed 20° patch")
+            axes[0, col].set_xticks([])
+            axes[0, col].set_yticks([])
+            simulations = np.asarray(record["surrogate_statistics"])
+            axes[1, col].hist(simulations[:, 0], bins=25, color="#087f8c", alpha=.7)
+            axes[1, col].axvline(record["observed"][0], color="#d88620", linewidth=2, label="Observed")
+            axes[1, col].set(xlabel="Finite connected components (PD0)", ylabel="Surrogates",
+                             title=f"Count: Holm p = {record['p_holm'][0]:.3f}")
+            axes[1, col].legend(frameon=False)
+        fig.text(.07, .075, "Histograms condition on the Gaussianized patch's spectrum and marginal distribution, within measured tolerances.", fontsize=9)
+        fig.text(.07, .043, "Boundary audit determines calibration eligibility. These plots do not establish a cosmological anomaly.", fontsize=9)
+        fig.savefig(out / "topology.png", dpi=160, facecolor="white")
+        plt.close(fig)
+        fig, ax = plt.subplots(figsize=(9, 5.5))
+        fig.subplots_adjust(left=.11, right=.96, bottom=.23, top=.78)
+        counts = [pilot["familywise_flags"], validation["familywise_flags"], boundary["familywise_flags"]]
+        bars = ax.bar(["Original pilot\n(skewed controls included)", "Rank method\n(periodic Gaussian)",
+                       "Rank method\n(cropped Gaussian)"], counts, color=["#ba5c45", "#087f8c", "#ba5c45"], width=.55)
+        for bar, count in zip(bars, counts):
+            ax.text(bar.get_x()+bar.get_width()/2, count+.5, f"{count}/64", ha="center", weight="bold")
+        ax.axhline(8, color="#586579", linestyle="--", label="Preset gross failure: more than 8")
+        ax.set(ylabel="Control fields flagged (Holm across 3 tests)", ylim=(0, max(20, max(counts)+5)))
+        ax.legend(loc="upper left", frameon=False, fontsize=9)
+        fig.text(.11, .92, "Check the comparison before trusting the sky", fontsize=20, weight="bold")
+        fig.text(.11, .85, f"Cropped-Gaussian calibration: {boundary['status'].upper()}", fontsize=13)
+        fig.text(.11, .10, "All flags shown before per-draw matching gates; 199 surrogates per field.", fontsize=9)
+        fig.text(.11, .055, "Cropped controls were a separately frozen post-hoc stress test, not discovery confirmation.", fontsize=9)
+        fig.savefig(out / "calibration_controls.png", dpi=160, facecolor="white")
+        plt.close(fig)
     names = plan["statistics"]
     rows = []
     for patch, rec in result["records"].items():
@@ -92,7 +97,7 @@ def main():
     else:
         note = "No comparison crossed the adjusted .05 threshold."
     if boundary["status"] == "failed":
-        note = f"{numerical_flags} sky comparisons crossed the numerical threshold and passed matching checks. **The cropped-Gaussian boundary audit failed; these sky flags are not calibrated anomaly evidence.**"
+        note += " **The cropped-Gaussian boundary audit failed; these sky flags are not calibrated anomaly evidence.**"
     elapsed = (datetime.fromisoformat(result["completed_utc"])
                - datetime.fromisoformat(plan["created_utc"])).total_seconds()
     report = f'''# Exploratory topology beyond Gaussianized two-point structure
@@ -158,7 +163,7 @@ that cosmology is true or false. The smallest available raw two-sided p is .002.
 ## Constraint diagnostics and implementation evidence
 
 - Matching failures: **{quality_failures} / 2,997** real-patch surrogates.
-- Largest S exact-spectrum relative error: {max(item['spectrum_stage_relative_error'] for item in q):.4g} (limit1e-10).
+- Largest S exact-spectrum relative error: {max(item['spectrum_stage_relative_error'] for item in q):.4g} (limit 1e-10).
 - Largest H spectrum mismatch: {max(item['histogram_stage_spectrum_error'] for item in q):.4g} (limit .01).
 - Largest S histogram Kolmogorov distance: {max(item['spectrum_stage_histogram_ks'] for item in q):.4g} (limit .01).
 - H histograms and S/H component-count agreement are checked for every draw.
