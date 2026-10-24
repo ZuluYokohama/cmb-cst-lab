@@ -1,0 +1,32 @@
+{
+  "phase": "development before scientific freeze",
+  "source": "src/cmbcst/closure_search.py",
+  "source_sha256": "3698b47263afbd16244e9699760c00400b5375fd18a76dc000c74583888a5fb0",
+  "archive": "data/evidence/closure_search_pre_checkpoint.py.gz",
+  "archive_sha256": "233b4ca260a8b1cdd0e11ed2c610223e7997f66a0b170b10b80a7c91a97d3768",
+  "changes": [
+    "Complete per-start checkpoint snapshots at initialization, periodic boundaries and exception/final completion",
+    "Count and isolate nonfinite constraint, ratio and target proposals instead of obstructing finite peers",
+    "Use unchunked torch.func.jacrev after measured execution-only profile; equations and scientific constants unchanged",
+    "Optional batched float64 Jacobian execution hook; default unchunked jacrev remains available, and numerical acceptance/optimizer constants unchanged"
+  ],
+  "scope": "Preserves source bound to the first GPU preflight; root will issue a new matching preflight receipt before freeze",
+  "revised_source_sha256": "70f6f0ae143637e1a579f0c79b2994e07c1290d45cb390770fbff7884939238c",
+  "verification": {
+    "focused_cpu_tests": 3,
+    "cpu_gpu_control_endpoint_changes": {
+      "cpu": 0.0,
+      "cuda:0": 0.0,
+      "cuda:1": 0.0
+    },
+    "complete_initial_periodic_final_snapshots": true,
+    "timeout_snapshot_marks_active_incomplete": true,
+    "nonfinite_peer_does_not_change_finite_initialization": true,
+    "hostile_nonfinite_ratio_counts": [
+      0,
+      10
+    ],
+    "optional_jacobian_hook_matches_default": true,
+    "timeout_before_initialization_snapshot": true
+  }
+}

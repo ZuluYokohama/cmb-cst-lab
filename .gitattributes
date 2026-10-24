@@ -21,3 +21,5 @@ results/acquisition_v1/device_cuda*.json -diff
 results/acquisition_v1/telemetry.json -diff
 results/real_splits_v1/telemetry.json -diff
 data/evidence/real_splits_cuda.json -diff
+results/closure_fibers_v1/telemetry.json -diff
+results/closure_fibers_v1/cases/*_history.json -diff
