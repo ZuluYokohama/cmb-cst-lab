@@ -1,0 +1,85 @@
+{
+  "configuration": {
+    "source": {
+      "input_sha256": {
+        "results/real_splits_v1/harmonics/alm_143A.npy": "3a0bd854f09bf15ef2a812948f6388be249112c93c833751c25f3013962ecb52",
+        "results/real_splits_v1/harmonics/alm_143B.npy": "be25da7194a17ef80a98e6bf57a1afe53faaaf998523fca87eb94bf7c2885aab",
+        "results/real_splits_v1/geometry.npz": "681e7b99cb2fa9b9d1240f62c5e65d4ecdeaa486f46d05a2f8ea66bc24ae5027",
+        "results/real_splits_v1/tiles.json": "d96399193ce365c94e9bba8eb122e606ed0caa7caa93b9db74a718c9f25309f6"
+      },
+      "epsilon": 1e-12,
+      "data_source_sha256": "4f73b5bbe7c58e8edd19618bcc0b5c4ffb1b4d68e73579ff308324ba30a0ab01",
+      "lmax": 512,
+      "threads": 8,
+      "numpy": "2.5.4",
+      "ducc0": "0.42.0"
+    },
+    "tile": 186,
+    "seed": 82024102027,
+    "shells": [
+      30,
+      36,
+      42,
+      48,
+      54,
+      60,
+      66,
+      72,
+      78,
+      84,
+      90,
+      96,
+      102,
+      108,
+      114,
+      120,
+      126,
+      132,
+      138,
+      144,
+      150,
+      156,
+      162,
+      168,
+      174,
+      180,
+      186,
+      192,
+      198,
+      204,
+      210,
+      216
+    ],
+    "planes_per_shell": 4
+  },
+  "seconds": 1.811116300000002,
+  "family_sha256": "cc71956d912786a18c0f36a043fa4880ebb3e705dbd93309e8857857ebb17cd7",
+  "planes_sha256": "5852dff6efe333334d1980c525935337be26f123ff0141122925979b6d056cf4",
+  "source_reference": {
+    "source": {
+      "input_sha256": {
+        "results/real_splits_v1/harmonics/alm_143A.npy": "3a0bd854f09bf15ef2a812948f6388be249112c93c833751c25f3013962ecb52",
+        "results/real_splits_v1/harmonics/alm_143B.npy": "be25da7194a17ef80a98e6bf57a1afe53faaaf998523fca87eb94bf7c2885aab",
+        "results/real_splits_v1/geometry.npz": "681e7b99cb2fa9b9d1240f62c5e65d4ecdeaa486f46d05a2f8ea66bc24ae5027",
+        "results/real_splits_v1/tiles.json": "d96399193ce365c94e9bba8eb122e606ed0caa7caa93b9db74a718c9f25309f6"
+      },
+      "epsilon": 1e-12,
+      "data_source_sha256": "4f73b5bbe7c58e8edd19618bcc0b5c4ffb1b4d68e73579ff308324ba30a0ab01",
+      "lmax": 512,
+      "threads": 8,
+      "numpy": "2.5.4",
+      "ducc0": "0.42.0"
+    },
+    "seconds": 3.095877099999999,
+    "array_sha256": {
+      "base.npy": "803936de579fc241e018e8a18b8c8fb0d27cb86ce117e94b1dec2b2c89de053b",
+      "base_derivative.npy": "78d76a5b9d800bd2de2c8b8d3a7e1c17586eb034c123df9c8ecf890c965815c6",
+      "base_band.npy": "409b90175f4c0fb1ec11f904a6b96d64502caba9fd38eca1e249692d6980c140",
+      "reference_alms.npy": "998b13318b208177f91acd928884fab17f21923e2a0d9872b7dee44811bb1b53"
+    }
+  },
+  "plane_checks": {
+    "noise_annihilation_error": 4.0472713853042015e-17,
+    "orthogonality_error": 1.9984014443252818e-15
+  }
+}
