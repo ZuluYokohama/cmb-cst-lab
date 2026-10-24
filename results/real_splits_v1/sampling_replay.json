@@ -1,0 +1,56 @@
+{
+  "status": "passed",
+  "records": [
+    {
+      "map": "100A",
+      "scaled_error": 0.0,
+      "sha256": "790092467533bd415fa9eeb68c233c16d9f53ceb4bb71c54fcc5b508aaae1ba7"
+    },
+    {
+      "map": "100B",
+      "scaled_error": 0.0,
+      "sha256": "52cb4e634e584b3890484e6aa7d60ef8a4ef4d69deb2e0ac0e3509d5d7c176e9"
+    },
+    {
+      "map": "143A",
+      "scaled_error": 0.0,
+      "sha256": "3a0bd854f09bf15ef2a812948f6388be249112c93c833751c25f3013962ecb52"
+    },
+    {
+      "map": "143B",
+      "scaled_error": 0.0,
+      "sha256": "be25da7194a17ef80a98e6bf57a1afe53faaaf998523fca87eb94bf7c2885aab"
+    },
+    {
+      "map": "217A",
+      "scaled_error": 0.0,
+      "sha256": "7d65066e3741dbe048d67f8e93917b6bdbffec9e0af637907b502a0b6d447017"
+    },
+    {
+      "map": "217B",
+      "scaled_error": 0.0,
+      "sha256": "6d3c967607d2e8f8e31c05d98bce18dd3f97c494b295d60e54d85d1003144138"
+    },
+    {
+      "map": "353A",
+      "scaled_error": 0.0,
+      "sha256": "7c6767db2a2d52df7cda91552ee3927a33d592ee04b588608dffa4617bc7d943"
+    },
+    {
+      "map": "353B",
+      "scaled_error": 0.0,
+      "sha256": "c0bae2e321aba1cf60c8f4b316dbb63f25e473e9bb103d900d75446a4d62272c"
+    }
+  ],
+  "spin2_grid_direct_error": 9.284639256725271e-11,
+  "raw_map_replay": {
+    "map": "143A",
+    "sha256": "41ea9f9ad5b3fb8ff65241199681357e6c53f2c3acb376b1d5aeabc97247d8a3",
+    "scaled_error": 7.330013707179383e-17,
+    "index_method": "RING-to-NESTED gather; production uses NESTED-to-RING scatter",
+    "filter": "independent explicit diagonal filter algebra"
+  },
+  "seconds": 29.282434480000006,
+  "scope": "Separate sampling execution of all eight maps, one raw 143A reanalysis with inverse index mapping and explicit filters, and direct/grid spin-2 fixture; shared ducc backend, not independent instrument model",
+  "source_sha256": "c07633e8d48b3449d9ccdffc69ef756b50361b6a40d76add29c77100d7867315"
+}

@@ -1,0 +1,79 @@
+{
+  "completed_utc": "2026-10-23T18:39:41.344721+00:00",
+  "status": "passed",
+  "checks": {
+    "all_receipts_match": true,
+    "stage_passed": true,
+    "all_fits_passed": true,
+    "numerical_sources_match": true,
+    "result_hash_matches": true,
+    "plan_hash_matches": true,
+    "observer_hash_matches": true,
+    "original_reference_unchanged": true
+  },
+  "jovin_suites": {
+    "data_integrity": {
+      "receipt_id": "20261023T175103Z-7966048f9fc7",
+      "matched": true
+    },
+    "network": {
+      "receipt_id": "20261023T173048Z-8a8d7c5da533",
+      "matched": true
+    },
+    "empirical_calibration": {
+      "receipt_id": "20261023T173051Z-1f9310a44f3a",
+      "matched": true
+    },
+    "estimated_covariance": {
+      "receipt_id": "20261023T173053Z-dd5dab68ee37",
+      "matched": true
+    },
+    "sparse_network": {
+      "receipt_id": "20261023T173056Z-0d03ece6fed1",
+      "matched": true
+    },
+    "sensor_network": {
+      "receipt_id": "20261023T173059Z-5cb4d69f6875",
+      "matched": true
+    },
+    "differential": {
+      "receipt_id": "20261023T173103Z-ba6bdf1bcc28",
+      "matched": true
+    },
+    "mk_core": {
+      "receipt_id": "20261023T173106Z-f8238746ed49",
+      "matched": true
+    },
+    "accel": {
+      "receipt_id": "20261023T173220Z-0f5c704fb64f",
+      "matched": true
+    },
+    "gpu_calibration": {
+      "receipt_id": "20261023T173137Z-48cb897d1a8b",
+      "matched": true
+    },
+    "spatial": {
+      "receipt_id": "20261023T173111Z-fffbb6ebc58c",
+      "matched": true
+    },
+    "simulator": {
+      "receipt_id": "20261023T173114Z-fc57d47d8819",
+      "matched": true
+    },
+    "npe": {
+      "receipt_id": "20261023T173117Z-e9115ff5937b",
+      "matched": true
+    },
+    "persistence": {
+      "receipt_id": "20261023T173121Z-8aebdd6510a7",
+      "matched": true
+    }
+  },
+  "local_tests": {
+    "passed": 173,
+    "skipped": 3,
+    "log_sha256": "f6fd0f36fceae18f618c1a0f0fd3e742f11c061c5998f2b6073cdb2499fd41fd"
+  },
+  "result_sha256": "4a6699b4501ff01f2c570a31f2e9ccb2aab80b29faf6d5486cac835300ece8ee",
+  "plot_sha256": "b0a46fb5a0cc0bc0ee0fb3c052e7afa8b5cd942ee3d80e37d40eadd7243a04a8"
+}

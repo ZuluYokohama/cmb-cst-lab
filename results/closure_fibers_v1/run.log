@@ -1,0 +1,47 @@
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 4, "seconds": 625.748043553}
+{"device": 1, "tile": 34, "stage": "source", "representation": "baseline", "starts_finished": 4, "seconds": 692.8927395640001}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 8, "seconds": 1229.875072656}
+{"device": 1, "tile": 34, "stage": "source", "representation": "baseline", "starts_finished": 8, "seconds": 1345.110577324}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 12, "seconds": 1800.892313575}
+{"device": 1, "tile": 34, "stage": "source", "representation": "baseline", "starts_finished": 12, "seconds": 1991.22073572}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 16, "seconds": 2392.2311495159997}
+{"device": 1, "tile": 34, "stage": "source", "representation": "baseline", "starts_finished": 16, "seconds": 2630.09774629}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 20, "seconds": 2989.534314915}
+{"device": 1, "tile": 34, "stage": "source", "representation": "baseline", "starts_finished": 20, "seconds": 3254.967911354}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 24, "seconds": 3562.546251837}
+{"device": 1, "tile": 34, "stage": "source", "representation": "baseline", "starts_finished": 23, "seconds": 3937.093352674}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 28, "seconds": 4182.790911729}
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 4, "seconds": 4580.626850681}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 32, "seconds": 4789.074072585}
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 8, "seconds": 5205.734027148001}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 36, "seconds": 5377.424077128}
+/mnt/e/New folder/cmb-cst-lab/src/cmbcst/closure_search.py:154: UserWarning: torch.linalg.svd: During SVD computation with the selected cusolver driver, batches 2 failed to converge. A more accurate method will be used to compute the SVD as a fallback. Check doc at https://pytorch.org/docs/stable/generated/torch.linalg.svd.html (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/native/cuda/linalg/BatchLinearAlgebraLib.cpp:693.)
+  u,s,v=torch.linalg.svd(j,full_matrices=False)
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 12, "seconds": 5800.967526073}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 40, "seconds": 5990.733616507}
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 16, "seconds": 6455.670837023001}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 44, "seconds": 6604.066777077001}
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 20, "seconds": 7094.581973828001}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 48, "seconds": 7195.4103683250005}
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 24, "seconds": 7744.421941218}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 52, "seconds": 7779.44101758}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 56, "seconds": 8395.733335623}
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 28, "seconds": 8395.736885590999}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 60, "seconds": 8998.072725869999}
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 32, "seconds": 9047.632241967}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 64, "seconds": 9597.652874088}
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 36, "seconds": 9686.235569314}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 68, "seconds": 10204.716277063}
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 40, "seconds": 10303.564185434}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 72, "seconds": 10800.182779914}
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 44, "seconds": 11169.265559319}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 76, "seconds": 11435.97181206}
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 48, "seconds": 12022.827253713}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 80, "seconds": 12063.532376489999}
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 52, "seconds": 12646.990035736}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 84, "seconds": 12660.232645069}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 88, "seconds": 13263.731204282}
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 56, "seconds": 13268.705031239999}
+{"device": 1, "tile": 34, "stage": "fresh", "representation": "baseline", "starts_finished": 56, "seconds": 13500.455912804999}
+{"device": 0, "tile": 24, "stage": "source", "representation": "baseline", "starts_finished": 88, "seconds": 13500.459139257999}
+{"status": "incomplete_with_failures", "outcome": "no_verified_witness_found", "completed": 167, "witnesses": 0, "seconds": 13502.224764858}

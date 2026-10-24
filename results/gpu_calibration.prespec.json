@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-23T17:33:31.777599+00:00",
+  "experiment": "Synthetic eight-map differential CMB calibration; bin-level Wishart ensemble",
+  "scope": "No measured sky data. Exact Wishart draws at weighted bin-mean covariance; not an exact ell-level simulation.",
+  "n_sims": 2000,
+  "batch": 32,
+  "seed": 20261023,
+  "generation_benchmark": {
+    "n_sims": 50,
+    "seed": 20261025,
+    "scope": "CPU Bartlett and selected-device Gram produce the same bin-level Wishart distribution and output shape using different algorithms and random streams; no hardware speedup claim."
+  },
+  "model": {
+    "alpha_degrees": [
+      0.5700000000000001,
+      -0.9299999999999999,
+      0.0,
+      0.12000000000000001,
+      -0.18,
+      -0.18,
+      -0.24000000000000002,
+      -0.30000000000000004
+    ],
+    "common_beta_degrees": 0.3,
+    "intrinsic_eb_over_ee": 0.03,
+    "gauge_map": 2,
+    "fitted_maps": [
+      0,
+      1,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "ell_min_inclusive": 51,
+    "ell_max_exclusive": 331,
+    "bin_width": 20,
+    "nu": [
+      2440,
+      3240,
+      4040,
+      4840,
+      5640,
+      6440,
+      7240,
+      8040,
+      8840,
+      9640,
+      10440,
+      11240,
+      12040,
+      12840
+    ],
+    "cl_sha256": "016b0aa51c90357ee5793c4240fc44da8204e4d8ceb4ef8ff28ead9c784d3e22"
+  },
+  "acceptance": {
+    "threshold_mcse": 5.0,
+    "all_pooled_and_per_map_checks_required": true,
+    "pair_chi2_dof": 28,
+    "network_residual_chi2_dof": 21,
+    "minimum_draws_for_full_run": 2000,
+    "float32_relative_tolerance": 1e-05,
+    "exact_mean_angle_tolerance_radians": 1e-12,
+    "no_post_result_threshold_or_seed_tuning": true,
+    "mcse_method": "Independent simulation clusters; delta method for centered pull width; empirical SEM for chi-square means."
+  },
+  "device": {
+    "type": "cuda",
+    "name": "NVIDIA GeForce RTX 5070",
+    "backend": "PyTorch 2.14.1+cu130 on NVIDIA GeForce RTX 5070 [cuda:0] (float32 Gram, float64 transform)",
+    "requested": "cuda:0",
+    "allow_cpu": false
+  },
+  "versions": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "numpy": "2.5.4",
+    "torch": "2.14.1+cu130",
+    "cuda_runtime": "13.0",
+    "platform": "Linux-6.6.114.1-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+  },
+  "git": {
+    "commit": "00b76ceb63e1fc51e8e5c2b6e916810747ddd208",
+    "working_tree": "M .github/workflows/verify.yml\n M .gitignore\n M .mcp.json\n M README.md\n M data/evidence/jovin_receipts.json\n M pyproject.toml\n M scripts/gpu_attest.py\n M scripts/jovin_verify.py\n M src/cmbcst/accel.py\n M tests/sandbox/jovin_tests_accel.py\n M tests/test_accel.py\n?? data/evidence/gpu_attestation_latest.json\n?? scripts/run_gpu_calibration.py\n?? tests/sandbox/jovin_tests_gpu_calibration.py\n?? tests/test_gpu_calibration.py\n?? tests/test_jovin_adapter.py"
+  },
+  "source_sha256": {
+    "scripts/run_gpu_calibration.py": "bc0669e7cc8a834ac58418be04cf49b0c3e30a07ec04b713cac4cbb5fda3cc4a",
+    "src/cmbcst/accel.py": "2674dedd82755b8d1dc1b3dc1b5633815eb7ce1c03872a45ba0536facecd60fa",
+    "src/cmbcst/differential.py": "9c0763f9d155b1fd924e1d0da183a61a4aec8c8a4cadc77727d45355a33e0a6c",
+    "src/cmbcst/network.py": "93cf89b0a5c9defa9aa719cbeea5855640b8fa9e8c114f7a4eba00abd7aec945",
+    "src/cmbcst/simulator.py": "582e07d913c0526fbcf0fa7414c124c1fb1ea6658b44b0094b91b51f1f1bccce",
+    "tests/sandbox/jovin_tests_differential.py": "546b6d4bf48efb6d60c4a2be6ea4f9a22db8a2d8702a45aec29ea513721b359b"
+  },
+  "command": [
+    "scripts/run_gpu_calibration.py",
+    "--n-sims",
+    "2000",
+    "--batch",
+    "32",
+    "--seed",
+    "20261023",
+    "--output",
+    "results/gpu_calibration.json"
+  ]
+}

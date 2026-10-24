@@ -1,0 +1,5 @@
+{
+  "start_id": 71,
+  "maximum_gap": 0.012621484150403896,
+  "rule": "Independent matrix feasible maximum; tie by start ID; no precision-failure substitution"
+}

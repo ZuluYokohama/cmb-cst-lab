@@ -1,0 +1,31 @@
+{
+  "verified_utc": "2026-10-23T20:58:11.456974+00:00",
+  "status": "passed",
+  "compiler": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "compiler_archive_url": "https://github.com/leanprover/lean4/releases/download/v4.35.0/lean-4.35.0-linux.tar.zst",
+  "compiler_archive_sha256": "7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d",
+  "source_sha256": "fce3a981171475507885ed77a9aee4cdb042750c6afc267b32eca41dd3022b4c",
+  "numerical_module_sha256": "ed967a9bc082a70ce913552cbff15d5493f9e2a066ffc9e353d4c5dda3be9e25",
+  "theorems": [
+    "affine_increment",
+    "normalized_fourth_invariant",
+    "normalized_sixth_invariant",
+    "directional_contrast_invariant",
+    "rawMoment_two_scale",
+    "rawMoment_four_scale",
+    "rawMoment_six_scale",
+    "finite_flatness_invariant",
+    "finite_sixth_ratio_invariant"
+  ],
+  "theorem_count": 9,
+  "seconds": 4.918094738999997,
+  "exit_code": 0,
+  "stdout": "'CmbCst.affine_increment' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CmbCst.normalized_fourth_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CmbCst.normalized_sixth_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CmbCst.directional_contrast_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CmbCst.finite_flatness_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CmbCst.finite_sixth_ratio_invariant' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "stderr": "",
+  "scope": "Exact rational algebra and finite-sample normalized moment invariance; not a physical discovery, a proof of Float64 implementation for all inputs, fractal dimension, or SHA256 collision resistance.",
+  "foundation_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "created_utc": "2026-10-23T20:18:04.781923+00:00",
+  "status": "passed",
+  "checks": {
+    "supplied_checksums": true,
+    "script_copy_unchanged": true,
+    "all_27_replayed": true,
+    "check_identifiers_match": true
+  },
+  "archive_sha256": "e088852040a666ea67eba4f0d21a12b79062ac49e4e39369bcb3c78876244224",
+  "scope": "Package checksums and local mathematical replay only; document instructions are reference data. No JoVin, CMB, neural or market validation follows from this replay.",
+  "contents": {
+    "CST_End_to_End_Expanded.pdf": {
+      "expected": "693438259e9be8004c86f297b30b4a11a3798c4eaa069a8e70b6ddd38dedeb8e",
+      "observed": "693438259e9be8004c86f297b30b4a11a3798c4eaa069a8e70b6ddd38dedeb8e",
+      "matched": true
+    },
+    "CST_End_to_End_Expanded.docx": {
+      "expected": "87851406d37b9e88617a336c668e68b4ebe24e5fa7dd1c1efa9fb9a7e32775a6",
+      "observed": "87851406d37b9e88617a336c668e68b4ebe24e5fa7dd1c1efa9fb9a7e32775a6",
+      "matched": true
+    },
+    "CST_End_to_End_Expanded.md": {
+      "expected": "e8f89eaedaa4d381302b4ff325a2f1ea866c218f7842368deef5556e37fdb6f3",
+      "observed": "e8f89eaedaa4d381302b4ff325a2f1ea866c218f7842368deef5556e37fdb6f3",
+      "matched": true
+    },
+    "cst_validation_extended.py": {
+      "expected": "8078924408b8e6e0ecc90e744de1f4176e545c9b752e824a06b78f9d17bad4de",
+      "observed": "8078924408b8e6e0ecc90e744de1f4176e545c9b752e824a06b78f9d17bad4de",
+      "matched": true
+    },
+    "validation_results_extended.json": {
+      "expected": "19ee3f0fc0d81a435b8c22b5c3921535224f44d1e97da3cc11d0addb54456c83",
+      "observed": "19ee3f0fc0d81a435b8c22b5c3921535224f44d1e97da3cc11d0addb54456c83",
+      "matched": true
+    }
+  },
+  "local_replay": {
+    "scope": "Independent finite-dimensional synthetic checks of stated mathematics; no full CST repo testing; no ML performance or market outcome validated",
+    "seed": 20261023,
+    "numpy_version": "2.5.4",
+    "checks": [
+      {
+        "id": "V01",
+        "test": "boundary of triangle boundary vanishes",
+        "pass": true,
+        "residual": 0.0
+      },
+      {
+        "id": "V02",
+        "test": "graph edge exact-cycle orthogonality and reconstruction",
+        "pass": true,
+        "cycle_residual": 1.0877919644084146e-15,
+        "cycle_amplitude": 1.7320508075688772
+      },
+      {
+        "id": "V03",
+        "test": "interior harmonic but nonzero coboundary",
+        "pass": true,
+        "edge_discrepancy_norm": 1.4142135623730951
+      },
+      {
+        "id": "V04",
+        "test": "nontrivial holonomy retains fixed axis",
+        "pass": true,
+        "nullity": 1
+      },
+      {
+        "id": "V05",
+        "test": "planar nonidentity holonomy can remove all sections",
+        "pass": true,
+        "nullity": 0
+      },
+      {
+        "id": "V06",
+        "test": "unique forced interior Dirichlet solution",
+        "pass": true,
+        "x_interior": 2.5
+      },
+      {
+        "id": "V07",
+        "test": "graph sheaf quadratic Hessian positive semidefinite",
+        "pass": true,
+        "min_eigenvalue": 3.9250536344271737e-17
+      },
+      {
+        "id": "V08",
+        "test": "mechanical action counterexample indefinite Hessian",
+        "pass": true,
+        "hessian": -1.0
+      },
+      {
+        "id": "V09",
+        "test": "DEL gradient matches independent finite difference",
+        "pass": true,
+        "gradient_error": 9.94604642767416e-10
+      },
+      {
+        "id": "V10",
+        "test": "nonlinear residual stationarity need not mean compatibility",
+        "pass": true,
+        "residual": -1.0
+      },
+      {
+        "id": "V11",
+        "test": "nonlinear residual Hessian has residual curvature term",
+        "pass": true,
+        "Hessian_at_inconsistent": -2.0
+      },
+      {
+        "id": "V12",
+        "test": "Schur reduction preserves boundary effective resistance",
+        "pass": true,
+        "resistance_difference": 2.7755575615628914e-17
+      },
+      {
+        "id": "V13",
+        "test": "Chebyshev fractional power matches exact spectral action",
+        "pass": true,
+        "approx_error": 0.006157666368876946,
+        "grid_uniform_error": 0.004181534197530645
+      },
+      {
+        "id": "V14",
+        "test": "Chebyshev energy perturbation bounded by operator approximation",
+        "pass": true,
+        "energy_error": 0.0012679597852098823,
+        "bound": 0.2618141789187734
+      },
+      {
+        "id": "V15",
+        "test": "landmark PSD and dual spectra match",
+        "pass": true,
+        "spectrum_error": 2.482534153247273e-16
+      },
+      {
+        "id": "V16",
+        "test": "naive symmetric global landmark has future dependence",
+        "pass": true,
+        "prefix_operator_change": 0.11645870469399888
+      },
+      {
+        "id": "V17",
+        "test": "Foster weighted leverage identity",
+        "pass": true,
+        "leverage_sum": 3.0000000000000004
+      },
+      {
+        "id": "V18",
+        "test": "absolute weight preservation does not preserve signed map",
+        "pass": true,
+        "output_difference": 2.0
+      },
+      {
+        "id": "V19",
+        "test": "RMSNorm cannot equal globally fixed linear scaling",
+        "pass": true,
+        "linearity_defect": 1.7320475599793916
+      },
+      {
+        "id": "V20",
+        "test": "ridge correction reduces penalized residual vs no correction",
+        "pass": true,
+        "before": 1.498981871072704,
+        "after": 0.23704022080356577
+      },
+      {
+        "id": "V21",
+        "test": "synchronized exact price loop vanishes, observed perturbation remains",
+        "pass": true,
+        "exact_loop": 0.0,
+        "noisy_loop": 0.010000000000000009
+      },
+      {
+        "id": "V22",
+        "test": "continuous execution optimum equals independent integral",
+        "pass": true,
+        "objective_error": 0.0
+      },
+      {
+        "id": "V23",
+        "test": "expected cost separated from risk-penalized objective",
+        "pass": true,
+        "expected_cost_error": 0.0
+      },
+      {
+        "id": "V24",
+        "test": "risk-neutral limiting objective is nonzero and finite",
+        "pass": true,
+        "risk_neutral_error": 1.049826892085548e-12
+      },
+      {
+        "id": "V25",
+        "test": "exact operational quotient closure on one fiber",
+        "pass": true,
+        "projected_next": 2.0
+      },
+      {
+        "id": "V26",
+        "test": "nonclosed projection cannot define deterministic quotient step",
+        "pass": true,
+        "projection_output_gap": 5.0
+      },
+      {
+        "id": "V27",
+        "test": "approximate projected dynamics respects finite-horizon Lipschitz bound",
+        "pass": true,
+        "step4_error": 0.10625000000000018,
+        "step4_bound": 0.15
+      }
+    ],
+    "total": 27,
+    "passed": 27,
+    "failed": 0
+  },
+  "source_sections_used": [
+    "7.2 negative controls",
+    "8.1 explicit operational projection"
+  ],
+  "interpretation": "Motivates testing the specified whole-sphere-to-patch pipeline; does not establish a quotient theorem for CMB summaries"
+}

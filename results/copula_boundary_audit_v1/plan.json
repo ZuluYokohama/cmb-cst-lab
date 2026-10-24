@@ -1,0 +1,32 @@
+{
+  "created_utc": "2026-10-23T19:15:41.993361+00:00",
+  "scope": "Post-hoc boundary robustness check, not confirmation",
+  "motivation": "Periodic 32x32 validation does not represent cropped open sky patches",
+  "source_sha256": {
+    "scripts/run_copula_topology.py": "3ca860125bbaf44c40640febd607edb39e7c29ecf7f4aafaa0e11c750b189342",
+    "src/cmbcst/surrogate_topology.py": "fbe8123721a14e22294252f91aa26ce6cbbf7ab0c2d009705be5f2220a560ae8",
+    "src/cmbcst/persistence.py": "353b240eeb6826d8d7fce5a2592e2e60e0c803ad9aa8125a77da4d400e77f498",
+    "src/cmbcst/spectra.py": "f49f508b30df565a94d466e70a0e79606721b50832893177a0ca6c20a55085e1",
+    "src/cmbcst/theory.py": "2f08159499b17db9ddb4878563fbe30bb06da735a90968dd924624fb6e4f7e5e",
+    "src/cmbcst/copula_topology.py": "d9b760dddf002eb7b9bc1094b6ad716940fc9391a8ffd61fa48831826767aaca",
+    "docs/COPULA_TOPOLOGY_SPEC.md": "1b2d4bf9acfc40e7a0ecfb6e9dca3060fd16b642a6a8499a2eccc286d773a6c5",
+    "docs/SURROGATE_TOPOLOGY_SPEC.md": "d3587ac52aafbb447c7365f75e283926f4e8f532182486a05301e543f4266779",
+    "scripts/audit_copula_boundaries.py": "529a2a31c33abaf707817622b2183e2302179b2c4426c457741a280b749eeadd"
+  },
+  "seed": 87391232026,
+  "fields": 64,
+  "parent_size": 64,
+  "center_crop_size": 32,
+  "surrogates_per_field": 199,
+  "iterations": 500,
+  "construction": "Same smooth Gaussian torus spectrum as V2 controls; 64x64 parent cropped to central 32x32, then normal scores",
+  "statistics": [
+    "finite_PD0_count",
+    "total_persistence_H",
+    "total_persistence_S"
+  ],
+  "holm_family_size": 3,
+  "flag_threshold": 0.05,
+  "gross_rejection_if_flags_exceed": 8,
+  "jovin_receipt_id": "20261023T190416Z-f73e0022af1e"
+}

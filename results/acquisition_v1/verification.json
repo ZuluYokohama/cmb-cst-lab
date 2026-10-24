@@ -1,0 +1,293 @@
+{
+  "status": "passed",
+  "verified_utc": "2026-10-23T23:54:26.595975+00:00",
+  "verification_environment": {
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+    "numpy": "2.4.6",
+    "platform": "win32"
+  },
+  "scope": "Authentic source/test receipt linkage, complete metrics and two CPU audit inputs; not proof of optics validity or novelty",
+  "jovin_suites": {
+    "acquisition_index": {
+      "matched": true,
+      "receipt_id": "20261023T234104Z-58f1101a658f",
+      "total": 4
+    },
+    "acquisition": {
+      "matched": true,
+      "receipt_id": "20261023T232459Z-151d1b4bcb0e",
+      "total": 6
+    },
+    "targeted": {
+      "matched": true,
+      "receipt_id": "20261023T223751Z-b7ba43ffca03",
+      "total": 6
+    },
+    "response": {
+      "matched": true,
+      "receipt_id": "20261023T215313Z-4fb94bd93228",
+      "total": 9
+    },
+    "orientation": {
+      "matched": true,
+      "receipt_id": "20261023T212557Z-3470461f116f",
+      "total": 5
+    },
+    "multiscale": {
+      "matched": true,
+      "receipt_id": "20261023T204940Z-b587588deae4",
+      "total": 6
+    },
+    "spherical_surrogates": {
+      "matched": true,
+      "receipt_id": "20261023T201811Z-764956b0e705",
+      "total": 6
+    },
+    "copula_topology": {
+      "matched": true,
+      "receipt_id": "20261023T190416Z-f73e0022af1e",
+      "total": 4
+    },
+    "surrogate_topology": {
+      "matched": true,
+      "receipt_id": "20261023T185704Z-58ac2ab53e53",
+      "total": 6
+    },
+    "data_integrity": {
+      "matched": true,
+      "receipt_id": "20261023T175103Z-7966048f9fc7",
+      "total": 6
+    },
+    "network": {
+      "matched": true,
+      "receipt_id": "20261023T173048Z-8a8d7c5da533",
+      "total": 12
+    },
+    "empirical_calibration": {
+      "matched": true,
+      "receipt_id": "20261023T173051Z-1f9310a44f3a",
+      "total": 4
+    },
+    "estimated_covariance": {
+      "matched": true,
+      "receipt_id": "20261023T173053Z-dd5dab68ee37",
+      "total": 3
+    },
+    "sparse_network": {
+      "matched": true,
+      "receipt_id": "20261023T173056Z-0d03ece6fed1",
+      "total": 4
+    },
+    "sensor_network": {
+      "matched": true,
+      "receipt_id": "20261023T173059Z-5cb4d69f6875",
+      "total": 4
+    },
+    "differential": {
+      "matched": true,
+      "receipt_id": "20261023T173103Z-ba6bdf1bcc28",
+      "total": 7
+    },
+    "mk_core": {
+      "matched": true,
+      "receipt_id": "20261023T173106Z-f8238746ed49",
+      "total": 8
+    },
+    "accel": {
+      "matched": true,
+      "receipt_id": "20261023T173220Z-0f5c704fb64f",
+      "total": 11
+    },
+    "gpu_calibration": {
+      "matched": true,
+      "receipt_id": "20261023T173137Z-48cb897d1a8b",
+      "total": 7
+    },
+    "spatial": {
+      "matched": true,
+      "receipt_id": "20261023T173111Z-fffbb6ebc58c",
+      "total": 10
+    },
+    "simulator": {
+      "matched": true,
+      "receipt_id": "20261023T173114Z-fc57d47d8819",
+      "total": 9
+    },
+    "npe": {
+      "matched": true,
+      "receipt_id": "20261023T173117Z-e9115ff5937b",
+      "total": 7
+    },
+    "persistence": {
+      "matched": true,
+      "receipt_id": "20261023T173121Z-8aebdd6510a7",
+      "total": 8
+    }
+  },
+  "chain": {
+    "valid": true,
+    "count": 50,
+    "head_sha256": "1535b4c502dcae1bb16768a25498038c7fb86a6fe38e29afaeeb38a969e12596",
+    "problems": []
+  },
+  "frozen_sources": {
+    "results\\acquisition_v1\\plan.json": true,
+    "results\\copula_boundary_audit_v1\\plan.json": true,
+    "results\\copula_topology_v2\\plan.json": true,
+    "results\\multiscale_v1\\plan.json": true,
+    "results\\orientation_v1\\plan.json": true,
+    "results\\response_v1\\plan.json": true,
+    "results\\spherical_topology_v1\\plan.json": true,
+    "results\\surrogate_topology_v1\\plan.json": true,
+    "results\\targeted_v1\\plan.json": true
+  },
+  "prior_artifacts_preserved": {
+    "results\\copula_topology_v2\\verification.json": true,
+    "results\\multiscale_v1\\verification.json": true,
+    "results\\orientation_v1\\verification.json": true,
+    "results\\response_v1\\verification.json": true,
+    "results\\spherical_topology_v1\\verification.json": true,
+    "results\\targeted_v1\\verification.json": true
+  },
+  "calculation_checks": {
+    "fixed_design": true,
+    "complete_and_in_budget": true,
+    "honest_scope": true,
+    "noiseless_0_shape_finite": true,
+    "noiseless_0_recovery": true,
+    "intensity_only_0_shape_finite": true,
+    "production_0_shape_finite": true,
+    "noise_model_0": true,
+    "noise_gate_0": true,
+    "batch_domain_0": true,
+    "roll_finite_timing_0": true,
+    "roll_aggregate_0": true,
+    "device_identity_0": true,
+    "audit_input_0_sha": true,
+    "full_resolution_cpu_audit_0": true,
+    "audit_is_production_0": true,
+    "noiseless_1_shape_finite": true,
+    "noiseless_1_recovery": true,
+    "intensity_only_1_shape_finite": true,
+    "production_1_shape_finite": true,
+    "noise_model_1": true,
+    "noise_gate_1": true,
+    "batch_domain_1": true,
+    "roll_finite_timing_1": true,
+    "roll_aggregate_1": true,
+    "device_identity_1": true,
+    "audit_input_1_sha": true,
+    "full_resolution_cpu_audit_1": true,
+    "audit_is_production_1": true,
+    "cross_gpu_precision": true,
+    "model_gate_status": true,
+    "poor_coverage_rejected": true,
+    "indexed_sample_rows": true,
+    "coordinate_source_bound": true,
+    "coordinate_export_hashes": true,
+    "corrected_physical_look_rows": true,
+    "independent_phase_oracle": true,
+    "lean_exact_identities": true,
+    "actual_two_gpu_fixture": true,
+    "development_failure_preserved": true,
+    "telemetry_0_recomputed": true,
+    "telemetry_1_recomputed": true
+  },
+  "bindings": {
+    "plan": true,
+    "result": true,
+    "preflight": true,
+    "proof": true,
+    "receipt": true
+  },
+  "local_tests": {
+    "passed": 192,
+    "skipped": 3,
+    "matched": true,
+    "log_sha256": "15f0bd7e1e655b5e70031f2d27d959fdccde2ca0af3792168a9145f461e6f2bb"
+  },
+  "ci_equivalent_sandbox_suites": {
+    "passed": 23,
+    "matched": true,
+    "log_sha256": "7ce9b9d4c7bf7118dc0f2e1a498b8bfc88ddf5443f53361a722f7a2aa9cab41d"
+  },
+  "pooled_production_rmse": [
+    [
+      0.01910256998206433,
+      0.028468826668381027,
+      0.02811640188371755,
+      0.028291958330068503
+    ],
+    [
+      0.01910256998206434,
+      1.268472800401647,
+      1.2684809772818584,
+      0.0282919583300685
+    ],
+    [
+      0.7480613376878004,
+      8.738720942567483,
+      8.738430459310926,
+      9.650760602736986
+    ],
+    [
+      1.7027790920559849,
+      1.8798543255989957,
+      1.8088962476116184,
+      1.7890914624053953
+    ]
+  ],
+  "pooled_intensity_only_rmse": [
+    [
+      0.01910668323526371,
+      0.028467361263606203,
+      0.02810379029437141,
+      0.04000267098860614
+    ],
+    [
+      0.019106683235263704,
+      0.028693946197717785,
+      0.027872408181302676,
+      0.040002670988606125
+    ],
+    [
+      0.6941652765898051,
+      8.73645033567922,
+      8.745226595506466,
+      12.361413862278988
+    ],
+    [
+      1.7019792553100295,
+      1.8768566842489738,
+      1.807800847638463,
+      2.6059038581521765
+    ]
+  ],
+  "artifact_sha256": {
+    "plan.json": "98cc3379951f8d433571c426e16ebdc25a292afb9a34c14afd854c1a308a49f6",
+    "result.json": "84b81aeab192e61cf16c13c9739b25220ac337c98effe710496f5c560da9e8fc",
+    "stage_audit.json": "bbb990862ce135dd85335e3863fea5d4d48684099a8b40c41974e74cc76cd36e",
+    "device_cuda0.json": "7fa7edda541c256ce78a7d43fe498f3504f50a165e9d445f965549bd7dc3b9a4",
+    "device_cuda1.json": "a7c25027b5561b4d3d686e28b038b6dd7682f624ba19b9f38394f340bba5ea20",
+    "audit_input_cuda0.npz": "53d0189fd5936f6205e189433c2b451d0e0a5199fec0bf7e6d2f1e09798587f2",
+    "audit_input_cuda1.npz": "374b43e1ca4ebb7f430361a07c2aeaca7e88dd42e2a6e5e1ee283acec8f6a1e1",
+    "labeled_samples.csv": "56197ebdd65fc128fc9b62b915911b2ddeb24f9d6b58db30ab746577fb8d8544",
+    "labeled_samples_corrected.csv": "9151d73784addaaefeeea26de54d223e79ea553835978479b040fb9565f884cf",
+    "coordinate_export_audit.json": "a27c520549f59c62c3d42bc6a9b9c5a2fb17adec0b7dc926fca75c7d2325d7bf",
+    "telemetry.json": "9e7c5850f215d5a8e9348409e0369fae2ea10f6260135834a0de7f935d0b454e",
+    "performance.json": "721e613669fc45ce178683b2fd1f749ebd58f41cdd1eaa584d159796428396ed",
+    "hardware.png": "9f0f7d65a485d663c1d2424ab7d450134742473a5cf4122e0a52f1d040981825",
+    "geometry.png": "e0ae8db368183153e369be9f855c24a19fb0d6728329520c983836c8b2c50327",
+    "noiseless_cuda0.npz": "3a2eb591e25938912fdd33f55e67aef04f847a8fcba927ed7cc02686e64d4a85",
+    "intensity_only_cuda0.npz": "f0f22e9826868b073a5fe71769ef7f0b709f021a4b6c188f87ce1d5f4e639b10",
+    "production_cuda0.npz": "663f08dcd62822379951ab60f1cb0e90c91a34e0356b86c4971aa13634016643",
+    "noiseless_cuda1.npz": "1fc3c14d803eb3f3067dc8b8d3b69c7adf021c5c50f4aa8d75a09646f93ce60d",
+    "intensity_only_cuda1.npz": "18effbe0ef511fc0069ae6c08cd7f69754dac7a10889829a47ae933d1eb37392",
+    "production_cuda1.npz": "9fd7966303d1a9caa3ed3464c961757920c0c3a08d6c62740a08d52ec48147c5"
+  },
+  "report_sha256": "ccfa4cf7684adb87cc84bf0e07a270a1d5b63f56995ed0ce3b4c5549475f4cf7",
+  "supporting_source_sha256": {
+    "scripts/verify_acquisition_evidence.py": "30064b95df26e1272a0d90529c7f24842e6fd7476ed268c2dc61d1e5a1f21090",
+    "scripts/report_acquisition_campaign.py": "7b548db33db17868bdbd1872e4542f79e8d6b57a6db578247324878721f489e7"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "scope": "Fixed-angle real-data software integration preflight; no optimizer or scientific search",
+  "source_sha256": {
+    "src/cmbcst/closure_fibers_data.py": "4f73b5bbe7c58e8edd19618bcc0b5c4ffb1b4d68e73579ff308324ba30a0ab01",
+    "src/cmbcst/closure_fibers.py": "58826d2810b8c92f0e02e55cd1d8590e0a02f2127339cf53f6d0b9005184ac51"
+  },
+  "reference_seconds": 3.7234991779999973,
+  "accepted_tiles": 79,
+  "global_anchors": 13665,
+  "source_inputs": {
+    "results/real_splits_v1/harmonics/alm_143A.npy": "3a0bd854f09bf15ef2a812948f6388be249112c93c833751c25f3013962ecb52",
+    "results/real_splits_v1/harmonics/alm_143B.npy": "be25da7194a17ef80a98e6bf57a1afe53faaaf998523fca87eb94bf7c2885aab",
+    "results/real_splits_v1/geometry.npz": "681e7b99cb2fa9b9d1240f62c5e65d4ecdeaa486f46d05a2f8ea66bc24ae5027",
+    "results/real_splits_v1/tiles.json": "d96399193ce365c94e9bba8eb122e606ed0caa7caa93b9db74a718c9f25309f6"
+  },
+  "family_seconds": 1.468920077,
+  "family_shape": {
+    "base": [
+      4,
+      2,
+      1122
+    ],
+    "base_band": [
+      4,
+      2,
+      4,
+      66
+    ],
+    "cos_basis": [
+      128,
+      1122
+    ],
+    "valid": [
+      4,
+      4,
+      66
+    ]
+  },
+  "planes_sha256": "0d3fb8daad61305ce1b606a0a5bb337cb8f95bec167cf36faf325bd3bb7161de",
+  "numpy_ratios": [
+    0.002891410641756037,
+    0.0010174341751188847
+  ],
+  "gpu": [
+    {
+      "index": 0,
+      "name": "NVIDIA GeForce RTX 5070",
+      "feature_errors_u0_u1": [
+        7.203104923074843e-16,
+        2.8975793496393503e-16
+      ],
+      "feature_ms": 14.197133900000125,
+      "jacobian_seconds": 2.594775888000001,
+      "jacobian_shape": [
+        52,
+        128
+      ],
+      "peak_allocated_bytes": 72903680,
+      "free_before_bytes": 11553210368
+    },
+    {
+      "index": 1,
+      "name": "NVIDIA GeForce GTX 1660 Ti",
+      "feature_errors_u0_u1": [
+        5.939402304991537e-16,
+        3.8743948468690415e-16
+      ],
+      "feature_ms": 8.962610399999704,
+      "jacobian_seconds": 0.4876022680000034,
+      "jacobian_shape": [
+        52,
+        128
+      ],
+      "peak_allocated_bytes": 72903680,
+      "free_before_bytes": 5377097728
+    }
+  ],
+  "replay_seconds": 0.612916847000001,
+  "invariants": {
+    "passed": true,
+    "normalized_spectral_gram_error": 1.2634060407166356e-15,
+    "spectral_bins_zero": true,
+    "spectral_minimum_margin": 4.999999987365939e-07,
+    "zero_reference_auto_shells_exact": true,
+    "split_difference_scaled_error": 5.382610476707555e-17,
+    "unmodified_removed_shells": true,
+    "mzero_real": true,
+    "global_perturbation_rms": 0.005459684330134003,
+    "reference_global_rms": 5.36613027520533
+  },
+  "direct_ratios": [
+    0.002891410641755329,
+    0.0010174341751188836
+  ],
+  "direct_feature_errors": [
+    1.9185970580862614e-14,
+    1.6560198432944646e-14
+  ],
+  "seconds": 11.230813230000003,
+  "status": "passed",
+  "source_unchanged": true
+}

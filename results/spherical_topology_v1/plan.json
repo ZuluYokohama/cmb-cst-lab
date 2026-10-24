@@ -1,0 +1,66 @@
+{
+  "created_utc": "2026-10-23T20:20:41.481575+00:00",
+  "seed": 66510322026,
+  "reference_skies": 999,
+  "control_skies": 64,
+  "batch_size": 8,
+  "lmax": 1000,
+  "nside": 512,
+  "threads": 8,
+  "smoothing_arcmin": 10.0,
+  "removed_multipoles": [
+    0,
+    1
+  ],
+  "patches_radians": {
+    "NGP": [
+      0.0,
+      0.0
+    ],
+    "SGP": [
+      3.141592653589793,
+      0.0
+    ],
+    "ColdSpot": [
+      2.5656340004316642,
+      3.6477381366681487
+    ]
+  },
+  "patch_size": 128,
+  "patch_degrees": 20,
+  "statistics": [
+    "rank_PD0_count",
+    "rank_total_PD0_lifetime",
+    "temperature_std_uK",
+    "temperature_skewness",
+    "temperature_excess_kurtosis"
+  ],
+  "holm_family_size": 15,
+  "candidate_p": 0.05,
+  "max_control_flags": 8,
+  "power_relative_tolerance": 1e-10,
+  "null": "Uniform independent real harmonic shell directions conditional on full-sphere C_ell; isotropic Gaussian conditional model",
+  "scope": "Previously inspected uncleaned temperature; no cosmological or novelty claim",
+  "source_sha256": {
+    "scripts/run_spherical_topology.py": "12ccb71772f3f4f5778118bee30191566c3d48d38b43ec5848c3852a8c1dfd14",
+    "docs/SPHERICAL_TOPOLOGY_SPEC.md": "a01a46dd16164065fcff3dbdd2e2ab74861f02caf9c397ee08638ad33ba500cf",
+    "src/cmbcst/spherical_surrogates.py": "7c9cc7107ab60e8ca77007b0c0eb380081e534a250dcad15321930a312500ccb",
+    "src/cmbcst/spectra.py": "f49f508b30df565a94d466e70a0e79606721b50832893177a0ca6c20a55085e1",
+    "src/cmbcst/theory.py": "2f08159499b17db9ddb4878563fbe30bb06da735a90968dd924624fb6e4f7e5e",
+    "src/cmbcst/persistence.py": "353b240eeb6826d8d7fce5a2592e2e60e0c803ad9aa8125a77da4d400e77f498",
+    "src/cmbcst/surrogate_topology.py": "fbe8123721a14e22294252f91aa26ce6cbbf7ab0c2d009705be5f2220a560ae8",
+    "src/cmbcst/copula_topology.py": "d9b760dddf002eb7b9bc1094b6ad716940fc9391a8ffd61fa48831826767aaca"
+  },
+  "jovin_receipt_id": "20261023T201811Z-764956b0e705",
+  "jovin_bundle_sha256": "1b13a246819efb4f6101404db49c354c4a088954a0d1886a67f827c065361ad6",
+  "jovin_tests_sha256": "47c6dcd713d3a01d28d36ebffa2921a13ee790b30b4623572f7d64268047bf3e",
+  "numpy": "2.5.4",
+  "torch": "2.14.1+cu130",
+  "cuda": "13.0",
+  "ducc0": "0.42.0",
+  "device": "NVIDIA GeForce RTX 5070",
+  "input_audit_sha256": "1c89126d5b1a8720c281bad1d12bb8f742318d01def6fabf61cb7d6bf1d08ac0",
+  "package_audit_sha256": "0edf2c6d33e0d285f9b5f22fd24f419edf32c2a53d710845d85fbb44ea001ee4",
+  "input_inventory_sha256": "80bcff0c69d751b531e737d95907a131bc0959c5ee5c73015318ba8930541036",
+  "mask_sha256": "2418af3133fdf7859b0bf82894db4c91775a649c7feec94ee34732cc4e1626d5"
+}

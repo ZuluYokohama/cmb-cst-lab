@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "original_sha256": "56197ebdd65fc128fc9b62b915911b2ddeb24f9d6b58db30ab746577fb8d8544",
+  "corrected_sha256": "9151d73784addaaefeeea26de54d223e79ea553835978479b040fb9565f884cf",
+  "source_sha256": {
+    "src/cmbcst/acquisition_index.py": "1398b3d91ec6cdbbc094a2d600191d3e121e1b0651e7d09065bfccaf87e3fc89",
+    "scripts/export_acquisition_coordinates.py": "a36a683c01a87dc845d1b901fc26fb0c690cf3931c6418e8f216267e8c41bc4d"
+  },
+  "analytic_negative_phase_error": 7.632783294297951e-16,
+  "incorrect_positive_phase_error": 0.28542700293708145,
+  "scope": "Coordinate-label erratum; frozen simulation, observations, inverse operators and metric files are unchanged"
+}

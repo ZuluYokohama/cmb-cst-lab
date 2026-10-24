@@ -1,0 +1,35 @@
+{
+  "devices": [
+    {
+      "device": 0,
+      "name": "RTX 5070",
+      "available": true,
+      "samples": 1218,
+      "mean_utilization": 97.08210180623973,
+      "median_utilization": 98.0,
+      "fraction_at_least_90_percent": 0.9917898193760263,
+      "mean_power_W": 96.95711822660098,
+      "peak_power_W": 99.79,
+      "peak_device_memory_MiB": 6972.0,
+      "peak_temperature_C": 58.0,
+      "gpu_event_production_seconds": 1229.7269207763673,
+      "production_skies_per_event_second": 159.8793981641671
+    },
+    {
+      "device": 1,
+      "name": "GTX 1660 Ti",
+      "available": true,
+      "samples": 1212,
+      "mean_utilization": 97.62541254125412,
+      "median_utilization": 98.0,
+      "fraction_at_least_90_percent": 0.9892739273927392,
+      "mean_power_W": 70.97469471947196,
+      "peak_power_W": 78.87,
+      "peak_device_memory_MiB": 4524.0,
+      "peak_temperature_C": 62.0,
+      "gpu_event_production_seconds": 1226.1572133789064,
+      "production_skies_per_event_second": 53.44828484057379
+    }
+  ],
+  "scope": "Measured counters; not an end-to-end CPU speedup comparison"
+}

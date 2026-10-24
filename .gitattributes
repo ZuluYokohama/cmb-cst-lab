@@ -1,2 +1,30 @@
 * text=auto eol=lf
+* whitespace=trailing-space,space-before-tab,cr-at-eol
 *.fits binary
+
+# Preserve the exact bytes identified by frozen SHA256 plans and receipts.
+# -text disables newline conversion without disabling textual diffs.
+src/**/*.py -text
+scripts/**/*.py -text
+tests/**/*.py -text
+docs/**/*.md -text
+results/** -text
+data/evidence/** -text
+formal/** -text
+
+# Keep full machine-generated draw matrices available without enormous text diffs.
+results/targeted_v1/development.json -diff
+results/targeted_v1/final.json -diff
+
+# Preserve complete acquisition batch/counter records without huge review diffs.
+results/acquisition_v1/device_cuda*.json -diff
+results/acquisition_v1/telemetry.json -diff
+results/real_splits_v1/telemetry.json -diff
+data/evidence/real_splits_cuda.json -diff
+results/closure_fibers_v1/telemetry.json -diff
+results/closure_fibers_v1/cases/*_history.json -diff
+results/closure_fibers_v2/telemetry.json -diff
+results/closure_fibers_v2/cases/*_history.json -diff
+results/closure_fibers_v2/result.json -diff
+results/closure_fibers_v2/certificates_v2/*/rows/*.json -diff
+data/closure_v2_*.log -text

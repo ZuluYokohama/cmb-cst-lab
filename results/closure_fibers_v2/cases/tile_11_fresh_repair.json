@@ -1,0 +1,23 @@
+{
+  "tile": 11,
+  "stage": "fresh",
+  "representation": "repair",
+  "device": 0,
+  "starts": 128,
+  "seed": 82024102027,
+  "signs": "first half maximize; second half minimize",
+  "seed_derivation": "SeedSequence([seed,tile,source=0/fresh=1,start]); fresh representations share raw kicks",
+  "name": "tile_11_fresh_repair",
+  "status": "complete",
+  "starts_started": 128,
+  "starts_completed": 128,
+  "errors": [],
+  "terminal_failure_starts": 0,
+  "seconds": 56.971865107999974,
+  "arrays": "cases/tile_11_fresh_repair.npz",
+  "arrays_sha256": "b419ac54a996df4f66be1f027dffef47762e013d5d79494f8ea2d8c28365dc34",
+  "rms_ratio_names": [
+    "tile",
+    "global"
+  ]
+}

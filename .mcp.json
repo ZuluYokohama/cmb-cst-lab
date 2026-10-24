@@ -1,10 +1,11 @@
 {
   "mcpServers": {
     "jovin": {
-      "command": "C:/DevProjects/SSI_Artifacts/environment-jovin-harness/Scripts/jovin-harness.exe",
-      "args": ["serve"],
+      "command": "D:/JovinHarness_Artifacts/environments/windows/Scripts/python.exe",
+      "args": ["-B", "-m", "jovin_harness", "serve"],
       "env": {
-        "JOVIN_HARNESS_RUNTIME": "wsl:Renigma-Evaluator@root"
+        "JOVIN_HARNESS_RUNTIME": "wsl:JovinHarness",
+        "JOVIN_HARNESS_DATA_DIR": "D:/SSI_Artifacts/jovin-cst"
       }
     }
   }

@@ -1,0 +1,85 @@
+{
+  "created_utc": "2026-10-24T00:25:12.329491+00:00",
+  "scope": "Exploratory real Planck A/B polarization; no calibrated anomaly or novelty claim",
+  "maps": [
+    "100A",
+    "100B",
+    "143A",
+    "143B",
+    "217A",
+    "217B",
+    "353A",
+    "353B"
+  ],
+  "nside_input": 2048,
+  "lmax": 512,
+  "lmin": 30,
+  "common_beam_arcmin": 60,
+  "beam_method": "sqrt(diagonal auto QuickPol EE/BB) effective equalization only",
+  "threads": 8,
+  "anchor_nside": 64,
+  "tile_nside": 4,
+  "lags_degrees": [
+    0.5,
+    1.0,
+    2.0,
+    4.0
+  ],
+  "bearings_degrees": [
+    0.0,
+    45.0,
+    90.0,
+    135.0
+  ],
+  "anchor_min_latitude_degrees": 45,
+  "path_min_latitude_degrees": 40,
+  "mask_margin_degrees": 3,
+  "min_pairs_per_tile_lag": 128,
+  "bootstrap_draws": 2000,
+  "seed": 82024102026,
+  "compute_cap_seconds": 3600,
+  "modes": [
+    "transported",
+    "naive_QU",
+    "amplitude_only",
+    "misaligned_B"
+  ],
+  "statistics": [
+    "auto_A",
+    "auto_B",
+    "cross_S2",
+    "mean_S2",
+    "difference_S2",
+    "coherence",
+    "connected4_normalized",
+    "imaginary_cross_normalized"
+  ],
+  "maximum_scaled_error": 1e-10,
+  "source_sha256": {
+    "src/cmbcst/real_splits.py": "f9395a343b751c3c52bc83fd4cbd7fdbcb6fb8c3322ee5612944d88681b1796b",
+    "src/cmbcst/real_splits_data.py": "8ca979af4d18d54b93200e022a4be94dd98fd188a12ed5c6e81d9b5ec6da9566",
+    "src/cmbcst/spectra.py": "f49f508b30df565a94d466e70a0e79606721b50832893177a0ca6c20a55085e1",
+    "src/cmbcst/theory.py": "2f08159499b17db9ddb4878563fbe30bb06da735a90968dd924624fb6e4f7e5e",
+    "src/cmbcst/data.py": "086b2699a0340e3bdadf3f3cdb633efb42e6ecac4b4e041fbf87db57ba4a969f",
+    "scripts/run_real_splits.py": "257a3a666aaa475240a65e24cf3d805d138b2910a135c83cce01fe5aed0d7db6",
+    "scripts/prepare_real_splits.py": "ab443eeada11a7c1aa172e1158e0d6922b30ce36923a71473a9434d6237d29f2",
+    "tests/test_real_splits.py": "67f4866f2b835c2dfe243d671abac29a5085c40039567f392fdac9a362603ae3",
+    "tests/sandbox/jovin_tests_real_splits.py": "417c44218be85552a0b9b1bb1c7a07c42119793167621f0bab7f32a0f08ab068",
+    "docs/REAL_SPLITS_SPEC.md": "99c47efd0df0ae1866244eb477f2f7a50c4aed58d0f03620401de4c9b1207df5"
+  },
+  "input_inventory_sha256": "80bcff0c69d751b531e737d95907a131bc0959c5ee5c73015318ba8930541036",
+  "input_audit_sha256": "1c89126d5b1a8720c281bad1d12bb8f742318d01def6fabf61cb7d6bf1d08ac0",
+  "mask_sha256": "2418af3133fdf7859b0bf82894db4c91775a649c7feec94ee34732cc4e1626d5",
+  "fixture_sha256": "2360cb5dcac344b0c80bb5c4a9bacd2263ae9a9baf3b9cc49287b6804ab61ac4",
+  "jovin_receipt_id": "20261024T002321Z-3b4b0dd2589d",
+  "jovin_bundle_sha256": "0fe27ac316c9df1a889af382ed9038ff4f63ee0014eb181f5f4c128fc34bd594",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "numpy": "2.5.4",
+  "torch": "2.14.1+cu130",
+  "cuda": "13.0",
+  "ducc0": "0.42.0",
+  "devices": [
+    "NVIDIA GeForce RTX 5070",
+    "NVIDIA GeForce GTX 1660 Ti"
+  ]
+}

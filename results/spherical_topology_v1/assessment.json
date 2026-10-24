@@ -1,0 +1,11 @@
+{
+  "status": "exploratory_complete",
+  "topology_flags": 3,
+  "conventional_moment_flags": 3,
+  "control_flags": 2,
+  "positive_control_topology_flags": 6,
+  "higher_order_specificity_established": false,
+  "accepted_cosmological_claims": [],
+  "interpretation": "3/6 topology comparisons and 3/9 conventional-moment comparisons crossed adjusted p<=.05 within the conditional isotropic model. These are exploratory diagnostic flags, not new cosmology.",
+  "result_sha256": "eff9f19097d893c8ddd8319053e7f04b452a08c5c9059c867c98d4fabfe49d59"
+}

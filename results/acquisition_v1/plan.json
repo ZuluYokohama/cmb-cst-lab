@@ -1,0 +1,57 @@
+{
+  "created_utc": "2026-10-23T23:31:35.599763+00:00",
+  "scope": "Local tangent-plane instrument model; no Planck TOD or radial-depth reconstruction",
+  "base_seed": 986004152026,
+  "grid_size": 512,
+  "field_degrees": 20.0,
+  "devices": [
+    {
+      "index": 0,
+      "name": "NVIDIA GeForce RTX 5070",
+      "batch": 64,
+      "production": 196608,
+      "noiseless": 256,
+      "intensity_only": 256,
+      "preflight_peak": 5667302400
+    },
+    {
+      "index": 1,
+      "name": "NVIDIA GeForce GTX 1660 Ti",
+      "batch": 32,
+      "production": 65536,
+      "noiseless": 256,
+      "intensity_only": 256,
+      "preflight_peak": 2977965056
+    }
+  ],
+  "total_skies": 263168,
+  "detectors": 8,
+  "modes": [
+    "correct",
+    "roll_error",
+    "pointing_error",
+    "circular_beam"
+  ],
+  "noise_sigma_uK": 0.5,
+  "compute_cap_seconds": 3600,
+  "precision": "float64/complex128",
+  "maximum_scaled_error": 1e-10,
+  "noise_variance_relative_gate": 0.02,
+  "source_sha256": {
+    "src/cmbcst/acquisition.py": "9a9ec0b089ee8522f85f9b95d1772d604a0e15aeb6132ae433b7a10822cf85d9",
+    "scripts/prepare_acquisition.py": "03754532f6d8a06c0d3b95e3949fac53ce4983ce7602ab4ddf560403d48d9d9b",
+    "scripts/run_acquisition_campaign.py": "6e5b1970fd6d38b98f5d109dfa15a1d4ca7f4ba41cd09f71c6c2acda990b73ed",
+    "scripts/verify_acquisition_lean.py": "7ea186c5f68b9c31e45174cadf8cb33acdbe6c50da2314b6feec6abbcff68f94",
+    "formal/PolarizationGeometry.lean": "d7cd17def75af9e8ac1d08b917ccb7fe8a0fe56f2611af9d0adad34636fd263f",
+    "docs/ACQUISITION_SPEC.md": "fc014f89fa5d62791a65e4fe97735b91d479a4bdd2d9a3d3fc9ceabd6b3fde8f",
+    "tests/test_acquisition.py": "13547bb48048c5e9346cb8fcbff9fd1966a50584f4125bc256e4c97000a76f4b",
+    "tests/sandbox/jovin_tests_acquisition.py": "077845e288bcbaf4ef4f98ccbb01a5e1a4350682c61081f27fbcb7d2be5483a2"
+  },
+  "preflight_sha256": "5347af911f1f7297304d4a65bba07cd602d2bf7f52c1c34da97a9f73ed395ef0",
+  "proof_sha256": "28b2dd8cc5462970439aa4ccd4403632bf5b24fb2da23faf285d891e4be4ba85",
+  "jovin_receipt_id": "20261023T232459Z-151d1b4bcb0e",
+  "jovin_bundle_sha256": "56197cafa3bf37bda2a7bb169a87745c8a5f138ce7a5d5aa8510cdd36b46ffd2",
+  "torch": "2.14.1+cu130",
+  "cuda": "13.0",
+  "numpy": "2.5.4"
+}

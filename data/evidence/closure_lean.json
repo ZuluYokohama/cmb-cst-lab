@@ -1,0 +1,59 @@
+{
+  "status": "passed",
+  "verified_utc": "2026-10-24T12:12:39.814099+00:00",
+  "version": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "compiler_sha256": "bf8d54e4714cc4b03d3f6bb34c83b7202b87e49c8bfcbff6895c085bb90ceb38",
+  "archive_sha256": "7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d",
+  "compiler_archive_url": "https://github.com/leanprover/lean4/releases/download/v4.35.0/lean-4.35.0-linux.tar.zst",
+  "source_sha256": "cb88da3ab37193c18533b4ffb2dd2455fd17b8491086ded84a5128fc2789254b",
+  "verifier_sha256": "68a1c40bf6b834bfec9dc3e305fa0ddcb4765157f70760c7581de465f483bcae",
+  "theorem_count": 7,
+  "theorems": [
+    "no_predictor_from_collision",
+    "no_factor_from_collision",
+    "toy_initial_moments",
+    "toy_left_next_moments",
+    "toy_right_next_moments",
+    "toy_next_moments_differ",
+    "toy_no_moment_factor"
+  ],
+  "theorem_axioms": {
+    "no_predictor_from_collision": [],
+    "no_factor_from_collision": [],
+    "toy_initial_moments": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "toy_left_next_moments": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "toy_right_next_moments": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "toy_next_moments_differ": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "toy_no_moment_factor": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "exit_code": 0,
+  "stdout": "'CmbCst.no_predictor_from_collision' does not depend on any axioms\n'CmbCst.no_factor_from_collision' does not depend on any axioms\n'CmbCst.toy_initial_moments' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CmbCst.toy_left_next_moments' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CmbCst.toy_right_next_moments' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CmbCst.toy_next_moments_differ' depends on axioms: [propext, Classical.choice, Quot.sound]\n'CmbCst.toy_no_moment_factor' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "stderr": "",
+  "seconds": 3.9556388,
+  "supporting_rotation_source_sha256": "d7cd17def75af9e8ac1d08b917ccb7fe8a0fe56f2611af9d0adad34636fd263f",
+  "supporting_rotation_theorems": [
+    "CmbCst.polarization_amplitude_invariant",
+    "CmbCst.corotated_measurement_invariant"
+  ],
+  "scope": "Conditional typed-function no-factor criterion and an exact rational four-node counterexample only. Existing rotation identities are referenced unchanged. This does not verify Float64 feature calculations, an optimizer, sky physics, universal closure of a repaired representation, or mathematical novelty."
+}

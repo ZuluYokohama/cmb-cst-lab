@@ -38,6 +38,122 @@ verification receipts. Open it in a browser.
    stays unexplained, and no cosmological claim is made. See `results/persistence.json` and
    `results/persistence_validation.json`.
 
+**New GPU experiment:** [rank geometry with matched surrogates](docs/COPULA_TOPOLOGY_RUN.md)
+tests temperature-patch structure beyond the Gaussianized patch's two-point spectrum.
+It records the rejected first pilot, fresh synthetic controls, all nine planned comparisons,
+matching diagnostics and JoVin receipt references. A later cropped-Gaussian control failed
+(20/64 flags), preventing a calibrated anomaly claim. This exploratory follow-up preserves
+the original results and paper.
+
+The [whole-sphere follow-up](docs/SPHERICAL_TOPOLOGY_RUN.md) replaces periodic
+patch surrogates with full spherical skies conditional on the empirical C_ell,
+then applies identical smoothing and patch extraction. It compares topology
+and conventional moments in one 15-test family, with held-out full-sky controls.
+The supplied CST working paper informed the projection and negative-control
+design; its separate [27-check local replay](data/evidence/cst_package_audit.json)
+does not establish CMB or other application performance.
+
+The [finite-scale roughness and intermittency study](docs/MULTISCALE_RUN.md)
+compares every structure-function curve independently on CPU and CUDA. None of
+its 18 adjusted comparisons flagged (minimum adjusted p=0.18). The supporting
+[Lean proof](formal/README.md) checks nine exact rational invariants; it does not
+prove a sky anomaly, a fractal dimension or the floating-point implementation
+for every input. The [frozen protocol](docs/MULTISCALE_SPEC.md), raw curves,
+control results and source-bound receipts remain available for review.
+
+The [rotated-representation audit](docs/ORIENTATION_MERIT_RUN.md) passed all 312
+CPU/CUDA checks across exact quarter turns and reflections of original,
+standardized and normal-score grids. The directional contrast changes sign
+when axes swap, as expected. These are numerical symmetry controls, not an
+arbitrary celestial-rotation test or a new sky detection. The report ranks
+foreground/noise reference checks ahead of expanding the feature search.
+
+The [controlled spherical response benchmark](docs/RESPONSE_BENCHMARK_RUN.md)
+tests whether responses to continuous spherical sampling turns, smoothing and
+rank normalization add detection power beyond 17 conventional summaries.
+Across 3,303 synthetic skies it found **no validated gain** in six planned
+comparisons; weak quadratic-coupling sensitivity fell from 89/128 to 44/128.
+The augmented detector had 37/512 matched-null flags versus 29/512 for the
+baseline. The simple foreground/noise model is a controlled benchmark, and
+observational Planck testing remains withheld. All draw records, numerical
+checks and the negative outcome are preserved.
+
+The [targeted physical blind-spot pilot](docs/TARGETED_RUN.md) replaces the large
+response model with six fixed responses and equal-training linear baselines.
+It locks development selections before generating final holdouts. Across 6,682
+synthetic skies, calibration and strong-signal retention gates passed, but no
+final comparison showed a validated gain (largest measured gain 0.78 percentage
+points). In the selected quadratic case, the original omnibus detected 88/256
+examples versus 28/256 for both learned detectors, suggesting a scoring-rule
+limitation. This remains a synthetic negative result, with all 21 JoVin suites
+authenticated and original analyses preserved.
+
+The [dual-GPU acquisition experiment](docs/ACQUISITION_RUN.md) tests the effect
+of detector pointing, incidence, elliptical beams and polarization orientation
+in a separate periodic tangent-plane model. It processed 263,168 synthetic skies
+in 21.5 minutes, with mean sampled busy levels of 97.08% on RTX 5070 and 97.63%
+on GTX 1660 Ti. Numerical and declared noise-model checks passed. Ignoring
+pointing produced 12.36 µK polarization RMS from intensity-only skies, versus
+0.0400 µK with correct geometry; a uniform roll changed Q/U while hiding in
+amplitude. These are expected instrument effects, not a new sky discovery or
+radial-depth inference. The [corrected indexed sample rows](results/acquisition_v1/labeled_samples_corrected.csv)
+and explicit [coordinate-label erratum](docs/ACQUISITION_COORDINATE_ERRATUM.md)
+preserve the original export. There are now 23 authenticated JoVin suites and
+two additional exact rational [Lean geometry identities](formal/PolarizationGeometry.lean).
+
+The [real Planck split-polarization run](docs/REAL_SPLITS_RUN.md) applies frozen
+spherical geometry and nominal diagonal beam equalization to all eight observed
+Q/U maps. It measures 215,796 sampled pairs across 79 accepted tiles at four
+angular separations. At 2 degrees, A/B coherence is 0.300 at 143 GHz and 0.674
+at 353 GHz; connected fourth-order structure is larger at 217/353 GHz than at
+100/143 GHz. The tile-resampling bands are descriptive, with no anomaly p-values,
+fractal-dimension or method-superiority claim. All real tile statistics agree
+on CPU and both GPUs, all 2000 resamples are independently checked, and a raw
+143A replay verifies index/filter handling. All 24 current JoVin suites verify.
+The [actual filtered sample rows](results/real_splits_v1/labeled_real_samples.csv)
+provide map/split, Galactic coordinates, separation, bearing and Q/U values.
+
+The [CST smoothing-information study](docs/CLOSURE_FIBERS_RUN.md) searched for
+counterfactual 143 GHz skies whose recorded summaries agree before smoothing
+and separate afterward. The bounded dual-GPU run ended **incomplete, with no
+verified witness**: 167/6,144 starts completed, and only three of 48 cases began.
+All 176 saved endpoints passed independent CPU/GPU checks (maximum scaled
+disagreement 8.24e-15); the largest discovered feasible gap was 0.01766, below
+the frozen 0.05 witness threshold. One strict optimizer-boundary failure is
+preserved. The power-control and CST-repair searches remained unstarted, so
+their relative merit was not tested. This does not establish closure or repair
+sufficiency. The [protocol](docs/CLOSURE_FIBERS_SPEC.md), checkpoints, failures,
+clock discrepancy and hardware counters remain auditable. Preflight passed
+211 local tests (three unavailable Intel XPU skips), 25 authenticated JoVin
+suites / 170 checks and seven new [conditional Lean theorems](formal/OperationalClosure.lean).
+These prove the stated mathematical implication and an exact toy example;
+they do not certify the floating-point sky pipeline or physical interpretation.
+
+The separate [batched v2 study](docs/CLOSURE_FIBERS_V2_RUN.md) completed all
+**6,144 starts and direct harmonic replays across 48 cases**, with zero recorded
+numerical or verification failures, in 5,781 budget-clock seconds (5,610 UTC
+seconds) under its four-hour cap. It found **14 verified cell maxima with raw
+K4 gaps at least 0.050**. In the 12 fresh matched searches, baseline, ordinary-
+power control and CST repair respectively yielded 5, 4 and 0 such maxima.
+The repair reduced discovered maxima on all 12 tiles (median paired reduction
+61%), but still admitted 11 verified collisions at the 0.010 tier. Both added
+feature sets distinguish all 12 source-baseline pairs. These are finite-search
+lower bounds: they support these particular features without establishing
+universal sufficiency, detection superiority or new cosmology.
+
+The [v2 protocol](docs/CLOSURE_FIBERS_V2_SPEC.md) freezes raw K4 tiers separately
+from robust-scale input quantization and preserves v1. Native 128/64-start GPU
+batches use resident analytic operators, measured exact CPU SVD and independent
+CPU/direct checks; every selected cell maximum is replayed on both GPUs. All
+26 current JoVin suites / 177 checks authenticate against current source and
+test hashes. Preflight passed 246 local tests, with three unavailable Intel XPU
+skips. The [six concrete Lean checks](formal/ClosureFibersV2Witness.lean) bring
+the supporting theorem total to 24; they verify exact recorded integer tables
+and a conditional no-factor conclusion, without certifying floating-point sky
+measurements. See the [coverage plot](results/closure_fibers_v2/coverage.png),
+[tier comparisons](results/closure_fibers_v2/tier_heatmap.png) and
+[complete saved-evidence audit](results/closure_fibers_v2/verification.json).
+
 **Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every result taken from `results/*.json`
 is written into it by `paper/make_inputs.py` (macros and figures). Two values come from checks
 whose output is not in `results/`: the injection pull width and the post-hoc A/B covariance
@@ -121,7 +237,8 @@ Per-map angles (network, gauge α_143A = 0, f_sky 0.92):
 ## Verification
 
 The numerical kernels are numpy-only on purpose, so they can be checked in the **JoVin** sandbox:
-a network-less container on WSL with Python 3.12 + numpy, 512 MB RAM and a 10 s limit. The
+a network-less container using the upgraded CST science profile on `wsl:JovinHarness`,
+with 2 GiB RAM and a 30 s limit on this workstation. See [current setup and isolation limits](docs/RTX5070_RUN.md). The
 verifier extracts the exact shipped functions with `ast` (never hand-copied), runs each suite, and
 appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 
@@ -136,14 +253,32 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 <!-- RECEIPTS:START -->
 | Suite | Result | Receipt |
 |---|---|---|
-| `network` | pass 12/12 | `20261022T182616Z-55c98a3fc8f4` |
-| `differential` | pass 7/7 | `20261022T171103Z-7469960ebbb7` |
-| `mk_core` | pass 8/8 | `20261022T171106Z-676f9cad61b0` |
-| `persistence` | pass 8/8 | `20261022T182619Z-703f2a4eadd6` |
-| `accel` | pass 10/10 | `20261022T172121Z-5cd7a09a18e0` |
-| `spatial` | pass 10/10 | `20261022T202537Z-066b960ada38` |
-| `simulator` | pass 9/9 | `20261022T214914Z-3c4a576e585d` |
-| `npe` | pass 7/7 | `20261022T214916Z-c3e848b7da18` |
+| `network` | pass 12/12 | `20261023T173048Z-8a8d7c5da533` |
+| `differential` | pass 7/7 | `20261023T173103Z-ba6bdf1bcc28` |
+| `mk_core` | pass 8/8 | `20261023T173106Z-f8238746ed49` |
+| `persistence` | pass 8/8 | `20261023T173121Z-8aebdd6510a7` |
+| `accel` | pass 11/11 | `20261023T173220Z-0f5c704fb64f` |
+| `spatial` | pass 10/10 | `20261023T173111Z-fffbb6ebc58c` |
+| `simulator` | pass 9/9 | `20261023T173114Z-fc57d47d8819` |
+| `npe` | pass 7/7 | `20261023T173117Z-e9115ff5937b` |
+| `empirical_calibration` | pass 4/4 | `20261023T173051Z-1f9310a44f3a` |
+| `estimated_covariance` | pass 3/3 | `20261023T173053Z-dd5dab68ee37` |
+| `sparse_network` | pass 4/4 | `20261023T173056Z-0d03ece6fed1` |
+| `sensor_network` | pass 4/4 | `20261023T173059Z-5cb4d69f6875` |
+| `gpu_calibration` | pass 7/7 | `20261023T173137Z-48cb897d1a8b` |
+| `data_integrity` | pass 6/6 | `20261023T175103Z-7966048f9fc7` |
+| `surrogate_topology` | pass 6/6 | `20261023T185704Z-58ac2ab53e53` |
+| `copula_topology` | pass 4/4 | `20261023T190416Z-f73e0022af1e` |
+| `spherical_surrogates` | pass 6/6 | `20261023T201811Z-764956b0e705` |
+| `multiscale` | pass 6/6 | `20261023T204940Z-b587588deae4` |
+| `orientation` | pass 5/5 | `20261023T212557Z-3470461f116f` |
+| `response` | pass 9/9 | `20261023T215313Z-4fb94bd93228` |
+| `targeted` | pass 6/6 | `20261023T223751Z-b7ba43ffca03` |
+| `acquisition` | pass 6/6 | `20261023T232459Z-151d1b4bcb0e` |
+| `acquisition_index` | pass 4/4 | `20261023T234104Z-58f1101a658f` |
+| `real_splits` | pass 6/6 | `20261024T002321Z-3b4b0dd2589d` |
+| `closure_fibers` | pass 12/12 | `20261024T124021Z-15f74d97a919` |
+| `closure_fibers_v2` | pass 7/7 | `20261024T171134Z-229a18914409` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).
@@ -162,6 +297,18 @@ the network χ² averages 19.4 for 21 dof. The Gaussian errors are unbiased and 
 conservative under a cut sky.
 
 ## Hardware acceleration
+
+**NVIDIA CUDA / RTX 5070:** the same precision-gated Wishart sampler now supports
+PyTorch CUDA as well as Intel XPU. Select `CMB_CST_DEVICE=cuda:0` explicitly;
+`auto` prefers CUDA, then XPU, and `cpu` forces NumPy. An explicitly requested
+unavailable device fails. CUDA matrix products use IEEE float32 with TF32 disabled
+for the operation, while covariance assembly and inference stay in float64.
+See [the RTX 5070 run and current JoVin setup](docs/RTX5070_RUN.md) for reproducible
+commands, fresh device attestation, and the separate synthetic calibration experiment.
+The [full-resolution scale-up](docs/PLANCK_SCALEUP_RUN.md) records the newly acquired
+19.210 GB Planck input set, completed scientific input audit, and versioned real-data run.
+
+The measurements below describe the original Intel machine.
 
 The bootstrap behind χ²_diff draws 2,000 Wishart samples of the bandpowers and refits both
 estimators on each one. Two changes make that practical on a laptop:

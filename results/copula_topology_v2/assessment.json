@@ -1,0 +1,11 @@
+{
+  "status": "calibration_failed",
+  "sky_numerical_status": "completed",
+  "sky_algorithmic_threshold_flags": 9,
+  "boundary_false_flags": 20,
+  "boundary_controls": 64,
+  "accepted_cosmological_claims": [],
+  "reason": "Cropped Gaussian control calibration failed",
+  "sky_result_sha256": "4f0a0920d54fdc47ebe8e296c96c04c6c40bddeed50032f31539a29a8a6fdf4c",
+  "boundary_result_sha256": "99d71e0a266488fbbe09c5fcf5ddcf20d324a7993610627be6ad245222834a29"
+}

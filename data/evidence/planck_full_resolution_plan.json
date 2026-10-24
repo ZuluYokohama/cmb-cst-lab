@@ -1,0 +1,41 @@
+{
+  "created_utc": "2026-10-23T17:49:47.526675+00:00",
+  "scope": "Reproduction on official full-resolution Planck PR4 maps, with separate versioned outputs; no new blind discovery claim",
+  "git_head": "00b76ceb63e1fc51e8e5c2b6e916810747ddd208",
+  "raw_directory": "data/raw",
+  "work_directory": "data/work/rtx5070_real",
+  "results_directory": "results/rtx5070_real",
+  "stages": [
+    "masks",
+    "alms",
+    "spectra",
+    "transfer",
+    "analyse"
+  ],
+  "bootstrap_draws": 2000,
+  "transfer_skies_per_mask": 8,
+  "threads": 8,
+  "device": "cuda:0",
+  "maps": 8,
+  "nside": 2048,
+  "lmax": 1520,
+  "binning": {
+    "lmin": 51,
+    "lmax_exclusive": 1491,
+    "width": 20
+  },
+  "quality_requirements": [
+    "All 12 inputs downloaded and structurally validated with local SHA256 provenance",
+    "Map FITS headers match NSIDE2048, polarization convention, and detector split identity",
+    "Actual JoVin receipts match current numerical source/tests",
+    "All resulting reported angles, uncertainties and statistics finite",
+    "Report bootstrap convergence diagnostics and method limitations"
+  ],
+  "numerical_source_sha256": {
+    "scripts/run_reproduction.py": "d9d27f2b4cfd0c8de1e72dde7cecf9b359c87abf89be96460eedc55e71163049",
+    "src/cmbcst/accel.py": "2674dedd82755b8d1dc1b3dc1b5633815eb7ce1c03872a45ba0536facecd60fa",
+    "src/cmbcst/network.py": "93cf89b0a5c9defa9aa719cbeea5855640b8fa9e8c114f7a4eba00abd7aec945",
+    "src/cmbcst/differential.py": "9c0763f9d155b1fd924e1d0da183a61a4aec8c8a4cadc77727d45355a33e0a6c",
+    "src/cmbcst/mk_likelihood.py": "08d7ac64b695785e7796afc9360ef73e19ee015919316899bbf6e2c9cbae50ed"
+  }
+}

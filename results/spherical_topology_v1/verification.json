@@ -1,0 +1,193 @@
+{
+  "verified_utc": "2026-10-23T20:29:43.516101+00:00",
+  "status": "passed",
+  "scope": "Implementation and provenance verification; physical null assumptions are separate",
+  "jovin_suites": {
+    "spherical_surrogates": {
+      "matched": true,
+      "receipt_id": "20261023T201811Z-764956b0e705",
+      "total": 6
+    },
+    "copula_topology": {
+      "matched": true,
+      "receipt_id": "20261023T190416Z-f73e0022af1e",
+      "total": 4
+    },
+    "surrogate_topology": {
+      "matched": true,
+      "receipt_id": "20261023T185704Z-58ac2ab53e53",
+      "total": 6
+    },
+    "data_integrity": {
+      "matched": true,
+      "receipt_id": "20261023T175103Z-7966048f9fc7",
+      "total": 6
+    },
+    "network": {
+      "matched": true,
+      "receipt_id": "20261023T173048Z-8a8d7c5da533",
+      "total": 12
+    },
+    "empirical_calibration": {
+      "matched": true,
+      "receipt_id": "20261023T173051Z-1f9310a44f3a",
+      "total": 4
+    },
+    "estimated_covariance": {
+      "matched": true,
+      "receipt_id": "20261023T173053Z-dd5dab68ee37",
+      "total": 3
+    },
+    "sparse_network": {
+      "matched": true,
+      "receipt_id": "20261023T173056Z-0d03ece6fed1",
+      "total": 4
+    },
+    "sensor_network": {
+      "matched": true,
+      "receipt_id": "20261023T173059Z-5cb4d69f6875",
+      "total": 4
+    },
+    "differential": {
+      "matched": true,
+      "receipt_id": "20261023T173103Z-ba6bdf1bcc28",
+      "total": 7
+    },
+    "mk_core": {
+      "matched": true,
+      "receipt_id": "20261023T173106Z-f8238746ed49",
+      "total": 8
+    },
+    "accel": {
+      "matched": true,
+      "receipt_id": "20261023T173220Z-0f5c704fb64f",
+      "total": 11
+    },
+    "gpu_calibration": {
+      "matched": true,
+      "receipt_id": "20261023T173137Z-48cb897d1a8b",
+      "total": 7
+    },
+    "spatial": {
+      "matched": true,
+      "receipt_id": "20261023T173111Z-fffbb6ebc58c",
+      "total": 10
+    },
+    "simulator": {
+      "matched": true,
+      "receipt_id": "20261023T173114Z-fc57d47d8819",
+      "total": 9
+    },
+    "npe": {
+      "matched": true,
+      "receipt_id": "20261023T173117Z-e9115ff5937b",
+      "total": 7
+    },
+    "persistence": {
+      "matched": true,
+      "receipt_id": "20261023T173121Z-8aebdd6510a7",
+      "total": 8
+    }
+  },
+  "jovin_chain": {
+    "valid": true,
+    "count": 44,
+    "head_sha256": "9ed7b9789536bb598527cb5f10dcd2493d029fb9e6610b6ea430256b9b8cae4c",
+    "problems": []
+  },
+  "frozen_sources": {
+    "surrogate_topology_v1": {
+      "scripts/run_surrogate_topology.py": true,
+      "src/cmbcst/surrogate_topology.py": true,
+      "src/cmbcst/persistence.py": true,
+      "src/cmbcst/spectra.py": true,
+      "src/cmbcst/theory.py": true,
+      "docs/SURROGATE_TOPOLOGY_SPEC.md": true
+    },
+    "copula_topology_v2": {
+      "scripts/run_copula_topology.py": true,
+      "src/cmbcst/surrogate_topology.py": true,
+      "src/cmbcst/persistence.py": true,
+      "src/cmbcst/spectra.py": true,
+      "src/cmbcst/theory.py": true,
+      "src/cmbcst/copula_topology.py": true,
+      "docs/COPULA_TOPOLOGY_SPEC.md": true,
+      "docs/SURROGATE_TOPOLOGY_SPEC.md": true
+    },
+    "copula_boundary_audit_v1": {
+      "scripts/run_copula_topology.py": true,
+      "src/cmbcst/surrogate_topology.py": true,
+      "src/cmbcst/persistence.py": true,
+      "src/cmbcst/spectra.py": true,
+      "src/cmbcst/theory.py": true,
+      "src/cmbcst/copula_topology.py": true,
+      "docs/COPULA_TOPOLOGY_SPEC.md": true,
+      "docs/SURROGATE_TOPOLOGY_SPEC.md": true,
+      "scripts/audit_copula_boundaries.py": true
+    },
+    "spherical_topology_v1": {
+      "scripts/run_spherical_topology.py": true,
+      "docs/SPHERICAL_TOPOLOGY_SPEC.md": true,
+      "src/cmbcst/spherical_surrogates.py": true,
+      "src/cmbcst/spectra.py": true,
+      "src/cmbcst/theory.py": true,
+      "src/cmbcst/persistence.py": true,
+      "src/cmbcst/surrogate_topology.py": true,
+      "src/cmbcst/copula_topology.py": true
+    }
+  },
+  "prior_artifacts_preserved": {
+    "plan.json": true,
+    "validation.json": true,
+    "result.json": true,
+    "assessment.json": true,
+    "topology.png": true,
+    "calibration_controls.png": true,
+    "copula_report": true,
+    "boundary_result": true,
+    "full_planck_result": true
+  },
+  "scientific_calculation_checks": {
+    "ensemble_shape": true,
+    "finite_statistics": true,
+    "all_1063_precision_checks": true,
+    "all_control_tail_and_holm_values": true,
+    "gate_decision": true,
+    "all_sky_tail_and_holm_values": true,
+    "all_candidate_flags": true,
+    "positive_control": true
+  },
+  "bindings": {
+    "stage_result": true,
+    "stage_plan": true,
+    "input_audit": true,
+    "package_audit": true,
+    "input_inventory": true,
+    "observed_alm": true,
+    "conditional_cl": true,
+    "plan_sha256": true,
+    "conditioning_sha256": true,
+    "ensemble_sha256": true,
+    "validation_sha256": true,
+    "observed_patches": true
+  },
+  "local_tests": {
+    "passed": 177,
+    "skipped": 3,
+    "summary_matched": true,
+    "log_sha256": "f17a8b62380859b7c7efe43d52b3c92b727e9006b573e211956c54b4d223ee62"
+  },
+  "artifact_sha256": {
+    "plan.json": "670c918caf64503c6465900866e5d7ee2b093e4179fa7a36f6157aeac4a73f9b",
+    "conditioning.json": "f25d9bcd75231b73dd3691703cd6305bb82c131f04272a874e717e5212f69960",
+    "ensemble.json": "723fedbd51900b179b0387fc1d0920ebe64d31d52ca15bab268d97006d08a891",
+    "validation.json": "04e47bfb54b0695b9059eb470d0b30465d5f48660b0b29df57d55c0163fa1753",
+    "positive_control.json": "49cac58e976d280415733961e799fb77ae0b1eaa7534551e9a3bd3c306657899",
+    "result.json": "eff9f19097d893c8ddd8319053e7f04b452a08c5c9059c867c98d4fabfe49d59",
+    "stage_audit.json": "a92333a2a2967ef23a93df7b4a6f13e82bf1c575c6d34ffcbbc02dc2950a719d",
+    "assessment.json": "71ce5cf44d2b4eb73ca1e08dd82c96e89fce5d0460b83477ffbeac3db5499bd3",
+    "calibration.png": "e67225fb53dd5a0efd64261e3fe69f8a8fc874de82976edf8673dcd43458ef3d",
+    "topology.png": "f96d7f8cd849196242908b9b59863fdcb0ee239f5d7832442ef9416a7c35d056"
+  },
+  "report_sha256": "000913a9ac42b37ddeaff8d48c9cc4d34f2e0c116849724c9001dc0986c1f3f6"
+}

@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "draws": 512,
+  "methods": [
+    "baseline",
+    "baseline_plus_responses"
+  ],
+  "flags": [
+    29,
+    37
+  ],
+  "rates": [
+    0.056640625,
+    0.072265625
+  ],
+  "wilson_95": [
+    [
+      0.039723226447529306,
+      0.08016139655674563
+    ],
+    [
+      0.05288070279816797,
+      0.09802120221476687
+    ]
+  ],
+  "max_flags": 40,
+  "nuisance_subgroups": {
+    "foreground_low": {
+      "draws": 250,
+      "flags": [
+        13,
+        14
+      ]
+    },
+    "foreground_high": {
+      "draws": 262,
+      "flags": [
+        16,
+        23
+      ]
+    },
+    "noise_low": {
+      "draws": 264,
+      "flags": [
+        15,
+        24
+      ]
+    },
+    "noise_high": {
+      "draws": 248,
+      "flags": [
+        14,
+        13
+      ]
+    }
+  },
+  "scope": "Matched synthetic mixture, fixed model/reference; not a Planck adequacy test"
+}

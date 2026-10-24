@@ -1,0 +1,23 @@
+{
+  "tile": 170,
+  "stage": "fresh",
+  "representation": "capacity",
+  "device": 1,
+  "starts": 128,
+  "seed": 82024102027,
+  "signs": "first half maximize; second half minimize",
+  "seed_derivation": "SeedSequence([seed,tile,source=0/fresh=1,start]); fresh representations share raw kicks",
+  "name": "tile_170_fresh_capacity",
+  "status": "complete",
+  "starts_started": 128,
+  "starts_completed": 128,
+  "errors": [],
+  "terminal_failure_starts": 0,
+  "seconds": 97.76653792299999,
+  "arrays": "cases/tile_170_fresh_capacity.npz",
+  "arrays_sha256": "848888224c091acc50858e19fb6e73144fbe676bf92246bf86523d14e6e4e125",
+  "rms_ratio_names": [
+    "tile",
+    "global"
+  ]
+}

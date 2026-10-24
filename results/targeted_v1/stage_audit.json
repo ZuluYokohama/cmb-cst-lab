@@ -1,0 +1,11 @@
+{
+  "status": "no_validated_gain",
+  "started_utc": "2026-10-23T22:40:43.235957+00:00",
+  "plan_sha256": "63d37ed74b4ce6740ea39be73a4323818c3c3e4c284fa63cecaf670e9a1335ac",
+  "completed_utc": "2026-10-23T22:47:29.829859+00:00",
+  "elapsed_seconds": 412.11358029099995,
+  "draws": 6682,
+  "numerical_failures": 0,
+  "score_error": 2.222081428285477e-14,
+  "result_sha256": "9356039f191f6021820b941a84e5d87820169a66cd3a945a4f74ef4ece985407"
+}

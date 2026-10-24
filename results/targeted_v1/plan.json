@@ -1,0 +1,584 @@
+{
+  "created_utc": "2026-10-23T22:40:43.085846+00:00",
+  "scope": "Synthetic physical blind-spot pilot; no observational Planck test",
+  "base_seed": 876003142026,
+  "compute_limit_seconds": 1800,
+  "batch_size": 8,
+  "maximum_draws": 6682,
+  "recipes": [
+    {
+      "id": "q00",
+      "family": "quadratic",
+      "amplitude": 0.1,
+      "variant": -1
+    },
+    {
+      "id": "q01",
+      "family": "quadratic",
+      "amplitude": 0.1,
+      "variant": 1
+    },
+    {
+      "id": "q02",
+      "family": "quadratic",
+      "amplitude": 0.2,
+      "variant": -1
+    },
+    {
+      "id": "q03",
+      "family": "quadratic",
+      "amplitude": 0.2,
+      "variant": 1
+    },
+    {
+      "id": "q04",
+      "family": "quadratic",
+      "amplitude": 0.3,
+      "variant": -1
+    },
+    {
+      "id": "q05",
+      "family": "quadratic",
+      "amplitude": 0.3,
+      "variant": 1
+    },
+    {
+      "id": "c00",
+      "family": "compact",
+      "amplitude": 0.1,
+      "variant": 0.5
+    },
+    {
+      "id": "c01",
+      "family": "compact",
+      "amplitude": 0.1,
+      "variant": 1.0
+    },
+    {
+      "id": "c02",
+      "family": "compact",
+      "amplitude": 0.2,
+      "variant": 0.5
+    },
+    {
+      "id": "c03",
+      "family": "compact",
+      "amplitude": 0.2,
+      "variant": 1.0
+    },
+    {
+      "id": "c04",
+      "family": "compact",
+      "amplitude": 0.3,
+      "variant": 0.5
+    },
+    {
+      "id": "c05",
+      "family": "compact",
+      "amplitude": 0.3,
+      "variant": 1.0
+    },
+    {
+      "id": "f00",
+      "family": "filament",
+      "amplitude": 0.1,
+      "variant": 0.5
+    },
+    {
+      "id": "f01",
+      "family": "filament",
+      "amplitude": 0.1,
+      "variant": 1.0
+    },
+    {
+      "id": "f02",
+      "family": "filament",
+      "amplitude": 0.2,
+      "variant": 0.5
+    },
+    {
+      "id": "f03",
+      "family": "filament",
+      "amplitude": 0.2,
+      "variant": 1.0
+    },
+    {
+      "id": "f04",
+      "family": "filament",
+      "amplitude": 0.3,
+      "variant": 0.5
+    },
+    {
+      "id": "f05",
+      "family": "filament",
+      "amplitude": 0.3,
+      "variant": 1.0
+    }
+  ],
+  "development_roles": [
+    {
+      "name": "train_null",
+      "count": 1024,
+      "offset": 0,
+      "recipe": null
+    },
+    {
+      "name": "train_q00",
+      "count": 64,
+      "offset": 10000,
+      "recipe": {
+        "id": "q00",
+        "family": "quadratic",
+        "amplitude": 0.1,
+        "variant": -1
+      }
+    },
+    {
+      "name": "train_q01",
+      "count": 64,
+      "offset": 11000,
+      "recipe": {
+        "id": "q01",
+        "family": "quadratic",
+        "amplitude": 0.1,
+        "variant": 1
+      }
+    },
+    {
+      "name": "train_q02",
+      "count": 64,
+      "offset": 12000,
+      "recipe": {
+        "id": "q02",
+        "family": "quadratic",
+        "amplitude": 0.2,
+        "variant": -1
+      }
+    },
+    {
+      "name": "train_q03",
+      "count": 64,
+      "offset": 13000,
+      "recipe": {
+        "id": "q03",
+        "family": "quadratic",
+        "amplitude": 0.2,
+        "variant": 1
+      }
+    },
+    {
+      "name": "train_q04",
+      "count": 64,
+      "offset": 14000,
+      "recipe": {
+        "id": "q04",
+        "family": "quadratic",
+        "amplitude": 0.3,
+        "variant": -1
+      }
+    },
+    {
+      "name": "train_q05",
+      "count": 64,
+      "offset": 15000,
+      "recipe": {
+        "id": "q05",
+        "family": "quadratic",
+        "amplitude": 0.3,
+        "variant": 1
+      }
+    },
+    {
+      "name": "train_c00",
+      "count": 64,
+      "offset": 16000,
+      "recipe": {
+        "id": "c00",
+        "family": "compact",
+        "amplitude": 0.1,
+        "variant": 0.5
+      }
+    },
+    {
+      "name": "train_c01",
+      "count": 64,
+      "offset": 17000,
+      "recipe": {
+        "id": "c01",
+        "family": "compact",
+        "amplitude": 0.1,
+        "variant": 1.0
+      }
+    },
+    {
+      "name": "train_c02",
+      "count": 64,
+      "offset": 18000,
+      "recipe": {
+        "id": "c02",
+        "family": "compact",
+        "amplitude": 0.2,
+        "variant": 0.5
+      }
+    },
+    {
+      "name": "train_c03",
+      "count": 64,
+      "offset": 19000,
+      "recipe": {
+        "id": "c03",
+        "family": "compact",
+        "amplitude": 0.2,
+        "variant": 1.0
+      }
+    },
+    {
+      "name": "train_c04",
+      "count": 64,
+      "offset": 20000,
+      "recipe": {
+        "id": "c04",
+        "family": "compact",
+        "amplitude": 0.3,
+        "variant": 0.5
+      }
+    },
+    {
+      "name": "train_c05",
+      "count": 64,
+      "offset": 21000,
+      "recipe": {
+        "id": "c05",
+        "family": "compact",
+        "amplitude": 0.3,
+        "variant": 1.0
+      }
+    },
+    {
+      "name": "train_f00",
+      "count": 64,
+      "offset": 22000,
+      "recipe": {
+        "id": "f00",
+        "family": "filament",
+        "amplitude": 0.1,
+        "variant": 0.5
+      }
+    },
+    {
+      "name": "train_f01",
+      "count": 64,
+      "offset": 23000,
+      "recipe": {
+        "id": "f01",
+        "family": "filament",
+        "amplitude": 0.1,
+        "variant": 1.0
+      }
+    },
+    {
+      "name": "train_f02",
+      "count": 64,
+      "offset": 24000,
+      "recipe": {
+        "id": "f02",
+        "family": "filament",
+        "amplitude": 0.2,
+        "variant": 0.5
+      }
+    },
+    {
+      "name": "train_f03",
+      "count": 64,
+      "offset": 25000,
+      "recipe": {
+        "id": "f03",
+        "family": "filament",
+        "amplitude": 0.2,
+        "variant": 1.0
+      }
+    },
+    {
+      "name": "train_f04",
+      "count": 64,
+      "offset": 26000,
+      "recipe": {
+        "id": "f04",
+        "family": "filament",
+        "amplitude": 0.3,
+        "variant": 0.5
+      }
+    },
+    {
+      "name": "train_f05",
+      "count": 64,
+      "offset": 27000,
+      "recipe": {
+        "id": "f05",
+        "family": "filament",
+        "amplitude": 0.3,
+        "variant": 1.0
+      }
+    },
+    {
+      "name": "dev_cal",
+      "count": 499,
+      "offset": 40000,
+      "recipe": null
+    },
+    {
+      "name": "dev_null",
+      "count": 256,
+      "offset": 41000,
+      "recipe": null
+    },
+    {
+      "name": "dev_q00",
+      "count": 32,
+      "offset": 50000,
+      "recipe": {
+        "id": "q00",
+        "family": "quadratic",
+        "amplitude": 0.1,
+        "variant": -1
+      }
+    },
+    {
+      "name": "dev_q01",
+      "count": 32,
+      "offset": 51000,
+      "recipe": {
+        "id": "q01",
+        "family": "quadratic",
+        "amplitude": 0.1,
+        "variant": 1
+      }
+    },
+    {
+      "name": "dev_q02",
+      "count": 32,
+      "offset": 52000,
+      "recipe": {
+        "id": "q02",
+        "family": "quadratic",
+        "amplitude": 0.2,
+        "variant": -1
+      }
+    },
+    {
+      "name": "dev_q03",
+      "count": 32,
+      "offset": 53000,
+      "recipe": {
+        "id": "q03",
+        "family": "quadratic",
+        "amplitude": 0.2,
+        "variant": 1
+      }
+    },
+    {
+      "name": "dev_q04",
+      "count": 32,
+      "offset": 54000,
+      "recipe": {
+        "id": "q04",
+        "family": "quadratic",
+        "amplitude": 0.3,
+        "variant": -1
+      }
+    },
+    {
+      "name": "dev_q05",
+      "count": 32,
+      "offset": 55000,
+      "recipe": {
+        "id": "q05",
+        "family": "quadratic",
+        "amplitude": 0.3,
+        "variant": 1
+      }
+    },
+    {
+      "name": "dev_c00",
+      "count": 32,
+      "offset": 56000,
+      "recipe": {
+        "id": "c00",
+        "family": "compact",
+        "amplitude": 0.1,
+        "variant": 0.5
+      }
+    },
+    {
+      "name": "dev_c01",
+      "count": 32,
+      "offset": 57000,
+      "recipe": {
+        "id": "c01",
+        "family": "compact",
+        "amplitude": 0.1,
+        "variant": 1.0
+      }
+    },
+    {
+      "name": "dev_c02",
+      "count": 32,
+      "offset": 58000,
+      "recipe": {
+        "id": "c02",
+        "family": "compact",
+        "amplitude": 0.2,
+        "variant": 0.5
+      }
+    },
+    {
+      "name": "dev_c03",
+      "count": 32,
+      "offset": 59000,
+      "recipe": {
+        "id": "c03",
+        "family": "compact",
+        "amplitude": 0.2,
+        "variant": 1.0
+      }
+    },
+    {
+      "name": "dev_c04",
+      "count": 32,
+      "offset": 60000,
+      "recipe": {
+        "id": "c04",
+        "family": "compact",
+        "amplitude": 0.3,
+        "variant": 0.5
+      }
+    },
+    {
+      "name": "dev_c05",
+      "count": 32,
+      "offset": 61000,
+      "recipe": {
+        "id": "c05",
+        "family": "compact",
+        "amplitude": 0.3,
+        "variant": 1.0
+      }
+    },
+    {
+      "name": "dev_f00",
+      "count": 32,
+      "offset": 62000,
+      "recipe": {
+        "id": "f00",
+        "family": "filament",
+        "amplitude": 0.1,
+        "variant": 0.5
+      }
+    },
+    {
+      "name": "dev_f01",
+      "count": 32,
+      "offset": 63000,
+      "recipe": {
+        "id": "f01",
+        "family": "filament",
+        "amplitude": 0.1,
+        "variant": 1.0
+      }
+    },
+    {
+      "name": "dev_f02",
+      "count": 32,
+      "offset": 64000,
+      "recipe": {
+        "id": "f02",
+        "family": "filament",
+        "amplitude": 0.2,
+        "variant": 0.5
+      }
+    },
+    {
+      "name": "dev_f03",
+      "count": 32,
+      "offset": 65000,
+      "recipe": {
+        "id": "f03",
+        "family": "filament",
+        "amplitude": 0.2,
+        "variant": 1.0
+      }
+    },
+    {
+      "name": "dev_f04",
+      "count": 32,
+      "offset": 66000,
+      "recipe": {
+        "id": "f04",
+        "family": "filament",
+        "amplitude": 0.3,
+        "variant": 0.5
+      }
+    },
+    {
+      "name": "dev_f05",
+      "count": 32,
+      "offset": 67000,
+      "recipe": {
+        "id": "f05",
+        "family": "filament",
+        "amplitude": 0.3,
+        "variant": 1.0
+      }
+    }
+  ],
+  "response_indices": [
+    7,
+    16,
+    73,
+    79,
+    82,
+    88
+  ],
+  "source_sha256": {
+    "scripts/run_response_benchmark.py": "491fef622a316df35227a541e4cbb709d730456f3f414fb00837476530f61e56",
+    "docs/RESPONSE_SPEC.md": "54c54219d224d47a94be9fcb0811d29beceecd0f5c5468e6b7d70e5a67db1bdf",
+    "scripts/record_response_cuda.py": "33fd8e714cc724ef12cc4133db43ccbb43083e28890e590ce7178bf6b139b3e8",
+    "src/cmbcst/response.py": "405188c125abfb59f9871855c1c9b14f2fdb5ffb7c567a40e718445014dc7659",
+    "src/cmbcst/response_sky.py": "0ca637658205f1d39f8823a3acd565d5fddc93374d532eb232b0149ae41ea126",
+    "src/cmbcst/multiscale.py": "ed967a9bc082a70ce913552cbff15d5493f9e2a066ffc9e353d4c5dda3be9e25",
+    "src/cmbcst/copula_topology.py": "d9b760dddf002eb7b9bc1094b6ad716940fc9391a8ffd61fa48831826767aaca",
+    "src/cmbcst/surrogate_topology.py": "fbe8123721a14e22294252f91aa26ce6cbbf7ab0c2d009705be5f2220a560ae8",
+    "src/cmbcst/persistence.py": "353b240eeb6826d8d7fce5a2592e2e60e0c803ad9aa8125a77da4d400e77f498",
+    "src/cmbcst/spherical_surrogates.py": "7c9cc7107ab60e8ca77007b0c0eb380081e534a250dcad15321930a312500ccb",
+    "src/cmbcst/spectra.py": "f49f508b30df565a94d466e70a0e79606721b50832893177a0ca6c20a55085e1",
+    "src/cmbcst/theory.py": "2f08159499b17db9ddb4878563fbe30bb06da735a90968dd924624fb6e4f7e5e",
+    "tests/sandbox/jovin_tests_response.py": "d7a9b9f7c588e6ecdd06d13eadc61e5346c057aadce8d85f223f8cb4f6d43e24",
+    "tests/test_response.py": "45b6e791430361ed2292df708e91fb09176c472b64298a4d7575b1c536ae375a",
+    "scripts/run_targeted_benchmark.py": "b695c8ae340c6767859b5f77c99999fb8fe3a97e0807712dbc0d7c8a3e8974e1",
+    "scripts/record_targeted_cuda.py": "f99ab31b9ae8937b3eaeab3fa8787d4c5d771fb38bf733448d4700d6e736e2c3",
+    "docs/TARGETED_SPEC.md": "bf92e38da9970978b7e054919d47c37373e247a8be0d1cae4f8726a081972a77",
+    "src/cmbcst/targeted.py": "d7ea20b64f4c9cc13bd31b508023a72ef2888772db726b596db9b6583d0a51f8",
+    "src/cmbcst/targeted_sky.py": "e545749e76b8681dba7abe6940490de5eed9b88b3d0b27bdf8847d3295d6972f",
+    "tests/test_targeted.py": "b08be4489cdbd9bc85d45572aacc08bb8ac345b2a7453006800f12a80372f66a",
+    "tests/sandbox/jovin_tests_targeted.py": "1eb5e83d1758a9b34daa266e50e062e705e63aa1281c629b8c6471f81d43c2d4"
+  },
+  "jovin_receipt_id": "20261023T223751Z-b7ba43ffca03",
+  "jovin_bundle_sha256": "b51f006c528a0cc0945c2ed49ea12d625db28c2dd525ba2b3d3d5bf5968325ec",
+  "hardware_fixture_sha256": "98cf64f322d2ca7ab7dc2c942b7abf623fdc8d790c3f23fc82012ccc43320fc3",
+  "lmax": 256,
+  "nside": 128,
+  "threads": 8,
+  "device": "NVIDIA GeForce RTX 5070",
+  "numpy": "2.5.4",
+  "torch": "2.14.1+cu130",
+  "cuda": "13.0",
+  "ducc0": "0.42.0",
+  "camb": "2.0.5",
+  "scaled_tolerance": 1e-10,
+  "nominal_alpha": 0.05,
+  "null_wilson_upper_limit": 0.075,
+  "maximum_null_rate_excess": 0.01,
+  "maximum_strong_loss": 0.05,
+  "minimum_gain": 0.1,
+  "holm_family": 3
+}

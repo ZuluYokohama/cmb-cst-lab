@@ -1,0 +1,16 @@
+{
+  "status": "no_validated_gain",
+  "started_utc": "2026-10-23T21:57:21.863408+00:00",
+  "plan_sha256": "d4777b587af8a6f37649970414062c375ef34f20659069d2dfa0e534e46de9d8",
+  "prepare_seconds": 2.3998535230000044,
+  "completed_utc": "2026-10-23T22:00:42.921788+00:00",
+  "elapsed_s": 203.305867728,
+  "draws": 3303,
+  "numerical_failures": 0,
+  "nonfinite_failures": 0,
+  "max_baseline_error": 8.348333190950446e-15,
+  "max_response_error": 2.0814077440448656e-14,
+  "max_signal_shell_error": 2.7755575615628914e-15,
+  "score_scaled_error": 1.1200448280789751e-14,
+  "result_sha256": "bf78a5e80f4bf1dc3426727f813d66bce78fd5142e7454bdc2ba0d616e40c73c"
+}

@@ -1,0 +1,53 @@
+{
+  "created_utc": "2026-10-23T20:51:46.194177+00:00",
+  "seed": 66510322026,
+  "reference_skies": 999,
+  "control_skies": 64,
+  "batch_size": 8,
+  "lags": [
+    1,
+    2,
+    4,
+    8,
+    16
+  ],
+  "features": [
+    "S2_log_slope",
+    "mean_flatness_excess",
+    "mean_sixth_excess",
+    "flatness_log_slope",
+    "sixth_log_slope",
+    "mean_directional_anisotropy"
+  ],
+  "holm_family_size": 18,
+  "candidate_p": 0.05,
+  "max_control_flags": 8,
+  "scaled_cpu_gpu_tolerance": 1e-10,
+  "source_sha256": {
+    "scripts/run_spherical_topology.py": "12ccb71772f3f4f5778118bee30191566c3d48d38b43ec5848c3852a8c1dfd14",
+    "docs/SPHERICAL_TOPOLOGY_SPEC.md": "a01a46dd16164065fcff3dbdd2e2ab74861f02caf9c397ee08638ad33ba500cf",
+    "src/cmbcst/spherical_surrogates.py": "7c9cc7107ab60e8ca77007b0c0eb380081e534a250dcad15321930a312500ccb",
+    "src/cmbcst/spectra.py": "f49f508b30df565a94d466e70a0e79606721b50832893177a0ca6c20a55085e1",
+    "src/cmbcst/theory.py": "2f08159499b17db9ddb4878563fbe30bb06da735a90968dd924624fb6e4f7e5e",
+    "src/cmbcst/persistence.py": "353b240eeb6826d8d7fce5a2592e2e60e0c803ad9aa8125a77da4d400e77f498",
+    "src/cmbcst/surrogate_topology.py": "fbe8123721a14e22294252f91aa26ce6cbbf7ab0c2d009705be5f2220a560ae8",
+    "src/cmbcst/copula_topology.py": "d9b760dddf002eb7b9bc1094b6ad716940fc9391a8ffd61fa48831826767aaca",
+    "scripts/run_multiscale.py": "d5ede16a76210c4c00c0d9b0717dfcf52f47d7afc36bddd10d407b99ef1447ee",
+    "src/cmbcst/multiscale.py": "ed967a9bc082a70ce913552cbff15d5493f9e2a066ffc9e353d4c5dda3be9e25",
+    "docs/MULTISCALE_SPEC.md": "a7bd34282ebf6aa86c6245acfca0af880a7d0307729f25f392a416061184c72f"
+  },
+  "source_artifacts_sha256": {
+    "results/spherical_topology_v1/plan.json": "670c918caf64503c6465900866e5d7ee2b093e4179fa7a36f6157aeac4a73f9b",
+    "results/spherical_topology_v1/conditioning.json": "f25d9bcd75231b73dd3691703cd6305bb82c131f04272a874e717e5212f69960",
+    "results/spherical_topology_v1/result.json": "eff9f19097d893c8ddd8319053e7f04b452a08c5c9059c867c98d4fabfe49d59",
+    "data/work/spherical_topology_v1/conditional_cl.npy": "992dc7a684ca6f084c7cb94b7ce2a392461e7a6fed9d668394698d3cc381b43a",
+    "data/work/spherical_topology_v1/observed_patches.npz": "ec5cb43d2ae1a7dd5cbb42592ab122760cf693d2451fa452676b015faef90f43"
+  },
+  "jovin_receipt_id": "20261023T204940Z-b587588deae4",
+  "jovin_bundle_sha256": "bff833521a9cd81362487db1aaa33c78805a23041284c6451898f9ee3822e959",
+  "numpy": "2.5.4",
+  "torch": "2.14.1+cu130",
+  "cuda": "13.0",
+  "device": "NVIDIA GeForce RTX 5070",
+  "scope": "Exploratory finite-scale diagnostics on previously examined uncleaned sky; no novelty, fractal-dimension or cosmological claim"
+}

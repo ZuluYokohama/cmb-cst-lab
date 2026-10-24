@@ -1,0 +1,168 @@
+{
+  "status": "no_validated_gain",
+  "completed_utc": "2026-10-23T22:47:29.379893+00:00",
+  "methods": [
+    "original_omnibus",
+    "trained_baseline",
+    "six_responses"
+  ],
+  "null": {
+    "draws": 1024,
+    "flags": [
+      51,
+      52,
+      47
+    ],
+    "rates": [
+      0.0498046875,
+      0.05078125,
+      0.0458984375
+    ],
+    "wilson_95": [
+      [
+        0.03808200411528848,
+        0.06489249444418058
+      ],
+      [
+        0.03893348394607315,
+        0.06598683999613024
+      ],
+      [
+        0.03469025477143743,
+        0.060500942257094265
+      ]
+    ]
+  },
+  "calibration_gate": true,
+  "retention_gate": true,
+  "strong_controls": [
+    {
+      "family": "quadratic",
+      "draws": 128,
+      "flags": [
+        128,
+        126,
+        126
+      ],
+      "rates": [
+        1.0,
+        0.984375,
+        0.984375
+      ],
+      "loss": 0.0
+    },
+    {
+      "family": "compact",
+      "draws": 128,
+      "flags": [
+        88,
+        94,
+        93
+      ],
+      "rates": [
+        0.6875,
+        0.734375,
+        0.7265625
+      ],
+      "loss": 0.0078125
+    },
+    {
+      "family": "filament",
+      "draws": 128,
+      "flags": [
+        18,
+        22,
+        22
+      ],
+      "rates": [
+        0.140625,
+        0.171875,
+        0.171875
+      ],
+      "loss": 0.0
+    }
+  ],
+  "comparisons": [
+    {
+      "family": "quadratic",
+      "recipe": "q00",
+      "draws": 256,
+      "flags": [
+        88,
+        28,
+        28
+      ],
+      "rates": [
+        0.34375,
+        0.109375,
+        0.109375
+      ],
+      "gain": 0.0,
+      "wins": 2,
+      "losses": 2,
+      "raw_p": 0.6875,
+      "bootstrap_95": [
+        -0.015625,
+        0.015625
+      ],
+      "p_holm": 1.0,
+      "provisional_gain": false
+    },
+    {
+      "family": "compact",
+      "recipe": "c01",
+      "draws": 256,
+      "flags": [
+        13,
+        12,
+        13
+      ],
+      "rates": [
+        0.05078125,
+        0.046875,
+        0.05078125
+      ],
+      "gain": 0.00390625,
+      "wins": 1,
+      "losses": 0,
+      "raw_p": 0.5,
+      "bootstrap_95": [
+        0.0,
+        0.01171875
+      ],
+      "p_holm": 1.0,
+      "provisional_gain": false
+    },
+    {
+      "family": "filament",
+      "recipe": "f03",
+      "draws": 256,
+      "flags": [
+        17,
+        11,
+        13
+      ],
+      "rates": [
+        0.06640625,
+        0.04296875,
+        0.05078125
+      ],
+      "gain": 0.0078125,
+      "wins": 3,
+      "losses": 1,
+      "raw_p": 0.3125,
+      "bootstrap_95": [
+        -0.0078125,
+        0.0234375
+      ],
+      "p_holm": 0.9375,
+      "provisional_gain": false
+    }
+  ],
+  "accepted_cosmological_claims": [],
+  "observational_planck_test_performed": false,
+  "plan_sha256": "63d37ed74b4ce6740ea39be73a4323818c3c3e4c284fa63cecaf670e9a1335ac",
+  "lock_sha256": "a4a7e53ad0ae432a6e1544f52b09d3e635370f6b55983335677ec986149a410f",
+  "final_sha256": "425ee0e1ffa9a2807531054c86756d207b53b9599bf673c0eea0052c70448543",
+  "model_sha256": "b2084f8df9d4702b2a7a0307493a9fe8bd1872c90916d1ce1c667eb664a21c32"
+}

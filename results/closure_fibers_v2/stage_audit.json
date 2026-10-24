@@ -1,0 +1,15 @@
+{
+  "status": "complete",
+  "started_utc": "2026-10-24T17:28:19.461661+00:00",
+  "plan_sha256": "83e8f8c6c1565491fb73265b6047ec2a83a57647b24d23301110b192cc6161ca",
+  "stages": {
+    "preprocessing_seconds": 23.988512383,
+    "search_wall_seconds": 1740.621510643
+  },
+  "completed_utc": "2026-10-24T19:01:49.755279+00:00",
+  "scientific_completed_utc": "2026-10-24T19:01:49.381861+00:00",
+  "result_sha256": "ecccb9acbc6f6360e4026cc7a18e88b35a806fc80ec2893eb3dda55119240372",
+  "elapsed_seconds": 5781.355708733,
+  "utc_elapsed_seconds": 5610.342437,
+  "budget_elapsed_seconds": 5781.355708733
+}

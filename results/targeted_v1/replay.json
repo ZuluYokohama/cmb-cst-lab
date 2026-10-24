@@ -1,0 +1,1139 @@
+{
+  "status": "passed",
+  "created_utc": "2026-10-23T22:48:23.199640+00:00",
+  "records": [
+    {
+      "phase": "development",
+      "role": "train_null",
+      "index": 0,
+      "seed": 876003142026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_null",
+      "index": 1023,
+      "seed": 876003143049,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_q00",
+      "index": 0,
+      "seed": 876003152026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_q00",
+      "index": 63,
+      "seed": 876003152089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_q01",
+      "index": 0,
+      "seed": 876003153026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_q01",
+      "index": 63,
+      "seed": 876003153089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_q02",
+      "index": 0,
+      "seed": 876003154026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_q02",
+      "index": 63,
+      "seed": 876003154089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_q03",
+      "index": 0,
+      "seed": 876003155026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_q03",
+      "index": 63,
+      "seed": 876003155089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_q04",
+      "index": 0,
+      "seed": 876003156026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_q04",
+      "index": 63,
+      "seed": 876003156089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_q05",
+      "index": 0,
+      "seed": 876003157026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_q05",
+      "index": 63,
+      "seed": 876003157089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_c00",
+      "index": 0,
+      "seed": 876003158026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_c00",
+      "index": 63,
+      "seed": 876003158089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_c01",
+      "index": 0,
+      "seed": 876003159026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_c01",
+      "index": 63,
+      "seed": 876003159089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_c02",
+      "index": 0,
+      "seed": 876003160026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_c02",
+      "index": 63,
+      "seed": 876003160089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_c03",
+      "index": 0,
+      "seed": 876003161026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_c03",
+      "index": 63,
+      "seed": 876003161089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_c04",
+      "index": 0,
+      "seed": 876003162026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_c04",
+      "index": 63,
+      "seed": 876003162089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_c05",
+      "index": 0,
+      "seed": 876003163026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_c05",
+      "index": 63,
+      "seed": 876003163089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_f00",
+      "index": 0,
+      "seed": 876003164026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_f00",
+      "index": 63,
+      "seed": 876003164089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_f01",
+      "index": 0,
+      "seed": 876003165026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_f01",
+      "index": 63,
+      "seed": 876003165089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_f02",
+      "index": 0,
+      "seed": 876003166026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_f02",
+      "index": 63,
+      "seed": 876003166089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_f03",
+      "index": 0,
+      "seed": 876003167026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_f03",
+      "index": 63,
+      "seed": 876003167089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_f04",
+      "index": 0,
+      "seed": 876003168026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_f04",
+      "index": 63,
+      "seed": 876003168089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_f05",
+      "index": 0,
+      "seed": 876003169026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "train_f05",
+      "index": 63,
+      "seed": 876003169089,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_cal",
+      "index": 0,
+      "seed": 876003182026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_cal",
+      "index": 498,
+      "seed": 876003182524,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_null",
+      "index": 0,
+      "seed": 876003183026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_null",
+      "index": 255,
+      "seed": 876003183281,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_q00",
+      "index": 0,
+      "seed": 876003192026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_q00",
+      "index": 31,
+      "seed": 876003192057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_q01",
+      "index": 0,
+      "seed": 876003193026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_q01",
+      "index": 31,
+      "seed": 876003193057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_q02",
+      "index": 0,
+      "seed": 876003194026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_q02",
+      "index": 31,
+      "seed": 876003194057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_q03",
+      "index": 0,
+      "seed": 876003195026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_q03",
+      "index": 31,
+      "seed": 876003195057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_q04",
+      "index": 0,
+      "seed": 876003196026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_q04",
+      "index": 31,
+      "seed": 876003196057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_q05",
+      "index": 0,
+      "seed": 876003197026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_q05",
+      "index": 31,
+      "seed": 876003197057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_c00",
+      "index": 0,
+      "seed": 876003198026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_c00",
+      "index": 31,
+      "seed": 876003198057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_c01",
+      "index": 0,
+      "seed": 876003199026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_c01",
+      "index": 31,
+      "seed": 876003199057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_c02",
+      "index": 0,
+      "seed": 876003200026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_c02",
+      "index": 31,
+      "seed": 876003200057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_c03",
+      "index": 0,
+      "seed": 876003201026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_c03",
+      "index": 31,
+      "seed": 876003201057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_c04",
+      "index": 0,
+      "seed": 876003202026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_c04",
+      "index": 31,
+      "seed": 876003202057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_c05",
+      "index": 0,
+      "seed": 876003203026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_c05",
+      "index": 31,
+      "seed": 876003203057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_f00",
+      "index": 0,
+      "seed": 876003204026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_f00",
+      "index": 31,
+      "seed": 876003204057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_f01",
+      "index": 0,
+      "seed": 876003205026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_f01",
+      "index": 31,
+      "seed": 876003205057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_f02",
+      "index": 0,
+      "seed": 876003206026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_f02",
+      "index": 31,
+      "seed": 876003206057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_f03",
+      "index": 0,
+      "seed": 876003207026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_f03",
+      "index": 31,
+      "seed": 876003207057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_f04",
+      "index": 0,
+      "seed": 876003208026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_f04",
+      "index": 31,
+      "seed": 876003208057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_f05",
+      "index": 0,
+      "seed": 876003209026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "development",
+      "role": "dev_f05",
+      "index": 31,
+      "seed": 876003209057,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "final_cal",
+      "index": 0,
+      "seed": 876003222026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "final_cal",
+      "index": 998,
+      "seed": 876003223024,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "final_null",
+      "index": 0,
+      "seed": 876003224026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "final_null",
+      "index": 1023,
+      "seed": 876003225049,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "final_quadratic",
+      "index": 0,
+      "seed": 876003232026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "final_quadratic",
+      "index": 255,
+      "seed": 876003232281,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "final_compact",
+      "index": 0,
+      "seed": 876003233026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "final_compact",
+      "index": 255,
+      "seed": 876003233281,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "final_filament",
+      "index": 0,
+      "seed": 876003234026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "final_filament",
+      "index": 255,
+      "seed": 876003234281,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "strong_quadratic",
+      "index": 0,
+      "seed": 876003242026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "strong_quadratic",
+      "index": 127,
+      "seed": 876003242153,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "strong_compact",
+      "index": 0,
+      "seed": 876003243026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "strong_compact",
+      "index": 127,
+      "seed": 876003243153,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "strong_filament",
+      "index": 0,
+      "seed": 876003244026,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    },
+    {
+      "phase": "final",
+      "role": "strong_filament",
+      "index": 127,
+      "seed": 876003244153,
+      "errors": [
+        0.0,
+        0.0
+      ],
+      "signal_passed": true,
+      "passed": true
+    }
+  ],
+  "seconds": 6.161536561000048,
+  "source_sha256": "afb625de24e163b88133e2269652c84d924011a86f421645166fbcdb01f7d6a0",
+  "plan_sha256": "63d37ed74b4ce6740ea39be73a4323818c3c3e4c284fa63cecaf670e9a1335ac",
+  "lock_sha256": "a4a7e53ad0ae432a6e1544f52b09d3e635370f6b55983335677ec986149a410f",
+  "scope": "Separate execution of frozen CPU kernels, not an independent physical simulator"
+}

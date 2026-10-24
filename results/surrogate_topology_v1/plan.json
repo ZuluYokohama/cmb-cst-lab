@@ -1,0 +1,55 @@
+{
+  "created_utc": "2026-10-23T18:58:08.971550+00:00",
+  "scope": "Exploratory algorithmic surrogate test on previously examined sky patches; no blind discovery claim",
+  "source_sha256": {
+    "scripts/run_surrogate_topology.py": "08d6f0d3d05410ecead317c78c1f19b6fcb7ea2c05ace216a8675bb746c98e00",
+    "src/cmbcst/surrogate_topology.py": "fbe8123721a14e22294252f91aa26ce6cbbf7ab0c2d009705be5f2220a560ae8",
+    "src/cmbcst/persistence.py": "353b240eeb6826d8d7fce5a2592e2e60e0c803ad9aa8125a77da4d400e77f498",
+    "src/cmbcst/spectra.py": "f49f508b30df565a94d466e70a0e79606721b50832893177a0ca6c20a55085e1",
+    "src/cmbcst/theory.py": "2f08159499b17db9ddb4878563fbe30bb06da735a90968dd924624fb6e4f7e5e",
+    "docs/SURROGATE_TOPOLOGY_SPEC.md": "d3587ac52aafbb447c7365f75e283926f4e8f532182486a05301e543f4266779"
+  },
+  "seed": 2026102307,
+  "iterations": 500,
+  "validation_fields": 64,
+  "validation_surrogates": 199,
+  "validation_size": 32,
+  "real_surrogates": 999,
+  "real_size": 128,
+  "patches_radians": {
+    "NGP": [
+      0.0,
+      0.0
+    ],
+    "SGP": [
+      3.141592653589793,
+      0.0
+    ],
+    "ColdSpot": [
+      2.5656340004316642,
+      3.6477381366681487
+    ]
+  },
+  "statistics": [
+    "finite_PD0_count",
+    "total_persistence_H",
+    "total_persistence_S"
+  ],
+  "holm_family_size": 9,
+  "candidate_adjusted_p": 0.05,
+  "validation_max_false_flags": 8,
+  "quality": {
+    "exact_spectrum_error": 1e-10,
+    "H_spectrum_RMS": 0.01,
+    "S_histogram_KS": 0.01
+  },
+  "numpy": "2.5.4",
+  "torch": "2.14.1+cu130",
+  "cuda": "13.0",
+  "device": "NVIDIA GeForce RTX 5070",
+  "jovin_receipt_id": "20261023T185704Z-58ac2ab53e53",
+  "jovin_bundle_sha256": "b0384c70e9bc17777f4535c3de19274eecfae6393b82137c6b366057235ce3a9",
+  "input_inventory_sha256": "80bcff0c69d751b531e737d95907a131bc0959c5ee5c73015318ba8930541036",
+  "input_audit_sha256": "1c89126d5b1a8720c281bad1d12bb8f742318d01def6fabf61cb7d6bf1d08ac0",
+  "monopole_mask_sha256": "2418af3133fdf7859b0bf82894db4c91775a649c7feec94ee34732cc4e1626d5"
+}
