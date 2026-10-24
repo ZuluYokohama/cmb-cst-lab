@@ -7,6 +7,7 @@ import hashlib
 import json
 import math
 from pathlib import Path
+import re
 import sys
 import numpy as np
 from jovin_verify import REPO,SUITES,build_bundle,configuration,_harness
@@ -175,7 +176,9 @@ def main():
         hardware_fixture=plan['hardware_fixture_sha256']==sha(REPO/'data/evidence/targeted_cuda_development.json'),
         receipt=plan['jovin_receipt_id']==suites['targeted']['receipt_id'])
     tests,sandbox = REPO/'data/targeted_tests.log',REPO/'data/targeted_sandbox_tests.log'
-    tests_ok = '189 passed, 3 skipped' in tests.read_text()
+    tests_summary = tests.read_text().lower()
+    tests_ok = (re.search(r'\b189 passed, 3 skipped\b',tests_summary) is not None
+        and 'failed' not in tests_summary and 'error' not in tests_summary)
     sandbox_ok = sandbox.read_text().count('[PASS]')==21 and '[FAIL]' not in sandbox.read_text()
     ok = ret==0 and chain.get('valid') is True and len(suites)==21 and all(v['matched'] for v in suites.values()) and all(frozen.values()) and all(prior.values()) and all(checks.values()) and all(bindings.values()) and tests_ok and sandbox_ok
     audit = dict(status='passed' if ok else 'failed',verified_utc=datetime.now(timezone.utc).isoformat(),

@@ -146,8 +146,8 @@ def evaluate_final(data,model,selected):
 
 
 def run():
-    plan = freeze()
     start = time.perf_counter()
+    plan = freeze()
     stage = dict(status='running',started_utc=now(),plan_sha256=sha(OUT/'plan.json'))
     completed = 0
     save(OUT/'stage_audit.json',stage)
