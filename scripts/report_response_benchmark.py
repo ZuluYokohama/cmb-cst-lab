@@ -109,7 +109,7 @@ def main():
     outcome = ('Provisional added detection power appeared in '+', '.join(gains)+'.') if gains else 'No comparison met the complete predeclared added-power rule.'
     weakest = min(comparisons,key=lambda row:row['gain'])
     loss_note = (f"The largest measured loss was {weakest['group']}: baseline {weakest['flags'][0]}/128 versus augmented {weakest['flags'][1]}/128, a {100*weakest['gain']:.2f} percentage-point change.") if weakest['gain']<0 else ''
-    calibration_note = ('The augmented Wilson95% interval lies above the nominal5% rate. Passing the gross cutoff must not be described as precise false-alarm calibration; finite-reference variability and model/score adequacy still need assessment.') if validation['wilson_95'][1][0]>.05 else ''
+    calibration_note = ('The augmented Wilson 95% interval lies above the nominal 5% rate. Passing the gross cutoff must not be described as precise false-alarm calibration; finite-reference variability and model/score adequacy still need assessment.') if validation['wilson_95'][1][0]>.05 else ''
     timing = ensemble['timings']
     report = f'''# Controlled spherical response benchmark V1
 
@@ -147,7 +147,7 @@ of all SO(3) orientations. All components receive the same smoothing/sampling.
 
 ## Forward model and withheld observations
 
-All3303 skies use a fiducial CAMB lensed TT spectrum through ell256, with Gaussian
+All 3303 skies use a fiducial CAMB lensed TT spectrum through ell 256, with Gaussian
 harmonic directions conditional on fixed shell powers. This is not a full
 non-Gaussian lensed CMB simulator. Each observation includes an explicit synthetic
 Galactic-band foreground proxy with amplitude Uniform(0,60)µK and anisotropic
@@ -164,22 +164,22 @@ physical Planck noise/foreground fit; observational testing remains withheld.
 
 ## Calibration and every planned comparison
 
-Training768, independent calibration999, matched null512, six alternative groups
-of128, and an omitted-stripe stress test256. Both methods use upper-tail
+Training 768, independent calibration 999, matched null 512, six alternative groups
+of 128, and an omitted-stripe stress test 256. Both methods use upper-tail
 plus-one Monte Carlo p-values against their own calibration score distribution,
 with nominal p<=.05. They share data and calibration draws, allowing paired
 comparison; the finite realized false-alarm rates need not be identical.
 
 - Baseline null flags: **{validation['flags'][0]}/512 ({validation['rates'][0]:.3%})**;
-  Wilson95% [{validation['wilson_95'][0][0]:.3%}, {validation['wilson_95'][0][1]:.3%}].
+  Wilson 95% [{validation['wilson_95'][0][0]:.3%}, {validation['wilson_95'][0][1]:.3%}].
 - Augmented null flags: **{validation['flags'][1]}/512 ({validation['rates'][1]:.3%})**;
-  Wilson95% [{validation['wilson_95'][1][0]:.3%}, {validation['wilson_95'][1][1]:.3%}].
-- Gross calibration gate: **{validation['status']}**, at most40 flags for each
+  Wilson 95% [{validation['wilson_95'][1][0]:.3%}, {validation['wilson_95'][1][1]:.3%}].
+- Gross calibration gate: **{validation['status']}**, at most 40 flags for each
   method. Nuisance-amplitude subgroup counts are retained in validation.json.
 
 {calibration_note}
 
-| Injection | Baseline detected | + responses detected | Gain | Paired bootstrap95% | Exact paired p | Holm p (6) | Provisional gain |
+| Injection | Baseline detected | + responses detected | Gain | Paired bootstrap 95% | Exact paired p | Holm p (6) | Provisional gain |
 |---|---:|---:|---:|---|---:|---:|---|
 {table}
 
@@ -202,7 +202,7 @@ unknown unknowns in general or isolate physical causes.
 - Maximum scaled response difference: **{stage['max_response_error']:.6g}**.
 - Maximum scaled score difference: **{stage['score_scaled_error']:.6g}**.
 - Maximum relative signal-shell power error: **{stage['max_signal_shell_error']:.6g}**.
-- Fixed tolerance1e-10; covariance condition numbers: {result['condition_numbers']}.
+- Fixed tolerance 1e-10; covariance condition numbers: {result['condition_numbers']}.
 - Complete audit: **{stage['elapsed_s']:.1f}s**, including both feature paths.
   Forward CPU operators: {timing['forward_cpu_seconds']:.2f}s; CPU rank preprocessing:
   {timing['rank_cpu_seconds']:.2f}s; CPU feature calls: {timing['feature_cpu_seconds']:.2f}s;
@@ -212,15 +212,15 @@ unknown unknowns in general or isolate physical causes.
 Spherical synthesis, shared rank preprocessing and training fit run on CPU;
 CUDA independently computes moment curves, excursion complexes, response
 aggregation and final scores. The earlier multiscale compression step is shared
-CPU code. JoVin's new9/9 suite checks shipped NumPy kernels and a real recorded
+CPU code. JoVin's new 9/9 suite checks shipped NumPy kernels and a real recorded
 CUDA fixture; production CUDA runs separately in WSL. The spherical forward
 class is source-frozen and locally tested, rather than claimed to execute in
 the NumPy-only JoVin sandbox.
 
-New authentic JoVin receipt: `{plan['jovin_receipt_id']}`. All20 current suites
-match their authentic receipts (136 checks including collection); regression185
-passed, three unavailable Intel XPU skips; all20 CI-equivalent CPU suites passed.
-A [separate30-case CPU replay](../results/response_v1/replay.json) regenerates
+New authentic JoVin receipt: `{plan['jovin_receipt_id']}`. All 20 current suites
+match their authentic receipts (136 checks including collection); regression 185
+passed, three unavailable Intel XPU skips; all 20 CI-equivalent CPU suites passed.
+A [separate 30-case CPU replay](../results/response_v1/replay.json) regenerates
 three fixed indices per role using the frozen kernels and stored fiducial C_ell.
 It is separate execution, not an independent physical simulator.
 The [final verification](../results/response_v1/verification.json) recomputes
@@ -235,7 +235,7 @@ No Lean proof establishes detection power or validity of this synthetic model.
 
 ## What would justify advancing it
 
-This comparison covers the specified17 baseline summaries and six synthetic
+This comparison covers the specified 17 baseline summaries and six synthetic
 alternatives. Broader added-information or novelty claims require benchmarks
 against bispectrum/scattering methods, more realistic nuisance models, sensitivity
 to changes in the training distribution and genuinely withheld observational
