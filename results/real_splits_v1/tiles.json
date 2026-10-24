@@ -1,0 +1,807 @@
+{
+  "records": [
+    {
+      "tile": 0,
+      "counts": [
+        839,
+        817,
+        789,
+        730
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 1,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 2,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1020
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 3,
+      "counts": [
+        984,
+        979,
+        971,
+        958
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 4,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 5,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 6,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 7,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 8,
+      "counts": [
+        982,
+        978,
+        968,
+        951
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 9,
+      "counts": [
+        1024,
+        1024,
+        1018,
+        979
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 10,
+      "counts": [
+        683,
+        652,
+        605,
+        524
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 11,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 12,
+      "counts": [
+        984,
+        984,
+        984,
+        984
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 13,
+      "counts": [
+        984,
+        984,
+        984,
+        984
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 14,
+      "counts": [
+        984,
+        984,
+        984,
+        981
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 15,
+      "counts": [
+        984,
+        984,
+        984,
+        984
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 16,
+      "counts": [
+        984,
+        984,
+        984,
+        974
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 17,
+      "counts": [
+        984,
+        984,
+        984,
+        984
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 18,
+      "counts": [
+        885,
+        881,
+        862,
+        818
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 19,
+      "counts": [
+        968,
+        968,
+        967,
+        968
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 20,
+      "counts": [
+        813,
+        802,
+        771,
+        724
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 21,
+      "counts": [
+        984,
+        981,
+        967,
+        925
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 22,
+      "counts": [
+        853,
+        850,
+        847,
+        845
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 23,
+      "counts": [
+        984,
+        984,
+        984,
+        984
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 24,
+      "counts": [
+        264,
+        260,
+        251,
+        229
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 25,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 26,
+      "counts": [
+        264,
+        264,
+        261,
+        248
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 27,
+      "counts": [
+        264,
+        264,
+        264,
+        262
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 28,
+      "counts": [
+        264,
+        264,
+        264,
+        262
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 29,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 30,
+      "counts": [
+        244,
+        240,
+        228,
+        206
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 31,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 32,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 33,
+      "counts": [
+        247,
+        247,
+        247,
+        247
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 34,
+      "counts": [
+        264,
+        264,
+        264,
+        254
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 35,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 36,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 37,
+      "counts": [
+        264,
+        264,
+        261,
+        255
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 38,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 39,
+      "counts": [
+        264,
+        261,
+        251,
+        219
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 152,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 153,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 154,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 155,
+      "counts": [
+        264,
+        264,
+        260,
+        250
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 156,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 157,
+      "counts": [
+        260,
+        256,
+        250,
+        238
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 158,
+      "counts": [
+        219,
+        215,
+        202,
+        173
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 159,
+      "counts": [
+        49,
+        48,
+        46,
+        44
+      ],
+      "accepted": false
+    },
+    {
+      "tile": 160,
+      "counts": [
+        147,
+        147,
+        141,
+        132
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 161,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 162,
+      "counts": [
+        211,
+        208,
+        187,
+        144
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 163,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 164,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 165,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 166,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 167,
+      "counts": [
+        264,
+        264,
+        264,
+        264
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 168,
+      "counts": [
+        984,
+        984,
+        984,
+        984
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 169,
+      "counts": [
+        984,
+        984,
+        984,
+        984
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 170,
+      "counts": [
+        973,
+        970,
+        964,
+        948
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 171,
+      "counts": [
+        953,
+        950,
+        944,
+        928
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 172,
+      "counts": [
+        926,
+        923,
+        918,
+        911
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 173,
+      "counts": [
+        797,
+        792,
+        777,
+        739
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 174,
+      "counts": [
+        984,
+        984,
+        984,
+        984
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 175,
+      "counts": [
+        981,
+        979,
+        973,
+        948
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 176,
+      "counts": [
+        688,
+        675,
+        642,
+        595
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 177,
+      "counts": [
+        984,
+        984,
+        984,
+        984
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 178,
+      "counts": [
+        984,
+        984,
+        984,
+        984
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 179,
+      "counts": [
+        984,
+        984,
+        984,
+        984
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 180,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 181,
+      "counts": [
+        1007,
+        999,
+        987,
+        962
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 182,
+      "counts": [
+        937,
+        936,
+        933,
+        932
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 183,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 184,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 185,
+      "counts": [
+        1004,
+        1000,
+        986,
+        951
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 186,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 187,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 188,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 189,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 190,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    },
+    {
+      "tile": 191,
+      "counts": [
+        1024,
+        1024,
+        1024,
+        1024
+      ],
+      "accepted": true
+    }
+  ],
+  "accepted": 79,
+  "valid_pairs": 215796,
+  "anchors": 13665
+}

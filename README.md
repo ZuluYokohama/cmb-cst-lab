@@ -101,6 +101,18 @@ and explicit [coordinate-label erratum](docs/ACQUISITION_COORDINATE_ERRATUM.md)
 preserve the original export. There are now 23 authenticated JoVin suites and
 two additional exact rational [Lean geometry identities](formal/PolarizationGeometry.lean).
 
+The [real Planck split-polarization run](docs/REAL_SPLITS_RUN.md) applies frozen
+spherical geometry and nominal diagonal beam equalization to all eight observed
+Q/U maps. It measures 215,796 sampled pairs across 79 accepted tiles at four
+angular separations. At 2 degrees, A/B coherence is 0.300 at 143 GHz and 0.674
+at 353 GHz; connected fourth-order structure is larger at 217/353 GHz than at
+100/143 GHz. The tile-resampling bands are descriptive, with no anomaly p-values,
+fractal-dimension or method-superiority claim. All real tile statistics agree
+on CPU and both GPUs, all 2000 resamples are independently checked, and a raw
+143A replay verifies index/filter handling. All 24 current JoVin suites verify.
+The [actual filtered sample rows](results/real_splits_v1/labeled_real_samples.csv)
+provide map/split, Galactic coordinates, separation, bearing and Q/U values.
+
 **Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every result taken from `results/*.json`
 is written into it by `paper/make_inputs.py` (macros and figures). Two values come from checks
 whose output is not in `results/`: the injection pull width and the post-hoc A/B covariance
@@ -223,6 +235,7 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `targeted` | pass 6/6 | `20261023T223751Z-b7ba43ffca03` |
 | `acquisition` | pass 6/6 | `20261023T232459Z-151d1b4bcb0e` |
 | `acquisition_index` | pass 4/4 | `20261023T234104Z-58f1101a658f` |
+| `real_splits` | pass 6/6 | `20261024T002321Z-3b4b0dd2589d` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).

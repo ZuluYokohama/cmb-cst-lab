@@ -1,0 +1,240 @@
+{
+  "status": "passed",
+  "verified_utc": "2026-10-24T00:37:30.174437+00:00",
+  "scope": "Authentic source/test receipt linkage, independent real-coordinate covariance contractions and all resamples; no physical-model or anomaly proof",
+  "calculation_checks": {
+    "fixed_plan": true,
+    "complete": true,
+    "plan_result_bindings": true,
+    "inventory_binding": true,
+    "fixture_binding": true,
+    "receipt_binding": true,
+    "honest_claims": true,
+    "great_circle_separation": true,
+    "endpoint_phase_projection": true,
+    "origin_phase": true,
+    "map_shapes_finite": true,
+    "geometry_only_tile_selection": true,
+    "independent_real_covariance_moments": true,
+    "all_features_finite": true,
+    "split_identity": true,
+    "coherence_bound": true,
+    "resample_manifest": true,
+    "all_cpu_resamples": true,
+    "result_means": true,
+    "result_bands": true,
+    "all_gpu_0_statistics": true,
+    "gpu_0_precision_records": true,
+    "all_gpu_1_statistics": true,
+    "gpu_1_precision_records": true,
+    "actual_input_identities": true,
+    "mask_binding": true,
+    "retained_harmonics_100A": true,
+    "retained_harmonics_100B": true,
+    "retained_harmonics_143A": true,
+    "retained_harmonics_143B": true,
+    "retained_harmonics_217A": true,
+    "retained_harmonics_217B": true,
+    "retained_harmonics_353A": true,
+    "retained_harmonics_353B": true,
+    "sampling_replay": true,
+    "raw_map_reanalysis": true,
+    "actual_gpu_fixture": true,
+    "rejected_admission_preserved": true,
+    "labeled_real_rows": true,
+    "all_foreground_associations": true,
+    "local_regression": true,
+    "all_sandbox_suites": true
+  },
+  "jovin_suites": {
+    "real_splits": {
+      "matched": true,
+      "receipt_id": "20261024T002321Z-3b4b0dd2589d",
+      "total": 6
+    },
+    "acquisition_index": {
+      "matched": true,
+      "receipt_id": "20261023T234104Z-58f1101a658f",
+      "total": 4
+    },
+    "acquisition": {
+      "matched": true,
+      "receipt_id": "20261023T232459Z-151d1b4bcb0e",
+      "total": 6
+    },
+    "targeted": {
+      "matched": true,
+      "receipt_id": "20261023T223751Z-b7ba43ffca03",
+      "total": 6
+    },
+    "response": {
+      "matched": true,
+      "receipt_id": "20261023T215313Z-4fb94bd93228",
+      "total": 9
+    },
+    "orientation": {
+      "matched": true,
+      "receipt_id": "20261023T212557Z-3470461f116f",
+      "total": 5
+    },
+    "multiscale": {
+      "matched": true,
+      "receipt_id": "20261023T204940Z-b587588deae4",
+      "total": 6
+    },
+    "spherical_surrogates": {
+      "matched": true,
+      "receipt_id": "20261023T201811Z-764956b0e705",
+      "total": 6
+    },
+    "copula_topology": {
+      "matched": true,
+      "receipt_id": "20261023T190416Z-f73e0022af1e",
+      "total": 4
+    },
+    "surrogate_topology": {
+      "matched": true,
+      "receipt_id": "20261023T185704Z-58ac2ab53e53",
+      "total": 6
+    },
+    "data_integrity": {
+      "matched": true,
+      "receipt_id": "20261023T175103Z-7966048f9fc7",
+      "total": 6
+    },
+    "network": {
+      "matched": true,
+      "receipt_id": "20261023T173048Z-8a8d7c5da533",
+      "total": 12
+    },
+    "empirical_calibration": {
+      "matched": true,
+      "receipt_id": "20261023T173051Z-1f9310a44f3a",
+      "total": 4
+    },
+    "estimated_covariance": {
+      "matched": true,
+      "receipt_id": "20261023T173053Z-dd5dab68ee37",
+      "total": 3
+    },
+    "sparse_network": {
+      "matched": true,
+      "receipt_id": "20261023T173056Z-0d03ece6fed1",
+      "total": 4
+    },
+    "sensor_network": {
+      "matched": true,
+      "receipt_id": "20261023T173059Z-5cb4d69f6875",
+      "total": 4
+    },
+    "differential": {
+      "matched": true,
+      "receipt_id": "20261023T173103Z-ba6bdf1bcc28",
+      "total": 7
+    },
+    "mk_core": {
+      "matched": true,
+      "receipt_id": "20261023T173106Z-f8238746ed49",
+      "total": 8
+    },
+    "accel": {
+      "matched": true,
+      "receipt_id": "20261023T173220Z-0f5c704fb64f",
+      "total": 11
+    },
+    "gpu_calibration": {
+      "matched": true,
+      "receipt_id": "20261023T173137Z-48cb897d1a8b",
+      "total": 7
+    },
+    "spatial": {
+      "matched": true,
+      "receipt_id": "20261023T173111Z-fffbb6ebc58c",
+      "total": 10
+    },
+    "simulator": {
+      "matched": true,
+      "receipt_id": "20261023T173114Z-fc57d47d8819",
+      "total": 9
+    },
+    "npe": {
+      "matched": true,
+      "receipt_id": "20261023T173117Z-e9115ff5937b",
+      "total": 7
+    },
+    "persistence": {
+      "matched": true,
+      "receipt_id": "20261023T173121Z-8aebdd6510a7",
+      "total": 8
+    }
+  },
+  "chain": {
+    "valid": true,
+    "count": 51,
+    "head_sha256": "5d1976df10d96a35c7362ddaf320cf8fedc20f5fdff16b931b0f49851a54164e",
+    "problems": []
+  },
+  "frozen_sources": {
+    "results\\acquisition_v1\\plan.json": true,
+    "results\\copula_boundary_audit_v1\\plan.json": true,
+    "results\\copula_topology_v2\\plan.json": true,
+    "results\\multiscale_v1\\plan.json": true,
+    "results\\orientation_v1\\plan.json": true,
+    "results\\real_splits_v1\\plan.json": true,
+    "results\\response_v1\\plan.json": true,
+    "results\\spherical_topology_v1\\plan.json": true,
+    "results\\surrogate_topology_v1\\plan.json": true,
+    "results\\targeted_v1\\plan.json": true
+  },
+  "prior_artifacts_preserved": {
+    "results\\acquisition_v1\\verification.json": true,
+    "results\\copula_topology_v2\\verification.json": true,
+    "results\\multiscale_v1\\verification.json": true,
+    "results\\orientation_v1\\verification.json": true,
+    "results\\response_v1\\verification.json": true,
+    "results\\spherical_topology_v1\\verification.json": true,
+    "results\\targeted_v1\\verification.json": true
+  },
+  "independent_maximum_scaled_feature_error": 1.139451244403896e-14,
+  "artifact_sha256": {
+    "association.json": "49a77b778a97761e6a57d70f975fd7067afae6cbd78aa1544884be5a4017bb51",
+    "geometry.npz": "681e7b99cb2fa9b9d1240f62c5e65d4ecdeaa486f46d05a2f8ea66bc24ae5027",
+    "gpu0_statistics.npz": "167c839313a4ec0bbdfa0cdae1bebd342e0ec2d5cd1af8979716d052b1bb0d75",
+    "gpu1_statistics.npz": "ded00674ad4e348c7b62b43201d5f93c07edaac6db8a3050722ea4061425d95a",
+    "inputs.json": "a4b248a0366b1fe6620580940f0417ad179d3022ec17fe525bed91d567bf0e46",
+    "labeled_real_samples.csv": "c0f350e0a5fe35bceea87296645e28154b12da39ca071856a8f2105160c989a2",
+    "observations.npz": "6fa55f59c973cd6df5c5e9c8ed0ef9de832bdcef9b0b1390a55c36947695df8b",
+    "plan.json": "f6a2e46f7f533b46e2c833610d545681710f464f79538f2ea6b7c28761c5f914",
+    "real_polarization.png": "5a3f96125718ff9950f040cb4cbc1a020fbd7cdc4fe6d40bc286a7e28b739700",
+    "resampling.npz": "beb8c49e0ae4856c1e00b1fb48ff64962d9be788359ff50f0537da643c8e830f",
+    "result.json": "cde733e11684e5d4c5e6bcadf613d2bb6564c73a00e1d7b87f0f6c639f6e93c5",
+    "sampling_replay.json": "8c2ba1bf0bd81224bdad9ba60b5b9c0a56b330c64d0b528878d04e06eb9725e6",
+    "stage_audit.json": "ca918cceb802f900e39ee5839e25fe62e657691c1581751c945e9c9ace661e2e",
+    "telemetry.json": "51beac1a41808ae6fb3de0c86651631327b713cd13bb0ead81120908dd35b4c6",
+    "tiles.json": "d96399193ce365c94e9bba8eb122e606ed0caa7caa93b9db74a718c9f25309f6",
+    "tile_statistics.npz": "86bb939dc199d764f82d9dd74effb28480a49bfaa6f59fa8cf6464692e94f41a",
+    "harmonics/alm_100A.npy": "790092467533bd415fa9eeb68c233c16d9f53ceb4bb71c54fcc5b508aaae1ba7",
+    "harmonics/alm_100B.npy": "52cb4e634e584b3890484e6aa7d60ef8a4ef4d69deb2e0ac0e3509d5d7c176e9",
+    "harmonics/alm_143A.npy": "3a0bd854f09bf15ef2a812948f6388be249112c93c833751c25f3013962ecb52",
+    "harmonics/alm_143B.npy": "be25da7194a17ef80a98e6bf57a1afe53faaaf998523fca87eb94bf7c2885aab",
+    "harmonics/alm_217A.npy": "7d65066e3741dbe048d67f8e93917b6bdbffec9e0af637907b502a0b6d447017",
+    "harmonics/alm_217B.npy": "6d3c967607d2e8f8e31c05d98bce18dd3f97c494b295d60e54d85d1003144138",
+    "harmonics/alm_353A.npy": "7c6767db2a2d52df7cda91552ee3927a33d592ee04b588608dffa4617bc7d943",
+    "harmonics/alm_353B.npy": "c0bae2e321aba1cf60c8f4b316dbb63f25e473e9bb103d900d75446a4d62272c"
+  },
+  "report_sha256": "f4f0dea4f013189c5451baa42bc97c9e08a6a745555a73756f49064d7234f368",
+  "supporting_source_sha256": {
+    "scripts/verify_real_splits.py": "2657f707821cc13c51f5229659d0d41ef6ebda1a4acc54907752f526a84caba3",
+    "scripts/replay_real_splits.py": "c07633e8d48b3449d9ccdffc69ef756b50361b6a40d76add29c77100d7867315",
+    "scripts/report_real_splits.py": "d1b1ca3f2a5e85f2cfecd5cd8e3a5676bcc4b6dd9aebb706133c46ba5ccb30e5"
+  },
+  "local_tests": {
+    "passed": 195,
+    "skipped": 3,
+    "log_sha256": "7ac8230a33d4f76acf873c126adc7701c69c63320c5493a0a19278410182ea57"
+  },
+  "ci_equivalent_suites": {
+    "passed": 24,
+    "log_sha256": "4a5e25fb8da65d7f67926b9c9f826b54354445f07174e0d85978e6b1c098466a"
+  }
+}

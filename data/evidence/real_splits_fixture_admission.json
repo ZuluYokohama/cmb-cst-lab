@@ -1,0 +1,16 @@
+{
+  "phase": "pre-freeze sandbox admission",
+  "reason": "recorded fixture made tests larger than the 262144-byte input limit; tests were not executed",
+  "files": {
+    "tests/sandbox/jovin_tests_real_splits.py": {
+      "sha256": "3570525e3383a28e05683b7810548bb3457de7f5ee87671ae1399da53097bf65",
+      "bytes": 350785,
+      "archive": "data/evidence/real_splits_oversize_jovin_tests_real_splits.py.gz"
+    },
+    "scripts/prepare_real_splits.py": {
+      "sha256": "88f114a07683e7204bb92e62070ee2ac03abcec3450cd2ab0e52f81b3239d147",
+      "bytes": 2119,
+      "archive": "data/evidence/real_splits_oversize_prepare_real_splits.py.gz"
+    }
+  }
+}

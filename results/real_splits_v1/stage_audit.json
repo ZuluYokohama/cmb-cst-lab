@@ -1,0 +1,16 @@
+{
+  "status": "exploratory_measurement_complete",
+  "started_utc": "2026-10-24T00:25:13.633713+00:00",
+  "plan_sha256": "f6a2e46f7f533b46e2c833610d545681710f464f79538f2ea6b7c28761c5f914",
+  "stages": {
+    "geometry_seconds": 5.712461346999987,
+    "hash_read_transform_sample_seconds": 564.266004088,
+    "cpu_statistics_seconds": 0.5472162859999798,
+    "both_gpu_statistics_wall_seconds": 15.189592121000032,
+    "resampling_seconds": 0.7814404619999777
+  },
+  "completed_utc": "2026-10-24T00:34:50.878603+00:00",
+  "elapsed_seconds": 586.579300144,
+  "numerical_failures": 0,
+  "result_sha256": "cde733e11684e5d4c5e6bcadf613d2bb6564c73a00e1d7b87f0f6c639f6e93c5"
+}

@@ -5111,5 +5111,230 @@
       "head_sha256": "1535b4c502dcae1bb16768a25498038c7fb86a6fe38e29afaeeb38a969e12596",
       "problems": []
     }
+  },
+  {
+    "suite": "real_splits",
+    "verified_at": "2026-10-24T00:21:07.505328+00:00",
+    "passed": false,
+    "harness_status": null,
+    "passed_count": null,
+    "total": null,
+    "receipt_id": null,
+    "receipt_sha256": null,
+    "isolation": "shared",
+    "integrity": null,
+    "timeout_s": 30,
+    "harness_version": "0.2.0.dev0",
+    "runtime": "wsl:JovinHarness",
+    "image": "sha256:b125b813cae0052127f1dc0e7e6353ead2ba10ebcac3c4fd42a10eae468a0ed7",
+    "runner_sha256": "8a847c3e8ac4d31afd86fe9b415e077d4be2ef3ede7cbf28696b6010f58ddfb2",
+    "bundle_sha256": "0fe27ac316c9df1a889af382ed9038ff4f63ee0014eb181f5f4c128fc34bd594",
+    "tests_sha256": "3570525e3383a28e05683b7810548bb3457de7f5ee87671ae1399da53097bf65",
+    "tests_text_sha256": "3570525e3383a28e05683b7810548bb3457de7f5ee87671ae1399da53097bf65",
+    "source_function_sha256": {
+      "real_splits.py": "b17c8f9a5fec4896529467418363dc4a8a1781bc7ef9a9637c8188289fbaee76"
+    },
+    "receipt_verified": false,
+    "receipt_membership": {},
+    "receipt": {},
+    "failures": {
+      "adapter_problems": [
+        "verification did not return a valid receipt ID"
+      ],
+      "harness_response": {
+        "adapter_error": "invalid harness response: Expecting value: line 1 column 1 (char 0)",
+        "stdout": "",
+        "stderr": "jovin-harness: tests is larger than 262144 bytes\n",
+        "harness_exit": 2
+      }
+    },
+    "duration_s": 0.17,
+    "chain_valid": true,
+    "chain_head_sha256": "1535b4c502dcae1bb16768a25498038c7fb86a6fe38e29afaeeb38a969e12596",
+    "chain_verification": {
+      "valid": true,
+      "count": 50,
+      "head_sha256": "1535b4c502dcae1bb16768a25498038c7fb86a6fe38e29afaeeb38a969e12596",
+      "problems": []
+    }
+  },
+  {
+    "suite": "real_splits",
+    "verified_at": "2026-10-24T00:23:22.231731+00:00",
+    "passed": true,
+    "harness_status": "passed",
+    "passed_count": 6,
+    "total": 6,
+    "receipt_id": "20261024T002321Z-3b4b0dd2589d",
+    "receipt_sha256": "5d1976df10d96a35c7362ddaf320cf8fedc20f5fdff16b931b0f49851a54164e",
+    "isolation": "shared",
+    "integrity": "shared_interpreter",
+    "timeout_s": 30,
+    "harness_version": "0.2.0.dev0",
+    "runtime": "wsl:JovinHarness",
+    "image": "sha256:b125b813cae0052127f1dc0e7e6353ead2ba10ebcac3c4fd42a10eae468a0ed7",
+    "runner_sha256": "8a847c3e8ac4d31afd86fe9b415e077d4be2ef3ede7cbf28696b6010f58ddfb2",
+    "bundle_sha256": "0fe27ac316c9df1a889af382ed9038ff4f63ee0014eb181f5f4c128fc34bd594",
+    "tests_sha256": "417c44218be85552a0b9b1bb1c7a07c42119793167621f0bab7f32a0f08ab068",
+    "tests_text_sha256": "417c44218be85552a0b9b1bb1c7a07c42119793167621f0bab7f32a0f08ab068",
+    "source_function_sha256": {
+      "real_splits.py": "b17c8f9a5fec4896529467418363dc4a8a1781bc7ef9a9637c8188289fbaee76"
+    },
+    "receipt_verified": true,
+    "receipt_membership": {
+      "valid": true,
+      "chain": "linked",
+      "problems": [],
+      "head": {
+        "count": 51,
+        "head_sha256": "5d1976df10d96a35c7362ddaf320cf8fedc20f5fdff16b931b0f49851a54164e",
+        "head_id": "20261024T002321Z-3b4b0dd2589d"
+      }
+    },
+    "receipt": {
+      "created_at": "2026-10-24T00:23:21.871Z",
+      "format": "jovin-harness.receipt.v1",
+      "harness_version": "0.2.0.dev0",
+      "id": "20261024T002321Z-3b4b0dd2589d",
+      "inputs": {
+        "code_sha256": "0fe27ac316c9df1a889af382ed9038ff4f63ee0014eb181f5f4c128fc34bd594",
+        "params": {
+          "isolation": "shared",
+          "timeout_s": 30
+        },
+        "tests_sha256": "417c44218be85552a0b9b1bb1c7a07c42119793167621f0bab7f32a0f08ab068"
+      },
+      "integrity": "shared_interpreter",
+      "notice": "A content hash is not a signature and a passing check is not a proof of correctness; the receipt records what ran, under which limits, and what the sandbox reported.",
+      "prev_sha256": "1535b4c502dcae1bb16768a25498038c7fb86a6fe38e29afaeeb38a969e12596",
+      "result": {
+        "duration_s": 0.2484,
+        "exit_code": 0,
+        "format": "jovin-harness.sandbox-result.v1",
+        "isolation": "shared",
+        "kernel": {
+          "locked_shared_scratch": [
+            "/tmp",
+            "/dev/shm"
+          ],
+          "memory_max": "2147483648",
+          "pids_max": "64",
+          "worker": {
+            "cap_eff": "0000000000000000",
+            "gid": [
+              "65534",
+              "65534",
+              "65534",
+              "65534"
+            ],
+            "no_new_privs": "1",
+            "seccomp": "2",
+            "uid": [
+              "65534",
+              "65534",
+              "65534",
+              "65534"
+            ]
+          }
+        },
+        "mode": "verify",
+        "output_truncated": false,
+        "passed_count": 6,
+        "status": "passed",
+        "stderr_bytes": 0,
+        "stderr_tail": "",
+        "stdout_bytes": 0,
+        "stdout_tail": "",
+        "tests": [
+          {
+            "message": "",
+            "name": "<module>",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_geodesic_transport_independent_tensor_oracle",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_local_basis_gauge_cancels",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_gaussian_wick_and_heavy_tail_positive_control",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_deterministic_four_sample_moments_and_invalid_inputs",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_recorded_actual_gpus",
+            "outcome": "passed"
+          }
+        ],
+        "timed_out": false,
+        "total": 6
+      },
+      "sandbox": {
+        "cleanup": "removed",
+        "engine": {
+          "cgroup_version": "2",
+          "docker_host": null,
+          "docker_host_local": true,
+          "engine_id": "e95ecb10-fdc8-4759-b4ba-7b8238391773",
+          "os_type": "linux",
+          "security_options": [
+            "name=seccomp,profile=builtin",
+            "name=cgroupns"
+          ],
+          "server_version": "29.9.0"
+        },
+        "execution_may_have_started": true,
+        "image": {
+          "architecture": "amd64",
+          "harness_version": "0.2.0.dev0",
+          "id": "sha256:b125b813cae0052127f1dc0e7e6353ead2ba10ebcac3c4fd42a10eae468a0ed7",
+          "runner_sha256": "8a847c3e8ac4d31afd86fe9b415e077d4be2ef3ede7cbf28696b6010f58ddfb2"
+        },
+        "inspect_verified": true,
+        "kernel_verified": true,
+        "limits": {
+          "cpus": 1.0,
+          "fsize_bytes": 16777216,
+          "max_input_bytes": 262144,
+          "max_output_bytes": 65536,
+          "memory_bytes": 2147483648,
+          "nofile": 64,
+          "pids": 64,
+          "timeout_s": 30,
+          "tmpfs_bytes": 16777216
+        },
+        "run_id": "d430551f7ff5f14c",
+        "runtime": "wsl:JovinHarness",
+        "timings_s": {
+          "cleanup": 0.46799999999348074,
+          "create_inspect": 0.5,
+          "execution": 1.0939999999827705,
+          "preflight": 0.5160000000032596
+        }
+      },
+      "sha256": "5d1976df10d96a35c7362ddaf320cf8fedc20f5fdff16b931b0f49851a54164e",
+      "tool": "verify_python"
+    },
+    "failures": null,
+    "duration_s": 3.1,
+    "chain_valid": true,
+    "chain_head_sha256": "5d1976df10d96a35c7362ddaf320cf8fedc20f5fdff16b931b0f49851a54164e",
+    "chain_verification": {
+      "valid": true,
+      "count": 51,
+      "head_sha256": "5d1976df10d96a35c7362ddaf320cf8fedc20f5fdff16b931b0f49851a54164e",
+      "problems": []
+    }
   }
 ]

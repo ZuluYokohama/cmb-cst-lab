@@ -1,0 +1,98 @@
+[
+  {
+    "frequency_GHz": 100,
+    "lag_degrees": 0.5,
+    "rank_correlation_with_353_mean_increment_power": 0.05876338851022395,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 100,
+    "lag_degrees": 1.0,
+    "rank_correlation_with_353_mean_increment_power": 0.14985394352482959,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 100,
+    "lag_degrees": 2.0,
+    "rank_correlation_with_353_mean_increment_power": 0.22969814995131452,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 100,
+    "lag_degrees": 4.0,
+    "rank_correlation_with_353_mean_increment_power": 0.01650438169425511,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 143,
+    "lag_degrees": 0.5,
+    "rank_correlation_with_353_mean_increment_power": 0.04961051606621227,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 143,
+    "lag_degrees": 1.0,
+    "rank_correlation_with_353_mean_increment_power": 0.14306231742940603,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 143,
+    "lag_degrees": 2.0,
+    "rank_correlation_with_353_mean_increment_power": 0.1374391431353457,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 143,
+    "lag_degrees": 4.0,
+    "rank_correlation_with_353_mean_increment_power": -0.0008033106134371958,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 217,
+    "lag_degrees": 0.5,
+    "rank_correlation_with_353_mean_increment_power": 0.4588120740019474,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 217,
+    "lag_degrees": 1.0,
+    "rank_correlation_with_353_mean_increment_power": 0.44866114897760473,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 217,
+    "lag_degrees": 2.0,
+    "rank_correlation_with_353_mean_increment_power": 0.4030671859785784,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 217,
+    "lag_degrees": 4.0,
+    "rank_correlation_with_353_mean_increment_power": 0.12373417721518988,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 353,
+    "lag_degrees": 0.5,
+    "rank_correlation_with_353_mean_increment_power": 0.5331791626095425,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 353,
+    "lag_degrees": 1.0,
+    "rank_correlation_with_353_mean_increment_power": 0.528748782862707,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 353,
+    "lag_degrees": 2.0,
+    "rank_correlation_with_353_mean_increment_power": 0.3814751703992211,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  },
+  {
+    "frequency_GHz": 353,
+    "lag_degrees": 4.0,
+    "rank_correlation_with_353_mean_increment_power": 0.15749756572541382,
+    "scope": "Descriptive association, no independence p-value or causal attribution"
+  }
+]
