@@ -113,16 +113,21 @@ on CPU and both GPUs, all 2000 resamples are independently checked, and a raw
 The [actual filtered sample rows](results/real_splits_v1/labeled_real_samples.csv)
 provide map/split, Galactic coordinates, separation, bearing and Q/U values.
 
-The [CST smoothing-information protocol](docs/CLOSURE_FIBERS_SPEC.md) searches
-for counterfactual 143 GHz skies with identical recorded local summaries and
-global spectra that separate after identical angular smoothing. It compares
-the baseline with ordinary-power and connected-fourth-order response features.
-The four-hour dual-GPU production run is in progress; no verified scientific
-outcome is reported yet. Preflight passed 211 local tests (three unavailable
-Intel XPU skips), 25 authenticated JoVin suites / 170 checks and seven new
-[conditional Lean closure theorems](formal/OperationalClosure.lean). These prove
-the stated mathematical implication and an exact toy example, while the real
-sky pipeline requires independent numerical replay.
+The [CST smoothing-information study](docs/CLOSURE_FIBERS_RUN.md) searched for
+counterfactual 143 GHz skies whose recorded summaries agree before smoothing
+and separate afterward. The bounded dual-GPU run ended **incomplete, with no
+verified witness**: 167/6,144 starts completed, and only three of 48 cases began.
+All 176 saved endpoints passed independent CPU/GPU checks (maximum scaled
+disagreement 8.24e-15); the largest discovered feasible gap was 0.01766, below
+the frozen 0.05 witness threshold. One strict optimizer-boundary failure is
+preserved. The power-control and CST-repair searches remained unstarted, so
+their relative merit was not tested. This does not establish closure or repair
+sufficiency. The [protocol](docs/CLOSURE_FIBERS_SPEC.md), checkpoints, failures,
+clock discrepancy and hardware counters remain auditable. Preflight passed
+211 local tests (three unavailable Intel XPU skips), 25 authenticated JoVin
+suites / 170 checks and seven new [conditional Lean theorems](formal/OperationalClosure.lean).
+These prove the stated mathematical implication and an exact toy example;
+they do not certify the floating-point sky pipeline or physical interpretation.
 
 **Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every result taken from `results/*.json`
 is written into it by `paper/make_inputs.py` (macros and figures). Two values come from checks

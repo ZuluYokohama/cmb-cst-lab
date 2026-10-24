@@ -1,0 +1,24 @@
+{
+  "notes": [
+    {
+      "recorded_utc": "2026-10-24T14:00:29.201341+00:00",
+      "scope": "Saved-output arithmetic only; no scientific feature recomputation or source changes",
+      "case": "tile_34_source_baseline",
+      "start_id": 21,
+      "failure": "FloatingPointError: stored search state lost feasibility",
+      "maximum_saved_scaled_change": 0.000499800000000243,
+      "inner_gate": 0.0004998,
+      "excess_over_inner_gate": 2.4296970685400154e-16,
+      "declared_bin_boundary_margin": 1.9999999975703515e-07,
+      "required_certificate_margin": 1e-07,
+      "nonfinite_trial_count": 0,
+      "interpretation": "Consistent with roundoff at the stricter optimizer inner boundary. This explains the preserved failure provisionally; it does not override the frozen solver or certify a witness.",
+      "action": "Preserve failed case and continue preplanned fresh searches; no constraint, source or seed changes",
+      "input_sha256": {
+        "results/closure_fibers_v1/cases/tile_34_source_baseline.npz": "668e5ac721799dc76ac979dc4d0fdda3a5ba7226406a55d1b6809f44e40c5c53",
+        "results/closure_fibers_v1/cases/tile_34_source_baseline.json": "45ed1378e55939b66acef08ef59e37ae1802d309fd2a28c95ce17ab05cc9e35d",
+        "results/closure_fibers_v1/reference_features.npz": "248e853c3a78b7c3c469d1a69ad21b03039e6675fd3e031d7426231b8cd79c0d"
+      }
+    }
+  ]
+}

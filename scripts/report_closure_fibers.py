@@ -5,6 +5,7 @@ evaluators. A post-cap report may summarize saved arrays and certificates only.
 """
 from __future__ import annotations
 import argparse
+from datetime import datetime
 import json
 from pathlib import Path
 import re
@@ -200,12 +201,58 @@ def collect_run(out):
     return dict(plan=plan,stage=stage,result=result,entries=entries,reference=refs,summary=summary)
 
 
+def saved_runtime_context(run,out):
+    """Read coverage, failures and timer records without new scientific work."""
+    entries,summary,stage=run['entries'],run['summary'],run['stage']
+    errors=[];groups=[];initial_failures=0;directions={}
+    for entry in entries:
+        record=entry['record'] or {};error=record.get('error')
+        if error and error.get('type')!='TimeoutError':
+            errors.append(dict(name=entry['name'],type=error.get('type','unknown'),
+                message=error.get('error','').strip().splitlines()[-1] if error.get('error') else 'No traceback retained'))
+        arrays=entry['arrays'];started=arrays['started']>0
+        if 'initial_retraction_succeeded' in arrays:
+            initial_failures+=int(np.sum(started&~arrays['initial_retraction_succeeded']))
+        if 'signs' in arrays:
+            completed=np.isin(arrays['status'],SUCCESS_STATES)&started
+            for label,mask in (('maximize',arrays['signs']>0),('minimize',arrays['signs']<0)):
+                totals=directions.setdefault(label,dict(started=0,completed=0))
+                totals['started']+=int(np.sum(started&mask));totals['completed']+=int(np.sum(completed&mask))
+    for phase,rep in CASE_LABELS:
+        group=[e for e in entries if e['planned']['stage']==phase and e['planned']['representation']==rep]
+        groups.append(dict(stage=phase,representation=rep,planned_cases=len(group),
+            started_cases=sum(e['started']>0 for e in group),started=sum(e['started'] for e in group),
+            completed=sum(e['completed'] for e in group)))
+    certs=[entry['certificate'] for entry in entries if entry['certificate']]
+    errors_saved=[cert['independent_feature_error'] for cert in certs if 'independent_feature_error' in cert]
+    gaps=[entry['maximum_gap'] for entry in entries if entry['maximum_gap'] is not None]
+    notes=read(Path(out)/'runtime_notes.json',dict(notes=[])).get('notes',[])
+    log_path=Path(out)/'run.log'
+    log=log_path.read_text(encoding='utf-8',errors='replace') if log_path.exists() else ''
+    utc_difference=None
+    if stage.get('started_utc') and stage.get('completed_utc'):
+        utc_difference=(datetime.fromisoformat(stage['completed_utc'])-datetime.fromisoformat(stage['started_utc'])).total_seconds()
+    elapsed=stage.get('elapsed_seconds')
+    return dict(started_cases=sum(e['started']>0 for e in entries),planned_cases=len(entries),
+        unstarted_cases=sum(e['started']==0 for e in entries),
+        interrupted_starts=summary['starts_started']-summary['starts_completed']-summary['terminal_failure_starts'],
+        case_errors=errors,groups=groups,directions=directions,initial_retraction_failures=initial_failures,
+        maximum_endpoint_error=max(errors_saved) if errors_saved else None,
+        maximum_saved_gap=max(gaps) if gaps else None,
+        provisional_candidates=sum(cert.get('provisional_candidates',0) for cert in certs),
+        direct_replay_candidates=sum(bool(cert.get('arrays')) for cert in certs),runtime_notes=notes,
+        svd_fallback_warnings=log.count('UserWarning: torch.linalg.svd:'),
+        utc_interval_seconds=utc_difference,
+        elapsed_minus_utc_seconds=None if elapsed is None or utc_difference is None else elapsed-utc_difference)
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run-dir',type=Path,default=OUT)
     parser.add_argument('--report',type=Path,default=ROOT/'docs/CLOSURE_FIBERS_RUN.md')
     args=parser.parse_args();out=args.run_dir
     run=collect_run(out);plan,stage,entries,summary=[run[k] for k in ('plan','stage','entries','summary')]
+    context=saved_runtime_context(run,out)
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -366,17 +413,61 @@ def main():
     timing='\n'.join(f"| {k.replace('_',' ')} | {v:.3f} |" for k,v in stages.items()) or '| — | No completed stage timing |'
     hardware_rows='\n'.join(f"| {v['phase'].replace('_',' ')} | {v['device']} | {v['samples']} | {v['mean_busy']:.2f} | {v['mean_power_W']:.2f} | {v['peak_memory_MiB']:.0f} |" for v in phase_summary) or '| — | — | No retained phase counters | — | — | — |'
     elapsed='not finalized' if summary['elapsed_seconds'] is None else f"{summary['elapsed_seconds']:.2f} seconds"
+    coverage_rows='\n'.join(f"| {v['stage']} / {v['representation']} | {v['started_cases']} / {v['planned_cases']} | {v['started']} | {v['completed']} |" for v in context['groups'])
+    error_rows='\n'.join(f"| {v['name']} | {v['type']} | {v['message'].replace('|','/')} | [case record](../results/closure_fibers_v1/cases/{v['name']}.json), [saved starts](../results/closure_fibers_v1/cases/{v['name']}.npz) |" for v in context['case_errors']) or '| — | No non-timeout case error recorded | — | — |'
+    runtime_rows=[]
+    for note in context['runtime_notes']:
+        if all(key in note for key in ('case','start_id','maximum_saved_scaled_change','inner_gate','excess_over_inner_gate','declared_bin_boundary_margin','required_certificate_margin')):
+            runtime_rows.append(f"| {note['case']} / {note['start_id']} | {note['maximum_saved_scaled_change']:.17g} | {note['inner_gate']:.17g} | {note['excess_over_inner_gate']:.17g} | {note['declared_bin_boundary_margin']:.17g} | {note['required_certificate_margin']:.17g} |")
+    runtime_rows='\n'.join(runtime_rows) or '| — | No saved inner-gate arithmetic note | — | — | — | — |'
+    direction_text='; '.join(f"{name}: {counts['started']} started / {counts['completed']} completed" for name,counts in context['directions'].items()) or 'No direction counts saved'
+    unstarted_repairs=[v['representation'] for v in context['groups'] if v['representation'] in ('capacity','repair') and v['started']==0]
+    repair_scope=(f"The {', '.join(unstarted_repairs)} searches were entirely unstarted. Their resistance to fresh searches was not tested, so no comparison or repair-performance conclusion is available." if unstarted_repairs else
+        'Fresh representation comparisons remain restricted to complete matched groups below.')
+    audit_error='not available' if context['maximum_endpoint_error'] is None else f"{context['maximum_endpoint_error']:.17g}"
+    max_gap='not available' if context['maximum_saved_gap'] is None else f"{context['maximum_saved_gap']:.17g}"
+    replay_scope=('No provisional candidate met the declared witness threshold, so no production full-harmonic direct replay or production invariant certificate was performed. The separately recorded real-operator preflight verifies only its fixed-angle controls.'
+        if context['provisional_candidates']==context['direct_replay_candidates']==0 else
+        f"Saved provisional candidates: {context['provisional_candidates']}; directly replayed selected candidates: {context['direct_replay_candidates']}. Only explicit passing certificates support witness claims.")
+    svd_note=(f"The [preserved run log](../results/closure_fibers_v1/run.log) contains {context['svd_fallback_warnings']} SVD convergence warning(s): the initially selected CUDA driver did not converge for a batch and PyTorch announced a more accurate fallback. The warning does not state that the fallback failed."
+        if context['svd_fallback_warnings'] else 'No SVD fallback warning was found in the saved run log.')
     report=f'''# CST information-loss search under angular smoothing
 
 **Scientific status: {summary['scientific_status']}. Outcome: {summary['scientific_outcome']}.**
 Completed starts: **{summary['starts_completed']:,}/{summary['planned_starts']:,}**;
-started: {summary['starts_started']:,}; terminal failure starts: {summary['terminal_failure_starts']};
+started: {summary['starts_started']:,}; terminal nonfinite failure starts: {summary['terminal_failure_starts']};
 started rows without retained GPU endpoints: {summary['unverified_started_rows']}.
+Separately recorded non-timeout optimizer/execution case failures: **{len(context['case_errors'])}**.
 Independently audited saved endpoints: {summary['independently_audited_starts']}.
 Saved verified witnesses: **{summary['verified_witnesses']}**. Elapsed study time: {elapsed}.
 The result file is {'present' if summary['result_present'] else 'absent; conclusions are limited to retained partial evidence'}.
 
 ![All case outcomes](../results/closure_fibers_v1/search_overview.png)
+
+## Actual coverage and limits
+
+Searches began in **{context['started_cases']}/{context['planned_cases']} cases**;
+{context['unstarted_cases']} cases never started. Of {summary['starts_started']}
+started rows, {summary['starts_completed']} completed the solver stopping rule
+and {context['interrupted_starts']} remained interrupted. Completed status counts:
+{summary['status_counts'].get('stalled',0)} stalled and
+{summary['status_counts'].get('iteration_cap',0)} reached the iteration cap.
+Initial retraction failures among started rows: {context['initial_retraction_failures']}.
+Directions: {direction_text}. The fixed order was truncated by the budget;
+these unequal direction counts cannot be treated as a balanced completed search.
+
+| Planned search | Started / planned cases | Starts begun | Starts completed |
+|---|---:|---:|---:|
+{coverage_rows}
+
+{repair_scope}
+The largest saved feasible endpoint gap was **{max_gap}**, against the fixed
+witness threshold **{plan['witness_gap']}**. It is a finite-search discovered
+lower bound, not an upper bound on undiscovered gaps or evidence of closure.
+Independent CPU covariance/derivative and stored GPU endpoint audits cover
+{summary['independently_audited_starts']} saved starts; their maximum recorded
+scaled discrepancy was {audit_error} (acceptance gate {plan['numerical_gate']}).
+{replay_scope}
 
 ## What the experiment asks
 
@@ -388,10 +479,13 @@ harmonics. They are not newly observed skies or a foreground/instrument model.
 
 The [frozen protocol](CLOSURE_FIBERS_SPEC.md) fixes 12 tiles and 6,144 starts.
 Each tile has a source-baseline search and fresh baseline, power-control and CST-
-repair searches, with 128 starts each. The global E/B auto/cross spectra and full
-A−B difference are preserved between states at each common smoothing time.
-The initial perturbation RMS is limited to 25% of the reference coadd globally
-and within the tile; plane angles are bounded by ±π/4.
+repair searches, with 128 starts each. The orthogonal-plane construction is
+designed to preserve global E/B auto/cross spectra and the full A−B difference
+at each common smoothing time; preflight controls verify those identities.
+An independently replayed production invariant certificate is conditional on a
+selected witness candidate, as disclosed above. Throughout the search, accepted
+states must keep perturbation RMS within 25% of the reference coadd globally
+and within the tile, with plane angles bounded by ±π/4.
 
 The baseline records 32 transported increment statistics and 12 local band powers.
 The power control adds four derivatives of mean increment power; the CST repair
@@ -419,6 +513,32 @@ proposals and terminal numerical failures remain separately recorded.
 | Tile | Search | Started / completed | Terminal failures | Unverified started | Largest saved feasible gap | Certificate |
 |---:|---|---:|---:|---:|---:|---|
 {rows}
+
+## Preserved execution failures and numerical warnings
+
+Case-level exceptions are separate from the terminal nonfinite-start counter.
+Timeouts at the reserved verification boundary are reported as interruptions;
+the following table lists other preserved case exceptions.
+
+| Case | Exception type | Recorded final error | Evidence |
+|---|---|---|---|
+{error_rows}
+
+The [runtime arithmetic notes](../results/closure_fibers_v1/runtime_notes.json)
+retain the following comparisons of saved values with the stricter optimizer
+inner gate. These are metadata calculations, not new feature recomputations.
+
+| Case / start | Maximum saved scaled change | Optimizer inner gate | Excess over inner gate | Bin-boundary margin | Required certificate margin |
+|---|---:|---:|---:|---:|---:|
+{runtime_rows}
+
+A tiny excess over the optimizer inner gate while the saved certificate margin
+remains safe is consistent with roundoff at that stricter boundary. This is a
+**provisional diagnosis** of the preserved failure. It neither overrides the
+frozen solver decision nor certifies a witness; no source, seed or tolerance was
+changed to turn the failure into a pass.
+
+{svd_note}
 
 ## Does the proposed repair distinguish the examples?
 
@@ -522,6 +642,12 @@ verification start was {summary['timing']['approximate_verification_start_second
 seconds, with {summary['timing']['verification_start_after_reserve_seconds']}
 seconds beyond the planned reserve boundary. Missing timing values mean an
 unfinished phase was not recorded; scheduling delays are not normalized away.
+The recorded UTC interval is `{stage.get('started_utc','not recorded')}` to
+`{stage.get('completed_utc','not recorded')}`, a difference of
+{context['utc_interval_seconds']} seconds. The saved `perf_counter` elapsed
+value is {summary['elapsed_seconds']} seconds, differing from the UTC interval
+by {context['elapsed_minus_utc_seconds']} seconds (`perf_counter` minus UTC).
+Both records are preserved. This report does not infer a cause for that discrepancy.
 
 ## What is known and what remains open
 

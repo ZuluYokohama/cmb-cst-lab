@@ -44,3 +44,21 @@ valid beam optics or a physical discovery. The separate
 [compiler record](../data/evidence/acquisition_lean.json) and
 [acquisition report](../docs/ACQUISITION_RUN.md) preserve their scope; CI checks
 both proof files. The original nine theorem sources and evidence remain intact.
+
+## Operational projection under smoothing
+
+[OperationalClosure.lean](OperationalClosure.lean) adds seven theorems using the
+same pinned Lean 4.35.0 compiler and standard library. Two conditional typed-
+function results show that equal recorded inputs with unequal target outputs
+exclude a deterministic predictor or factor map on a domain containing that
+pair. Five exact rational checks instantiate the argument with four-node
+adjacent averaging and second/fourth moments. The conditional results need no
+axioms; the toy checks use the standard foundations listed above.
+
+The [compiler evidence](../data/evidence/closure_lean.json) records all seven
+theorems and their axioms. There are 18 supporting theorems across the three
+files, all checked in CI. The [bounded Planck counterfactual study](../docs/CLOSURE_FIBERS_RUN.md)
+found no qualifying witness and left the repair comparison untested. The proofs
+do not certify numerical sky calculations, successful optimization, universal
+repair, physical detections or mathematical novelty. Earlier proof sources and
+their evidence remain unchanged.

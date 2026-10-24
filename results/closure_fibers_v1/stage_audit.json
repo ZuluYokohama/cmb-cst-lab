@@ -1,0 +1,14 @@
+{
+  "status": "incomplete_with_failures",
+  "started_utc": "2026-10-24T12:54:16.120734+00:00",
+  "plan_sha256": "1213eb583b92b1ada02f06bf853bdd66b86a4071032f14bf5a1108b25dc4f081",
+  "stages": {
+    "preprocessing_seconds": 24.250234499999998,
+    "search_seconds": 13476.306984375,
+    "scientific_verification_seconds": 1.6241828999991412
+  },
+  "completed_utc": "2026-10-24T16:32:31.137489+00:00",
+  "elapsed_seconds": 13502.224764858,
+  "result_sha256": "5bd58072b50d8f8f0d388963fd10dd0594082a09f3fc7977b4ae1a569b05ca74",
+  "numerical_failures": 1
+}

@@ -1,0 +1,22 @@
+{
+  "tile": 24,
+  "stage": "source",
+  "representation": "baseline",
+  "device": 0,
+  "starts": 128,
+  "seed": 82024102027,
+  "signs": "first half maximize; second half minimize",
+  "seed_derivation": "SeedSequence([seed,tile,source=0/fresh=1,start]); fresh representations share raw kicks",
+  "status": "incomplete",
+  "starts_started": 92,
+  "starts_completed": 88,
+  "seconds": 13475.460321346,
+  "terminal_failure_starts": 0,
+  "nonfinite_trial_count": 0,
+  "arrays": "cases/tile_24_source_baseline.npz",
+  "error": {
+    "type": "TimeoutError",
+    "error": "Traceback (most recent call last):\n  File \"/mnt/e/New folder/cmb-cst-lab/scripts/run_closure_fibers.py\", line 217, in worker\n    result=projected_batch(feature,target,model.ratios,kicks[ids],signs[ids],device=f'cuda:{index}',\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/e/New folder/cmb-cst-lab/src/cmbcst/closure_search.py\", line 284, in projected_batch\n    trial,valid,already_nonfinite=retract(current+step_norm*(.5**h)*direction,ids)\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/e/New folder/cmb-cst-lab/src/cmbcst/closure_search.py\", line 172, in retract\n    check_budget()\n  File \"/mnt/e/New folder/cmb-cst-lab/src/cmbcst/closure_search.py\", line 150, in check_budget\n    budget()\n  File \"/mnt/e/New folder/cmb-cst-lab/scripts/run_closure_fibers.py\", line 115, in search_budget\n    raise TimeoutError('scientific verification reserve reached')\nTimeoutError: scientific verification reserve reached\n",
+    "first_start": 88
+  }
+}

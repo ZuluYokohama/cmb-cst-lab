@@ -1,0 +1,32 @@
+{
+  "status": "no_verified_witness",
+  "case": {
+    "tile": 34,
+    "stage": "source",
+    "representation": "baseline",
+    "device": 1,
+    "starts": 128,
+    "seed": 82024102027,
+    "signs": "first half maximize; second half minimize",
+    "seed_derivation": "SeedSequence([seed,tile,source=0/fresh=1,start]); fresh representations share raw kicks",
+    "status": "execution_failed",
+    "starts_started": 24,
+    "starts_completed": 23,
+    "seconds": 3912.1384513989997,
+    "terminal_failure_starts": 0,
+    "nonfinite_trial_count": 0,
+    "arrays": "cases/tile_34_source_baseline.npz",
+    "error": {
+      "type": "FloatingPointError",
+      "error": "Traceback (most recent call last):\n  File \"/mnt/e/New folder/cmb-cst-lab/scripts/run_closure_fibers.py\", line 217, in worker\n    result=projected_batch(feature,target,model.ratios,kicks[ids],signs[ids],device=f'cuda:{index}',\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/e/New folder/cmb-cst-lab/src/cmbcst/closure_search.py\", line 312, in projected_batch\n    raise FloatingPointError('stored search state lost feasibility')\nFloatingPointError: stored search state lost feasibility\n",
+      "first_start": 20
+    }
+  },
+  "starts_checked": 24,
+  "feasible_endpoints": 24,
+  "provisional_candidates": 0,
+  "maximum_discovered_feasible_gap": 0.01601377022513345,
+  "independent_feature_error": 5.127146658877449e-15,
+  "seconds": 0.17041126799995254,
+  "note": "Finite search maxima are discovered lower bounds, not certified worst-case upper bounds"
+}
