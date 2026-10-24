@@ -39,6 +39,13 @@ HEADER = (
 # suite -> (sources, sandbox tests file). A source is (path, [function names]) or (path, None) for a
 # whole standalone module (its own imports are kept; it must not import other cmbcst modules).
 SUITES: dict[str, tuple[list[tuple[str, list[str] | None]], str]] = {
+    "integration_cutsky_v1": (
+        [("src/cmbcst/integration/family.py", None),
+         ("src/cmbcst/integration/quadratic.py", None),
+         ("src/cmbcst/integration/continuation.py", None),
+         ("src/cmbcst/integration/certificates.py", None)],
+        "tests/sandbox/jovin_tests_integration_cutsky_v1.py",
+    ),
     "closure_fibers_v2": (
         [("src/cmbcst/closure_fibers.py", None), ("src/cmbcst/closure_fibers_data.py", None),
          ("src/cmbcst/closure_search.py", None), ("src/cmbcst/closure_fibers_oracle.py", None),

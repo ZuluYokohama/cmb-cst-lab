@@ -1,0 +1,20 @@
+{
+  "scope": "Integration development controls before a frozen scientific pilot; no production candidates promoted",
+  "failures": [
+    {
+      "dependency": "pymaster 3.0.1",
+      "control": "NSIDE8, field lmax12, mask lmax23, purify_b=True",
+      "actual_exception": "ValueError: operands could not be broadcast together with shapes (300,) (91,) (300,)",
+      "location": "pymaster.field.NmtField._purify combining mask-bandlimit and field-bandlimit harmonic arrays",
+      "resolution": "The new adapter explicitly supports matching field and mask band limits when purification is requested and rejects incompatible profiles before calling the library. The library and frozen prior studies were not modified.",
+      "numerical_gates_relaxed": false,
+      "scientific_pilot_started": false
+    },
+    {
+      "control": "plain sandbox under workspace drvfs TMPDIR",
+      "actual_exception": "pytest capture FileNotFoundError during temporary-file truncate; no tests executed",
+      "resolution": "Use native Linux /tmp for the subprocess temporary files; retain the failed log and unchanged tests/gates",
+      "scientific_pilot_started": false
+    }
+  ]
+}

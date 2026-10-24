@@ -1,0 +1,87 @@
+
+=================================== ERRORS ====================================
+_____________________ ERROR collecting tests/test_data.py _____________________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_data.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_data.py:7: in <module>
+    ???
+E   ModuleNotFoundError: No module named 'requests'
+__________________ ERROR collecting tests/test_injection.py ___________________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_injection.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_injection.py:12: in <module>
+    ???
+src\cmbcst\spectra.py:11: in <module>
+    import ducc0
+E   ModuleNotFoundError: No module named 'ducc0'
+______________ ERROR collecting tests/test_planck_input_audit.py ______________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_planck_input_audit.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_planck_input_audit.py:10: in <module>
+    ???
+E   ModuleNotFoundError: No module named 'astropy'
+___________________ ERROR collecting tests/test_response.py ___________________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_response.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_response.py:4: in <module>
+    ???
+src\cmbcst\response_sky.py:4: in <module>
+    from . import spectra, theory, spherical_surrogates
+src\cmbcst\spectra.py:11: in <module>
+    import ducc0
+E   ModuleNotFoundError: No module named 'ducc0'
+_____________ ERROR collecting tests/test_spherical_surrogates.py _____________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_spherical_surrogates.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_spherical_surrogates.py:6: in <module>
+    ???
+src\cmbcst\spherical_surrogates.py:11: in <module>
+    from .spectra import alm_ell_m, cross_cl
+src\cmbcst\spectra.py:11: in <module>
+    import ducc0
+E   ModuleNotFoundError: No module named 'ducc0'
+___________________ ERROR collecting tests/test_targeted.py ___________________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_targeted.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_targeted.py:5: in <module>
+    ???
+src\cmbcst\targeted_sky.py:3: in <module>
+    from .response_sky import SphericalResponseModel
+src\cmbcst\response_sky.py:4: in <module>
+    from . import spectra, theory, spherical_surrogates
+src\cmbcst\spectra.py:11: in <module>
+    import ducc0
+E   ModuleNotFoundError: No module named 'ducc0'
+=========================== short test summary info ===========================
+ERROR tests/test_data.py
+ERROR tests/test_injection.py
+ERROR tests/test_planck_input_audit.py
+ERROR tests/test_response.py
+ERROR tests/test_spherical_surrogates.py
+ERROR tests/test_targeted.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 6 errors during collection !!!!!!!!!!!!!!!!!!!
+6 errors in 2.74s

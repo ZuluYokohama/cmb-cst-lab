@@ -1,0 +1,8 @@
+{
+  "inputs/directions.json": "48d9d4bc44b948f7599790e61f83b39f8ca6c9a26900cb62c58ecd9e51266977",
+  "inputs/family.npz": "e8d78c83c07d6cabaecbc37297638c9577cb1f2cf19572f51264570ceecc6904",
+  "inputs/prepared_arrays.npz": "e11cfd46fb0057afc1e77fdcbc4f4eb8a502f8d7f36c7ad211d437ecc03f252e",
+  "inputs/provenance.json": "d3db87f53009759c38364af82e72bf1ff0bf51da246873d6d54e4a96768ddb7c",
+  "inputs/splits.fits": "d044b48e8debc302bce0736f627d10146c8f353de72b148afbb8da411c3c11bb",
+  "inputs/splits.h5": "95f9dd13f0b9bd891a7fe7915403a75c7ae1b01a825d2498e72d30cc732336b8"
+}

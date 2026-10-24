@@ -1,0 +1,12 @@
+{
+  "status": "complete",
+  "started_utc": "2026-10-24T23:09:17.798678+00:00",
+  "plan_sha256": "14924065c732bdea09121d0d1c7aecfa7dd0eb698cd8cd553575704136738b27",
+  "scientific_scope": "H1 finite-family feasibility only; coupled binned realized spectra and canonical harmonic Gram; no future-response or physical-inference claim",
+  "completed_utc": "2026-10-24T23:10:21.627542+00:00",
+  "result_sha256": "e77ba0d588e4e3e7f24eb1e38729e1326c480b2f3192550695d35a1e82d16c46",
+  "metadata_completed_utc": "2026-10-24T23:10:21.646334+00:00",
+  "elapsed_seconds": 65.561529062,
+  "utc_elapsed_seconds": 63.828863,
+  "budget_elapsed_seconds": 65.561529062
+}

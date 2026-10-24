@@ -28,3 +28,7 @@ results/closure_fibers_v2/cases/*_history.json -diff
 results/closure_fibers_v2/result.json -diff
 results/closure_fibers_v2/certificates_v2/*/rows/*.json -diff
 data/closure_v2_*.log -text
+
+# Keep complete cut-sky evidence accessible without burying source review.
+results/cutsky_feasibility_v1/plan.json -diff
+results/cutsky_feasibility_v1/cases/*/start_*.json -diff

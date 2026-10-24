@@ -1,0 +1,29 @@
+Collecting h5py==3.16.0
+  Using cached h5py-3.16.0-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (3.0 kB)
+Collecting healpy==1.20.1
+  Using cached healpy-1.20.1-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (9.8 kB)
+Collecting fitsio
+  Downloading fitsio-1.4.2-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (21 kB)
+Collecting pymaster==3.0.1
+  Downloading pymaster-3.0.1.tar.gz (42.0 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.0/42.0 MB 72.1 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Downloading h5py-3.16.0-cp312-cp312-manylinux_2_28_x86_64.whl (5.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 97.3 MB/s eta 0:00:00
+Downloading healpy-1.20.1-cp312-cp312-manylinux_2_28_x86_64.whl (8.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.7/8.7 MB 88.0 MB/s eta 0:00:00
+Downloading fitsio-1.4.2-cp312-cp312-manylinux_2_28_x86_64.whl (895 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 895.7/895.7 kB 64.2 MB/s eta 0:00:00
+Building wheels for collected packages: pymaster
+  Building wheel for pymaster (pyproject.toml): started
+  Building wheel for pymaster (pyproject.toml): finished with status 'done'
+  Created wheel for pymaster: filename=pymaster-3.0.1-cp312-cp312-linux_x86_64.whl size=898588 sha256=6c51f3a0ef87b1c40526efdff7dbde9796bd8e337b82b086eff15e86c375f114
+  Stored in directory: /root/.cache/pip/wheels/e2/02/64/1b07a189b0e92263775fe50e8763e3acff4929ef11a11197f5
+Successfully built pymaster
+Installing collected packages: pymaster, healpy, h5py, fitsio
+Successfully installed fitsio-1.4.2 h5py-3.16.0 healpy-1.20.1 pymaster-3.0.1

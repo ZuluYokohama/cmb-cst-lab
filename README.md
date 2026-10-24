@@ -145,14 +145,34 @@ The [v2 protocol](docs/CLOSURE_FIBERS_V2_SPEC.md) freezes raw K4 tiers separatel
 from robust-scale input quantization and preserves v1. Native 128/64-start GPU
 batches use resident analytic operators, measured exact CPU SVD and independent
 CPU/direct checks; every selected cell maximum is replayed on both GPUs. All
-26 current JoVin suites / 177 checks authenticate against current source and
-test hashes. Preflight passed 246 local tests, with three unavailable Intel XPU
+26 JoVin suites / 177 checks were authenticated at the v2 publication against
+its source and test hashes. Preflight passed 246 local tests, with three unavailable Intel XPU
 skips. The [six concrete Lean checks](formal/ClosureFibersV2Witness.lean) bring
 the supporting theorem total to 24; they verify exact recorded integer tables
 and a conditional no-factor conclusion, without certifying floating-point sky
 measurements. See the [coverage plot](results/closure_fibers_v2/coverage.png),
 [tier comparisons](results/closure_fibers_v2/tier_heatmap.png) and
 [complete saved-evidence audit](results/closure_fibers_v2/verification.json).
+
+The new [`cmbcst.integration` slice](docs/CMB_INTEGRATION_V1.md) adds strict
+HEALPix FITS/HDF5 split I/O, residual-preserving harmonic families, ducc/healpy
+spin-2 operators, and actual NaMaster coupled-spectrum constraints. The separate
+[synthetic cut-sky pilot](docs/CUTSKY_FEASIBILITY_RUN.md) verified all 48 finite
+candidates across six masks and two fixed precision gates, in 65.6 seconds.
+Each achieved 1.003–1.119% retained-harmonic coadd RMS change; 24/24 passed the
+stricter scaled 1e-12 gate. These are 24 paired direction identities evaluated at
+both tolerances, not 48 independent directions. All current 27 JoVin suites /
+186 checks authenticate, with actual outputs from both GPUs bound to the new
+receipt. The [coverage plot](results/cutsky_feasibility_v1/coverage.png) and
+[saved-evidence audit](results/cutsky_feasibility_v1/verification.json) preserve
+the full scope: simulated inputs, common masks/response, 48 binned coupled
+pseudo-spectra, and canonical retained-alm invariants. This is finite feasibility,
+not a new closure counterexample, physical-noise validation or observatory
+readiness. The [general integration research plan](docs/CMB_INTEGRATION_RESEARCH_PLAN.md)
+keeps realistic observing models, further backends, statistical calibration
+and deployment as subsequent work.
+Final local regression passed 401 tests with three unavailable XPU skips in
+Linux, and 370 tests with 34 unavailable optional-backend/device skips in Windows.
 
 **Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every result taken from `results/*.json`
 is written into it by `paper/make_inputs.py` (macros and figures). Two values come from checks
@@ -279,6 +299,7 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `real_splits` | pass 6/6 | `20261024T002321Z-3b4b0dd2589d` |
 | `closure_fibers` | pass 12/12 | `20261024T124021Z-15f74d97a919` |
 | `closure_fibers_v2` | pass 7/7 | `20261024T171134Z-229a18914409` |
+| `integration_cutsky_v1` | pass 9/9 | `20261024T230307Z-db083a4ffa16` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).
