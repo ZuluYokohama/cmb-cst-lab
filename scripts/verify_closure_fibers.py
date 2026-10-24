@@ -242,6 +242,32 @@ def validate_case(out,entry,reference,scales,checks):
         checks.add(name+':no_witness_honest',cert['provisional_candidates']==0)
 
 
+def validate_timing(out,plan,stage,checks):
+    """Audit recorded wall-time metadata, without extending the scientific run."""
+    status=stage.get('status');elapsed=stage.get('elapsed_seconds');cap=plan['compute_cap_seconds']
+    terminal=('complete','complete_with_failures','incomplete','incomplete_with_failures',
+        'incomplete_hard_cap','execution_failed')
+    valid_elapsed=isinstance(elapsed,(int,float)) and np.isfinite(elapsed) and elapsed>=0
+    checks.add('scientific_run_terminal',status in terminal)
+    checks.add('recorded_elapsed_valid',valid_elapsed)
+    stages=stage.get('stages',{})
+    valid_stages=all(isinstance(value,(int,float)) and np.isfinite(value) and value>=0 for value in stages.values())
+    checks.add('recorded_stage_times_valid',valid_stages)
+    checks.add('recorded_stage_time_accounting',valid_elapsed and valid_stages
+        and sum(stages.values())<=elapsed+1e-6)
+    checks.add('completion_within_declared_cap',not str(status).startswith('complete')
+        or (valid_elapsed and elapsed<=cap and set(stages)=={
+            'preprocessing_seconds','search_seconds','scientific_verification_seconds'}))
+    checks.add('recorded_cap_excess_explicit',not valid_elapsed or elapsed<=cap
+        or str(status).startswith('incomplete'))
+    hard=read(out/'hard_cap.json')
+    checks.add('hard_cap_marker_consistent',(hard is None and status!='incomplete_hard_cap') or
+        (hard is not None and status=='incomplete_hard_cap' and hard.get('status')==status
+        and hard.get('plan_sha256')==stage.get('plan_sha256')
+        and hard.get('elapsed_seconds')==elapsed and valid_elapsed and elapsed>=cap
+        and not (out/'result.json').exists()))
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run-dir',type=Path,default=OUT)
@@ -259,6 +285,7 @@ def main():
         and plan['sampling_epsilon']==1e-12 and plan['numerical_gate']==1e-10 and plan['threads']==8
         and plan['shells']==np.rint(np.linspace(30,216,32)).astype(int).tolist())
     checks.add('plan_stage_binding',stage.get('plan_sha256')==sha(out/'plan.json'))
+    validate_timing(out,plan,stage,checks)
     required_sources={'src/cmbcst/'+name for name in ('closure_fibers.py','closure_fibers_data.py',
         'closure_fibers_oracle.py','closure_search.py','closure_certification.py','closure_jacobian.py')}
     checks.attempt('current_scientific_source_bindings',lambda:required_sources<=set(plan['source_sha256'])
@@ -304,6 +331,18 @@ def main():
     checks.attempt('preflight_source_binding',lambda:profile['status']=='passed'
         and sha(profile_path)==plan['preflight_sha256']
         and all(sha(ROOT/name)==digest for name,digest in profile['source_sha256'].items()))
+    real_profile_path=ROOT/'data/evidence/closure_real_operator_preflight.json'
+    real_profile=read(real_profile_path,{})
+    checks.attempt('real_operator_preflight_binding',lambda:real_profile['status']=='passed'
+        and real_profile['source_unchanged'] is True
+        and sha(real_profile_path)==plan['real_operator_preflight_sha256']
+        and real_profile['source_inputs']==plan['input_sha256']
+        and all(sha(ROOT/name)==digest for name,digest in real_profile['source_sha256'].items())
+        and real_profile['accepted_tiles']==79 and real_profile['invariants']['passed'] is True
+        and all(np.isfinite(value) and 0<=value<=GATE for value in real_profile['direct_feature_errors'])
+        and len(real_profile['gpu'])==2 and {v['index'] for v in real_profile['gpu']}=={0,1}
+        and all(np.isfinite(value) and 0<=value<=GATE for device in real_profile['gpu']
+            for value in device['feature_errors_u0_u1']))
     tree=ast.parse((ROOT/'tests/sandbox/jovin_tests_closure_fibers.py').read_text(encoding='utf-8'))
     assignment=next(v for v in tree.body if isinstance(v,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='GPU_ATTESTATION' for t in v.targets))
     checks.add('preflight_sandbox_actual_output_binding',ast.literal_eval(assignment.value)==profile.get('fixture'))
@@ -354,6 +393,17 @@ def main():
         checks.add('fixed_reference_scales',ref['features'].shape==(79,52) and ref['tile_ids'].shape==(79,)
             and len(np.unique(ref['tile_ids']))==79 and np.isfinite(ref['features']).all()
             and close(ref['scales'],robust_scales(ref['features'])))
+        normalization=read(out/'normalization_lock.json',{})
+        checks.attempt('normalization_lock_binding',lambda:
+            normalization['plan_sha256']==sha(out/'plan.json')
+            and normalization['reference_features_sha256']==sha(out/'reference_features.npz')
+            and exact(normalization['accepted_tiles'],ref['tile_ids'])
+            and normalization['rule']=='max(1.4826*MAD, .001*max(1,abs(median)))'
+            and datetime.fromisoformat(plan['created_utc'])<=datetime.fromisoformat(normalization['created_utc'])
+            and ('preprocessing_seconds' not in stage.get('stages',{}) or
+                (datetime.fromisoformat(normalization['created_utc'])-
+                 datetime.fromisoformat(stage['started_utc'])).total_seconds()
+                <=stage['stages']['preprocessing_seconds']+1.))
         reference_map={int(tile):v for tile,v in zip(ref['tile_ids'],ref['features'])}
         for entry in run['entries']:
             checks.attempt('case_audit:'+entry['name'],lambda e=entry:(validate_case(out,e,

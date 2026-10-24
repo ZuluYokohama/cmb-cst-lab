@@ -113,6 +113,17 @@ on CPU and both GPUs, all 2000 resamples are independently checked, and a raw
 The [actual filtered sample rows](results/real_splits_v1/labeled_real_samples.csv)
 provide map/split, Galactic coordinates, separation, bearing and Q/U values.
 
+The [CST smoothing-information protocol](docs/CLOSURE_FIBERS_SPEC.md) searches
+for counterfactual 143 GHz skies with identical recorded local summaries and
+global spectra that separate after identical angular smoothing. It compares
+the baseline with ordinary-power and connected-fourth-order response features.
+The four-hour dual-GPU production run is in progress; no verified scientific
+outcome is reported yet. Preflight passed 211 local tests (three unavailable
+Intel XPU skips), 25 authenticated JoVin suites / 170 checks and seven new
+[conditional Lean closure theorems](formal/OperationalClosure.lean). These prove
+the stated mathematical implication and an exact toy example, while the real
+sky pipeline requires independent numerical replay.
+
 **Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every result taken from `results/*.json`
 is written into it by `paper/make_inputs.py` (macros and figures). Two values come from checks
 whose output is not in `results/`: the injection pull width and the post-hoc A/B covariance
@@ -236,6 +247,7 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `acquisition` | pass 6/6 | `20261023T232459Z-151d1b4bcb0e` |
 | `acquisition_index` | pass 4/4 | `20261023T234104Z-58f1101a658f` |
 | `real_splits` | pass 6/6 | `20261024T002321Z-3b4b0dd2589d` |
+| `closure_fibers` | pass 12/12 | `20261024T124021Z-15f74d97a919` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).

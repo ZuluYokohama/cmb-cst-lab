@@ -60,6 +60,29 @@ def _empty_arrays(count=128,planes=128):
         gpu_ratios=np.full((count,2),np.nan))
 
 
+def timing_evidence(plan,stage,hard_cap=None):
+    """Summarize recorded times; never manufacture unfinished stage durations."""
+    def finite(value):
+        return float(value) if isinstance(value,(int,float)) and np.isfinite(value) else None
+    elapsed=finite(stage.get('elapsed_seconds'))
+    cap=float(plan['compute_cap_seconds'])
+    reserve_begin=cap-float(plan['verification_reserve_seconds'])
+    stages=stage.get('stages',{})
+    durations=[finite(value) for value in stages.values()]
+    total=sum(durations) if all(value is not None for value in durations) else None
+    search_end=None
+    if all(key in stages for key in ('preprocessing_seconds','search_seconds')):
+        values=[finite(stages[key]) for key in ('preprocessing_seconds','search_seconds')]
+        if all(value is not None for value in values):search_end=sum(values)
+    return dict(declared_cap_seconds=cap,verification_reserve_seconds=float(plan['verification_reserve_seconds']),
+        recorded_elapsed_seconds=elapsed,completed_stage_seconds=total,
+        recorded_cap_excess_seconds=None if elapsed is None else max(0.,elapsed-cap),
+        approximate_verification_start_seconds=search_end,
+        verification_start_after_reserve_seconds=None if search_end is None else max(0.,search_end-reserve_begin),
+        hard_cap_marker_present=hard_cap is not None,
+        scope='Saved elapsed and sequential-stage metadata; unfinished stages and timer scheduling delays are not reconstructed')
+
+
 def collect_run(out):
     """Reconstruct all planned cases, including interrupted in-flight batches.
 
@@ -171,7 +194,7 @@ def collect_run(out):
         matched_complete_tiles=matched,status_counts=statuses,
         independently_audited_starts=sum(int(np.sum((e['arrays']['started']>0)&np.isfinite(e['endpoints']['features']).all(axis=1)))
             for e in entries if e['endpoints'] is not None),
-        elapsed_seconds=stage.get('elapsed_seconds'),
+        elapsed_seconds=stage.get('elapsed_seconds'),timing=timing_evidence(plan,stage,read(out/'hard_cap.json')),
         certificate_statuses={name:sum(bool(e['certificate']) and e['certificate']['status']==name for e in entries)
             for name in ('verified_witness','no_verified_witness','rejected_candidate','precision_failure')})
     return dict(plan=plan,stage=stage,result=result,entries=entries,reference=refs,summary=summary)
@@ -322,6 +345,24 @@ def main():
     source_rows='\n'.join(f"| {e['planned']['tile']} | {e['certificate']['direct_gap']:.6g} | {e['certificate']['distinguished_by']['capacity']} | {e['certificate']['distinguished_by']['repair']} |" for e in source)
     if not source_rows:
         source_rows='| — | No verified source witness | — | — |'
+    witness_rows=[];trajectory_rows=[]
+    for entry in entries:
+        cert=entry['certificate'] or {}
+        if not cert.get('arrays'):continue
+        saved=load_npz(out/cert['arrays'])
+        if saved is None:continue
+        label=f"{entry['planned']['tile']} / {entry['planned']['stage']} / {entry['planned']['representation']}"
+        invariants=cert.get('invariant_checks',[])
+        spectral=max((v['normalized_spectral_gram_error'] for v in invariants),default=float('nan'))
+        split=max((v['split_difference_scaled_error'] for v in invariants),default=float('nan'))
+        ratios=cert.get('perturbation_ratios',[float('nan'),float('nan')])
+        evidence=f"[certificate](../results/closure_fibers_v1/certificates/{entry['name']}.json), [summaries/angles/bins](../results/closure_fibers_v1/{cert['arrays']}), [harmonics](../results/closure_fibers_v1/{cert['coefficients']})"
+        witness_rows.append(f"| {label} | {cert['status']} | {cert['current_minimum_margin']:.6g} | {spectral:.3g} | {split:.3g} | {cert['direct_sample_feature_error']:.3g} | {ratios[0]:.6g} / {ratios[1]:.6g} | {evidence} |")
+        ref,can=saved['reference_features'],saved['candidate_features']
+        pairs=[f"{ref[u,22]:.7g} / {can[u,22]:.7g}" for u in range(4)]
+        trajectory_rows.append(f"| {label} | {' | '.join(pairs)} | {cert['direct_gap']:.7g} |")
+    witness_rows='\n'.join(witness_rows) or '| — | No directly replayed candidate | — | — | — | — | — | — |'
+    trajectory_rows='\n'.join(trajectory_rows) or '| — | No directly replayed candidate | — | — | — | — |'
     timing='\n'.join(f"| {k.replace('_',' ')} | {v:.3f} |" for k,v in stages.items()) or '| — | No completed stage timing |'
     hardware_rows='\n'.join(f"| {v['phase'].replace('_',' ')} | {v['device']} | {v['samples']} | {v['mean_busy']:.2f} | {v['mean_power_W']:.2f} | {v['peak_memory_MiB']:.0f} |" for v in phase_summary) or '| — | — | No retained phase counters | — | — | — |'
     elapsed='not finalized' if summary['elapsed_seconds'] is None else f"{summary['elapsed_seconds']:.2f} seconds"
@@ -396,6 +437,30 @@ All other groups remain visible but are not used to compare representations.
 Failure to find a fresh collision is resistance to this particular search,
 not a proof of sufficiency or a detection-power advantage.
 
+## Directly replayed candidates and numerical margins
+
+Every directly replayed selected candidate appears below, including rejected or
+precision-failed candidates. Only rows labeled `verified_witness` support a
+collision claim. The current margin is the smallest distance to a recorded local
+bin boundary in robust-scale units (required ≥ 1e-7); spectral, split-difference
+and direct-sampling errors use the declared scaled numerical gate 1e-10.
+RMS columns are global / tile perturbation ratios (each required ≤ 0.25).
+Linked arrays retain all 52 before/after summaries, response derivatives,
+rotation parameters, bin IDs and both actual GPU replays. Certificates retain
+the future changed-coordinate safety decision and detailed invariant checks.
+
+| Tile / search / representation | Verification status | Current minimum margin | Maximum spectral error | Maximum split-difference error | Direct feature error | RMS ratios | Saved evidence |
+|---|---|---:|---:|---:|---:|---:|---|
+{witness_rows}
+
+The following values are the primary 2° K4 summary, with each cell showing
+**reference / candidate** after the indicated identical smoothing. Steps 2/3
+are descriptive trajectories of the selected pair, not additional searches.
+
+| Tile / search / representation | u=0 | u=1 | u=2 | u=3 | Absolute u=1 gap |
+|---|---:|---:|---:|---:|---:|
+{trajectory_rows}
+
 ## Verification, proofs and provenance
 
 The publication audit reads saved evidence and performs hash, count, bin, margin,
@@ -449,6 +514,14 @@ verification; new batches stop at 13,500 seconds to reserve 900 seconds. Publica
 formatting and metadata-only authentication are outside that cap. Device-wide
 counters may include other applications. Recorded activity is not a percentage
 of theoretical FLOPS and establishes neither saturation nor CPU/GPU speedup.
+Saved timing audit: completed-stage sum {summary['timing']['completed_stage_seconds']}
+seconds; recorded elapsed beyond the declared cap
+{summary['timing']['recorded_cap_excess_seconds']} seconds; hard-cap marker
+present: {summary['timing']['hard_cap_marker_present']}. The approximate recorded
+verification start was {summary['timing']['approximate_verification_start_seconds']}
+seconds, with {summary['timing']['verification_start_after_reserve_seconds']}
+seconds beyond the planned reserve boundary. Missing timing values mean an
+unfinished phase was not recorded; scheduling delays are not normalized away.
 
 ## What is known and what remains open
 
