@@ -1,0 +1,59 @@
+{
+  "name": "fsky_30_apod_8",
+  "nominal_fraction": 0.3,
+  "apodization_degrees": 8.0,
+  "positive_pixel_fraction": 0.29443359375,
+  "mean_weight": 0.25846132756953205,
+  "mean_squared_weight": 0.24830148431329024,
+  "operator": {
+    "profile": {
+      "nside": 32,
+      "lmax": 64,
+      "band_edges": [
+        2,
+        18,
+        34,
+        50,
+        65
+      ],
+      "purify_e": false,
+      "purify_b": true,
+      "n_iter": 3,
+      "n_iter_mask": 3,
+      "nthreads": 8,
+      "mask_lmax": 64,
+      "representation": "coupled_binned_pseudo_cl",
+      "pairs": [
+        "AA",
+        "BB",
+        "AB"
+      ],
+      "channels": [
+        "EE",
+        "EB",
+        "BE",
+        "BB"
+      ],
+      "polarization_convention": "COSMO",
+      "ordering": "RING",
+      "templates": null,
+      "anisotropic_weights": false,
+      "beam_deconvolution": false,
+      "pixel_window_deconvolution": false
+    },
+    "mask_sha256": "9334c14db4701166b2dcad48327da1b662f02fdd3571befca13b7cbeb3975f45",
+    "response_sha256": "6aa6dd2566540e12b8a464f96fe5e7c30d227e5ae9c66b00f83cca173423b06e",
+    "versions": {
+      "pymaster": "3.0.1",
+      "healpy": "1.20.1",
+      "ducc0": "0.42.0",
+      "numpy": "2.5.4"
+    },
+    "source_sha256": "b028fb32709ea0ae7e67fa3d2294e03a903804ec40e37385eadeb4f5cc8f4cc7",
+    "supported_scope": "common scalar mask/common response; no deprojection; coupled binned realized spectra",
+    "operator_sha256": "7195382d96731b0df8104dbb92f879686188798a8d58478a41289664b604439d"
+  },
+  "arrays": "profiles/fsky_30_apod_8.npz",
+  "arrays_sha256": "b6f24e3f5baab048756f6c8897f141352c67d1975dc4337b93c4de26f68becbe",
+  "zero_model_scaled_error": 1.9015459015193613e-15
+}

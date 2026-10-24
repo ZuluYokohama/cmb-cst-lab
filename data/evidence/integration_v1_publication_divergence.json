@@ -1,0 +1,103 @@
+{
+  "scope": "Publication divergence only; local pilot source, prior frozen artifacts and results were not altered",
+  "prior_common_commit": "a7e69dbf2ee307b8836fa72d5c47c541ef9a3e18",
+  "local_scientific_source": "24322681307d4b0f591bacb4f8cade16ef5a8529",
+  "remote_commit": "ed160228062f7e61cbfded1b5ecdf82e9bc048de",
+  "remote_new_commits": "9",
+  "changed_remote_paths": [
+    ".github/workflows/verify.yml",
+    "docs/COPULA_TOPOLOGY_RUN.md",
+    "docs/PLANCK_SCALEUP_RUN.md",
+    "docs/REAL_SPLITS_SPEC.md",
+    "docs/RTX5070_RUN.md",
+    "results/acquisition_v1/stage_audit.json",
+    "results/copula_topology_v2/verification.json",
+    "scripts/audit_cst_package.py",
+    "scripts/audit_planck_inputs.py",
+    "scripts/evidence_test_summary.py",
+    "scripts/export_acquisition_coordinates.py",
+    "scripts/jovin_verify.py",
+    "scripts/prepare_real_splits.py",
+    "scripts/report_acquisition_campaign.py",
+    "scripts/report_closure_fibers.py",
+    "scripts/report_copula_topology.py",
+    "scripts/report_orientation.py",
+    "scripts/report_response_benchmark.py",
+    "scripts/report_spherical_topology.py",
+    "scripts/run_acquisition_campaign.py",
+    "scripts/run_closure_fibers.py",
+    "scripts/run_targeted_benchmark.py",
+    "scripts/verify_acquisition_evidence.py",
+    "scripts/verify_acquisition_lean.py",
+    "scripts/verify_closure_fibers.py",
+    "scripts/verify_closure_lean.py",
+    "scripts/verify_lean.py",
+    "scripts/verify_multiscale_evidence.py",
+    "scripts/verify_orientation_evidence.py",
+    "scripts/verify_real_splits.py",
+    "scripts/verify_spherical_evidence.py",
+    "scripts/verify_targeted_evidence.py",
+    "scripts/verify_topology_evidence.py",
+    "src/cmbcst/closure_certification.py",
+    "tests/test_acquisition_scripts.py",
+    "tests/test_closure_hardening.py",
+    "tests/test_closure_reporting.py",
+    "tests/test_evidence_audits.py",
+    "tests/test_jovin_adapter.py",
+    "tests/test_orientation_reporting.py",
+    "tests/test_planck_input_audit.py",
+    "tests/test_real_splits_validation.py",
+    "tests/test_targeted_workflow.py",
+    "tests/test_verifiers.py"
+  ],
+  "remote_paths_conflicting_with_preserved_bytes": {
+    "docs/REAL_SPLITS_SPEC.md": {
+      "frozen_sha256": "99c47efd0df0ae1866244eb477f2f7a50c4aed58d0f03620401de4c9b1207df5",
+      "remote_sha256": "4a430a61f6e23accabb2dd97a80c28971a5690957dee45aa01e7e04afa7d03ff"
+    },
+    "results/acquisition_v1/stage_audit.json": {
+      "frozen_sha256": "bbb990862ce135dd85335e3863fea5d4d48684099a8b40c41974e74cc76cd36e",
+      "remote_sha256": "6139642948db26e2dd055a2c5a2904e92ed653445fdcec207780eee25d250052"
+    },
+    "results/copula_topology_v2/verification.json": {
+      "frozen_sha256": "d330961c9611af1a1797854dd3697c010a2b546ba063c0a27c5128b5c69eb055",
+      "remote_sha256": "2caa5b20d0b5c24f900482ad4929d0fc99d91fb505b0340872d17de6142f36e7"
+    },
+    "scripts/prepare_real_splits.py": {
+      "frozen_sha256": "ab443eeada11a7c1aa172e1158e0d6922b30ce36923a71473a9434d6237d29f2",
+      "remote_sha256": "aa190d6a2af9e3119d70c9f6fb58e870f6ab05068e4a478c84d3e58dbfa4fdbb"
+    },
+    "scripts/run_acquisition_campaign.py": {
+      "frozen_sha256": "6e5b1970fd6d38b98f5d109dfa15a1d4ca7f4ba41cd09f71c6c2acda990b73ed",
+      "remote_sha256": "7ca2539ee14a5d6fc12d0dd201c2e82995f46c6094a49f9896e8ba61283b2e03"
+    },
+    "scripts/run_closure_fibers.py": {
+      "frozen_sha256": "b8ae30939bedb452f21af23cd770beaaa9d02e24b650b23851e0da81cd29cb60",
+      "remote_sha256": "f2b91e6038a0af0fc7d199989553b33459b89bee6ffd1b68858d03cfb65c0b01"
+    },
+    "scripts/run_targeted_benchmark.py": {
+      "frozen_sha256": "b695c8ae340c6767859b5f77c99999fb8fe3a97e0807712dbc0d7c8a3e8974e1",
+      "remote_sha256": "f6f651938b655a91a525541848264f2b0e03b7f4f00a642753ed8b3c109d22fc"
+    },
+    "scripts/verify_acquisition_lean.py": {
+      "frozen_sha256": "7ea186c5f68b9c31e45174cadf8cb33acdbe6c50da2314b6feec6abbcff68f94",
+      "remote_sha256": "69ba77837184695f3a2517f8db34e7e66ba88331b22b125b1cf1a4733c17c3b1"
+    },
+    "scripts/verify_closure_lean.py": {
+      "frozen_sha256": "68a1c40bf6b834bfec9dc3e305fa0ddcb4765157f70760c7581de465f483bcae",
+      "remote_sha256": "19619790e8937488efa1a93bb97102178cea541078aa6184fcc386582d00249e"
+    },
+    "src/cmbcst/closure_certification.py": {
+      "frozen_sha256": "2fdc43778b4531da5b00e025d2750da5eec10f593860f9bec0dbe5cd0f629691",
+      "remote_sha256": "64b5feadf9aaa756fceac6f0c3e6d65a87c367c3cac4b29d30a680f595c27c4e"
+    }
+  },
+  "action": "No force push or overwrite; publication preference requested from user",
+  "resolution": {
+    "user_authorized": "Separate integration branch/PR; preserve both versions",
+    "head": "codex/cmb-integration-v1",
+    "base": "codex/cmb-frozen-v2-baseline",
+    "base_revision": "a7e69dbf2ee307b8836fa72d5c47c541ef9a3e18",
+    "existing_PR17_unchanged": true
+  }
+}

@@ -1,0 +1,227 @@
+
+=================================== ERRORS ====================================
+_____________________ ERROR collecting tests/test_data.py _____________________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_data.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_data.py:7: in <module>
+    ???
+data\work\integration_windows_deps\requests\__init__.py:45: in <module>
+    import urllib3
+E   ModuleNotFoundError: No module named 'urllib3'
+_____________ ERROR collecting tests/test_estimated_covariance.py _____________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_estimated_covariance.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_estimated_covariance.py:6: in <module>
+    ???
+data\work\integration_windows_deps\scipy\stats\__init__.py:600: in <module>
+    from ._stats_py import *
+data\work\integration_windows_deps\scipy\stats\_stats_py.py:40: in <module>
+    from scipy.spatial.distance import cdist
+data\work\integration_windows_deps\scipy\spatial\__init__.py:111: in <module>
+    from ._kdtree import *
+data\work\integration_windows_deps\scipy\spatial\_kdtree.py:8: in <module>
+    from .distance import minkowski
+data\work\integration_windows_deps\scipy\spatial\distance.py:115: in <module>
+    from scipy.linalg import norm
+data\work\integration_windows_deps\scipy\linalg\__init__.py:201: in <module>
+    from ._misc import *
+data\work\integration_windows_deps\scipy\linalg\_misc.py:3: in <module>
+    from .blas import get_blas_funcs
+data\work\integration_windows_deps\scipy\linalg\blas.py:247: in <module>
+    from scipy.linalg import _fblas
+E   ImportError: DLL load failed while importing _fblas: The specified module could not be found.
+_____________ ERROR collecting tests/test_non_gaussian_closure.py _____________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_non_gaussian_closure.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_non_gaussian_closure.py:10: in <module>
+    ???
+scripts\audit_non_gaussian_closure.py:14: in <module>
+    from scipy.stats import f
+data\work\integration_windows_deps\scipy\stats\__init__.py:600: in <module>
+    from ._stats_py import *
+data\work\integration_windows_deps\scipy\stats\_stats_py.py:40: in <module>
+    from scipy.spatial.distance import cdist
+data\work\integration_windows_deps\scipy\spatial\__init__.py:111: in <module>
+    from ._kdtree import *
+data\work\integration_windows_deps\scipy\spatial\_kdtree.py:8: in <module>
+    from .distance import minkowski
+data\work\integration_windows_deps\scipy\spatial\distance.py:115: in <module>
+    from scipy.linalg import norm
+data\work\integration_windows_deps\scipy\linalg\__init__.py:201: in <module>
+    from ._misc import *
+data\work\integration_windows_deps\scipy\linalg\_misc.py:3: in <module>
+    from .blas import get_blas_funcs
+data\work\integration_windows_deps\scipy\linalg\blas.py:247: in <module>
+    from scipy.linalg import _fblas
+E   ImportError: DLL load failed while importing _fblas: The specified module could not be found.
+______________ ERROR collecting tests/test_planck_input_audit.py ______________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_planck_input_audit.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_planck_input_audit.py:15: in <module>
+    ???
+scripts\audit_planck_inputs.py:28: in <module>
+    from cmbcst import DETECTORS, data  # noqa: E402
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\cmbcst\data.py:32: in <module>
+    import requests
+data\work\integration_windows_deps\requests\__init__.py:45: in <module>
+    import urllib3
+E   ModuleNotFoundError: No module named 'urllib3'
+_________________ ERROR collecting tests/test_session_rank.py _________________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_session_rank.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_session_rank.py:12: in <module>
+    ???
+scripts\audit_session_rank.py:16: in <module>
+    from scipy.stats import f
+data\work\integration_windows_deps\scipy\stats\__init__.py:600: in <module>
+    from ._stats_py import *
+data\work\integration_windows_deps\scipy\stats\_stats_py.py:40: in <module>
+    from scipy.spatial.distance import cdist
+data\work\integration_windows_deps\scipy\spatial\__init__.py:111: in <module>
+    from ._kdtree import *
+data\work\integration_windows_deps\scipy\spatial\_kdtree.py:8: in <module>
+    from .distance import minkowski
+data\work\integration_windows_deps\scipy\spatial\distance.py:115: in <module>
+    from scipy.linalg import norm
+data\work\integration_windows_deps\scipy\linalg\__init__.py:201: in <module>
+    from ._misc import *
+data\work\integration_windows_deps\scipy\linalg\_misc.py:3: in <module>
+    from .blas import get_blas_funcs
+data\work\integration_windows_deps\scipy\linalg\blas.py:247: in <module>
+    from scipy.linalg import _fblas
+E   ImportError: DLL load failed while importing _fblas: The specified module could not be found.
+________________ ERROR collecting tests/test_sparse_network.py ________________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_sparse_network.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_sparse_network.py:5: in <module>
+    ???
+data\work\integration_windows_deps\scipy\optimize\__init__.py:422: in <module>
+    from ._optimize import *
+data\work\integration_windows_deps\scipy\optimize\_optimize.py:33: in <module>
+    from scipy.linalg import cholesky, issymmetric, LinAlgError
+data\work\integration_windows_deps\scipy\linalg\__init__.py:201: in <module>
+    from ._misc import *
+data\work\integration_windows_deps\scipy\linalg\_misc.py:3: in <module>
+    from .blas import get_blas_funcs
+data\work\integration_windows_deps\scipy\linalg\blas.py:247: in <module>
+    from scipy.linalg import _fblas
+E   ImportError: DLL load failed while importing _fblas: The specified module could not be found.
+______________ ERROR collecting tests/test_sparse_noise_audit.py ______________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_sparse_noise_audit.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_sparse_noise_audit.py:10: in <module>
+    ???
+scripts\audit_sparse_noise.py:15: in <module>
+    from scipy.stats import chi2
+data\work\integration_windows_deps\scipy\stats\__init__.py:600: in <module>
+    from ._stats_py import *
+data\work\integration_windows_deps\scipy\stats\_stats_py.py:40: in <module>
+    from scipy.spatial.distance import cdist
+data\work\integration_windows_deps\scipy\spatial\__init__.py:111: in <module>
+    from ._kdtree import *
+data\work\integration_windows_deps\scipy\spatial\_kdtree.py:8: in <module>
+    from .distance import minkowski
+data\work\integration_windows_deps\scipy\spatial\distance.py:115: in <module>
+    from scipy.linalg import norm
+data\work\integration_windows_deps\scipy\linalg\__init__.py:201: in <module>
+    from ._misc import *
+data\work\integration_windows_deps\scipy\linalg\_misc.py:3: in <module>
+    from .blas import get_blas_funcs
+data\work\integration_windows_deps\scipy\linalg\blas.py:247: in <module>
+    from scipy.linalg import _fblas
+E   ImportError: DLL load failed while importing _fblas: The specified module could not be found.
+_______________ ERROR collecting tests/test_spatial_ab_audit.py _______________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_spatial_ab_audit.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_spatial_ab_audit.py:4: in <module>
+    ???
+data\work\integration_windows_deps\scipy\stats\__init__.py:600: in <module>
+    from ._stats_py import *
+data\work\integration_windows_deps\scipy\stats\_stats_py.py:40: in <module>
+    from scipy.spatial.distance import cdist
+data\work\integration_windows_deps\scipy\spatial\__init__.py:111: in <module>
+    from ._kdtree import *
+data\work\integration_windows_deps\scipy\spatial\_kdtree.py:8: in <module>
+    from .distance import minkowski
+data\work\integration_windows_deps\scipy\spatial\distance.py:115: in <module>
+    from scipy.linalg import norm
+data\work\integration_windows_deps\scipy\linalg\__init__.py:201: in <module>
+    from ._misc import *
+data\work\integration_windows_deps\scipy\linalg\_misc.py:3: in <module>
+    from .blas import get_blas_funcs
+data\work\integration_windows_deps\scipy\linalg\blas.py:247: in <module>
+    from scipy.linalg import _fblas
+E   ImportError: DLL load failed while importing _fblas: The specified module could not be found.
+_____________ ERROR collecting tests/test_temporal_calibration.py _____________
+ImportError while importing test module 'E:\New folder\cmb-cst-lab\tests\test_temporal_calibration.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\JT-DEV1\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/mnt/e/New folder/cmb-cst-lab/tests/test_temporal_calibration.py:13: in <module>
+    ???
+scripts\audit_temporal_calibration.py:21: in <module>
+    from scipy.stats import f
+data\work\integration_windows_deps\scipy\stats\__init__.py:600: in <module>
+    from ._stats_py import *
+data\work\integration_windows_deps\scipy\stats\_stats_py.py:40: in <module>
+    from scipy.spatial.distance import cdist
+data\work\integration_windows_deps\scipy\spatial\__init__.py:111: in <module>
+    from ._kdtree import *
+data\work\integration_windows_deps\scipy\spatial\_kdtree.py:8: in <module>
+    from .distance import minkowski
+data\work\integration_windows_deps\scipy\spatial\distance.py:115: in <module>
+    from scipy.linalg import norm
+data\work\integration_windows_deps\scipy\linalg\__init__.py:201: in <module>
+    from ._misc import *
+data\work\integration_windows_deps\scipy\linalg\_misc.py:3: in <module>
+    from .blas import get_blas_funcs
+data\work\integration_windows_deps\scipy\linalg\blas.py:247: in <module>
+    from scipy.linalg import _fblas
+E   ImportError: DLL load failed while importing _fblas: The specified module could not be found.
+=========================== short test summary info ===========================
+ERROR tests/test_data.py
+ERROR tests/test_estimated_covariance.py
+ERROR tests/test_non_gaussian_closure.py
+ERROR tests/test_planck_input_audit.py
+ERROR tests/test_session_rank.py
+ERROR tests/test_sparse_network.py
+ERROR tests/test_sparse_noise_audit.py
+ERROR tests/test_spatial_ab_audit.py
+ERROR tests/test_temporal_calibration.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 9 errors during collection !!!!!!!!!!!!!!!!!!!
+9 errors in 9.12s

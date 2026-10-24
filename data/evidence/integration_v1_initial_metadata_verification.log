@@ -1,0 +1,58 @@
+{
+  "metadata_integrity": "passed",
+  "scientific_summary": {
+    "execution_status": "complete",
+    "planned_profiles": 6,
+    "planned_cases": 12,
+    "planned_starts": 48,
+    "profiles_preprocessed": 6,
+    "closed_cases": 12,
+    "starts_started": 48,
+    "starts_terminal": 48,
+    "verified_candidates": 48,
+    "no_nontrivial_found": 0,
+    "numerical_or_verification_failures": 0,
+    "incomplete_started": 0,
+    "unstarted": 0,
+    "status_counts": {
+      "finite_feasible_candidate_verified": 48
+    },
+    "solver_reason_counts": {
+      "nontrivial_threshold_reached": 48
+    },
+    "tolerance_outcomes": {
+      "1e-10": {
+        "planned": 24,
+        "started": 24,
+        "verified": 24,
+        "no_nontrivial_found": 0,
+        "failed": 0,
+        "incomplete": 0
+      },
+      "1e-12": {
+        "planned": 24,
+        "started": 24,
+        "verified": 24,
+        "no_nontrivial_found": 0,
+        "failed": 0,
+        "incomplete": 0
+      }
+    },
+    "scientific_outcome": "finite_feasibility_demonstrated_for_reported_profiles",
+    "maximum_direct_model_scaled_error": 1.509619162833684e-14,
+    "maximum_actual_gpu_scaled_error": 1.411413574968361e-14,
+    "maximum_observed_D_scaled_error": 1.7717930130176602e-15,
+    "maximum_canonical_gram_error": 1.6128692262929336e-15,
+    "maximum_canonical_D_scaled_error": 6.144269805977243e-17,
+    "minimum_verified_harmonic_rms": 0.010034410171666789,
+    "maximum_verified_harmonic_rms": 0.011189535290451675,
+    "elapsed_seconds": 65.561529062,
+    "utc_elapsed_seconds": 63.828863,
+    "budget_elapsed_seconds": 65.561529062,
+    "closure_counterexamples": 0,
+    "universal_closure_verified": false,
+    "physical_noise_model_validated": false
+  },
+  "failed": [],
+  "errors": {}
+}

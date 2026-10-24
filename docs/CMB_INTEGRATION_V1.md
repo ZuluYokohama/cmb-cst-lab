@@ -3,8 +3,9 @@
 `cmbcst.integration` is the first supported HEALPix integration slice. It reads
 explicit split-map products, constructs a stored harmonic counterfactual family,
 retains the original pixel residual, and can cache selected realized NaMaster
-responses as quadratic forms. This guide describes the implemented API, not an
-outcome of the pending feasibility pilot.
+responses as quadratic forms. This guide describes the implemented API; the
+separate [synthetic feasibility report](CUTSKY_FEASIBILITY_RUN.md) records
+48 independently verified finite candidates across 12 cases.
 
 The [research plan](CMB_INTEGRATION_RESEARCH_PLAN.md) describes the wider program.
 The [earlier Planck v2 study](CLOSURE_FIBERS_V2_RUN.md) supplies prior evidence

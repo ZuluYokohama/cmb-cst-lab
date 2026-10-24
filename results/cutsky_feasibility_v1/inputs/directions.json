@@ -1,0 +1,146 @@
+{
+  "0": {
+    "seed": 82024102027,
+    "global_start_id": 0,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "8f190c310747ba503e65b1fd201ee2d7c697289d913b58b9b648c0bb1acc3988"
+  },
+  "1": {
+    "seed": 82024102027,
+    "global_start_id": 1,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "482119e1a26149748dc34f5ce04871ed1f4827bf80ab85c794bbaff982c74080"
+  },
+  "2": {
+    "seed": 82024102027,
+    "global_start_id": 2,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "e2e15fb34fb6e4babdaaf2cb9572670d8e2daf141063b6caf7f4b864e94c1b7d"
+  },
+  "3": {
+    "seed": 82024102027,
+    "global_start_id": 3,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "472aafed28a212bec46f51093b0269ec1c286adfec7bd3c440bffd05d7027041"
+  },
+  "4": {
+    "seed": 82024102027,
+    "global_start_id": 4,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "5f94301a8e2022fb3899d4c2d1d8f05dcd89ffaebe79538062ed503208e2e938"
+  },
+  "5": {
+    "seed": 82024102027,
+    "global_start_id": 5,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "5c3e37c616b90b507beb83c4abcfb6b76fac31790f9405e09a0bd347307119c5"
+  },
+  "6": {
+    "seed": 82024102027,
+    "global_start_id": 6,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "bf83ec1059ace813e85383a7c53376eb70eee692b233a11b1e76073e7c8b8a56"
+  },
+  "7": {
+    "seed": 82024102027,
+    "global_start_id": 7,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "b67e9390b1b78f0bd3bcdf9070b0623b9371ba0c6c677c988dd56d698972b1aa"
+  },
+  "8": {
+    "seed": 82024102027,
+    "global_start_id": 8,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "85e5e92869e96fd9440742528f652ff03dd95bc8f12b7f21a93a02a7bb603199"
+  },
+  "9": {
+    "seed": 82024102027,
+    "global_start_id": 9,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "9e2073f733962695d378414d7a0819621cf2764493e9ed1d9a14b17ce112f4d5"
+  },
+  "10": {
+    "seed": 82024102027,
+    "global_start_id": 10,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "7c48285868e37a77a238a74b4ef6e9e5149696603dc3a1665276232c66f0b9b3"
+  },
+  "11": {
+    "seed": 82024102027,
+    "global_start_id": 11,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "b63ae1b404fd5a2082dbf49b4ace35849f81f0703c4507d6fef60ac7d8815044"
+  },
+  "12": {
+    "seed": 82024102027,
+    "global_start_id": 12,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "90c097fc1b7ebcd970ddd038d96656ee9017271a1cb83f43d003c2855efeb9d4"
+  },
+  "13": {
+    "seed": 82024102027,
+    "global_start_id": 13,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "8f007368f6fbf2f7089a2b63e8df478600df51283e1a78f7d3ae32430caeff6e"
+  },
+  "14": {
+    "seed": 82024102027,
+    "global_start_id": 14,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "b18bc2e2f6216e35fb7b39d8930f609759ac8a9717996767e0c5333524b67fca"
+  },
+  "15": {
+    "seed": 82024102027,
+    "global_start_id": 15,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "3c29e0cba9c50564c3558b7218fbe00cbdba9651650eb011dd3cf3bdbbfe764e"
+  },
+  "16": {
+    "seed": 82024102027,
+    "global_start_id": 16,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "b1ba5a9be2f3f6d9f2fea73348c51717890027f9b6e174b0c055174eb9103365"
+  },
+  "17": {
+    "seed": 82024102027,
+    "global_start_id": 17,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "d9acfde640f824cb07046eb8e1bb3b4dfa205a2cd92feccf766457849846a118"
+  },
+  "18": {
+    "seed": 82024102027,
+    "global_start_id": 18,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "58df7683a7d14a527df52047ee63b39297c5e381749a2cede18b9a96a1d0da41"
+  },
+  "19": {
+    "seed": 82024102027,
+    "global_start_id": 19,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "74cee4902c6aa2b5fcaa7b093f03ca7408a290be801d2149d2f453f0af6d9c25"
+  },
+  "20": {
+    "seed": 82024102027,
+    "global_start_id": 20,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "205c4e0240f2cc7b0ece2e57d4ee92719b666ed32c5cc319602787d693616319"
+  },
+  "21": {
+    "seed": 82024102027,
+    "global_start_id": 21,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "70a4756264d8980493b1548228b435a9a98b029ae3e653aef9808dd9ccaf1b21"
+  },
+  "22": {
+    "seed": 82024102027,
+    "global_start_id": 22,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "5ac562aab456d5d47f35abf8c91eb27fb42994e59070181432569495d33f297d"
+  },
+  "23": {
+    "seed": 82024102027,
+    "global_start_id": 23,
+    "derivation": "SeedSequence([seed,global_start_id]); standard normal normalized to unit norm",
+    "direction_sha256": "643d3c0cdcc4bb3a76706ef867765112d9a0a1c0348bc1f241054dcaf5500ba9"
+  }
+}

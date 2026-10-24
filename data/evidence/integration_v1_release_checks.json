@@ -1,0 +1,33 @@
+{
+  "format": "cmbcst.integration_release_checks.v1",
+  "recorded_utc": "2026-10-24T23:21:02.411920+00:00",
+  "linux": {
+    "passed": 401,
+    "skipped": 3,
+    "skips": "unavailable Intel XPU",
+    "actual_cutsky_dependencies": true
+  },
+  "windows": {
+    "passed": 370,
+    "skipped": 34,
+    "skips": "unavailable optional backends/devices; no Windows NaMaster qualification",
+    "invocation": "Python312; site.addsitedir(data/work/integration_windows_deps); pytest",
+    "initial_collection_failures": [
+      "Minimal metadata-only Python lacked required base packages",
+      "A direct PYTHONPATH target produced a SciPy _fblas DLL import failure"
+    ],
+    "resolution": "An isolated workspace dependency target loaded with site.addsitedir passed mandatory imports and the full suite; no global package or Windows security-policy changes"
+  },
+  "scientific_run_unchanged": true,
+  "post_run_scope": "Regression uses separate test fixtures; report/verifier only inspect saved pilot metadata and byte hashes. No pilot search, transform, candidate extraction or promotion was rerun.",
+  "evidence_audit_sha256": "f66fc34826e740c242ec2207b632a52eb52925ca459f08b591b7213d02e2a04b",
+  "authenticated_jovin_suites": 27,
+  "authenticated_jovin_checks": 186,
+  "log_sha256": {
+    "data/evidence/integration_v1_release_checks/integration_v1_linux_release_tests.log": "10badb2fe7d7dabee8331325bf1a5513a8ae0d2c041d47e1f212c7bee193908f",
+    "data/evidence/integration_v1_release_checks/integration_v1_windows_dependencies.log": "e4fe078d82d7e7e65128ffb07d605a38757bae5f298aae79a88de84b83bd9f86",
+    "data/evidence/integration_v1_release_checks/integration_v1_windows_regression_qualified.log": "7ee986f4aef7e34ae2262b308a0318b7a1c2afdfa0b282147dc68ccaa89fe0c2",
+    "data/evidence/integration_v1_release_checks/cutsky_feasibility_report_final.log": "8f6303fbad2d55bae308409aabe0a08768f9c5fae925e86a53d93e8063f65e29",
+    "data/evidence/integration_v1_release_checks/cutsky_feasibility_verification_final.log": "0b20078c450d20a2ece595b3d56d3e3f036b0bc1705e14d4ada685fbeb7ad521"
+  }
+}
