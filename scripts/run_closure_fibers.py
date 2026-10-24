@@ -12,6 +12,11 @@ import sys
 import threading
 import time
 import traceback
+
+BLAS_THREAD_VARIABLES=('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS')
+for name in BLAS_THREAD_VARIABLES:
+    os.environ[name]='1'
+
 import numpy as np
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'src'))
@@ -80,6 +85,7 @@ def freeze():
         max_iterations=1000,max_stalls=50,svd_relative_cutoff=1e-10,step_norm=.1,newton_corrections=5,step_halvings=10,
         compute_cap_seconds=14400,verification_reserve_seconds=900,batch_starts=4,
         sampling_epsilon=1e-12,numerical_gate=1e-10,threads=8,
+        blas_threads={name:int(os.environ[name]) for name in BLAS_THREAD_VARIABLES},
         input_sha256=input_hashes(ROOT),source_sha256={name:sha(ROOT/name) for name in paths},
         initialization_sha256=sha(OUT/'initializations.npz'),preflight_sha256=sha(PROFILE),
         preflight_path=str(PROFILE.relative_to(ROOT)),

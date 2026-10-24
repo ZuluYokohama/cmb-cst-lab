@@ -24,6 +24,14 @@ def _json(path,value):
     temporary.replace(path)
 
 
+def _npz(path,**arrays):
+    path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
+    temporary=path.with_name(path.name+'.tmp')
+    with temporary.open('wb') as stream:
+        np.savez_compressed(stream,**arrays)
+    temporary.replace(path)
+
+
 def bin_separation(features,reference,scales,representation):
     """Different bins and safe evidence are distinct; an unsafe zero bin is not separation."""
     ix=projection_indices(representation)
@@ -79,7 +87,7 @@ def certify_case(root,out,work,case,family,shared,scales,archive,budget=None):
     candidates=np.flatnonzero(matches&(gap>=.05))
     name=f"tile_{case['tile']}_{case['stage']}_{case['representation']}"
     directory=out/'certificates';directory.mkdir(exist_ok=True)
-    np.savez_compressed(directory/f'{name}_endpoints.npz',start_id=np.arange(len(theta)),started=archive['started'],
+    _npz(directory/f'{name}_endpoints.npz',start_id=np.arange(len(theta)),started=archive['started'],
         features=all_features,target=all_target,ratios=all_ratios,matching=matches,gap=gap)
     max_gap=float(np.nanmax(gap[matches])) if np.any(matches) else 0.
     record=dict(status='no_verified_witness',case=case,starts_checked=len(ids),feasible_endpoints=int(matches.sum()),
@@ -133,7 +141,7 @@ def certify_case(root,out,work,case,family,shared,scales,archive,budget=None):
         and safe_future_difference)
     witness_directory=out/'witnesses';witness_directory.mkdir(exist_ok=True)
     arrays=witness_directory/f'{name}.npz'
-    np.savez_compressed(arrays,theta=theta[chosen],initial_theta=initial[chosen],
+    _npz(arrays,theta=theta[chosen],initial_theta=initial[chosen],
         reference_features=reference_future,candidate_features=direct_values,matrix_features=matrix_values,
         current_reference_bins=np.zeros(len(direct_match['bins']),dtype=np.int64),
         current_candidate_bins=direct_match['bins'],future_reference_bins=future_ref_bins,future_candidate_bins=future_candidate_bins,
@@ -141,7 +149,7 @@ def certify_case(root,out,work,case,family,shared,scales,archive,budget=None):
     candidate_alms=witness_directory/f'{name}_candidate_alms.npz'
     # Store selected reconstructed coefficients, including rejected precision
     # candidates, to preserve the complete replay evidence.
-    np.savez_compressed(candidate_alms,alms=replay['candidate_alms'])
+    _npz(candidate_alms,alms=replay['candidate_alms'])
     separation={};separation_details={}
     for representation in ('baseline','capacity','repair'):
         details=bin_separation(direct_values[0],reference,scales,representation)

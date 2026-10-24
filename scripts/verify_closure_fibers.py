@@ -283,6 +283,8 @@ def main():
         and plan['step_norm']==.1 and plan['newton_corrections']==5 and plan['step_halvings']==10
         and plan['compute_cap_seconds']==14400 and plan['verification_reserve_seconds']==900
         and plan['sampling_epsilon']==1e-12 and plan['numerical_gate']==1e-10 and plan['threads']==8
+        and all(plan.get('blas_threads',{}).get(name)==1
+            for name in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS'))
         and plan['shells']==np.rint(np.linspace(30,216,32)).astype(int).tolist())
     checks.add('plan_stage_binding',stage.get('plan_sha256')==sha(out/'plan.json'))
     validate_timing(out,plan,stage,checks)

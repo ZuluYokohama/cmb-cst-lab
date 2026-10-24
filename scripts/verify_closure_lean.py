@@ -49,7 +49,7 @@ def main() -> None:
     archive_hash, compiler_hash = sha(args.archive), sha(args.lean)
     if archive_hash != PINNED_ARCHIVE_SHA256 or compiler_hash != PINNED_COMPILER_SHA256:
         raise ValueError('compiler/archive bytes differ from the pinned official release evidence')
-    version = subprocess.check_output([str(args.lean), '--version'], text=True).strip()
+    version = subprocess.check_output([str(args.lean), '--version'], text=True, timeout=120).strip()
     if 'version 4.35.0' not in version or PINNED_COMMIT not in version:
         raise ValueError('Lean version/commit differs from the pinned compiler')
     start = time.perf_counter()
