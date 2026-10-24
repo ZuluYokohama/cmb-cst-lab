@@ -6,6 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import time
 
@@ -30,6 +31,12 @@ def main():
     args = parser.parse_args()
     if sha(args.archive) != RELEASE_SHA256:
         raise ValueError('compiler archive SHA256 differs from the pinned official release')
+    lean = Path(shutil.which(args.lean) or args.lean).resolve()
+    archived_binary = subprocess.check_output(['tar','--zstd','-xOf',str(args.archive),
+        'lean-4.35.0-linux/bin/lean'])
+    compiler_sha256 = sha(lean)
+    if compiler_sha256 != hashlib.sha256(archived_binary).hexdigest():
+        raise ValueError('Lean executable differs from the binary in the pinned archive')
     source = ROOT/'formal/ScaleInvariance.lean'
     text = source.read_text()
     if re.search(r'\b(sorry|admit)\b|^\s*(axiom|opaque)\s',text,re.MULTILINE):
@@ -37,16 +44,31 @@ def main():
     names = re.findall(r'^theorem\s+(\w+)',text,re.MULTILINE)
     if len(names) != 9:
         raise ValueError('expected all nine supporting invariants')
-    version = subprocess.check_output([args.lean,'--version'],text=True).strip()
+    version = subprocess.check_output([str(lean),'--version'],text=True).strip()
     if 'version 4.35.0' not in version or 'eb6cafb7290e8bd5f2937522d8d804f58f02bafc' not in version:
         raise ValueError('Lean executable version/commit differs from the pinned compiler')
     start = time.perf_counter()
-    result = subprocess.run([args.lean,str(source)],cwd=ROOT,capture_output=True,text=True,timeout=120)
-    passed = result.returncode == 0 and 'sorryAx' not in result.stdout+result.stderr
+    # Query every theorem without changing the preserved proof source.
+    queries = '\n'.join(f'#print axioms CmbCst.{name}' for name in names)
+    result = subprocess.run([str(lean),'--stdin'],input=text+'\n'+queries+'\n',
+        cwd=ROOT,capture_output=True,text=True,timeout=120)
+    assumptions = {}
+    for name in names:
+        matches = re.findall(rf"^'CmbCst\.{re.escape(name)}' "
+            r'(?:depends on axioms: \[([^\]]*)\]|does not depend on any axioms)\s*$',
+            result.stdout,re.MULTILINE)
+        if matches:
+            assumptions[name] = sorted({value.strip() for values in matches
+                for value in values.split(',') if value.strip()})
+    allowed = {'propext','Classical.choice','Quot.sound'}
+    passed = (result.returncode == 0 and 'sorryAx' not in result.stdout+result.stderr
+        and len(assumptions) == len(names)
+        and all(set(values) <= allowed for values in assumptions.values()))
     evidence = {'verified_utc':datetime.now(timezone.utc).isoformat(),'status':'passed' if passed else 'failed',
-        'compiler':version,'compiler_archive_url':RELEASE_URL,'compiler_archive_sha256':sha(args.archive),
+        'compiler':version,'compiler_sha256':compiler_sha256,
+        'compiler_archive_url':RELEASE_URL,'compiler_archive_sha256':sha(args.archive),
         'source_sha256':sha(source),'numerical_module_sha256':sha(ROOT/'src/cmbcst/multiscale.py'),
-        'theorems':names,'theorem_count':len(names),'seconds':time.perf_counter()-start,
+        'theorems':names,'theorem_count':len(names),'theorem_axioms':assumptions,'seconds':time.perf_counter()-start,
         'exit_code':result.returncode,'stdout':result.stdout,'stderr':result.stderr,
         'scope':'Exact rational algebra and finite-sample normalized moment invariance; not a physical discovery, a proof of Float64 implementation for all inputs, fractal dimension, or SHA256 collision resistance.',
         'foundation_axioms':['propext','Classical.choice','Quot.sound']}

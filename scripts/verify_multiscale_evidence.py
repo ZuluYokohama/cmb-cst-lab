@@ -41,6 +41,25 @@ def compress(curves):
         slope([c[4]+15 for c in curves]),sum(c[5] for c in curves)/5]
 
 
+def comparison_checks(result,positive,reference):
+    checks = {}
+    if result['status']=='calibration_failed':
+        observed_keys = {'observed','observed_curves','raw_p','p_holm',
+            'observed_quality','reference_mean','reference_sd'}
+        checks['no_observed_comparisons'] = not observed_keys.intersection(result) and not result['candidate_flags']
+    else:
+        raw,adjusted = probabilities(result['observed'],reference)
+        checks['all_sky_pvalues'] = close(flat(result['raw_p']),raw) and close(flat(result['p_holm']),adjusted)
+        checks['no_threshold_flags'] = not result['candidate_flags'] and all(v>.05 for v in adjusted)
+        checks['observed_compression'] = all(close(f,compress(c)) for f,c in zip(result['observed'],result['observed_curves']))
+    raw,adjusted = probabilities(positive['features'],reference)
+    checks['positive_control'] = (positive['quality']['passed']
+        and len(positive['features'])==len(positive['curves'])==3
+        and all(close(f,compress(c)) for f,c in zip(positive['features'],positive['curves']))
+        and close(flat(positive['raw_p']),raw) and close(flat(positive['p_holm']),adjusted))
+    return checks
+
+
 def main():
     command,env = configuration(argparse.Namespace(harness=None,harness_python=None,runtime='wsl:JovinHarness',data_dir=None))
     ret,chain = _harness(command,env,['receipts','verify'])
@@ -80,12 +99,7 @@ def main():
     calculations['all_control_decisions'] = len(control_checks)==64 and all(control_checks)
     flags = sum(r['flag'] for r in records)
     calculations['calibration_gate'] = flags==validation['familywise_flags'] and validation['status']==('passed' if flags<=8 else 'failed')
-    raw,adjusted = probabilities(result['observed'],reference)
-    calculations['all_sky_pvalues'] = close(flat(result['raw_p']),raw) and close(flat(result['p_holm']),adjusted)
-    calculations['no_threshold_flags'] = not result['candidate_flags'] and all(v>.05 for v in adjusted)
-    calculations['observed_compression'] = all(close(f,compress(c)) for f,c in zip(result['observed'],result['observed_curves']))
-    raw,adjusted = probabilities(positive['features'],reference)
-    calculations['positive_control'] = positive['quality']['passed'] and close(flat(positive['raw_p']),raw) and close(flat(positive['p_holm']),adjusted)
+    calculations.update(comparison_checks(result,positive,reference))
     bindings = {name:sha(REPO/name)==digest for name,digest in plan['source_artifacts_sha256'].items()}
     for key,name in (('plan_sha256','plan.json'),('ensemble_sha256','ensemble.json'),('validation_sha256','validation.json')):
         bindings[key] = result[key]==sha(OUT/name)
