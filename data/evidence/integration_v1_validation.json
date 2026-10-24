@@ -1,0 +1,49 @@
+{
+  "format": "cmbcst.integration_validation.v1",
+  "recorded_utc": "2026-10-24T23:07:10.410071+00:00",
+  "scope": "Pre-freeze regression/preflight evidence; no scientific pilot outcome",
+  "full_wsl_regression": {
+    "passed": 391,
+    "skipped": 3,
+    "skip_reason": "unavailable Intel XPU",
+    "note": "Includes 10 original driver tests; subsequent run-control improvements tested separately with 11 current driver tests"
+  },
+  "current_windows_driver_tests": {
+    "passed": 11
+  },
+  "plain_sandbox_suites": 27,
+  "integration_jovin": {
+    "receipt_id": "20261024T230307Z-db083a4ffa16",
+    "checks": 9,
+    "receipt_sha256": "62d498dfc2a8892ad17b38a7f4efc92b61c4faf420dc0a112429b42cf7040582"
+  },
+  "final_preflight_sha256": "18d955f0b22900b392292d85fcad8620b44aecd16d5ef143d338bc7f18e1c5b4",
+  "log_sha256": {
+    "data/evidence/integration_v1_validation/integration_v1_dependency_install.log": "f9be6ce2a8619375f919d88646eeb5e8d9450932b22d75d48c72eeda36cd0063",
+    "data/evidence/integration_v1_validation/integration_v1_driver_tests.log": "78d1f8d28a8a492f65ccf64a259ae579e57b56c8bff1fe12e00f83b4b1340fb9",
+    "data/evidence/integration_v1_validation/integration_v1_jovin.log": "e142a783e297ec3ecac67dd45772c45279c5cdf655d77018a56a85f07906bb50",
+    "data/evidence/integration_v1_validation/integration_v1_preflight.log": "18fc3d6d5350e382c7801949f2fdb4ac83dba59d419cdf783863d96900f6d50b",
+    "data/evidence/integration_v1_validation/integration_v1_preflight_final.log": "18d955f0b22900b392292d85fcad8620b44aecd16d5ef143d338bc7f18e1c5b4",
+    "data/evidence/integration_v1_validation/integration_v1_regression.log": "47808cb9bd335538dd34678c595c9197c0fbef94e491f744fa4c7e580286ccc2",
+    "data/evidence/integration_v1_validation/integration_v1_sandbox_tests.log": "a6ea7ce0b944a02c716b0975482bbd1f285d4d0debddd6149abf2170cfb0bbdb",
+    "data/evidence/integration_v1_validation/integration_v1_tests.log": "209659d86027ae690de07e4edd7d30235f53f8da27a803e60cbd5c990668e327",
+    "data/evidence/integration_v1_validation/integration_v1_tests_initial.log": "8cca0ab925433794fea48aa261bf5bb74ef9da38d37de5e2af7f705be5bd392d"
+  },
+  "optional_environment": "Isolated data/work/integration_v1_deps with existing /opt/cmb-cst-gpu/bin/python; base Python packages not replaced",
+  "native_build_setup": {
+    "note": "Setup record; not an independently authenticated package-state attestation",
+    "installed_packages": [
+      "build-essential",
+      "pkg-config",
+      "libgsl-dev",
+      "libfftw3-dev",
+      "libcfitsio-dev",
+      "autoconf",
+      "automake",
+      "libtool",
+      "python3.12-dev"
+    ],
+    "system_library_change": "python development prerequisites also upgraded zlib1g .2 to .3; earlier Python package environment was retained"
+  },
+  "lean": "24 previously checked supporting declarations retained unchanged; no new proof of NaMaster or physical validity"
+}

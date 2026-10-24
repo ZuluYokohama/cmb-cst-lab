@@ -17,6 +17,9 @@ dev = ["pytest", "pypdf"]
 gpu = ["torch", "openvino"]
 # NVIDIA CUDA: install the matching torch wheel from pytorch.org first.
 cuda = ["torch>=2.9"]
+# First integration profile; tested versions are pinned separately from old runs.
+integration = ["h5py==3.16.0", "healpy==1.20.1"]
+cutsky = ["h5py==3.16.0", "healpy==1.20.1", "fitsio==1.4.2", "pymaster==3.0.1"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

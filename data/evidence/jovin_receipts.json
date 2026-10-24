@@ -5949,5 +5949,399 @@
       "head_sha256": "c170902ce70346b880711a5ace31a80cbde531843ce1fd30ac02e255656f23cb",
       "problems": []
     }
+  },
+  {
+    "suite": "integration_cutsky_v1",
+    "verified_at": "2026-10-24T22:50:01.477557+00:00",
+    "passed": true,
+    "harness_status": "passed",
+    "passed_count": 9,
+    "total": 9,
+    "receipt_id": "20261024T225001Z-d24a269ad6fa",
+    "receipt_sha256": "b0887b28128a80daf2dbd65cbc6de0810a9fed458dce8bca19c8b2435523d064",
+    "isolation": "shared",
+    "integrity": "shared_interpreter",
+    "timeout_s": 30,
+    "harness_version": "0.2.0.dev0",
+    "runtime": "wsl:JovinHarness",
+    "image": "sha256:b125b813cae0052127f1dc0e7e6353ead2ba10ebcac3c4fd42a10eae468a0ed7",
+    "runner_sha256": "8a847c3e8ac4d31afd86fe9b415e077d4be2ef3ede7cbf28696b6010f58ddfb2",
+    "bundle_sha256": "b9d7a24fb0eeff9862af6b78340d67dc5ff751714235238d299464ad541af436",
+    "tests_sha256": "51ad991c19fad301bd6bd90163497fbce3007a75db584b01ed02f9e22cec646b",
+    "tests_text_sha256": "a3f663e110336de118527b64f0cc7c734a33e31f21970c8479ef6c272212d67e",
+    "source_function_sha256": {
+      "family.py": "a0457977cab5964fa64742845dc0f218e881dd6ce616c8cdcddbb87275cfe63f",
+      "quadratic.py": "190def1bfbdfe81b30ebb360db244331ed559ba5864b44d82f81206486d19b5f",
+      "continuation.py": "9f3119d0a5f4c7fff5dab26e8fa3fc9e80bb91a4b52776611ebea4f92bbf2aef",
+      "certificates.py": "7d543f9a9b0a6c6071455a41dd9745746d3ccd1dcbd8f91062b6ea23c4b310f8"
+    },
+    "receipt_verified": true,
+    "receipt_membership": {
+      "valid": true,
+      "chain": "linked",
+      "problems": [],
+      "head": {
+        "count": 55,
+        "head_sha256": "b0887b28128a80daf2dbd65cbc6de0810a9fed458dce8bca19c8b2435523d064",
+        "head_id": "20261024T225001Z-d24a269ad6fa"
+      }
+    },
+    "receipt": {
+      "created_at": "2026-10-24T22:50:01.109Z",
+      "format": "jovin-harness.receipt.v1",
+      "harness_version": "0.2.0.dev0",
+      "id": "20261024T225001Z-d24a269ad6fa",
+      "inputs": {
+        "code_sha256": "b9d7a24fb0eeff9862af6b78340d67dc5ff751714235238d299464ad541af436",
+        "params": {
+          "isolation": "shared",
+          "timeout_s": 30
+        },
+        "tests_sha256": "a3f663e110336de118527b64f0cc7c734a33e31f21970c8479ef6c272212d67e"
+      },
+      "integrity": "shared_interpreter",
+      "notice": "A content hash is not a signature and a passing check is not a proof of correctness; the receipt records what ran, under which limits, and what the sandbox reported.",
+      "prev_sha256": "c170902ce70346b880711a5ace31a80cbde531843ce1fd30ac02e255656f23cb",
+      "result": {
+        "duration_s": 0.4374,
+        "exit_code": 0,
+        "format": "jovin-harness.sandbox-result.v1",
+        "isolation": "shared",
+        "kernel": {
+          "locked_shared_scratch": [
+            "/tmp",
+            "/dev/shm"
+          ],
+          "memory_max": "2147483648",
+          "pids_max": "64",
+          "worker": {
+            "cap_eff": "0000000000000000",
+            "gid": [
+              "65534",
+              "65534",
+              "65534",
+              "65534"
+            ],
+            "no_new_privs": "1",
+            "seccomp": "2",
+            "uid": [
+              "65534",
+              "65534",
+              "65534",
+              "65534"
+            ]
+          }
+        },
+        "mode": "verify",
+        "output_truncated": false,
+        "passed_count": 9,
+        "status": "passed",
+        "stderr_bytes": 0,
+        "stderr_tail": "",
+        "stdout_bytes": 0,
+        "stdout_tail": "",
+        "tests": [
+          {
+            "message": "",
+            "name": "<module>",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_recorded_actual_gpu_native_batch_values_and_jacobians",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_stored_family_preserves_full_gram_and_empirical_difference",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_curved_fiber_yields_a_finite_candidate_without_self_certification",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_gram_preservation_without_the_full_difference_lock_is_rejected",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_zero_amplitude_missing_independent_evidence_and_drift_cannot_pass",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_full_rank_control_and_budget_failure_remain_inconclusive_or_incomplete",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_independent_hash_references_do_not_claim_authentication_or_physics",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_global_start_identity_is_deterministic_and_strict_gate_is_not_relaxed",
+            "outcome": "passed"
+          }
+        ],
+        "timed_out": false,
+        "total": 9
+      },
+      "sandbox": {
+        "cleanup": "removed",
+        "engine": {
+          "cgroup_version": "2",
+          "docker_host": null,
+          "docker_host_local": true,
+          "engine_id": "e95ecb10-fdc8-4759-b4ba-7b8238391773",
+          "os_type": "linux",
+          "security_options": [
+            "name=seccomp,profile=builtin",
+            "name=cgroupns"
+          ],
+          "server_version": "29.9.0"
+        },
+        "execution_may_have_started": true,
+        "image": {
+          "architecture": "amd64",
+          "harness_version": "0.2.0.dev0",
+          "id": "sha256:b125b813cae0052127f1dc0e7e6353ead2ba10ebcac3c4fd42a10eae468a0ed7",
+          "runner_sha256": "8a847c3e8ac4d31afd86fe9b415e077d4be2ef3ede7cbf28696b6010f58ddfb2"
+        },
+        "inspect_verified": true,
+        "kernel_verified": true,
+        "limits": {
+          "cpus": 1.0,
+          "fsize_bytes": 16777216,
+          "max_input_bytes": 262144,
+          "max_output_bytes": 65536,
+          "memory_bytes": 2147483648,
+          "nofile": 64,
+          "pids": 64,
+          "timeout_s": 30,
+          "tmpfs_bytes": 16777216
+        },
+        "run_id": "69bcfc3dfb71977a",
+        "runtime": "wsl:JovinHarness",
+        "timings_s": {
+          "cleanup": 0.46899999998277053,
+          "create_inspect": 0.5310000000172295,
+          "execution": 1.25,
+          "preflight": 0.5160000000032596
+        }
+      },
+      "sha256": "b0887b28128a80daf2dbd65cbc6de0810a9fed458dce8bca19c8b2435523d064",
+      "tool": "verify_python"
+    },
+    "failures": null,
+    "duration_s": 3.31,
+    "chain_valid": true,
+    "chain_head_sha256": "b0887b28128a80daf2dbd65cbc6de0810a9fed458dce8bca19c8b2435523d064",
+    "chain_verification": {
+      "valid": true,
+      "count": 55,
+      "head_sha256": "b0887b28128a80daf2dbd65cbc6de0810a9fed458dce8bca19c8b2435523d064",
+      "problems": []
+    }
+  },
+  {
+    "suite": "integration_cutsky_v1",
+    "verified_at": "2026-10-24T23:03:08.126024+00:00",
+    "passed": true,
+    "harness_status": "passed",
+    "passed_count": 9,
+    "total": 9,
+    "receipt_id": "20261024T230307Z-db083a4ffa16",
+    "receipt_sha256": "62d498dfc2a8892ad17b38a7f4efc92b61c4faf420dc0a112429b42cf7040582",
+    "isolation": "shared",
+    "integrity": "shared_interpreter",
+    "timeout_s": 30,
+    "harness_version": "0.2.0.dev0",
+    "runtime": "wsl:JovinHarness",
+    "image": "sha256:b125b813cae0052127f1dc0e7e6353ead2ba10ebcac3c4fd42a10eae468a0ed7",
+    "runner_sha256": "8a847c3e8ac4d31afd86fe9b415e077d4be2ef3ede7cbf28696b6010f58ddfb2",
+    "bundle_sha256": "b9d7a24fb0eeff9862af6b78340d67dc5ff751714235238d299464ad541af436",
+    "tests_sha256": "14e9adb2a774a25d521e861c84866dd93ad34885118d8d9845ad94f61d9e7d2a",
+    "tests_text_sha256": "12810e9fa1c8572c04651dc74d06c195626c3fd07e223f2f5e63016af978c226",
+    "source_function_sha256": {
+      "family.py": "a0457977cab5964fa64742845dc0f218e881dd6ce616c8cdcddbb87275cfe63f",
+      "quadratic.py": "190def1bfbdfe81b30ebb360db244331ed559ba5864b44d82f81206486d19b5f",
+      "continuation.py": "9f3119d0a5f4c7fff5dab26e8fa3fc9e80bb91a4b52776611ebea4f92bbf2aef",
+      "certificates.py": "7d543f9a9b0a6c6071455a41dd9745746d3ccd1dcbd8f91062b6ea23c4b310f8"
+    },
+    "receipt_verified": true,
+    "receipt_membership": {
+      "valid": true,
+      "chain": "linked",
+      "problems": [],
+      "head": {
+        "count": 56,
+        "head_sha256": "62d498dfc2a8892ad17b38a7f4efc92b61c4faf420dc0a112429b42cf7040582",
+        "head_id": "20261024T230307Z-db083a4ffa16"
+      }
+    },
+    "receipt": {
+      "created_at": "2026-10-24T23:03:07.748Z",
+      "format": "jovin-harness.receipt.v1",
+      "harness_version": "0.2.0.dev0",
+      "id": "20261024T230307Z-db083a4ffa16",
+      "inputs": {
+        "code_sha256": "b9d7a24fb0eeff9862af6b78340d67dc5ff751714235238d299464ad541af436",
+        "params": {
+          "isolation": "shared",
+          "timeout_s": 30
+        },
+        "tests_sha256": "12810e9fa1c8572c04651dc74d06c195626c3fd07e223f2f5e63016af978c226"
+      },
+      "integrity": "shared_interpreter",
+      "notice": "A content hash is not a signature and a passing check is not a proof of correctness; the receipt records what ran, under which limits, and what the sandbox reported.",
+      "prev_sha256": "b0887b28128a80daf2dbd65cbc6de0810a9fed458dce8bca19c8b2435523d064",
+      "result": {
+        "duration_s": 0.4071,
+        "exit_code": 0,
+        "format": "jovin-harness.sandbox-result.v1",
+        "isolation": "shared",
+        "kernel": {
+          "locked_shared_scratch": [
+            "/tmp",
+            "/dev/shm"
+          ],
+          "memory_max": "2147483648",
+          "pids_max": "64",
+          "worker": {
+            "cap_eff": "0000000000000000",
+            "gid": [
+              "65534",
+              "65534",
+              "65534",
+              "65534"
+            ],
+            "no_new_privs": "1",
+            "seccomp": "2",
+            "uid": [
+              "65534",
+              "65534",
+              "65534",
+              "65534"
+            ]
+          }
+        },
+        "mode": "verify",
+        "output_truncated": false,
+        "passed_count": 9,
+        "status": "passed",
+        "stderr_bytes": 0,
+        "stderr_tail": "",
+        "stdout_bytes": 0,
+        "stdout_tail": "",
+        "tests": [
+          {
+            "message": "",
+            "name": "<module>",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_recorded_actual_gpu_native_batch_values_and_jacobians",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_stored_family_preserves_full_gram_and_empirical_difference",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_curved_fiber_yields_a_finite_candidate_without_self_certification",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_gram_preservation_without_the_full_difference_lock_is_rejected",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_zero_amplitude_missing_independent_evidence_and_drift_cannot_pass",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_full_rank_control_and_budget_failure_remain_inconclusive_or_incomplete",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_independent_hash_references_do_not_claim_authentication_or_physics",
+            "outcome": "passed"
+          },
+          {
+            "message": "",
+            "name": "test_global_start_identity_is_deterministic_and_strict_gate_is_not_relaxed",
+            "outcome": "passed"
+          }
+        ],
+        "timed_out": false,
+        "total": 9
+      },
+      "sandbox": {
+        "cleanup": "removed",
+        "engine": {
+          "cgroup_version": "2",
+          "docker_host": null,
+          "docker_host_local": true,
+          "engine_id": "e95ecb10-fdc8-4759-b4ba-7b8238391773",
+          "os_type": "linux",
+          "security_options": [
+            "name=seccomp,profile=builtin",
+            "name=cgroupns"
+          ],
+          "server_version": "29.9.0"
+        },
+        "execution_may_have_started": true,
+        "image": {
+          "architecture": "amd64",
+          "harness_version": "0.2.0.dev0",
+          "id": "sha256:b125b813cae0052127f1dc0e7e6353ead2ba10ebcac3c4fd42a10eae468a0ed7",
+          "runner_sha256": "8a847c3e8ac4d31afd86fe9b415e077d4be2ef3ede7cbf28696b6010f58ddfb2"
+        },
+        "inspect_verified": true,
+        "kernel_verified": true,
+        "limits": {
+          "cpus": 1.0,
+          "fsize_bytes": 16777216,
+          "max_input_bytes": 262144,
+          "max_output_bytes": 65536,
+          "memory_bytes": 2147483648,
+          "nofile": 64,
+          "pids": 64,
+          "timeout_s": 30,
+          "tmpfs_bytes": 16777216
+        },
+        "run_id": "ab5a4223b112be57",
+        "runtime": "wsl:JovinHarness",
+        "timings_s": {
+          "cleanup": 0.5150000000139698,
+          "create_inspect": 0.5630000000237487,
+          "execution": 1.2189999999827705,
+          "preflight": 0.5619999999762513
+        }
+      },
+      "sha256": "62d498dfc2a8892ad17b38a7f4efc92b61c4faf420dc0a112429b42cf7040582",
+      "tool": "verify_python"
+    },
+    "failures": null,
+    "duration_s": 3.41,
+    "chain_valid": true,
+    "chain_head_sha256": "62d498dfc2a8892ad17b38a7f4efc92b61c4faf420dc0a112429b42cf7040582",
+    "chain_verification": {
+      "valid": true,
+      "count": 56,
+      "head_sha256": "62d498dfc2a8892ad17b38a7f4efc92b61c4faf420dc0a112429b42cf7040582",
+      "problems": []
+    }
   }
 ]
