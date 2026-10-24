@@ -21,7 +21,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'src'))
 from cmbcst.closure_fibers import projection_indices, robust_scales
-from report_closure_fibers_v2 import collect_run, read, load_npz, TIERS, SUCCESS, FAILURE, CHECKPOINT_PHASES
+from report_closure_fibers_v2 import collect_run, read, load_npz, TIERS, SUCCESS, FAILURE, CHECKPOINT_PHASES, FORMAL_RECORDS, formal_support
 from verify_closure_fibers import Checks, authenticate, sha, close, exact
 from report_closure_fibers import pytest_summary
 from jovin_verify import SUITES
@@ -92,6 +92,69 @@ def validate_checkpoint(entry, checks):
     checks.add(prefix+':changed_measurements_unverified', all(
         key not in arrays or not len(overlay) or np.isnan(arrays[key][overlay]).all()
         for key in ('gpu_features', 'gpu_target', 'gpu_ratios', 'gpu_all_features')))
+
+
+def validate_formal_support(root, out, plan, checks):
+    """Authenticate existing compiler receipts and exact saved-bin bindings."""
+    archive_pin = '7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d'
+    compiler_pin = 'bf8d54e4714cc4b03d3f6bb34c83b7202b87e49c8bfcbff6895c085bb90ceb38'
+    for label, source, receipt, count in FORMAL_RECORDS:
+        def group_binding(source=source, receipt=receipt, count=count):
+            record = read(root/receipt, {})
+            text = (root/source).read_text(encoding='utf-8')
+            names = re.findall(r'^theorem\s+(\w+)', text, re.MULTILINE)
+            version = record.get('version', record.get('compiler', ''))
+            exit_code = record.get('exit_code', record.get('witness_compile', {}).get('exit_code'))
+            return (record['status'] == 'passed' and record['theorem_count'] == count == len(names)
+                    and record['source_sha256'] == sha(root/source) and exit_code == 0
+                    and record.get('archive_sha256', record.get('compiler_archive_sha256')) == archive_pin
+                    and (not record.get('compiler_sha256') or record['compiler_sha256'] == compiler_pin)
+                    and 'version 4.35.0' in version and 'eb6cafb7290e8bd5f2937522d8d804f58f02bafc' in version
+                    and not re.search(r'\b(sorry|admit)\b|^\s*(axiom|opaque)\s', text, re.MULTILINE)
+                    and 'sorryAx' not in record.get('stdout', '')+record.get('witness_compile', {}).get('stdout', ''))
+        checks.attempt('formal_group:'+source, group_binding)
+    summary = formal_support(root)
+    checks.add('supporting_theorem_count_24', summary['theorem_count'] == summary['expected_theorem_count'] == 24)
+    concrete_path = root/'data/evidence/closure_v2_first_witness_lean.json'
+    def concrete_binding():
+        record = read(concrete_path)
+        text = (root/'formal/ClosureFibersV2Witness.lean').read_text(encoding='utf-8')
+        row = read(out/'certificates_v2/tile_24_source_baseline/rows/start_0056.json')
+        table_names = ('currentReferenceBins', 'currentCandidateBins', 'futureReferenceBins', 'futureCandidateBins')
+        tables = {}
+        for name in table_names:
+            match = re.search(rf'def\s+{name}\s*:\s*List Int\s*:=\s*(\[[^\]]*\])', text)
+            tables[name] = ast.literal_eval(match.group(1))
+        measured = dict(currentReferenceBins=[0]*44, currentCandidateBins=row['input_bins']['bins'],
+                        futureReferenceBins=row['future_bins'][0]['reference_bins'],
+                        futureCandidateBins=row['future_bins'][0]['candidate_bins'])
+        names = re.findall(r'^theorem\s+(\w+)', text, re.MULTILINE)
+        stdout = record['witness_compile']['stdout']
+        return (record['theorem_count'] == len(names) == len(record['theorem_axioms']) == 6
+                and record['theorems'] == ['CmbCst.ClosureFibersV2.'+name for name in names]
+                and set(record['theorem_axioms']) == set(names)
+                and all(not values for values in record['theorem_axioms'].values())
+                and all("'CmbCst.ClosureFibersV2."+name+"' does not depend on any axioms" in stdout for name in names)
+                and record['verifier_sha256'] == sha(root/'scripts/verify_closure_v2_witness_lean.py')
+                and record['dependency_source_sha256'] == sha(root/'formal/OperationalClosure.lean')
+                and record['dependency_build']['exit_code'] == record['witness_compile']['exit_code'] == 0
+                and record['formal_source_tree_olean_unchanged'] is True and record['proof_sources_unchanged'] is True
+                and text.startswith('import OperationalClosure\n') and 'CmbCst.no_factor_from_collision' in text
+                and 'same_global' in text and 'Global × List Int' in text
+                and len(record['explicit_mathematical_hypotheses']) == 4
+                and tables == record['exact_integer_tables'] == measured
+                and all(len(xs) == 44 and all(type(x) is int for x in xs) for xs in tables.values())
+                and record['primary_coordinate'] == 22 and record['primary_bins'] == [232, 1007]
+                and [tables['futureReferenceBins'][22], tables['futureCandidateBins'][22]] == [232, 1007]
+                and record['scientific_source_revision'] == plan['source_revision']
+                and record['scientific_source_sha256'] == plan['source_sha256']
+                and record['scientific_input_sha256'] == plan['input_sha256']
+                and all(sha(root/name) == value for name, value in record['linked_artifact_sha256'].items())
+                and record['reconstructed_coefficient_content_sha256'] == row['candidate_harmonics_sha256']
+                and close(record['measured_raw_gap'], row['raw_primary_gap']))
+    checks.attempt('concrete_witness_lean_receipt_and_measured_tables', concrete_binding)
+    checks.add('concrete_six_theorems_axiom_free', summary['concrete_witness_axiom_free'])
+    return summary
 
 
 def _row(out, entry, view, scales, locked_reference, checks):
@@ -322,7 +385,8 @@ def validate_saved(out=OUT, root=ROOT):
                        and max(maximum['actual_both_gpu_errors'].values()) <= GATE
                        and maximum.get('safe_primary_future_bin_difference'))
         checks.add(name+':cell_maximum_tiers', all(cert['tier_counts'][f'{t:.3f}'] == int(witness and maximum['tiers'][f'{t:.3f}']) for t in TIERS)
-                   and cert['reported_cell_maximum_no_factor_witness'] == bool(witness and any(maximum['tiers'].values())))
+                   and cert['reported_cell_maximum_no_factor_witness'] == bool(witness and any(maximum['tiers'].values()))
+                   and cert['quantized_cell_maximum_collision_verified'] == witness)
     elapsed = stage.get('elapsed_seconds')
     utc_elapsed = stage.get('utc_elapsed_seconds')
     budget_elapsed = stage.get('budget_elapsed_seconds')
@@ -351,6 +415,8 @@ def validate_saved(out=OUT, root=ROOT):
                    and proof['archive_sha256'] == '7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d'
                    and proof['compiler_sha256'] == 'bf8d54e4714cc4b03d3f6bb34c83b7202b87e49c8bfcbff6895c085bb90ceb38'
                    and (not plan.get('proof_sha256') or sha(proof_path) == plan['proof_sha256']))
+    formal = validate_formal_support(root, out, plan, checks)
+    checks.add('formal_summary_binding', formal == summary['formal_support'])
     profile_path = root/plan.get('preflight_path', 'data/evidence/closure_v2_preflight.json')
     profile = read(profile_path, {})
     checks.attempt('preflight_source_and_output_binding', lambda: profile['status'] == 'passed'
@@ -399,11 +465,15 @@ def main():
     checks.add('report_and_plots_present', args.report.exists() and all((out/name).exists() for name in ('coverage.png', 'tier_heatmap.png', 'hardware.png')))
     okay = all(checks.values.values())
     artifacts = [p for p in sorted(out.rglob('*')) if p.is_file() and p.resolve() != output.resolve() and p.name != 'progress.json']
+    formal_paths = [name for _, source, receipt, _ in FORMAL_RECORDS for name in (source, receipt)]
+    formal_paths += ['scripts/verify_lean.py', 'scripts/verify_closure_lean.py', 'scripts/verify_closure_v2_witness_lean.py']
     verification = dict(status='passed' if okay else 'failed', metadata_integrity='passed' if okay else 'failed',
                         verified_utc=datetime.now(timezone.utc).isoformat(), scientific_status=run['summary']['scientific_status'],
                         scientific_summary=run['summary'], scope=__doc__, arithmetic_checks=checks.values,
                         errors=checks.errors, jovin_suites=suites, chain=chain, jovin_suite_count=len(suites),
                         jovin_test_count=sum(v.get('total', 0) for v in suites.values()),
+                        formal_support=run['summary']['formal_support'],
+                        formal_artifact_sha256={name: sha(ROOT/name) for name in formal_paths},
                         artifact_sha256={str(p.relative_to(out)).replace('\\', '/'): sha(p) for p in artifacts},
                         report_sha256=sha(args.report) if args.report.exists() else None,
                         supporting_script_sha256={name: sha(ROOT/name) for name in

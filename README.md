@@ -129,17 +129,30 @@ suites / 170 checks and seven new [conditional Lean theorems](formal/Operational
 These prove the stated mathematical implication and an exact toy example;
 they do not certify the floating-point sky pipeline or physical interpretation.
 
-The separate [v2 protocol](docs/CLOSURE_FIBERS_V2_SPEC.md) uses resident GPU
-operators with native 128/64-start batches and measured exact CPU SVD, center
-restoration, active RMS/box constraints and direct harmonic replay for every
-started endpoint. It prospectively records raw K4 tiers 0.010/0.015/0.025/0.050;
-these are separate from robust-scale quantization and do not reclassify v1.
-Preflight passed 246 local tests (three unavailable Intel XPU skips), all 26
-CPU sandbox suites and 26 authenticated JoVin suites / 177 checks. Batched
-fixed-fixture GPU evaluation plus CPU projection took 47--91 ms, while exact
-CUDA SVD alone took 0.49--2.11 seconds. This is an engineering measurement,
-not a saturation guarantee or a scientific result. The new production run has
-its own four-hour cap; incomplete starts and verification remain explicit.
+The separate [batched v2 study](docs/CLOSURE_FIBERS_V2_RUN.md) completed all
+**6,144 starts and direct harmonic replays across 48 cases**, with zero recorded
+numerical or verification failures, in 5,781 budget-clock seconds (5,610 UTC
+seconds) under its four-hour cap. It found **14 verified cell maxima with raw
+K4 gaps at least 0.050**. In the 12 fresh matched searches, baseline, ordinary-
+power control and CST repair respectively yielded 5, 4 and 0 such maxima.
+The repair reduced discovered maxima on all 12 tiles (median paired reduction
+61%), but still admitted 11 verified collisions at the 0.010 tier. Both added
+feature sets distinguish all 12 source-baseline pairs. These are finite-search
+lower bounds: they support these particular features without establishing
+universal sufficiency, detection superiority or new cosmology.
+
+The [v2 protocol](docs/CLOSURE_FIBERS_V2_SPEC.md) freezes raw K4 tiers separately
+from robust-scale input quantization and preserves v1. Native 128/64-start GPU
+batches use resident analytic operators, measured exact CPU SVD and independent
+CPU/direct checks; every selected cell maximum is replayed on both GPUs. All
+26 current JoVin suites / 177 checks authenticate against current source and
+test hashes. Preflight passed 246 local tests, with three unavailable Intel XPU
+skips. The [six concrete Lean checks](formal/ClosureFibersV2Witness.lean) bring
+the supporting theorem total to 24; they verify exact recorded integer tables
+and a conditional no-factor conclusion, without certifying floating-point sky
+measurements. See the [coverage plot](results/closure_fibers_v2/coverage.png),
+[tier comparisons](results/closure_fibers_v2/tier_heatmap.png) and
+[complete saved-evidence audit](results/closure_fibers_v2/verification.json).
 
 **Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every result taken from `results/*.json`
 is written into it by `paper/make_inputs.py` (macros and figures). Two values come from checks

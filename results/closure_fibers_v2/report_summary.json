@@ -1,0 +1,267 @@
+{
+  "scientific_status": "complete",
+  "scientific_outcome": "verified_tier_witnesses",
+  "planned_cases": 48,
+  "planned_starts": 6144,
+  "starts_started": 6144,
+  "starts_completed": 6144,
+  "starts_verified": 6144,
+  "terminal_failure_starts": 0,
+  "verification_failures": 0,
+  "tier_counts": {
+    "0.010": 47,
+    "0.015": 43,
+    "0.025": 34,
+    "0.050": 14
+  },
+  "row_cpu_direct_raw_tier_counts": {
+    "0.010": 6016,
+    "0.015": 5504,
+    "0.025": 4287,
+    "0.050": 1098
+  },
+  "matched_complete_tiles": [
+    24,
+    6,
+    30,
+    34,
+    21,
+    11,
+    152,
+    170,
+    189,
+    174,
+    186,
+    166
+  ],
+  "status_counts": {
+    "stalled": 6144
+  },
+  "directions": {
+    "maximize": {
+      "started": 3072,
+      "completed": 3072
+    },
+    "minimize": {
+      "started": 3072,
+      "completed": 3072
+    }
+  },
+  "elapsed_seconds": 5781.355708733,
+  "utc_elapsed_seconds": 5610.342437,
+  "budget_elapsed_seconds": 5781.355708733,
+  "rms_ratio_names": [
+    "tile",
+    "global"
+  ],
+  "checkpoint_pair_recoveries": [],
+  "formal_support": {
+    "theorem_count": 24,
+    "expected_theorem_count": 24,
+    "groups": [
+      {
+        "label": "Scale and moment identities",
+        "source": "formal/ScaleInvariance.lean",
+        "receipt": "results/multiscale_v1/lean_verification.json",
+        "theorem_count": 9,
+        "expected_theorem_count": 9,
+        "status": "passed",
+        "receipt_sha256": "0240acfb15a48dc5429e4eb281646525abb48dab6232e2d22610225c531bda3c",
+        "source_sha256": "fce3a981171475507885ed77a9aee4cdb042750c6afc267b32eca41dd3022b4c",
+        "scope": "Exact rational algebra and finite-sample normalized moment invariance; not a physical discovery, a proof of Float64 implementation for all inputs, fractal dimension, or SHA256 collision resistance.",
+        "theorem_axioms": {},
+        "foundation_axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "label": "Polarization rotation identities",
+        "source": "formal/PolarizationGeometry.lean",
+        "receipt": "data/evidence/acquisition_lean.json",
+        "theorem_count": 2,
+        "expected_theorem_count": 2,
+        "status": "passed",
+        "receipt_sha256": "28b2dd8cc5462970439aa4ccd4403632bf5b24fb2da23faf285d891e4be4ba85",
+        "source_sha256": "d7cd17def75af9e8ac1d08b917ccb7fe8a0fe56f2611af9d0adad34636fd263f",
+        "scope": "Exact rational polarization basis identities under c*c+s*s=1; not empirical or floating-point correctness",
+        "theorem_axioms": {},
+        "foundation_axioms": []
+      },
+      {
+        "label": "Conditional closure and rational toy",
+        "source": "formal/OperationalClosure.lean",
+        "receipt": "data/evidence/closure_lean.json",
+        "theorem_count": 7,
+        "expected_theorem_count": 7,
+        "status": "passed",
+        "receipt_sha256": "1eac6fc3df1d894e85fdd1f1710eb8fe738b9c8ccbedd7b8158b32d2e4a9931e",
+        "source_sha256": "cb88da3ab37193c18533b4ffb2dd2455fd17b8491086ded84a5128fc2789254b",
+        "scope": "Conditional typed-function no-factor criterion and an exact rational four-node counterexample only. Existing rotation identities are referenced unchanged. This does not verify Float64 feature calculations, an optimizer, sky physics, universal closure of a repaired representation, or mathematical novelty.",
+        "theorem_axioms": {
+          "no_predictor_from_collision": [],
+          "no_factor_from_collision": [],
+          "toy_initial_moments": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "toy_left_next_moments": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "toy_right_next_moments": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "toy_next_moments_differ": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
+          "toy_no_moment_factor": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ]
+        },
+        "foundation_axioms": []
+      },
+      {
+        "label": "Concrete V2 recorded-bin witness",
+        "source": "formal/ClosureFibersV2Witness.lean",
+        "receipt": "data/evidence/closure_v2_first_witness_lean.json",
+        "theorem_count": 6,
+        "expected_theorem_count": 6,
+        "status": "passed",
+        "receipt_sha256": "0e842b7afaf7cb0b7d5b13257c66ddf2ce25a55a1992f63e2f8a659867985dc7",
+        "source_sha256": "fe2324b3c24f6a0557da8b4b9acbb11afa802b04d5cd9632a4d71ed68ebaf6ce",
+        "scope": "Kernel-checked integer-table distinction and specialization of the unchanged conditional theorem only. Measured Float64 quantization, ducc sampling, GPU execution, raw 0.05 threshold, spectra, sky physics and physical interpretation are not certified by Lean. No universal repair, cosmological or priority claim.",
+        "theorem_axioms": {
+          "recorded_table_lengths": [],
+          "recorded_current_bins_equal": [],
+          "recorded_primary_future_bins": [],
+          "recorded_primary_values_differ": [],
+          "recorded_future_bins_differ": [],
+          "conditional_recorded_no_factor": []
+        },
+        "foundation_axioms": []
+      }
+    ],
+    "concrete_witness_primary_coordinate": 22,
+    "concrete_witness_primary_bins": [
+      232,
+      1007
+    ],
+    "concrete_witness_explicit_hypotheses": [
+      "State and Global are arbitrary types; R : State -> Global x List Int and T : State -> State.",
+      "The two current Global components are equal (retained global representation, including its spectral bins).",
+      "The two current local components equal the exact currentReferenceBins/currentCandidateBins tables.",
+      "The two future local components under the same T equal the exact futureReferenceBins/futureCandidateBins tables."
+    ],
+    "concrete_witness_axiom_free": true,
+    "scope": "Supporting theorem declarations, not independent physical findings or floating-point pipeline proofs"
+  },
+  "fresh_comparisons": {
+    "matched_tiles": [
+      24,
+      6,
+      30,
+      34,
+      21,
+      11,
+      152,
+      170,
+      189,
+      174,
+      186,
+      166
+    ],
+    "matched_tile_count": 12,
+    "groups": {
+      "baseline": {
+        "cases": 12,
+        "minimum": 0.017839445940065635,
+        "median": 0.045673440242879865,
+        "maximum": 0.06859242512975489,
+        "quantized_collisions": 12,
+        "tier_counts": {
+          "0.010": 12,
+          "0.015": 12,
+          "0.025": 11,
+          "0.050": 5
+        }
+      },
+      "capacity": {
+        "cases": 12,
+        "minimum": 0.017109850992923937,
+        "median": 0.04263431571943223,
+        "maximum": 0.06164519032999395,
+        "quantized_collisions": 12,
+        "tier_counts": {
+          "0.010": 12,
+          "0.015": 12,
+          "0.025": 11,
+          "0.050": 4
+        }
+      },
+      "repair": {
+        "cases": 12,
+        "minimum": 0.007180781683979917,
+        "median": 0.017189960191915335,
+        "maximum": 0.029207276136951663,
+        "quantized_collisions": 12,
+        "tier_counts": {
+          "0.010": 11,
+          "0.015": 7,
+          "0.025": 1,
+          "0.050": 0
+        }
+      }
+    },
+    "paired": {
+      "capacity": {
+        "lower_than_baseline": 8,
+        "higher_than_baseline": 4,
+        "median_ratio_to_baseline": 0.9734270117733788
+      },
+      "repair": {
+        "lower_than_baseline": 12,
+        "higher_than_baseline": 0,
+        "median_ratio_to_baseline": 0.38957672837557955
+      }
+    },
+    "repair_lower_than_capacity": 12,
+    "source_witnesses": 12,
+    "source_separated_by": {
+      "capacity": 12,
+      "repair": 12
+    },
+    "scope": "Finite matched-search discovered lower bounds; not global maxima, significance estimates or uniform error bounds"
+  },
+  "quantized_cell_maximum_collisions": 48,
+  "numerical_diagnostics": {
+    "row_audits_read": 6144,
+    "minimum_current_margin": 0.0004990000744098719,
+    "maximum_matrix_direct_scaled_error": 7.923332459149358e-13,
+    "maximum_both_gpu_direct_scaled_error": 3.839327673636134e-13,
+    "maximum_spectral_error": 2.3123354484497527e-15,
+    "maximum_split_difference_error": 4.1389947926903835e-16,
+    "maximum_rms_ratios": [
+      0.24475398624169628,
+      0.055610241804765814
+    ],
+    "rms_ratio_names": [
+      "tile",
+      "global"
+    ],
+    "final_stall_reason_counts": {
+      "box_bound": 6144
+    }
+  },
+  "clock_difference_seconds": 171.01327173299978,
+  "unverified_started_rows": 0
+}

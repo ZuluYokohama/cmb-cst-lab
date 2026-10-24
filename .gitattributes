@@ -25,4 +25,6 @@ results/closure_fibers_v1/telemetry.json -diff
 results/closure_fibers_v1/cases/*_history.json -diff
 results/closure_fibers_v2/telemetry.json -diff
 results/closure_fibers_v2/cases/*_history.json -diff
+results/closure_fibers_v2/result.json -diff
+results/closure_fibers_v2/certificates_v2/*/rows/*.json -diff
 data/closure_v2_*.log -text

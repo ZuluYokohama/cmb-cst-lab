@@ -1,0 +1,62 @@
+{
+  "gpu0": {
+    "utilization": {
+      "samples": 5370,
+      "mean": 2.556052141527002,
+      "maximum": 44.0,
+      "first_budget_seconds": 0.003245600000001403,
+      "last_budget_seconds": 5781.327715632
+    },
+    "memory_MiB": {
+      "samples": 5370,
+      "mean": 500.3692737430168,
+      "maximum": 508.0,
+      "first_budget_seconds": 0.003245600000001403,
+      "last_budget_seconds": 5781.327715632
+    },
+    "power_W": {
+      "samples": 5370,
+      "mean": 13.599640595903164,
+      "maximum": 58.38,
+      "first_budget_seconds": 0.003245600000001403,
+      "last_budget_seconds": 5781.327715632
+    },
+    "temperature_C": {
+      "samples": 5370,
+      "mean": 38.57783985102421,
+      "maximum": 53.0,
+      "first_budget_seconds": 0.003245600000001403,
+      "last_budget_seconds": 5781.327715632
+    }
+  },
+  "gpu1": {
+    "utilization": {
+      "samples": 5370,
+      "mean": 6.785474860335196,
+      "maximum": 46.0,
+      "first_budget_seconds": 0.003245600000001403,
+      "last_budget_seconds": 5781.327715632
+    },
+    "memory_MiB": {
+      "samples": 5370,
+      "mean": 1599.8932960893856,
+      "maximum": 1912.0,
+      "first_budget_seconds": 0.003245600000001403,
+      "last_budget_seconds": 5781.327715632
+    },
+    "power_W": {
+      "samples": 5370,
+      "mean": 19.238327746741156,
+      "maximum": 54.76,
+      "first_budget_seconds": 0.003245600000001403,
+      "last_budget_seconds": 5781.327715632
+    },
+    "temperature_C": {
+      "samples": 5370,
+      "mean": 38.83612662942272,
+      "maximum": 48.0,
+      "first_budget_seconds": 0.003245600000001403,
+      "last_budget_seconds": 5781.327715632
+    }
+  }
+}

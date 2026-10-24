@@ -18,6 +18,12 @@ SUCCESS = ('stalled', 'iteration_cap')
 FAILURE = ('nonfinite_reference', 'invalid_reference', 'nonfinite_jacobian',
            'nonfinite_gradient', 'nonfinite_rms_gradient')
 CHECKPOINT_PHASES = ('before_initialization', 'initialized', 'periodic', 'complete', 'interrupted')
+FORMAL_RECORDS = (
+    ('Scale and moment identities', 'formal/ScaleInvariance.lean', 'results/multiscale_v1/lean_verification.json', 9),
+    ('Polarization rotation identities', 'formal/PolarizationGeometry.lean', 'data/evidence/acquisition_lean.json', 2),
+    ('Conditional closure and rational toy', 'formal/OperationalClosure.lean', 'data/evidence/closure_lean.json', 7),
+    ('Concrete V2 recorded-bin witness', 'formal/ClosureFibersV2Witness.lean', 'data/evidence/closure_v2_first_witness_lean.json', 6),
+)
 
 
 def read(path, default=None):
@@ -43,6 +49,99 @@ def finite(value):
 
 def fmt(value, digits=6):
     return '—' if value is None or not np.isfinite(value) else f'{value:.{digits}g}'
+
+
+def formal_support(root=ROOT):
+    """Summarize existing compiler receipts; never invoke a compiler."""
+    groups = []
+    for label, source, receipt, expected in FORMAL_RECORDS:
+        path = Path(root)/receipt
+        record = read(path, {})
+        groups.append(dict(label=label, source=source, receipt=receipt,
+                           theorem_count=record.get('theorem_count', 0), expected_theorem_count=expected,
+                           status=record.get('status', 'unavailable'),
+                           receipt_sha256=hashlib.sha256(path.read_bytes()).hexdigest() if path.exists() else None,
+                           source_sha256=record.get('source_sha256'), scope=record.get('scope'),
+                           theorem_axioms=record.get('theorem_axioms', {}),
+                           foundation_axioms=record.get('foundation_axioms', [])))
+    concrete = read(Path(root)/FORMAL_RECORDS[-1][2], {})
+    return dict(theorem_count=sum(int(g['theorem_count']) for g in groups), expected_theorem_count=24,
+                groups=groups, concrete_witness_primary_coordinate=concrete.get('primary_coordinate'),
+                concrete_witness_primary_bins=concrete.get('primary_bins'),
+                concrete_witness_explicit_hypotheses=concrete.get('explicit_mathematical_hypotheses', []),
+                concrete_witness_axiom_free=bool(concrete.get('theorem_count') == 6
+                    and len(concrete.get('theorem_axioms', {})) == 6
+                    and all(not xs for xs in concrete['theorem_axioms'].values())),
+                scope='Supporting theorem declarations, not independent physical findings or floating-point pipeline proofs')
+
+
+def fresh_comparisons(entries, matched_tiles):
+    """Arithmetic on certified saved maxima; no new search or significance test."""
+    lookup = {(e['case']['tile'], e['case']['representation']): e
+              for e in entries if e['case']['stage'] == 'fresh'}
+    included = [int(t) for t in matched_tiles if all(
+        finite(lookup[(t, rep)]['maximum_gap']) is not None and (lookup[(t, rep)]['maximum'] or {}).get('certified')
+        for rep in ('baseline', 'capacity', 'repair'))]
+    groups = {}
+    values = {}
+    for rep in ('baseline', 'capacity', 'repair'):
+        selected = [lookup[(tile, rep)] for tile in included]
+        x = np.asarray([e['maximum_gap'] for e in selected], dtype=float)
+        values[rep] = x
+        groups[rep] = dict(cases=len(x), minimum=float(x.min()) if len(x) else None,
+                           median=float(np.median(x)) if len(x) else None,
+                           maximum=float(x.max()) if len(x) else None,
+                           quantized_collisions=sum(bool((e['certificate'] or {}).get('quantized_cell_maximum_collision_verified')) for e in selected),
+                           tier_counts={f'{t:.3f}': sum(int(e['tier_counts'].get(f'{t:.3f}', 0)) for e in selected) for t in TIERS})
+    paired = {}
+    for rep in ('capacity', 'repair'):
+        valid = values['baseline'] > 0
+        paired[rep] = dict(lower_than_baseline=int(np.sum(values[rep] < values['baseline'])),
+                            higher_than_baseline=int(np.sum(values[rep] > values['baseline'])),
+                            median_ratio_to_baseline=float(np.median(values[rep][valid]/values['baseline'][valid])) if np.any(valid) else None)
+    source = [e for e in entries if e['case']['stage'] == 'source'
+              and (e['certificate'] or {}).get('reported_cell_maximum_no_factor_witness')]
+    return dict(matched_tiles=included, matched_tile_count=len(included), groups=groups, paired=paired,
+                repair_lower_than_capacity=int(np.sum(values['repair'] < values['capacity'])),
+                source_witnesses=len(source), source_separated_by={rep: sum(bool((e['maximum'] or {}).get('distinguished_by', {}).get(rep)) for e in source)
+                    for rep in ('capacity', 'repair')},
+                scope='Finite matched-search discovered lower bounds; not global maxima, significance estimates or uniform error bounds')
+
+
+def saved_numerical_diagnostics(entries, out):
+    """Read preserved row diagnostics only; do not recompute any feature."""
+    margins, matrix_errors, gpu_errors, spectral, difference, ratios = [], [], [], [], [], []
+    stops = {}
+    rows = 0
+    for entry in entries:
+        arrays = entry['arrays']
+        if 'stall_reason' in arrays:
+            for reason, count in zip(*np.unique(arrays['stall_reason'][arrays['started'] > 0], return_counts=True)):
+                stops[str(reason)] = stops.get(str(reason), 0)+int(count)
+        for view in (entry['certificate'] or {}).get('rows', []):
+            record = read(Path(out)/view['audit_path'], {}) if view.get('audit_path') else {}
+            rows += int(bool(record))
+            margin = finite(record.get('input_bins', {}).get('minimum_margin'))
+            if margin is not None:
+                margins.append(margin)
+            value = finite(record.get('errors', {}).get('matrix_vs_direct'))
+            if value is not None:
+                matrix_errors.append(value)
+            gpu_errors.extend(x for x in record.get('actual_both_gpu_errors', {}).values() if finite(x) is not None)
+            for item in record.get('invariant_checks', []):
+                if finite(item.get('normalized_spectral_gram_error')) is not None:
+                    spectral.append(item['normalized_spectral_gram_error'])
+                if finite(item.get('split_difference_scaled_error')) is not None:
+                    difference.append(item['split_difference_scaled_error'])
+            if len(record.get('perturbation_ratios', [])) == 2:
+                ratios.append(record['perturbation_ratios'])
+    return dict(row_audits_read=rows, minimum_current_margin=min(margins) if margins else None,
+                maximum_matrix_direct_scaled_error=max(matrix_errors) if matrix_errors else None,
+                maximum_both_gpu_direct_scaled_error=max(gpu_errors) if gpu_errors else None,
+                maximum_spectral_error=max(spectral) if spectral else None,
+                maximum_split_difference_error=max(difference) if difference else None,
+                maximum_rms_ratios=np.max(ratios, axis=0).tolist() if ratios else None,
+                rms_ratio_names=['tile', 'global'], final_stall_reason_counts=stops)
 
 
 def checkpoint_binding(checkpoint, metadata, npz_sha256, count, planes, metadata_error=None):
@@ -236,6 +335,12 @@ def collect_run(out=OUT):
                    rms_ratio_names=['tile', 'global'])
     summary['checkpoint_pair_recoveries'] = [dict(case=e['name'], **e['checkpoint_info']) for e in entries
                                              if e['checkpoint_info']['pair_recovered']]
+    summary['formal_support'] = formal_support()
+    summary['fresh_comparisons'] = fresh_comparisons(entries, matched)
+    summary['quantized_cell_maximum_collisions'] = sum(bool((e['certificate'] or {}).get('quantized_cell_maximum_collision_verified')) for e in entries)
+    summary['numerical_diagnostics'] = saved_numerical_diagnostics(entries, out)
+    summary['clock_difference_seconds'] = (summary['elapsed_seconds']-summary['utc_elapsed_seconds']
+                                            if summary['elapsed_seconds'] is not None and summary['utc_elapsed_seconds'] is not None else None)
     summary['unverified_started_rows'] = summary['starts_started']-summary['starts_verified']
     return dict(plan=plan, stage=stage, result=result, entries=entries, summary=summary)
 
@@ -301,16 +406,20 @@ def plots(run, out):
                ('power_W', 'Power (W)'), ('temperature_C', 'Temperature (°C)')]
     hardware = {}
     for device in (0, 1):
-        data = [(s.get('seconds', 0), d) for s in telemetry.get('samples', [])
+        data = [(s.get('budget_elapsed_seconds', s.get('elapsed_seconds', s.get('seconds'))), d)
+                for s in telemetry.get('samples', [])
                 for d in s.get('devices', []) if d.get('index') == device]
         hardware[f'gpu{device}'] = {}
         for ax, (key, title) in zip(axes.ravel(), metrics):
-            pairs = [(float(t)/60, float(d[key])) for t, d in data if finite(d.get(key)) is not None]
+            pairs = [(float(t)/60, float(d[key])) for t, d in data
+                     if finite(t) is not None and finite(d.get(key)) is not None]
             if pairs:
                 x, y = np.asarray(pairs).T
                 ax.plot(x, y, label=f'GPU {device}', linewidth=1)
-                hardware[f'gpu{device}'][key] = dict(samples=len(y), mean=float(y.mean()), maximum=float(y.max()))
-            ax.set(xlabel='Recorded run minutes', ylabel=title)
+                hardware[f'gpu{device}'][key] = dict(samples=len(y), mean=float(y.mean()), maximum=float(y.max()),
+                                                   first_budget_seconds=float(x.min()*60),
+                                                   last_budget_seconds=float(x.max()*60))
+            ax.set(xlabel='Recorded budget-clock minutes', ylabel=title)
     for ax in axes.ravel():
         if ax.lines:
             ax.legend()
@@ -359,7 +468,11 @@ def main():
         if c.get('error'):
             failures.append(f"| {e['name']} verifier | {c.get('status','verification failure')} | Saved worker_failure.json |")
     tier_rows = '\n'.join(f"| {t:.3f} | {summary['tier_counts'][f'{t:.3f}']} | {summary['row_cpu_direct_raw_tier_counts'][f'{t:.3f}']} |" for t in TIERS)
-    proof = read(ROOT/'data/evidence/closure_lean.json', {})
+    formal = summary['formal_support']
+    comparison = summary['fresh_comparisons']
+    formal_rows = '\n'.join(f"| {g['label']} | {g['theorem_count']} | {g['status']} | [{Path(g['source']).name}]({link(ROOT/g['source'])}) | [{Path(g['receipt']).name}]({link(ROOT/g['receipt'])}) |" for g in formal['groups'])
+    comparison_rows = '\n'.join(f"| {rep} | {data['cases']} | {data['quantized_collisions']} | {' / '.join(str(data['tier_counts'][f'{t:.3f}']) for t in TIERS)} | {fmt(data['minimum'])} | {fmt(data['median'])} | {fmt(data['maximum'])} |" for rep, data in comparison['groups'].items())
+    diagnostics = summary['numerical_diagnostics']
     fresh_rows = []
     for tile in plan['selected_tiles']:
         group = {e['case']['representation']: e for e in run['entries'] if e['case']['tile'] == tile and e['case']['stage'] == 'fresh'}
@@ -381,6 +494,10 @@ Scientific status: **{summary['scientific_status']}**. Completed starts:
 {summary['terminal_failure_starts']}; recorded verification failures:
 {summary['verification_failures']}. These are finite counterfactual searches,
 anchored to real Planck 143 GHz splits, not new observed skies or cosmological detections.
+Safely matching-current/different-future cell-maximum pairs:
+**{summary['quantized_cell_maximum_collisions']}/{summary['planned_cases']}**.
+The no-factor criterion itself requires different safe future bins; the raw-gap
+tiers additionally grade the size of that difference and do not define equality.
 
 ![Coverage and discovered raw gaps]({link(out/'coverage.png')})
 
@@ -431,13 +548,24 @@ are retained in [the row/cell certificates]({link(out/'certificates_v2')}).
 |---|---:|---:|---:|---|---:|---|
 {chr(10).join(maxima) or '| — | — | — | — | — | — | No selected endpoint |'}
 
+Across {diagnostics['row_audits_read']} saved row audits, the smallest current
+margin was {fmt(diagnostics['minimum_current_margin'],10)}. The largest saved
+matrix/direct error was {fmt(diagnostics['maximum_matrix_direct_scaled_error'])},
+and the largest both-GPU/direct error was
+{fmt(diagnostics['maximum_both_gpu_direct_scaled_error'])}, against the fixed
+1e-10 numerical gate. Maximum spectral and split-difference errors were
+{fmt(diagnostics['maximum_spectral_error'])} and
+{fmt(diagnostics['maximum_split_difference_error'])}. Maximum RMS ratios in
+tile/global order were {diagnostics['maximum_rms_ratios']}.
+
 ## Does the added information distinguish source witnesses?
 
 Only reported source-baseline witnesses enter this table. Distinguishing one
 source pair supports that specific augmentation; it does not establish universal
 sufficiency. Fresh baseline, capacity-control and CST-repair searches use common
 initializations. Complete, equal-budget, independently audited fresh triples:
-**{summary['matched_complete_tiles']}**. Unequal or incomplete triples remain in
+**{len(summary['matched_complete_tiles'])} tiles**, IDs {summary['matched_complete_tiles']}.
+Unequal or incomplete triples remain in
 the coverage table and are not promoted to completed comparisons.
 
 | Source tile | Raw future gap | Ordinary-power response distinguishes | Connected-fourth response distinguishes |
@@ -448,7 +576,43 @@ the coverage table and are not promoted to completed comparisons.
 |---:|---|---:|---:|---:|
 {chr(10).join(fresh_rows)}
 
+Only the complete, certified matched triples enter this aggregate comparison.
+Threshold counts use raw K4 gaps ≥0.010 / 0.015 / 0.025 / 0.050 and safe future
+bin separation, counting each cell maximum once.
+
+| Fresh representation | Matched cases | Safe quantized collisions | Four tier counts | Smallest maximum | Median maximum | Largest maximum |
+|---|---:|---:|---|---:|---:|---:|
+{comparison_rows}
+
+The CST-repair discovered maximum was lower than baseline on
+{comparison['paired']['repair']['lower_than_baseline']}/{comparison['matched_tile_count']}
+matched tiles and lower than the power control on
+{comparison['repair_lower_than_capacity']}/{comparison['matched_tile_count']}.
+The median paired repair/baseline ratio was
+{fmt(comparison['paired']['repair']['median_ratio_to_baseline'])}; the power-control
+ratio was {fmt(comparison['paired']['capacity']['median_ratio_to_baseline'])}.
+These observations support the usefulness of the connected-fourth response
+features for this task and solver. They do not identify a universal sufficient
+representation: repair still produced
+{comparison['groups']['repair']['quantized_collisions']} certified quantized
+collisions, of which
+{comparison['groups']['repair']['tier_counts']['0.010']} verified witnesses at
+the 0.010 tier. Both augmentations distinguish
+{comparison['source_separated_by']['capacity']} and {comparison['source_separated_by']['repair']},
+respectively, of the {comparison['source_witnesses']} reported source witnesses.
+The power-control search found a larger gap than baseline on
+{comparison['paired']['capacity']['higher_than_baseline']} tiles despite its more
+constrained domain. Different optimization paths can expose different endpoints;
+this reinforces why the observed maxima are lower bounds and why this experiment
+does not establish closure, physical ceilings, statistical significance or general superiority.
+
 ## Preserved failures and incomplete verification
+
+Recorded solver status counts: {summary['status_counts']}. Final rejection-reason
+counts: {diagnostics['final_stall_reason_counts']}. A `stalled` stop records the
+frozen 50-consecutive-rejection condition; `box_bound` is the retained last
+rejection reason. These records establish algorithm termination, not convergence
+to a global optimum or a certified maximum.
 
 | Case / start | Status or exception | Evidence |
 |---|---|---|
@@ -480,13 +644,24 @@ Both clocks and any discrepancy are preserved. GPU counters are device-wide and
 can include other applications; activity does not establish FLOPS saturation or
 CPU/GPU speedup. Post-cap reporting and verification use only saved values and
 hashes, with no new science or candidate promotion.
+The recorded monotonic-minus-UTC discrepancy is
+{fmt(summary['clock_difference_seconds'],9)} seconds; its cause is unknown.
+The budget gate used the larger clock. Preprocessing, search and pipelined CPU
+verification overlap, so their durations are not summed as disjoint wall time.
 
 ## What is proved, measured, inferred and unknown
 
-- **Proved:** the conditional collision/no-factor-map implication and an exact
-  rational nonclosure toy, kernel-checked in pinned Lean 4.35.0. Saved Lean status:
-  `{proof.get('status','unavailable')}`, theorem count {proof.get('theorem_count','unknown')}.
-  Existing rotation identities are reused. These proofs do not certify floating-point sky processing.
+- **Proved:** {formal['theorem_count']} supporting theorem declarations in pinned
+  Lean 4.35.0: 9 scale/moment identities, 2 polarization identities, 7 conditional
+  closure/toy results, and 6 concrete recorded-bin results for source tile 24,
+  start 56. The 6 concrete results are axiom-free. They check all 44 current/future
+  integer-bin entries, including the primary future distinction **232 ≠ 1007**,
+  and specialize the unchanged conditional no-factor theorem. Their application
+  to the measured sky pipeline explicitly assumes those recorded tables and
+  equality of the complete retained current global representation. They do not
+  certify Float64 quantization, direct sampling, GPU arithmetic, the raw 0.05
+  threshold, or physical interpretation. The older algebraic results may use
+  Lean's standard foundational axioms as disclosed by their receipts.
 - **Measured:** only the saved, explicitly qualified counterfactual endpoints,
   numerical errors, margins, bounds, coverage and device counters.
 - **Inferred:** a verified matching-current/different-future pair rules out an
@@ -494,6 +669,10 @@ hashes, with no new science or candidate promotion.
   domain containing that pair.
 - **Unknown:** exact continuous-summary closure, universal repair, physical
   origin, primordial structure, fractal dimension and general superiority.
+
+| Formal support | Theorems | Saved status | Source | Compiler receipt |
+|---|---:|---|---|---|
+{formal_rows}
 
 Provenance is in [the frozen plan]({link(out/'plan.json')}),
 [result]({link(out/'result.json')}), [report summary]({link(out/'report_summary.json')})
