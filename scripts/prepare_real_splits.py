@@ -26,7 +26,7 @@ def main():
         boot = bootstrap_tiles(features,indices,device)
         errors = [np.max(np.abs(actual-cross_statistics(a,b))/(1+np.abs(cross_statistics(a,b)))),
                   np.max(np.abs(boot-bootstrap_tiles(features,indices))/(1+np.abs(bootstrap_tiles(features,indices))))]
-        if max(errors)>1e-10:
+        if not np.isfinite(errors).all() or max(errors)>1e-10:
             raise ValueError('actual GPU fixture precision failure')
         fixture['devices'].append(dict(device=device,name=torch.cuda.get_device_name(index),statistics=actual.tolist(),bootstrap=boot.tolist(),maximum_scaled_error=float(max(errors))))
     test.write_text(source.replace('GPU_ATTESTATION = None','GPU_ATTESTATION = '+repr(fixture)),encoding='utf-8')

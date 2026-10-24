@@ -15,7 +15,11 @@ sys.path.insert(0,str(ROOT/'src'))
 from jovin_verify import SUITES,build_bundle,configuration,_harness
 OUT=ROOT/'results/real_splits_v1'
 read=lambda p:json.loads(Path(p).read_text(encoding='utf-8'))
-sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+
+
+def sha(p):
+    with Path(p).open('rb') as stream:
+        return hashlib.file_digest(stream,'sha256').hexdigest()
 
 
 def close(a,b):
@@ -33,6 +37,33 @@ def covariance_oracle(a,b):
     fourth=np.mean(np.sum(x[:,:2]**2,axis=1)*np.sum(x[:,2:]**2,axis=1))
     k=fourth-va*vb-2*np.sum(cov[:2,2:]**2)
     return [va,vb,re,(va+vb+2*re)/4,(va+vb-2*re)/4,re/np.sqrt(va*vb),k/(va*vb),im/np.sqrt(va*vb)]
+
+
+def input_identities_match(inputs,plan,inventory):
+    return [v['key'] for v in inputs['maps']]==plan['maps'] and all(
+        sha(ROOT/'data/raw'/inventory[v['key']]['filename'])==v['sha256']==inventory[v['key']]['sha256']
+        and v['bytes']==inventory[v['key']]['bytes'] and v['zero_filled_invalid_pixels']>=0
+        for v in inputs['maps'])
+
+
+def labeled_rows_match(rows,plan,g,anchor,endpoint,views):
+    rows_ok=len(rows)==16
+    sample_indices=set();map_directions=set()
+    loc=g['loc']
+    for row in rows:
+        bearing=float(row['bearing_deg'])
+        if bearing not in plan['bearings_degrees']:
+            rows_ok=False
+            continue
+        m=plan['maps'].index(row['map']);direction=plan['bearings_degrees'].index(bearing)
+        sample_index=int(row['sample_index']);pair=(row['map'],direction)
+        rows_ok &= sample_index not in sample_indices and pair not in map_directions
+        sample_indices.add(sample_index);map_directions.add(pair)
+        j=int(np.flatnonzero(g['anchor_pixel']==int(row['anchor_pixel_nside64_ring']))[0])
+        values=[float(row[key]) for key in ('Q_anchor_uK','U_anchor_uK','Q_end_uK','U_end_uK','transported_delta_real_uK','transported_delta_imag_uK')]
+        expected=[anchor[m,j].real,anchor[m,j].imag,endpoint[m,2,direction,j].real,endpoint[m,2,direction,j].imag,views[0,m,2,direction,j].real,views[0,m,2,direction,j].imag]
+        rows_ok &= close(values,expected) and abs(float(row['galactic_latitude_deg'])-(90-np.degrees(loc[j,0])))<1e-12 and abs(float(row['galactic_longitude_deg'])-np.degrees(loc[j,1]))<1e-12 and float(row['lag_deg'])==2. and (row['valid_pair']=='True')==bool(g['valid'][2,direction,j])
+    return bool(rows_ok)
 
 
 def main():
@@ -121,7 +152,7 @@ def main():
             checks[f'all_gpu_{i}_statistics']=close(d['features'],oracle)
         checks[f'gpu_{i}_precision_records']=result['devices'][i]['maximum_scaled_error']<=1e-10 and result['resampling_devices'][i]['maximum_scaled_error']<=1e-10 and result['resampling_devices'][i]['common32_cpu_error']<=1e-10
     inventory={v['key']:v for v in read(ROOT/'data/evidence/planck_dataset.json')['products']}
-    checks['actual_input_identities']=[v['key'] for v in inputs['maps']]==plan['maps'] and all(v['sha256']==inventory[v['key']]['sha256'] and v['bytes']==inventory[v['key']]['bytes'] and v['zero_filled_invalid_pixels']>=0 for v in inputs['maps'])
+    checks['actual_input_identities']=input_identities_match(inputs,plan,inventory)
     checks['mask_binding']=inputs['mask_sha256']==plan['mask_sha256']==sha(ROOT/'data/work/rtx5070_real/mask_30.npy')
     for item in inputs['maps']:
         checks[f"retained_harmonics_{item['key']}"]=sha(OUT/f"harmonics/alm_{item['key']}.npy")==item['filtered_alm_sha256'] and np.isfinite(item['diagonal_windows']).all()
@@ -135,14 +166,7 @@ def main():
     checks['rejected_admission_preserved']=all(hashlib.sha256(gzip.decompress((ROOT/v['archive']).read_bytes())).hexdigest()==v['sha256'] for v in rejected['files'].values()) and any(v['suite']=='real_splits' and v['receipt_id'] is None and not v['passed'] for v in history)
     with (OUT/'labeled_real_samples.csv').open(newline='') as stream:
         rows=list(csv.DictReader(stream))
-    rows_ok=len(rows)==16
-    for row in rows:
-        m=plan['maps'].index(row['map']);direction=int(float(row['bearing_deg'])/45)
-        j=int(np.flatnonzero(g['anchor_pixel']==int(row['anchor_pixel_nside64_ring']))[0])
-        values=[float(row[key]) for key in ('Q_anchor_uK','U_anchor_uK','Q_end_uK','U_end_uK','transported_delta_real_uK','transported_delta_imag_uK')]
-        expected=[anchor[m,j].real,anchor[m,j].imag,endpoint[m,2,direction,j].real,endpoint[m,2,direction,j].imag,views[0,m,2,direction,j].real,views[0,m,2,direction,j].imag]
-        rows_ok &= close(values,expected) and abs(float(row['galactic_latitude_deg'])-(90-np.degrees(loc[j,0])))<1e-12 and abs(float(row['galactic_longitude_deg'])-np.degrees(loc[j,1]))<1e-12 and float(row['lag_deg'])==2. and (row['valid_pair']=='True')==bool(g['valid'][2,direction,j])
-    checks['labeled_real_rows']=bool(rows_ok)
+    checks['labeled_real_rows']=labeled_rows_match(rows,plan,g,anchor,endpoint,views)
     association=read(OUT/'association.json')
     checks['all_foreground_associations']=len(association)==16 and all(abs(v['rank_correlation_with_353_mean_increment_power']-spearmanr(oracle[0,i,:,l,6],oracle[0,3,:,l,3]).statistic)<1e-10 for v,(i,l) in zip(association,[(i,l) for i in range(4) for l in range(4)]))
     tests=ROOT/'data/real_splits_tests.log';sandbox=ROOT/'data/real_splits_sandbox_tests.log'

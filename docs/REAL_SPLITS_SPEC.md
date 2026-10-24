@@ -76,7 +76,7 @@ Retain endpoint samples, phases, masks, tile IDs and all tile metrics.
 
 Use seed82024102026 for 2000 equal-tile resamples with replacement, common to
 all frequencies/modes/lags, 1000 draws per GPU. CPU independently reproduces
-all draws; both GPUs also compute the same first32 draws. Report 2.5/97.5
+all draws; both GPUs also compute the same first 32 draws. Report 2.5/97.5
 percentile **tile-resampling stability bands**, not confidence intervals or
 cosmological significance: adjacent tiles and underlying modes are dependent.
 Summaries are equal-weight means of accepted tile-level quantities, not pooled
