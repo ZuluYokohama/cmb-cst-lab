@@ -34,6 +34,13 @@ cosmological detection, a physical ceiling or a methodological-priority claim.
 The paper's conditional no-factor argument is kernel-checked separately;
 floating-point sky calculations and physical interpretation are not Lean proofs.
 
+The [concrete recorded-bin Lean specialization](../formal/ClosureFibersV2Witness.lean)
+has six axiom-free kernel-checked theorems. Its
+[compiler and evidence-binding receipt](../data/evidence/closure_v2_first_witness_lean.json)
+links the exact current/future tables to this saved pair. Equality of retained
+global records and the interpretation of the table as measurements are explicit
+assumptions; the proof does not certify the floating-point transforms.
+
 Source freeze: `ab94c88c081a95e2f1d5828d700847346a1df86a`.
 [Protocol](CLOSURE_FIBERS_V2_SPEC.md),
 [complete cell audit](../results/closure_fibers_v2/certificates_v2/tile_24_source_baseline/case.json),

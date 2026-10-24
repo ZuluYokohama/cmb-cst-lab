@@ -62,3 +62,20 @@ found no qualifying witness and left the repair comparison untested. The proofs
 do not certify numerical sky calculations, successful optimization, universal
 repair, physical detections or mathematical novelty. Earlier proof sources and
 their evidence remain unchanged.
+
+## Recorded v2 witness
+
+[ClosureFibersV2Witness.lean](ClosureFibersV2Witness.lean) adds six axiom-free
+theorems for the first verified v2 pair, tile 24 / start 56. They check the four
+44-entry integer-bin tables, equal current records and unequal future records,
+including primary future bins 232 and 1007. The final theorem imports and
+specializes the existing no-factor theorem with an explicit assumption that
+the retained global records agree. It does not copy the generic proof.
+
+The [compiler receipt](../data/evidence/closure_v2_first_witness_lean.json) binds
+the exact tables, numerical evidence, coefficients and source by SHA-256 and
+records the pinned Lean 4.35.0 output. The compiled dependency stays in a
+temporary cache. CI repeats the check. There are now 24 supporting theorems in
+four files. These six prove recorded-table mathematics and a conditional
+conclusion; identifying those tables with floating-point sky measurements
+remains an empirical assumption, not a formal pipeline or physical proof.

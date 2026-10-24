@@ -51,3 +51,5 @@ jobs:
         run: '"$RUNNER_TEMP/lean/bin/lean" formal/PolarizationGeometry.lean'
       - name: Kernel-check operational closure and exact counterexample
         run: '"$RUNNER_TEMP/lean/bin/lean" formal/OperationalClosure.lean'
+      - name: Kernel-check the recorded v2 witness and its evidence bindings
+        run: python3 scripts/verify_closure_v2_witness_lean.py --lean "$RUNNER_TEMP/lean/bin/lean" --archive "$RUNNER_TEMP/lean.tar.zst" --cache-dir "$RUNNER_TEMP/closure-v2-lean" --output "$RUNNER_TEMP/closure-v2-witness.json"
