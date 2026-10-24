@@ -1,0 +1,78 @@
+......                                                                   [100%]
+6 passed in 0.18s
+[PASS] closure_fibers_v2
+...........                                                              [100%]
+11 passed in 0.19s
+[PASS] closure_fibers
+.....                                                                    [100%]
+5 passed in 0.10s
+[PASS] real_splits
+...                                                                      [100%]
+3 passed in 0.06s
+[PASS] acquisition_index
+.....                                                                    [100%]
+5 passed in 0.14s
+[PASS] acquisition
+.....                                                                    [100%]
+5 passed in 0.07s
+[PASS] targeted
+........                                                                 [100%]
+8 passed in 0.10s
+[PASS] response
+....                                                                     [100%]
+4 passed in 0.08s
+[PASS] orientation
+.....                                                                    [100%]
+5 passed in 0.07s
+[PASS] multiscale
+.....                                                                    [100%]
+5 passed in 0.18s
+[PASS] spherical_surrogates
+...                                                                      [100%]
+3 passed in 0.06s
+[PASS] copula_topology
+.....                                                                    [100%]
+5 passed in 0.08s
+[PASS] surrogate_topology
+.....                                                                    [100%]
+5 passed in 0.05s
+[PASS] data_integrity
+...........                                                              [100%]
+11 passed in 1.05s
+[PASS] network
+...                                                                      [100%]
+3 passed in 0.04s
+[PASS] empirical_calibration
+..                                                                       [100%]
+2 passed in 0.08s
+[PASS] estimated_covariance
+...                                                                      [100%]
+3 passed in 0.06s
+[PASS] sparse_network
+...                                                                      [100%]
+3 passed in 0.05s
+[PASS] sensor_network
+......                                                                   [100%]
+6 passed in 1.64s
+[PASS] differential
+.......                                                                  [100%]
+7 passed in 0.45s
+[PASS] mk_core
+..........                                                               [100%]
+10 passed in 0.55s
+[PASS] accel
+......                                                                   [100%]
+6 passed in 0.05s
+[PASS] gpu_calibration
+.........                                                                [100%]
+9 passed in 2.16s
+[PASS] spatial
+........                                                                 [100%]
+8 passed in 0.31s
+[PASS] simulator
+......                                                                   [100%]
+6 passed in 0.14s
+[PASS] npe
+.......                                                                  [100%]
+7 passed in 0.14s
+[PASS] persistence

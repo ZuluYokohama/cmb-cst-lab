@@ -1,0 +1,76 @@
+"""Compact CPU controls and recorded outputs from both actual GPUs."""
+import numpy as np
+from solution import features_numpy, ratios_numpy, oracle_features, fixture_family
+from solution import active_tangent_numpy, input_bins, future_bin_difference, raw_tiers
+
+GPU_ATTESTATION = {'seed': 929173, 'family': {'n': 8, 'planes': 4}, 'ratio_names': ['tile', 'global'], 'source_sha256': {'src/cmbcst/closure_gpu_v2.py': 'f6b06bbd355da8198ea6d4a3c36096fc80fe53d4b46719399901b6f50f210b29', 'scripts/prepare_closure_fibers_v2.py': 'e90b393462c65870e7258aa69f2ce624077579ceea47171f8ee889531e1d96fc', 'tests/test_closure_gpu_v2.py': 'a94c623ad13b4f1f17b9ea2271393b53bcde2aa404e7e086b1ab68bb50f82d0e', 'src/cmbcst/closure_fibers.py': '58826d2810b8c92f0e02e55cd1d8590e0a02f2127339cf53f6d0b9005184ac51', 'src/cmbcst/closure_jacobian.py': '49ceff3ba6f8102487b87ace76b931156248f20bc5d8e7ada91322771fb6505e', 'src/cmbcst/closure_search_v2.py': 'f6e97d0bb114bf28a06845c1d023fb7fc96df338c820adb53743e4922f08798a'}, 'devices': [{'device': 'cuda:0', 'name': 'NVIDIA GeForce RTX 5070', 'angles': [0.02, -0.04, 0.01, 0.07], 'features': [15.174736509760343, 11.158141316005608, -0.12214260227673726, 6.522148155303118, 6.644290757579856, -0.009386650773077416, -0.21189954422274787, 0.03144788368249129, 20.733467215295853, 16.024211016217933, -1.3344449554642206, 8.522197080146338, 9.856642035610559, -0.07321100512993915, -0.04283579806656668, 0.19943892883914024, 16.861527854288624, 11.470130011974335, 1.8649099577300379, 8.015369445430757, 6.15045948770072, 0.13409890619142045, -0.28635097349231886, 0.2791530650208112, 29.070167682906337, 13.741695128980778, 2.558984530819618, 11.982457968381587, 9.42347343756197, 0.12803353531110334, -0.17284796013308207, 0.3758066776466931, 5.8268009407845724, 2.2172737766159507, 0.4758457679374007, 1.9668487748016117, 1.5672336039355628, -0.2568505591616006, 2.4229151668880915, 1.0349319940294261, 0.44937989148571744, 1.5180517818060193, 1.7711426114452704, 0.5991585315506316, -3.78064455947891, -5.743784433941105, -4.942801950344899, -8.074350231774634, -0.02174529285231757, -0.10348600448280529, -0.11547484004665237, 0.031666055689975325], 'target': -0.3539495116162489, 'target_gradient': [0.01241859778663514, -0.006772450900605039, 0.011844736767166929, -0.014743546196880767], 'ratio_squared': [1.673934721633287e-05, 5.8728888741761057e-05], 'rms_gradient': [[7.284092120384765e-05, -9.58818980877747e-05, -3.6647321524297765e-06, 0.0004079700777044124], [9.999333346666542e-05, -0.0003998933418663416, 0.00014999750001249996, 0.0013988569467506557]], 'errors': {'features': 9.683762701662458e-16, 'jacobian_autograd': 1.4650420464785808e-16, 'jacobian_five_point': 3.6471097711157784e-12, 'target': 6.151467392284412e-16, 'target_gradient': 4.4549567218541253e-17, 'ratio_squared': 6.775865638975163e-21, 'rms_gradient': 2.1653752946976987e-19, 'features_u1': 6.151467392284412e-16, 'features_u2': 5.701122133702907e-16, 'features_u3': 7.746745995492814e-16}, 'jacobian_indices': [0, 6, 22, 32, 44, 48, 51], 'jacobian': [[0.013161758677193386, 0.1558781694012149, 0.06736615212013901, -0.36060347608475], [0.00890316522628424, 0.008290579037078747, -0.019584508079805513, -0.0059791867778416045], [0.01751098399144533, 0.005975806318910559, 0.016555705617088527, -0.021596851965479672], [-0.22756083530785073, 0.0, 0.0, 0.0], [-0.04197438273006904, -0.03909053791186336, -0.07366039073424469, 0.010363838553789417], [-0.0017025731493928648, 0.008585331411574627, -0.004565868073289318, -0.0032010782754620264], [-0.005374684981617886, -0.008858291286796537, 0.013556671182518118, -0.0055311418062264535]]}, {'device': 'cuda:1', 'name': 'NVIDIA GeForce GTX 1660 Ti', 'angles': [0.02, -0.04, 0.01, 0.07], 'features': [15.174736509760343, 11.158141316005608, -0.12214260227673705, 6.522148155303118, 6.644290757579856, -0.0093866507730774, -0.21189954422274787, 0.0314478836824913, 20.733467215295853, 16.024211016217933, -1.334444955464221, 8.522197080146338, 9.856642035610559, -0.07321100512993918, -0.04283579806656668, 0.19943892883914022, 16.861527854288624, 11.470130011974335, 1.8649099577300379, 8.015369445430757, 6.150459487700722, 0.13409890619142045, -0.28635097349231886, 0.2791530650208112, 29.07016768290634, 13.741695128980778, 2.5589845308196186, 11.982457968381592, 9.42347343756197, 0.12803353531110337, -0.17284796013308212, 0.3758066776466931, 5.8268009407845724, 2.2172737766159507, 0.4758457679374007, 1.9668487748016117, 1.5672336039355628, -0.2568505591616006, 2.4229151668880915, 1.0349319940294261, 0.44937989148571744, 1.5180517818060193, 1.7711426114452704, 0.5991585315506316, -3.78064455947891, -5.743784433941105, -4.9428019503449, -8.074350231774636, -0.02174529285231757, -0.10348600448280512, -0.1154748400466524, 0.03166605568997511], 'target': -0.3539495116162491, 'target_gradient': [0.012418597786635137, -0.0067724509006050265, 0.011844736767166925, -0.014743546196880772], 'ratio_squared': [1.673934721633287e-05, 5.872888874176105e-05], 'rms_gradient': [[7.284092120384765e-05, -9.588189808777472e-05, -3.6647321524297998e-06, 0.0004079700777044124], [9.999333346666542e-05, -0.0003998933418663416, 0.00014999750001249996, 0.0013988569467506557]], 'errors': {'features': 1.1192920525298165e-15, 'jacobian_autograd': 1.9214360378679148e-16, 'jacobian_five_point': 3.647070500268459e-12, 'target': 6.151467392284412e-16, 'target_gradient': 3.426889786041635e-17, 'ratio_squared': 1.3551731277950326e-20, 'rms_gradient': 2.1653752946976987e-19, 'features_u1': 6.151467392284412e-16, 'features_u2': 7.535966038802693e-16, 'features_u3': 7.919471658714504e-16}, 'jacobian_indices': [0, 6, 22, 32, 44, 48, 51], 'jacobian': [[0.013161758677193394, 0.15587816940121493, 0.06736615212013897, -0.36060347608474985], [0.008903165226284239, 0.008290579037078742, -0.01958450807980552, -0.005979186777841614], [0.017510983991445347, 0.005975806318910537, 0.01655570561708853, -0.021596851965479672], [-0.22756083530785073, 0.0, 0.0, 0.0], [-0.04197438273006904, -0.03909053791186336, -0.07366039073424469, 0.010363838553789383], [-0.0017025731493928596, 0.008585331411574621, -0.004565868073289323, -0.003201078275462031], [-0.005374684981617854, -0.008858291286796525, 0.013556671182518113, -0.005531141806226449]]}]}
+
+
+def error(a,b):
+    a,b=np.asarray(a),np.asarray(b)
+    assert a.shape==b.shape and np.isfinite(a).all() and np.isfinite(b).all()
+    return np.max(np.abs(a-b)/(1+np.abs(b)),initial=0.)
+
+
+def five_point(function,angle):
+    h=1e-3; basis=np.eye(len(angle))
+    return np.stack([(-function(angle+2*h*d)+8*function(angle+h*d)
+        -8*function(angle-h*d)+function(angle-2*h*d))/(12*h) for d in basis],axis=-1)
+
+
+def test_actual_devices_are_bound_and_finite():
+    assert GPU_ATTESTATION['seed']==929173
+    assert tuple(GPU_ATTESTATION['ratio_names'])==('tile','global')
+    assert {d['device'] for d in GPU_ATTESTATION['devices']}=={'cuda:0','cuda:1'}
+    for d in GPU_ATTESTATION['devices']:
+        assert len(d['features'])==52 and len(d['angles'])==4
+        assert all(np.isfinite(v) and 0<=v<=1e-10 for v in d['errors'].values())
+
+
+def test_actual_gpu_features_match_two_cpu_routes():
+    family=fixture_family()
+    for d in GPU_ATTESTATION['devices']:
+        angle=np.asarray(d['angles'])
+        assert error(d['features'],features_numpy(family,angle))<=1e-10
+        assert error(d['features'],oracle_features(family,angle))<=1e-10
+        assert error(d['target'],oracle_features(family,angle,1)[22])<=1e-10
+
+
+def test_actual_gpu_jacobian_matches_independent_finite_differences():
+    family=fixture_family()
+    for d in GPU_ATTESTATION['devices']:
+        angle=np.asarray(d['angles']);ix=np.asarray(d['jacobian_indices'])
+        jac=five_point(lambda x:oracle_features(family,x),angle)
+        assert error(d['jacobian'],jac[ix])<=1e-10
+        future=five_point(lambda x:np.asarray(oracle_features(family,x,1)[22]),angle)
+        assert error(d['target_gradient'],future)<=1e-10
+
+
+def test_actual_gpu_rms_squared_gradient_and_order():
+    family=fixture_family()
+    for d in GPU_ATTESTATION['devices']:
+        angle=np.asarray(d['angles'])
+        assert error(d['ratio_squared'],ratios_numpy(family,angle)**2)<=1e-10
+        gradient=five_point(lambda x:ratios_numpy(family,x)**2,angle)
+        assert error(d['rms_gradient'],gradient)<=1e-10
+
+
+def test_active_rms_and_outward_box_faces_remove_normal_motion():
+    jac=np.array([[1.,0.,0.]])
+    rms=np.array([[0.,1.,0.],[0.,0.,1.]])
+    normal=active_tangent_numpy(jac,np.ones(3),np.zeros(3),np.array([.25,.1]),rms)
+    assert np.linalg.norm(normal['direction']-np.array([0.,0.,1.]))<1e-12
+    box=active_tangent_numpy(jac,np.ones(3),np.array([0.,0.,np.pi/4]),np.array([.25,.1]),rms)
+    assert np.linalg.norm(box['direction'])<1e-12 and box['box_satisfied']
+
+
+def test_safe_bins_and_raw_tiers_are_distinct():
+    reference=np.zeros(52);scales=np.ones(52)
+    safe=reference.copy();safe[22]=.00048
+    unsafe=reference.copy();unsafe[22]=.000495
+    assert input_bins(safe,reference,scales,'baseline')['matched']
+    assert not input_bins(unsafe,reference,scales,'baseline')['matched']
+    future=reference.copy();future[22]=.010
+    assert future_bin_difference(reference,future,reference,scales,'baseline')['safe_difference']
+    assert raw_tiers(.014,True)=={'0.010':True,'0.015':False,'0.025':False,'0.050':False}
+    assert not any(raw_tiers(.1,False).values())

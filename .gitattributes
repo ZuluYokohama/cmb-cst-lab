@@ -23,3 +23,6 @@ results/real_splits_v1/telemetry.json -diff
 data/evidence/real_splits_cuda.json -diff
 results/closure_fibers_v1/telemetry.json -diff
 results/closure_fibers_v1/cases/*_history.json -diff
+results/closure_fibers_v2/telemetry.json -diff
+results/closure_fibers_v2/cases/*_history.json -diff
+data/closure_v2_*.log -text

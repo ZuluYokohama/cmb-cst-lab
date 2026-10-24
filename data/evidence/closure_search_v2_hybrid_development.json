@@ -1,0 +1,31 @@
+{
+  "phase": "development before v2 scientific freeze",
+  "created_utc": "2026-10-24T17:07:12.354164+00:00",
+  "source": "src/cmbcst/closure_search_v2.py",
+  "source_sha256": "f1d59bb915bf271e67b941d8279c7d10d3c52e7255d3e5c5cdffe70f4d940ccc",
+  "archive": "data/evidence/closure_search_v2_pre_cpu_svd.py.gz",
+  "archive_sha256": "baebef57251be71d717d5c6a26cff4ef48b762549850543871bfdf82ffc5fa03",
+  "prior_profile": "data/evidence/closure_v2_preflight_final.json",
+  "prior_profile_sha256": "1ad0f51ec12a1de56c33ab9a4502321c0aeb3c2e0b3bfcbd9cd7db2eb6339586",
+  "reason": "Add measured hybrid native-batch exact Float64 CPU SVD with shared CPU lock. Equations, singular-rank cutoff and all acceptance/search thresholds remain unchanged.",
+  "changes": [
+    "CPU transfer, exact batched torch.linalg.svd and return transfer under optional shared lock",
+    "Identical backend selection for tangent, initialization and Newton restoration"
+  ],
+  "scope": "Execution backend only; a fresh source-bound GPU preflight is required before v2 freeze",
+  "revised_source_sha256": "f6e97d0bb114bf28a06845c1d023fb7fc96df338c820adb53743e4922f08798a",
+  "test_source_sha256": "7128b5a38ab8eeb39748974a562011613d19c85e2d2f5f26f9bd42e84a26f5a2",
+  "verification": {
+    "cpu_only_combined_tests_passed": 16,
+    "new_v2_tests_passed": 13,
+    "existing_v1_tests_passed": 3,
+    "seconds": 5.62,
+    "cuda_visible_devices": "",
+    "cpu_backend_matches_device_cpu": true,
+    "native_batch_svd_call_under_shared_lock": true,
+    "initialization_restoration_tangent_share_backend": true,
+    "invalid_backend_and_noncontext_lock_rejected": true,
+    "v1_frozen_search_preserved": true,
+    "actual_gpu_preflight": "parent and performance agent will issue a fresh source-bound preflight before freeze"
+  }
+}

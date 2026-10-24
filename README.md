@@ -129,6 +129,18 @@ suites / 170 checks and seven new [conditional Lean theorems](formal/Operational
 These prove the stated mathematical implication and an exact toy example;
 they do not certify the floating-point sky pipeline or physical interpretation.
 
+The separate [v2 protocol](docs/CLOSURE_FIBERS_V2_SPEC.md) uses resident GPU
+operators with native 128/64-start batches and measured exact CPU SVD, center
+restoration, active RMS/box constraints and direct harmonic replay for every
+started endpoint. It prospectively records raw K4 tiers 0.010/0.015/0.025/0.050;
+these are separate from robust-scale quantization and do not reclassify v1.
+Preflight passed 246 local tests (three unavailable Intel XPU skips), all 26
+CPU sandbox suites and 26 authenticated JoVin suites / 177 checks. Batched
+fixed-fixture GPU evaluation plus CPU projection took 47--91 ms, while exact
+CUDA SVD alone took 0.49--2.11 seconds. This is an engineering measurement,
+not a saturation guarantee or a scientific result. The new production run has
+its own four-hour cap; incomplete starts and verification remain explicit.
+
 **Paper draft:** [`paper/main.pdf`](paper/main.pdf). Every result taken from `results/*.json`
 is written into it by `paper/make_inputs.py` (macros and figures). Two values come from checks
 whose output is not in `results/`: the injection pull width and the post-hoc A/B covariance
@@ -253,6 +265,7 @@ appends a hash-chained receipt to `data/evidence/jovin_receipts.json`.
 | `acquisition_index` | pass 4/4 | `20261023T234104Z-58f1101a658f` |
 | `real_splits` | pass 6/6 | `20261024T002321Z-3b4b0dd2589d` |
 | `closure_fibers` | pass 12/12 | `20261024T124021Z-15f74d97a919` |
+| `closure_fibers_v2` | pass 7/7 | `20261024T171134Z-229a18914409` |
 <!-- RECEIPTS:END -->
 
 The harness counts one more item than each file defines (its own collection check).
