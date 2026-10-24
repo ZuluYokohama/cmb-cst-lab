@@ -1,0 +1,23 @@
+{
+  "tile": 24,
+  "stage": "source",
+  "representation": "baseline",
+  "device": 0,
+  "starts": 128,
+  "seed": 82024102027,
+  "signs": "first half maximize; second half minimize",
+  "seed_derivation": "SeedSequence([seed,tile,source=0/fresh=1,start]); fresh representations share raw kicks",
+  "name": "tile_24_source_baseline",
+  "status": "complete",
+  "starts_started": 128,
+  "starts_completed": 128,
+  "errors": [],
+  "terminal_failure_starts": 0,
+  "seconds": 22.7870834,
+  "arrays": "cases/tile_24_source_baseline.npz",
+  "arrays_sha256": "98358b50273f05e389b774290d3279e78ef04ed1cf5948597c3d89f4d027c03a",
+  "rms_ratio_names": [
+    "tile",
+    "global"
+  ]
+}
